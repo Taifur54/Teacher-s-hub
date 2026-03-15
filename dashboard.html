@@ -794,7 +794,7 @@ const demoCounter = document.getElementById('demoCounter');
 const demoProgressFill = document.getElementById('demoProgressFill');
 let activeDemoStep = 0;
 
-let demoStepTimer = null;
+
 function setDemoStep(si) {
   if (si === activeDemoStep) return;
 
@@ -861,12 +861,10 @@ STEPS.forEach((s,si)=>{
 // ══ SCROLL DRIVER ══
 const bgWord=document.getElementById('bgWord');
 const diagramWrap=document.getElementById('diagram');
-let lastSY=-1,activeStep=0;
+const nav=document.querySelector('nav');
+let lastSY=-1, activeStep=0;
+let demoStepTimer=null;
 bgWord.textContent=STEPS[0].bg;
-
-// ── scroll state ──
-let lastSY = -1, activeStep = 0, activeDemoStepTracked = -1;
-let stepChangeTimeout = null;
 
 function onFrame(){
   const sy = window.scrollY;
@@ -874,12 +872,12 @@ function onFrame(){
     lastSY = sy;
 
     // ── NAV colour switch ──
-    const nav = document.querySelector('nav');
     const demoRect = demoWrap.getBoundingClientRect();
     const diagramRect = diagramWrap.getBoundingClientRect();
-    // dark when demo section or diagram section (dark bg) is covering the nav
+    const toneEl = document.querySelector('.tone-section');
+    const toneRect = toneEl ? toneEl.getBoundingClientRect() : {top:9999,bottom:0};
     const inDark = (demoRect.top <= 0 && demoRect.bottom > 72) ||
-                   (diagramRect.top <= 0 && diagramRect.bottom > 72);
+                   (toneRect.top <= 0 && toneRect.bottom > 72);
     nav.classList.toggle('dark', inDark);
     const dr = demoWrap.getBoundingClientRect();
     const dTotal = demoWrap.offsetHeight - window.innerHeight;
