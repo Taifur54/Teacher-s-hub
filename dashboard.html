@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>YesTeachers! — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --g:#1D9E75;--gd:#0F6E56;--gl:#E1F5EE;
+  --ink:#0e0e0e;--paper:#faf9f6;--muted:#888;
+  --border:rgba(0,0,0,0.09);--white:#fff;
+  --sidebar:220px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
+::selection{background:var(--g);color:#fff;}
+input,textarea,select,button{font-family:'Syne',sans-serif;}
+
+/* ── SCREENS ── */
+.screen{display:none;width:100%;min-height:100vh;}
+.screen.active{display:flex;}
+
+/* ════════════════════════════
+   AUTH SCREEN
+════════════════════════════ */
+#screen-auth{
+  align-items:center;justify-content:center;
+  background:var(--ink);position:relative;overflow:hidden;
+}
+.auth-orb{position:absolute;border-radius:50%;pointer-events:none;}
+.auth-orb1{width:600px;height:600px;top:-200px;right:-200px;background:radial-gradient(circle,rgba(29,158,117,0.15) 0%,transparent 70%);}
+.auth-orb2{width:400px;height:400px;bottom:-150px;left:-150px;background:radial-gradient(circle,rgba(29,158,117,0.1) 0%,transparent 70%);}
+
+.auth-box{
+  position:relative;z-index:1;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:24px;padding:48px 44px;
+  width:100%;max-width:440px;
+  backdrop-filter:blur(20px);
+}
+.auth-logo{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;letter-spacing:-0.5px;}
+.auth-logo span{color:var(--g);}
+.auth-tagline{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:36px;}
+.auth-tabs{display:flex;gap:0;margin-bottom:28px;background:rgba(255,255,255,0.06);border-radius:10px;padding:4px;}
+.auth-tab{flex:1;padding:9px;text-align:center;font-size:13px;font-weight:700;color:rgba(255,255,255,0.4);cursor:pointer;border-radius:7px;transition:all 0.2s;}
+.auth-tab.active{background:var(--g);color:#fff;}
+.auth-field{margin-bottom:14px;}
+.auth-field label{display:block;font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px;}
+.auth-field input{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;font-size:14px;color:#fff;outline:none;transition:border-color 0.2s;}
+.auth-field input::placeholder{color:rgba(255,255,255,0.25);}
+.auth-field input:focus{border-color:var(--g);}
+.auth-btn{width:100%;background:var(--g);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;transition:background 0.15s,transform 0.1s;}
+.auth-btn:hover{background:var(--gd);transform:translateY(-1px);}
+.auth-divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:rgba(255,255,255,0.2);font-size:12px;}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.1);}
+.guest-btn{width:100%;background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+.guest-btn:hover{border-color:var(--g);color:var(--g);}
+.auth-note{font-size:11px;color:rgba(255,255,255,0.25);text-align:center;margin-top:20px;line-height:1.6;}
+
+/* ════════════════════════════
+   PROFILE SETUP SCREEN
+════════════════════════════ */
+#screen-profile{
+  align-items:center;justify-content:center;
+  background:var(--paper);flex-direction:column;padding:40px 20px;
+}
+.setup-header{text-align:center;margin-bottom:36px;}
+.setup-logo{font-size:18px;font-weight:800;color:var(--ink);margin-bottom:6px;}
+.setup-logo span{color:var(--g);}
+.setup-header h2{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,38px);font-weight:700;margin-bottom:8px;}
+.setup-header h2 em{font-style:italic;color:var(--g);}
+.setup-header p{font-size:14px;color:var(--muted);}
+.setup-box{background:#fff;border:1px solid var(--border);border-radius:20px;padding:36px;width:100%;max-width:520px;box-shadow:0 8px 40px rgba(0,0,0,0.06);}
+
+/* avatar upload */
+.avatar-upload{display:flex;align-items:center;gap:20px;margin-bottom:28px;}
+.avatar-preview{width:80px;height:80px;border-radius:50%;background:var(--gl);border:2px solid var(--g);display:flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden;flex-shrink:0;cursor:pointer;}
+.avatar-preview img{width:100%;height:100%;object-fit:cover;}
+.avatar-upload-info{flex:1;}
+.avatar-upload-info p{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.avatar-upload-info span{font-size:11px;color:var(--muted);}
+.avatar-upload-btn{margin-top:8px;background:var(--ink);color:#fff;border:none;border-radius:7px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;transition:background 0.15s;}
+.avatar-upload-btn:hover{background:var(--g);}
+
+.setup-field{margin-bottom:16px;}
+.setup-field label{display:block;font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.setup-field input,.setup-field select{width:100%;background:#faf9f6;border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;font-size:14px;color:var(--ink);outline:none;transition:border-color 0.2s;appearance:none;}
+.setup-field input:focus,.setup-field select:focus{border-color:var(--g);background:#fff;}
+.setup-field input::placeholder{color:#bbb;}
+.setup-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.setup-submit{width:100%;background:var(--ink);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;transition:background 0.15s,transform 0.1s;}
+.setup-submit:hover{background:var(--g);transform:translateY(-1px);}
+.setup-skip{display:block;text-align:center;font-size:12px;color:var(--muted);margin-top:14px;cursor:pointer;text-decoration:underline;}
+.setup-skip:hover{color:var(--g);}
+
+/* ════════════════════════════
+   MAIN DASHBOARD
+════════════════════════════ */
+#screen-dashboard{flex-direction:row;min-height:100vh;}
+
+/* sidebar */
+.sidebar{
+  width:var(--sidebar);flex-shrink:0;
+  background:#fff;border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.sidebar-logo{padding:24px 20px 16px;font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-0.3px;border-bottom:1px solid var(--border);}
+.sidebar-logo span{color:var(--g);}
+
+.sidebar-profile{padding:20px;border-bottom:1px solid var(--border);}
+.sb-avatar{width:52px;height:52px;border-radius:50%;background:var(--gl);border:2px solid var(--g);display:flex;align-items:center;justify-content:center;font-size:20px;overflow:hidden;margin-bottom:10px;}
+.sb-avatar img{width:100%;height:100%;object-fit:cover;}
+.sb-name{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-school{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-subject{display:inline-block;margin-top:6px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--gl);color:var(--gd);}
+.sb-edit{display:block;margin-top:10px;font-size:11px;color:var(--muted);text-decoration:none;cursor:pointer;}
+.sb-edit:hover{color:var(--g);}
+
+.sidebar-nav{padding:16px 12px;flex:1;}
+.nav-section-label{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);padding:0 8px;margin-bottom:6px;margin-top:16px;}
+.nav-section-label:first-child{margin-top:0;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.15s;margin-bottom:2px;}
+.nav-item:hover{background:var(--paper);color:var(--ink);}
+.nav-item.active{background:var(--gl);color:var(--gd);}
+.nav-item .nav-icon{font-size:16px;width:20px;text-align:center;}
+.nav-badge{margin-left:auto;background:var(--g);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:999px;}
+
+.sidebar-footer{padding:16px 20px;border-top:1px solid var(--border);}
+.logout-btn{width:100%;background:transparent;border:1px solid var(--border);border-radius:8px;padding:9px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.15s;}
+.logout-btn:hover{border-color:#f87171;color:#ef4444;}
+
+/* main content */
+.dash-main{flex:1;overflow-y:auto;min-width:0;}
+.dash-topbar{position:sticky;top:0;z-index:50;background:rgba(250,249,246,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.dash-topbar h1{font-size:16px;font-weight:700;color:var(--ink);}
+.dash-topbar-right{display:flex;align-items:center;gap:12px;}
+.topbar-greeting{font-size:13px;color:var(--muted);}
+.topbar-avatar{width:32px;height:32px;border-radius:50%;background:var(--gl);border:1.5px solid var(--g);display:flex;align-items:center;justify-content:center;font-size:14px;overflow:hidden;cursor:pointer;}
+.topbar-avatar img{width:100%;height:100%;object-fit:cover;}
+
+.dash-content{padding:32px;}
+
+/* ── PANELS ── */
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* ── HOME PANEL ── */
+.welcome-banner{background:var(--ink);border-radius:20px;padding:32px 36px;margin-bottom:28px;position:relative;overflow:hidden;}
+.welcome-banner::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(29,158,117,0.2) 0%,transparent 70%);}
+.welcome-banner h2{font-family:'Playfair Display',serif;font-size:clamp(20px,2.5vw,28px);font-weight:700;color:#fff;margin-bottom:8px;position:relative;z-index:1;}
+.welcome-banner h2 em{font-style:italic;color:var(--g);}
+.welcome-banner p{font-size:14px;color:rgba(255,255,255,0.5);position:relative;z-index:1;max-width:420px;line-height:1.6;}
+
+.section-title{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+
+/* tool cards grid */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:36px;}
+.tool-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:22px 20px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
+.tool-card::before{content:'';position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,var(--gl),transparent);transition:opacity 0.2s;}
+.tool-card:hover::before{opacity:1;}
+.tool-card:hover{border-color:var(--g);transform:translateY(-3px);box-shadow:0 12px 40px rgba(29,158,117,0.12);}
+.tool-card-icon{font-size:28px;margin-bottom:12px;display:block;}
+.tool-card-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.tool-card-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+.tool-card-time{position:absolute;top:14px;right:14px;font-size:9px;font-weight:700;color:var(--g);background:var(--gl);padding:2px 7px;border-radius:999px;}
+
+/* quick stats */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px;}
+.stat-card-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--g);line-height:1;margin-bottom:4px;}
+.stat-card-l{font-size:11px;color:var(--muted);font-weight:600;}
+
+/* ── TOOL PANEL ── */
+.tool-panel-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;}
+.tool-back{background:transparent;border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;color:var(--muted);transition:all 0.15s;}
+.tool-back:hover{border-color:var(--g);color:var(--g);}
+.tool-panel-icon{font-size:28px;}
+.tool-panel-title{font-size:20px;font-weight:700;color:var(--ink);}
+.tool-panel-sub{font-size:13px;color:var(--muted);}
+
+.tool-workspace{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}
+.tool-input-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;}
+.tool-output-card{background:#fff;border:1.5px solid var(--g);border-radius:16px;padding:24px;position:relative;overflow:hidden;}
+.tool-output-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g),#5DCAA5);}
+
+.tool-section-label{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.tool-field{margin-bottom:14px;}
+.tool-field label{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.06em;}
+.tool-field input,.tool-field textarea,.tool-field select{width:100%;background:#faf9f6;border:1.5px solid var(--border);border-radius:9px;padding:10px 13px;font-size:13px;color:var(--ink);outline:none;transition:border-color 0.2s;resize:vertical;}
+.tool-field input:focus,.tool-field textarea:focus,.tool-field select:focus{border-color:var(--g);background:#fff;}
+.tool-field textarea{min-height:90px;}
+.tool-generate-btn{width:100%;background:var(--ink);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 0.15s;}
+.tool-generate-btn:hover{background:var(--g);}
+.tool-generate-btn .spin{display:none;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tool-generate-btn.loading .spin{display:block;}
+.tool-generate-btn.loading .btn-lbl{display:none;}
+
+.output-placeholder{text-align:center;padding:40px 20px;color:var(--muted);}
+.output-placeholder .ph-icon{font-size:36px;margin-bottom:12px;opacity:0.4;}
+.output-placeholder p{font-size:13px;line-height:1.6;}
+.output-result{font-size:13px;color:var(--ink);line-height:1.8;white-space:pre-wrap;}
+.output-title{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+
+/* output sections */
+.out-s{margin-bottom:12px;}
+.out-s-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--g);margin-bottom:5px;}
+.out-line{padding:3px 0 3px 14px;position:relative;font-size:12px;color:#333;line-height:1.5;}
+.out-line::before{content:'·';position:absolute;left:0;color:var(--g);font-weight:700;font-size:15px;line-height:1.2;}
+.out-tag-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;}
+.out-tag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--gl);color:var(--gd);}
+.out-fb-pos{background:#f0faf6;border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:9px 11px;margin-bottom:7px;}
+.out-fb-imp{background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:9px 11px;}
+.out-fb-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;}
+.out-fb-pos .out-fb-lbl{color:var(--gd);}.out-fb-imp .out-fb-lbl{color:#C2410C;}
+.out-fb-txt{font-size:12px;color:#444;line-height:1.5;}
+
+/* copy btn */
+.output-actions{display:flex;gap:8px;margin-top:16px;}
+.out-action-btn{padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--ink);transition:all 0.15s;}
+.out-action-btn:hover{border-color:var(--g);color:var(--g);}
+.out-action-btn.primary{background:var(--g);color:#fff;border-color:var(--g);}
+.out-action-btn.primary:hover{background:var(--gd);}
+
+/* ── PROFILE PANEL ── */
+.profile-panel-inner{max-width:560px;}
+.profile-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:32px;margin-bottom:20px;}
+.profile-card-header{display:flex;align-items:center;gap:20px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.profile-big-avatar{width:80px;height:80px;border-radius:50%;background:var(--gl);border:2px solid var(--g);display:flex;align-items:center;justify-content:center;font-size:32px;overflow:hidden;flex-shrink:0;cursor:pointer;}
+.profile-big-avatar img{width:100%;height:100%;object-fit:cover;}
+.profile-card-info h3{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.profile-card-info p{font-size:13px;color:var(--muted);margin-bottom:8px;}
+.profile-subject-tag{display:inline-block;font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--gl);color:var(--gd);}
+.profile-edit-field{margin-bottom:16px;}
+.profile-edit-field label{display:block;font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.profile-edit-field input,.profile-edit-field select{width:100%;background:#faf9f6;border:1.5px solid var(--border);border-radius:9px;padding:10px 13px;font-size:13px;color:var(--ink);outline:none;transition:border-color 0.2s;}
+.profile-edit-field input:focus,.profile-edit-field select:focus{border-color:var(--g);background:#fff;}
+.profile-save-btn{background:var(--g);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer;transition:background 0.15s;}
+.profile-save-btn:hover{background:var(--gd);}
+.profile-saved-msg{display:none;font-size:12px;color:var(--g);font-weight:600;margin-left:12px;}
+
+/* guest banner */
+.guest-banner{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:14px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.guest-banner p{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.5;}
+.guest-banner p strong{color:#fff;}
+.guest-signup-btn{background:var(--g);color:#fff;border:none;border-radius:9px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background 0.15s;}
+.guest-signup-btn:hover{background:var(--gd);}
+
+/* mobile */
+.mob-menu-btn{display:none;background:transparent;border:none;cursor:pointer;padding:8px;}
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:90;}
+
+@media(max-width:768px){
+  .sidebar{position:fixed;left:-240px;top:0;bottom:0;z-index:100;transition:left 0.3s;width:240px;}
+  .sidebar.open{left:0;}
+  .mob-menu-btn{display:flex;align-items:center;justify-content:center;}
+  .mob-overlay.show{display:block;}
+  .dash-content{padding:20px 16px;}
+  .tool-workspace{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr 1fr 1fr;}
+  .tools-grid{grid-template-columns:1fr 1fr;}
+  .dash-topbar{padding:0 16px;}
+  .welcome-banner{padding:24px 22px;}
+}
+@media(max-width:480px){
+  .tools-grid{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ AUTH SCREEN ══ -->
+<div class="screen active" id="screen-auth">
+  <div class="auth-orb auth-orb1"></div>
+  <div class="auth-orb auth-orb2"></div>
+  <div class="auth-box">
+    <div class="auth-logo">Yes<span>Teachers</span>!</div>
+    <div class="auth-tagline">Someday, someone will say you were their inspiration.</div>
+
+    <div class="auth-tabs">
+      <div class="auth-tab active" onclick="switchAuthTab('login')">Log in</div>
+      <div class="auth-tab" onclick="switchAuthTab('signup')">Sign up</div>
+    </div>
+
+    <div id="auth-login">
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" placeholder="you@school.edu" id="login-email"/>
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" id="login-pass"/>
+      </div>
+      <button class="auth-btn" onclick="doLogin()">Log in →</button>
+    </div>
+
+    <div id="auth-signup" style="display:none;">
+      <div class="auth-field">
+        <label>Full name</label>
+        <input type="text" placeholder="Ms. Sarah Johnson" id="signup-name"/>
+      </div>
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" placeholder="you@school.edu" id="signup-email"/>
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" id="signup-pass"/>
+      </div>
+      <button class="auth-btn" onclick="doSignup()">Create account →</button>
+    </div>
+
+    <div class="auth-divider">or</div>
+    <button class="guest-btn" onclick="doGuest()">👋 Try as guest — no account needed</button>
+    <p class="auth-note">By continuing you agree to our terms. Your data stays on your device unless you connect a backend.</p>
+  </div>
+</div>
+
+<!-- ══ PROFILE SETUP SCREEN ══ -->
+<div class="screen" id="screen-profile" style="display:none;">
+  <div class="setup-header">
+    <div class="setup-logo">Yes<span>Teachers</span>!</div>
+    <h2>Set up your <em>profile.</em></h2>
+    <p>Takes 30 seconds. Helps personalise your tools.</p>
+  </div>
+  <div class="setup-box">
+    <div class="avatar-upload">
+      <div class="avatar-preview" id="setupAvatarPreview" onclick="document.getElementById('setupAvatarInput').click()">🧑‍🏫</div>
+      <input type="file" id="setupAvatarInput" accept="image/*" style="display:none;" onchange="previewAvatar(this,'setupAvatarPreview')"/>
+      <div class="avatar-upload-info">
+        <p>Profile photo</p>
+        <span>JPG or PNG, up to 5MB</span>
+        <button class="avatar-upload-btn" onclick="document.getElementById('setupAvatarInput').click()">Upload photo</button>
+      </div>
+    </div>
+
+    <div class="setup-row">
+      <div class="setup-field">
+        <label>First name</label>
+        <input type="text" placeholder="Sarah" id="setup-fname"/>
+      </div>
+      <div class="setup-field">
+        <label>Last name</label>
+        <input type="text" placeholder="Johnson" id="setup-lname"/>
+      </div>
+    </div>
+    <div class="setup-field">
+      <label>School / Institution</label>
+      <input type="text" placeholder="Lincoln High School" id="setup-school"/>
+    </div>
+    <div class="setup-row">
+      <div class="setup-field">
+        <label>Subject you teach</label>
+        <select id="setup-subject">
+          <option value="">Select subject</option>
+          <option>Biology</option><option>Chemistry</option><option>Physics</option>
+          <option>Mathematics</option><option>English</option><option>History</option>
+          <option>Geography</option><option>Art</option><option>Music</option>
+          <option>Physical Education</option><option>Computer Science</option><option>Other</option>
+        </select>
+      </div>
+      <div class="setup-field">
+        <label>Grade level</label>
+        <select id="setup-grade">
+          <option value="">Select level</option>
+          <option>Elementary (K–5)</option><option>Middle School (6–8)</option>
+          <option>High School (9–12)</option><option>College / University</option>
+          <option>Multiple levels</option>
+        </select>
+      </div>
+    </div>
+    <div class="setup-field">
+      <label>Email (shown on your profile)</label>
+      <input type="email" placeholder="s.johnson@lincolnhigh.edu" id="setup-email"/>
+    </div>
+    <button class="setup-submit" onclick="saveProfile()">Save profile & go to dashboard →</button>
+    <span class="setup-skip" onclick="skipProfile()">Skip for now</span>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD SCREEN ══ -->
+<div class="screen" id="screen-dashboard" style="display:none;flex-direction:row;">
+
+  <!-- mobile overlay -->
+  <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">Yes<span>Teachers</span>!</div>
+
+    <div class="sidebar-profile">
+      <div class="sb-avatar" id="sbAvatar">🧑‍🏫</div>
+      <div class="sb-name" id="sbName">Guest Teacher</div>
+      <div class="sb-school" id="sbSchool">No institution set</div>
+      <span class="sb-subject" id="sbSubject">No subject</span>
+      <span class="sb-edit" onclick="showPanel('profile')">Edit profile →</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Tools</div>
+      <div class="nav-item active" onclick="showPanel('home')"><span class="nav-icon">🏠</span>Home</div>
+      <div class="nav-item" onclick="openTool('lesson')"><span class="nav-icon">📋</span>Lesson Planner</div>
+      <div class="nav-item" onclick="openTool('diagram')"><span class="nav-icon">🔬</span>Diagram Generator</div>
+      <div class="nav-item" onclick="openTool('quiz')"><span class="nav-icon">📐</span>Quiz Generator</div>
+      <div class="nav-item" onclick="openTool('essay')"><span class="nav-icon">✍️</span>Essay Feedback</div>
+      <div class="nav-item" onclick="openTool('vocab')"><span class="nav-icon">📚</span>Vocabulary Builder</div>
+      <div class="nav-item" onclick="openTool('grade')"><span class="nav-icon">✅</span>Answer Grader</div>
+
+      <div class="nav-section-label">Account</div>
+      <div class="nav-item" onclick="showPanel('profile')"><span class="nav-icon">👤</span>My Profile</div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="doLogout()">Log out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="mob-menu-btn" onclick="openSidebar()">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect y="2" width="18" height="2" rx="1" fill="#888"/><rect y="8" width="18" height="2" rx="1" fill="#888"/><rect y="14" width="18" height="2" rx="1" fill="#888"/></svg>
+        </button>
+        <h1 id="topbarTitle">Dashboard</h1>
+      </div>
+      <div class="dash-topbar-right">
+        <span class="topbar-greeting" id="topbarGreeting">Good morning</span>
+        <div class="topbar-avatar" id="topbarAvatar" onclick="showPanel('profile')">🧑‍🏫</div>
+      </div>
+    </div>
+
+    <div class="dash-content">
+
+      <!-- HOME PANEL -->
+      <div class="panel active" id="panel-home">
+        <div id="guestBanner" style="display:none;">
+          <div class="guest-banner">
+            <p><strong>You're browsing as a guest.</strong><br/>Create a free account to save your work and set up your profile.</p>
+            <button class="guest-signup-btn" onclick="doLogout()">Create account →</button>
+          </div>
+        </div>
+
+        <div class="welcome-banner">
+          <h2>Welcome back, <em id="welcomeName">Teacher</em>.</h2>
+          <p>What would you like to create today? Pick a tool below and be ready in seconds.</p>
+        </div>
+
+        <div class="section-title">Your tools</div>
+        <div class="tools-grid">
+          <div class="tool-card" onclick="openTool('lesson')">
+            <span class="tool-card-time">~18s</span>
+            <span class="tool-card-icon">📋</span>
+            <div class="tool-card-name">Lesson Planner</div>
+            <div class="tool-card-desc">Full lesson with objectives, flow & differentiation</div>
+          </div>
+          <div class="tool-card" onclick="openTool('diagram')">
+            <span class="tool-card-time">~12s</span>
+            <span class="tool-card-icon">🔬</span>
+            <div class="tool-card-name">Diagram Generator</div>
+            <div class="tool-card-desc">Labelled science & concept diagrams, print-ready</div>
+          </div>
+          <div class="tool-card" onclick="openTool('quiz')">
+            <span class="tool-card-time">~12s</span>
+            <span class="tool-card-icon">📐</span>
+            <div class="tool-card-name">Quiz Generator</div>
+            <div class="tool-card-desc">MC + short answer quizzes with answer keys</div>
+          </div>
+          <div class="tool-card" onclick="openTool('essay')">
+            <span class="tool-card-time">~15s</span>
+            <span class="tool-card-icon">✍️</span>
+            <div class="tool-card-name">Essay Feedback</div>
+            <div class="tool-card-desc">Inline markup, rubric scores & model paragraphs</div>
+          </div>
+          <div class="tool-card" onclick="openTool('vocab')">
+            <span class="tool-card-time">~10s</span>
+            <span class="tool-card-icon">📚</span>
+            <div class="tool-card-name">Vocabulary Builder</div>
+            <div class="tool-card-desc">Definitions, examples & difficulty ratings by topic</div>
+          </div>
+          <div class="tool-card" onclick="openTool('grade')">
+            <span class="tool-card-time">~9s</span>
+            <span class="tool-card-icon">✅</span>
+            <div class="tool-card-name">Answer Grader</div>
+            <div class="tool-card-desc">Score + structured feedback for any answer</div>
+          </div>
+        </div>
+
+        <div class="section-title">This month</div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-card-n" id="statGenerations">0</div><div class="stat-card-l">Generations used</div></div>
+          <div class="stat-card"><div class="stat-card-n" id="statPlans">0</div><div class="stat-card-l">Lesson plans created</div></div>
+          <div class="stat-card"><div class="stat-card-n" id="statQuizzes">0</div><div class="stat-card-l">Quizzes generated</div></div>
+        </div>
+      </div>
+
+      <!-- TOOL PANEL -->
+      <div class="panel" id="panel-tool">
+        <div class="tool-panel-header">
+          <button class="tool-back" onclick="showPanel('home')">← Back</button>
+          <span class="tool-panel-icon" id="toolPanelIcon">📋</span>
+          <div>
+            <div class="tool-panel-title" id="toolPanelTitle">Lesson Planner</div>
+            <div class="tool-panel-sub" id="toolPanelSub">Fill in the details and generate in seconds</div>
+          </div>
+        </div>
+        <div class="tool-workspace">
+          <div class="tool-input-card">
+            <div class="tool-section-label">Input</div>
+            <div id="toolInputFields"></div>
+            <button class="tool-generate-btn" id="toolGenBtn" onclick="runTool()">
+              <div class="spin"></div>
+              <span class="btn-lbl">Generate →</span>
+            </button>
+          </div>
+          <div class="tool-output-card">
+            <div class="tool-section-label">Output</div>
+            <div id="toolOutput">
+              <div class="output-placeholder">
+                <div class="ph-icon">✨</div>
+                <p>Fill in the fields and hit generate.<br/>Your result will appear here.</p>
+              </div>
+            </div>
+            <div class="output-actions" id="outputActions" style="display:none;">
+              <button class="out-action-btn" onclick="copyOutput()">Copy text</button>
+              <button class="out-action-btn primary" onclick="runTool()">Regenerate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFILE PANEL -->
+      <div class="panel" id="panel-profile">
+        <div class="profile-panel-inner">
+          <div class="section-title" style="margin-bottom:20px;">My profile</div>
+          <div class="profile-card">
+            <div class="profile-card-header">
+              <div class="profile-big-avatar" id="profileBigAvatar" onclick="document.getElementById('profileAvatarInput').click()">🧑‍🏫</div>
+              <input type="file" id="profileAvatarInput" accept="image/*" style="display:none;" onchange="previewAvatar(this,'profileBigAvatar');savePfpFromInput(this)"/>
+              <div class="profile-card-info">
+                <h3 id="profileDisplayName">Guest Teacher</h3>
+                <p id="profileDisplaySchool">No institution set</p>
+                <span class="profile-subject-tag" id="profileDisplaySubject">No subject</span>
+              </div>
+            </div>
+
+            <div class="setup-row">
+              <div class="profile-edit-field">
+                <label>First name</label>
+                <input type="text" id="profile-fname" placeholder="Sarah"/>
+              </div>
+              <div class="profile-edit-field">
+                <label>Last name</label>
+                <input type="text" id="profile-lname" placeholder="Johnson"/>
+              </div>
+            </div>
+            <div class="profile-edit-field">
+              <label>School / Institution</label>
+              <input type="text" id="profile-school" placeholder="Lincoln High School"/>
+            </div>
+            <div class="setup-row">
+              <div class="profile-edit-field">
+                <label>Subject</label>
+                <select id="profile-subject">
+                  <option value="">Select subject</option>
+                  <option>Biology</option><option>Chemistry</option><option>Physics</option>
+                  <option>Mathematics</option><option>English</option><option>History</option>
+                  <option>Geography</option><option>Art</option><option>Music</option>
+                  <option>Physical Education</option><option>Computer Science</option><option>Other</option>
+                </select>
+              </div>
+              <div class="profile-edit-field">
+                <label>Grade level</label>
+                <select id="profile-grade">
+                  <option value="">Select level</option>
+                  <option>Elementary (K–5)</option><option>Middle School (6–8)</option>
+                  <option>High School (9–12)</option><option>College / University</option>
+                  <option>Multiple levels</option>
+                </select>
+              </div>
+            </div>
+            <div class="profile-edit-field">
+              <label>Email (visible on profile)</label>
+              <input type="email" id="profile-email" placeholder="you@school.edu"/>
+            </div>
+            <div style="display:flex;align-items:center;">
+              <button class="profile-save-btn" onclick="saveProfileEdit()">Save changes</button>
+              <span class="profile-saved-msg" id="profileSavedMsg">✓ Saved!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /dash-content -->
+  </main>
+</div>
+
+<script>
+// ══ STATE ══
+let profile = JSON.parse(localStorage.getItem('yt_profile')||'{}');
+let stats   = JSON.parse(localStorage.getItem('yt_stats')||'{"gen":0,"plans":0,"quizzes":0}');
+let isGuest = false;
+let currentTool = null;
+
+// ══ AUTH ══
+function switchAuthTab(tab){
+  document.querySelectorAll('.auth-tab').forEach((t,i)=>t.classList.toggle('active',i===(tab==='login'?0:1)));
+  document.getElementById('auth-login').style.display = tab==='login'?'block':'none';
+  document.getElementById('auth-signup').style.display = tab==='signup'?'block':'none';
+}
+function doLogin(){
+  const email = document.getElementById('login-email').value.trim();
+  if(!email){alert('Please enter your email.');return;}
+  if(!profile.email) profile.email = email;
+  isGuest = false;
+  gotoProfileOrDash();
+}
+function doSignup(){
+  const name  = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  if(!name||!email){alert('Please fill in your name and email.');return;}
+  profile.fname = name.split(' ')[0];
+  profile.lname = name.split(' ').slice(1).join(' ');
+  profile.email = email;
+  localStorage.setItem('yt_profile', JSON.stringify(profile));
+  isGuest = false;
+  showScreen('screen-profile');
+}
+function doGuest(){
+  isGuest = true;
+  profile = {fname:'Guest',lname:'Teacher',school:'',subject:'',grade:'',email:''};
+  gotoProfileOrDash();
+}
+function doLogout(){
+  isGuest = false;
+  showScreen('screen-auth');
+}
+function gotoProfileOrDash(){
+  if(!profile.fname && !isGuest){ showScreen('screen-profile'); }
+  else { enterDash(); }
+}
+
+// ══ PROFILE SETUP ══
+let setupAvatarData = null;
+function saveProfile(){
+  profile.fname   = document.getElementById('setup-fname').value.trim() || 'Teacher';
+  profile.lname   = document.getElementById('setup-lname').value.trim() || '';
+  profile.school  = document.getElementById('setup-school').value.trim();
+  profile.subject = document.getElementById('setup-subject').value;
+  profile.grade   = document.getElementById('setup-grade').value;
+  profile.email   = document.getElementById('setup-email').value.trim();
+  if(setupAvatarData) profile.avatar = setupAvatarData;
+  localStorage.setItem('yt_profile', JSON.stringify(profile));
+  enterDash();
+}
+function skipProfile(){
+  if(!profile.fname) profile.fname = 'Teacher';
+  localStorage.setItem('yt_profile', JSON.stringify(profile));
+  enterDash();
+}
+
+// ══ DASHBOARD ══
+function enterDash(){
+  showScreen('screen-dashboard');
+  refreshProfileUI();
+  updateStats();
+  if(isGuest) document.getElementById('guestBanner').style.display='block';
+  updateGreeting();
+}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>{s.style.display='none';s.classList.remove('active');});
+  const s = document.getElementById(id);
+  s.style.display = id==='screen-dashboard'?'flex':id==='screen-profile'?'flex':'flex';
+  s.classList.add('active');
+}
+function showPanel(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  const titles = {home:'Dashboard',tool:'Tool',profile:'My Profile'};
+  document.getElementById('topbarTitle').textContent = titles[name]||'Dashboard';
+  if(name==='profile') loadProfileEditFields();
+  closeSidebar();
+}
+function openTool(tool){
+  currentTool = tool;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-tool').classList.add('active');
+  const tools={
+    lesson:{icon:'📋',title:'Lesson Planner',sub:'Generate a full lesson plan in seconds',fields:`
+      <div class="tool-field"><label>Subject & level</label><input id="tf1" placeholder="e.g. Biology · High School"/></div>
+      <div class="tool-field"><label>Topic</label><input id="tf2" placeholder="e.g. Photosynthesis"/></div>
+      <div class="tool-field"><label>Duration</label><input id="tf3" placeholder="e.g. 45 minutes"/></div>
+      <div class="tool-field"><label>Include (optional)</label><input id="tf4" placeholder="e.g. differentiation, group activity"/></div>`},
+    diagram:{icon:'🔬',title:'Diagram Generator',sub:'Labelled diagrams, print-ready',fields:`
+      <div class="tool-field"><label>Topic</label><input id="tf1" placeholder="e.g. Animal cell structure"/></div>
+      <div class="tool-field"><label>Subject & level</label><input id="tf2" placeholder="e.g. Biology · Grade 9"/></div>
+      <div class="tool-field"><label>Style</label><input id="tf3" placeholder="e.g. Labelled, simple, printable"/></div>`},
+    quiz:{icon:'📐',title:'Quiz Generator',sub:'Questions with full answer key',fields:`
+      <div class="tool-field"><label>Topic</label><input id="tf1" placeholder="e.g. Quadratic equations"/></div>
+      <div class="tool-field"><label>Subject & level</label><input id="tf2" placeholder="e.g. Math · Grade 10"/></div>
+      <div class="tool-field"><label>Number of questions</label><input id="tf3" placeholder="e.g. 5"/></div>
+      <div class="tool-field"><label>Question types</label><input id="tf4" placeholder="e.g. Multiple choice + short answer"/></div>`},
+    essay:{icon:'✍️',title:'Essay Feedback',sub:'Inline markup, rubric & model answer',fields:`
+      <div class="tool-field"><label>Question / Task</label><input id="tf1" placeholder="e.g. Explain the causes of WW1 (8 marks)"/></div>
+      <div class="tool-field"><label>Student's answer</label><textarea id="tf2" placeholder="Paste the student's answer here..."></textarea></div>
+      <div class="tool-field"><label>Rubric / focus</label><input id="tf3" placeholder="e.g. Focus on analysis, GCSE level"/></div>`},
+    vocab:{icon:'📚',title:'Vocabulary Builder',sub:'Terms, definitions & difficulty ratings',fields:`
+      <div class="tool-field"><label>Topic</label><input id="tf1" placeholder="e.g. Climate change"/></div>
+      <div class="tool-field"><label>Subject & level</label><input id="tf2" placeholder="e.g. Geography · Grade 9"/></div>
+      <div class="tool-field"><label>Number of terms</label><input id="tf3" placeholder="e.g. 8"/></div>`},
+    grade:{icon:'✅',title:'Answer Grader',sub:'Score + structured feedback instantly',fields:`
+      <div class="tool-field"><label>Question</label><input id="tf1" placeholder="e.g. Describe the water cycle (6 marks)"/></div>
+      <div class="tool-field"><label>Student's answer</label><textarea id="tf2" placeholder="Paste the student's answer here..."></textarea></div>
+      <div class="tool-field"><label>Mark scheme / rubric</label><input id="tf3" placeholder="e.g. Out of 6, focus on process stages"/></div>`},
+  };
+  const t = tools[tool];
+  document.getElementById('toolPanelIcon').textContent  = t.icon;
+  document.getElementById('toolPanelTitle').textContent = t.title;
+  document.getElementById('toolPanelSub').textContent   = t.sub;
+  document.getElementById('toolInputFields').innerHTML  = t.fields;
+  document.getElementById('toolOutput').innerHTML = `<div class="output-placeholder"><div class="ph-icon">✨</div><p>Fill in the fields and hit generate.<br/>Your result will appear here.</p></div>`;
+  document.getElementById('outputActions').style.display='none';
+  document.getElementById('topbarTitle').textContent = t.title;
+  closeSidebar();
+}
+
+// ══ TOOL RUNNER ══
+function runTool(){
+  const btn = document.getElementById('toolGenBtn');
+  btn.classList.add('loading');
+  const f1 = (document.getElementById('tf1')||{value:''}).value;
+  const f2 = (document.getElementById('tf2')||{value:''}).value;
+  const f3 = (document.getElementById('tf3')||{value:''}).value;
+  const f4 = (document.getElementById('tf4')||{value:''}).value;
+  setTimeout(()=>{
+    btn.classList.remove('loading');
+    const out = generateOutput(currentTool,f1,f2,f3,f4);
+    document.getElementById('toolOutput').innerHTML = out;
+    document.getElementById('outputActions').style.display='flex';
+    // update stats
+    stats.gen++;
+    if(currentTool==='lesson') stats.plans++;
+    if(currentTool==='quiz') stats.quizzes++;
+    localStorage.setItem('yt_stats',JSON.stringify(stats));
+    updateStats();
+  }, 1600);
+}
+
+function generateOutput(tool,f1,f2,f3,f4){
+  const topic = f1||f2||'your topic';
+  const level = f2||'';
+  const templates = {
+    lesson:`<div class="output-title">📋 ${topic||'Lesson'} — Lesson Plan</div>
+<div class="out-s"><div class="out-s-lbl">🎯 Learning objectives</div>
+<div class="out-line">Students will understand the core concepts of ${topic}</div>
+<div class="out-line">Students will apply knowledge through structured activities</div>
+<div class="out-line">Students will demonstrate understanding via exit ticket</div></div>
+<div class="out-s"><div class="out-s-lbl">📋 Lesson flow (${f3||'45 min'})</div>
+<div class="out-tag-row"><span class="out-tag">0–5 min Hook</span><span class="out-tag">5–20 min Instruction</span><span class="out-tag">20–35 min Activity</span><span class="out-tag">35–${f3?f3.replace(/\D/g,''):'45'} min Exit ticket</span></div></div>
+<div class="out-s"><div class="out-s-lbl">♿ Differentiation</div>
+<div class="out-line">Support: visual aids, word bank, sentence starters</div>
+<div class="out-line">Extend: independent research, comparative task</div></div>
+${f4?`<div class="out-s"><div class="out-s-lbl">📎 Includes</div><div class="out-line">${f4}</div></div>`:''}`,
+
+    diagram:`<div class="output-title">🔬 ${topic} — Labelled Diagram</div>
+<div class="out-s"><div class="out-s-lbl">📊 Diagram elements</div>
+<div class="out-line">Main structure with key components labelled</div>
+<div class="out-line">Directional arrows showing process flow</div>
+<div class="out-line">Colour-coded regions for clarity</div></div>
+<div class="out-s"><div class="out-s-lbl">📎 Export options</div>
+<div class="out-tag-row"><span class="out-tag">✓ Print-ready A4</span><span class="out-tag">✓ Editable labels</span><span class="out-tag">✓ PDF export</span><span class="out-tag">✓ Blank version for students</span></div></div>
+<div class="out-s"><div class="out-s-lbl">💡 Teaching note</div>
+<div class="out-line">Diagram suitable for ${level||'your level'} — includes annotation prompts</div></div>`,
+
+    quiz:`<div class="output-title">📐 ${topic} — Quiz</div>
+<div class="out-s"><div class="out-s-lbl">Q1 — Multiple choice</div>
+<div class="out-line">Which of the following best describes ${topic}?</div>
+<div class="out-tag-row"><span class="out-tag">A. Option one</span><span class="out-tag">B. Option two</span><span class="out-tag" style="background:var(--g);color:#fff;">C. Correct ✓</span><span class="out-tag">D. Option four</span></div></div>
+<div class="out-s"><div class="out-s-lbl">Q2 — Short answer</div>
+<div class="out-line">Explain in your own words how ${topic} works. (3 marks)</div></div>
+<div class="out-s"><div class="out-s-lbl">🔑 Answer key</div>
+<div class="out-line">Q1 → C. Detailed explanation provided</div>
+<div class="out-line">Q2 → Model answer: 3 key points required for full marks</div></div>`,
+
+    essay:`<div class="output-title">✍️ Essay Feedback</div>
+<div class="out-s"><div class="out-s-lbl">📊 Score</div>
+<div style="display:inline-flex;align-items:center;gap:10px;"><span style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;background:var(--g);padding:4px 14px;border-radius:8px;">6 / 8</span><span style="font-size:12px;color:var(--muted);">Good response — needs deeper analysis</span></div></div>
+<div class="out-fb-pos" style="margin-top:10px;"><div class="out-fb-lbl">✓ What went well</div><div class="out-fb-txt">Clear structure and relevant content. Key points identified correctly with supporting evidence.</div></div>
+<div class="out-fb-imp" style="margin-top:6px;"><div class="out-fb-lbl">↑ To improve</div><div class="out-fb-txt">Needs more analytical depth. Link points explicitly to the question. Use subject-specific terminology more consistently.</div></div>`,
+
+    vocab:`<div class="output-title">📚 ${topic} — Vocabulary List</div>
+<div class="out-s"><div class="out-s-lbl">Key terms</div>
+<div class="out-line"><strong>Term 1</strong> — Definition with context for ${topic}</div>
+<div class="out-line"><strong>Term 2</strong> — Definition with example sentence included</div>
+<div class="out-line"><strong>Term 3</strong> — Definition, difficulty: intermediate</div>
+<div class="out-line"><strong>Term 4</strong> — Definition, difficulty: advanced</div></div>
+<div class="out-s"><div class="out-s-lbl">📎 Includes</div>
+<div class="out-tag-row"><span class="out-tag">✓ Definitions</span><span class="out-tag">✓ Example sentences</span><span class="out-tag">✓ Difficulty rated</span><span class="out-tag">✓ Flashcard export</span></div></div>`,
+
+    grade:`<div class="output-title">✅ Grading Result</div>
+<div class="out-s"><div class="out-s-lbl">Score</div>
+<div style="display:inline-flex;align-items:center;gap:10px;"><span style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;background:var(--g);padding:4px 14px;border-radius:8px;">5 / ${f3?f3.replace(/\D/g,''):'8'}</span><span style="font-size:12px;color:var(--muted);">Good — room to improve analysis</span></div></div>
+<div class="out-fb-pos" style="margin-top:10px;"><div class="out-fb-lbl">✓ What went well</div><div class="out-fb-txt">Relevant points made with supporting detail. Shows understanding of core concepts.</div></div>
+<div class="out-fb-imp" style="margin-top:6px;"><div class="out-fb-lbl">↑ To improve</div><div class="out-fb-txt">Needs more specific evidence and stronger analytical links. Refer to the mark scheme criteria more explicitly.</div></div>
+<div class="out-s" style="margin-top:10px;"><div class="out-s-lbl">📝 Model answer hint</div><div class="out-line">A stronger answer would include: specific terminology, causal links, and structured paragraphs (point → evidence → analysis).</div></div>`,
+  };
+  return templates[tool]||'<p>Output generated.</p>';
+}
+
+function copyOutput(){
+  const text = document.getElementById('toolOutput').innerText;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = document.querySelector('.out-action-btn');
+    const orig = btn.textContent;
+    btn.textContent='Copied!';
+    setTimeout(()=>btn.textContent=orig,1500);
+  });
+}
+
+// ══ PROFILE UI ══
+function refreshProfileUI(){
+  const name = [profile.fname,profile.lname].filter(Boolean).join(' ')||'Teacher';
+  const school  = profile.school||'No institution set';
+  const subject = profile.subject||'No subject';
+  // sidebar
+  document.getElementById('sbName').textContent    = name;
+  document.getElementById('sbSchool').textContent  = school;
+  document.getElementById('sbSubject').textContent = subject;
+  // topbar
+  document.getElementById('topbarGreeting').textContent = getGreeting()+', '+(profile.fname||'Teacher');
+  // welcome
+  document.getElementById('welcomeName').textContent = profile.fname||'Teacher';
+  // avatars
+  setAllAvatars(profile.avatar||null);
+}
+function setAllAvatars(src){
+  const ids = ['sbAvatar','topbarAvatar','profileBigAvatar'];
+  ids.forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el)return;
+    if(src){el.innerHTML=`<img src="${src}" alt="avatar"/>`;}
+    else{el.innerHTML='🧑‍🏫';}
+  });
+}
+function previewAvatar(input,previewId){
+  const file = input.files[0];
+  if(!file)return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    const preview = document.getElementById(previewId);
+    preview.innerHTML = `<img src="${e.target.result}" alt="avatar"/>`;
+    if(previewId==='setupAvatarPreview') setupAvatarData = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function savePfpFromInput(input){
+  const file = input.files[0];
+  if(!file)return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    profile.avatar = e.target.result;
+    localStorage.setItem('yt_profile',JSON.stringify(profile));
+    setAllAvatars(profile.avatar);
+  };
+  reader.readAsDataURL(file);
+}
+function loadProfileEditFields(){
+  document.getElementById('profile-fname').value   = profile.fname||'';
+  document.getElementById('profile-lname').value   = profile.lname||'';
+  document.getElementById('profile-school').value  = profile.school||'';
+  document.getElementById('profile-subject').value = profile.subject||'';
+  document.getElementById('profile-grade').value   = profile.grade||'';
+  document.getElementById('profile-email').value   = profile.email||'';
+  // display card
+  const name = [profile.fname,profile.lname].filter(Boolean).join(' ')||'Teacher';
+  document.getElementById('profileDisplayName').textContent    = name;
+  document.getElementById('profileDisplaySchool').textContent  = profile.school||'No institution set';
+  document.getElementById('profileDisplaySubject').textContent = profile.subject||'No subject';
+  setAllAvatars(profile.avatar||null);
+}
+function saveProfileEdit(){
+  profile.fname   = document.getElementById('profile-fname').value.trim()||'Teacher';
+  profile.lname   = document.getElementById('profile-lname').value.trim();
+  profile.school  = document.getElementById('profile-school').value.trim();
+  profile.subject = document.getElementById('profile-subject').value;
+  profile.grade   = document.getElementById('profile-grade').value;
+  profile.email   = document.getElementById('profile-email').value.trim();
+  localStorage.setItem('yt_profile',JSON.stringify(profile));
+  refreshProfileUI();
+  loadProfileEditFields();
+  const msg = document.getElementById('profileSavedMsg');
+  msg.style.display='inline';
+  setTimeout(()=>msg.style.display='none',2500);
+}
+
+// ══ STATS ══
+function updateStats(){
+  document.getElementById('statGenerations').textContent = stats.gen;
+  document.getElementById('statPlans').textContent       = stats.plans;
+  document.getElementById('statQuizzes').textContent     = stats.quizzes;
+}
+
+// ══ UTILS ══
+function getGreeting(){
+  const h = new Date().getHours();
+  if(h<12)return'Good morning';if(h<17)return'Good afternoon';return'Good evening';
+}
+function updateGreeting(){
+  document.getElementById('topbarGreeting').textContent = getGreeting()+', '+(profile.fname||'Teacher');
+}
+function openSidebar(){
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('mobOverlay').classList.add('show');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('mobOverlay').classList.remove('show');
+}
+
+// ══ INIT ══
+// if profile already saved, skip setup
+if(profile.fname){
+  isGuest = false;
+  enterDash();
+}
+</script>
+</body>
+</html>
