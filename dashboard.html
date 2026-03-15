@@ -612,7 +612,7 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
 <script>
 // ══ CONFIG — paste your keys here ══
 const SUPABASE_URL = 'https://pmmwyxbkdoxtjugytcpa.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_yPw2eEwVi5AhRB2r-xSCYQ_db39uPRX';
+const SUPABASE_ANON_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY_HERE';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ══ STATE ══
@@ -829,17 +829,20 @@ Include these sections:
 
 Write in the tone specified. Make it feel like a real teacher wrote it.`,
 
-    diagram: `You are an expert teacher. Describe a detailed labelled diagram for:
+    diagram: `You are an expert teacher creating educational diagrams. Generate a clean, labelled SVG diagram for:
 Topic: ${f1}
 Subject & Level: ${f2}
 Style: ${f3||'Labelled, clear, educational'}
 
-List every component that should appear in the diagram with:
-- The name of each part
-- A one-line description of its function
-- How it connects to other parts
-
-Then write a teaching note explaining how to use this diagram in class.`,
+IMPORTANT RULES:
+- Output ONLY a valid SVG element, nothing else — no explanation, no markdown, no text outside the SVG
+- Start with <svg viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;border-radius:10px;background:#f9f8f5;padding:12px;">
+- Use these colors only: fill:#E1F5EE stroke:#1D9E75 for shapes, fill:#333 for text labels
+- All text labels must use font-family="sans-serif" font-size="11" fill="#333"
+- Draw the main components as shapes (rect, ellipse, circle, path)
+- Add clear leader lines to labels
+- Keep it simple, clean and print-ready
+- End with </svg>`,
 
     quiz: `You are an expert teacher. Generate a complete quiz:
 Topic: ${f1}
@@ -1002,8 +1005,27 @@ async function runTool(){
 }
 
 function formatResponse(text){
-  // convert markdown-style formatting to clean HTML
-  return text
+  const cleaned = text.trim();
+  // if response is SVG, render it directly
+  if(cleaned.startsWith('<svg')){
+    return `${cleaned}
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
+  <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--gl);color:var(--gd);">✓ Print-ready</span>
+  <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--gl);color:var(--gd);">✓ Editable labels</span>
+  <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--gl);color:var(--gd);">✓ PDF export</span>
+</div>`;
+  }
+  // extract SVG if embedded in text
+  const svgMatch = cleaned.match(/<svg[\s\S]*<\/svg>/);
+  if(svgMatch){
+    return `${svgMatch[0]}
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
+  <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--gl);color:var(--gd);">✓ Print-ready</span>
+  <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--gl);color:var(--gd);">✓ Editable labels</span>
+</div>`;
+  }
+  // regular text formatting
+  return cleaned
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/^#{1,3}\s(.+)$/gm, '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--g);margin:14px 0 5px;">$1</div>')
     .replace(/^[-•]\s(.+)$/gm, '<div class="out-line">$1</div>')
