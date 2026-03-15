@@ -9,12 +9,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-:root{--g:#1D9E75;--gd:#0F6E56;--gl:#E1F5EE;--ink:#0e0e0e;--paper:#faf9f6;--muted:#888;--border:rgba(0,0,0,0.1);}
+:root{
+  --g:#1D9E75;--gd:#0F6E56;--gl:#E1F5EE;
+  --ink:#0e0e0e;--paper:#faf9f6;--muted:#888;--border:rgba(0,0,0,0.1);
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
 ::selection{background:var(--g);color:#fff;}
 
+/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;background:rgba(250,249,246,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
 .nav-logo{font-size:18px;font-weight:800;letter-spacing:-0.5px;}
 .nav-logo span{color:var(--g);}
@@ -23,167 +27,163 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-cta{background:var(--ink);color:var(--paper)!important;padding:8px 20px;border-radius:8px;transition:background 0.15s;}
 .nav-cta:hover{background:var(--g);}
 
-/* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;position:relative;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 60% 50% at 20% 80%,rgba(29,158,117,0.12) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 80% 20%,rgba(29,158,117,0.08) 0%,transparent 70%);}
-.hero-content{position:relative;z-index:1;max-width:860px;}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);background:var(--gl);padding:6px 16px;border-radius:999px;margin-bottom:32px;}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(48px,8vw,96px);line-height:1.0;font-weight:700;color:var(--ink);margin-bottom:28px;letter-spacing:-1px;}
-.hero h1 em{font-style:italic;color:var(--g);}
-.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--muted);font-weight:400;max-width:520px;margin:0 auto 44px;line-height:1.65;}
-.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-.btn-dark{background:var(--ink);color:var(--paper);padding:14px 32px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;transition:background 0.15s,transform 0.1s;}
-.btn-dark:hover{background:var(--g);transform:translateY(-2px);}
-.btn-outline{background:transparent;color:var(--ink);padding:14px 32px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;border:1.5px solid rgba(0,0,0,0.2);transition:border-color 0.15s,color 0.15s;}
-.btn-outline:hover{border-color:var(--g);color:var(--g);}
-.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);z-index:1;animation:bob 2s ease-in-out infinite;}
-.scroll-arrow{width:18px;height:18px;border-right:2px solid var(--g);border-bottom:2px solid var(--g);transform:rotate(45deg);}
-@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
-
 /* PROGRESS BAR */
 .jprog{position:fixed;top:60px;left:0;right:0;height:3px;background:rgba(0,0,0,0.06);z-index:150;}
 .jprog-fill{height:100%;background:var(--g);width:0%;will-change:width;}
 
-/* ─── SEAMLESS SCROLL DIAGRAM ─── */
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;z-index:0;
+  background:radial-gradient(ellipse 60% 50% at 20% 80%,rgba(29,158,117,0.13) 0%,transparent 70%),
+             radial-gradient(ellipse 40% 60% at 80% 20%,rgba(29,158,117,0.08) 0%,transparent 70%);}
+.hero-orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0;}
+.hero-orb1{width:500px;height:500px;top:-100px;right:-150px;background:radial-gradient(circle,rgba(29,158,117,0.07) 0%,transparent 70%);animation:orbFloat1 8s ease-in-out infinite;}
+.hero-orb2{width:350px;height:350px;bottom:-80px;left:-100px;background:radial-gradient(circle,rgba(29,158,117,0.06) 0%,transparent 70%);animation:orbFloat2 10s ease-in-out infinite;}
+@keyframes orbFloat1{0%,100%{transform:translate(0,0)}50%{transform:translate(-20px,15px)}}
+@keyframes orbFloat2{0%,100%{transform:translate(0,0)}50%{transform:translate(15px,-20px)}}
+
+.hero-content{position:relative;z-index:1;max-width:860px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);background:var(--gl);padding:6px 16px;border-radius:999px;margin-bottom:32px;opacity:0;animation:fadeUp 0.7s 0.1s forwards;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(48px,8vw,96px);line-height:1.0;font-weight:700;color:var(--ink);margin-bottom:28px;letter-spacing:-1px;opacity:0;animation:fadeUp 0.8s 0.25s forwards;}
+.hero h1 em{font-style:italic;color:var(--g);}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--muted);font-weight:400;max-width:520px;margin:0 auto 44px;line-height:1.65;opacity:0;animation:fadeUp 0.8s 0.4s forwards;}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s 0.55s forwards;}
+.hero-trust{margin-top:52px;display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s 0.7s forwards;}
+.trust-item{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted);}
+.trust-dot{width:6px;height:6px;border-radius:50%;background:var(--g);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+.btn-dark{background:var(--ink);color:var(--paper);padding:14px 32px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;transition:background 0.2s,transform 0.15s,box-shadow 0.2s;box-shadow:0 4px 20px rgba(0,0,0,0.15);}
+.btn-dark:hover{background:var(--g);transform:translateY(-3px);box-shadow:0 8px 30px rgba(29,158,117,0.3);}
+.btn-outline{background:transparent;color:var(--ink);padding:14px 32px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;border:1.5px solid rgba(0,0,0,0.18);transition:border-color 0.15s,color 0.15s,background 0.15s;}
+.btn-outline:hover{border-color:var(--g);color:var(--g);background:var(--gl);}
+
+.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);z-index:1;animation:bob 2s ease-in-out infinite;}
+.scroll-arrow{width:18px;height:18px;border-right:2px solid var(--g);border-bottom:2px solid var(--g);transform:rotate(45deg);}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* ══════════════════════════════
+   DEMO STICKY SCROLL
+══════════════════════════════ */
+.demo-sticky-wrap{position:relative;height:400vh;background:var(--ink);}
+.demo-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.demo-bg{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 60% at 10% 50%,rgba(29,158,117,0.12) 0%,transparent 60%),
+             radial-gradient(ellipse 50% 80% at 90% 50%,rgba(29,158,117,0.07) 0%,transparent 60%);}
+
+/* top label */
+.demo-step-label{position:absolute;top:28px;left:40px;z-index:10;display:flex;align-items:center;gap:14px;}
+.demo-step-counter{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);}
+.demo-step-dots{display:flex;gap:6px;}
+.demo-step-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);transition:background 0.3s,transform 0.3s;cursor:pointer;}
+.demo-step-dot.active{background:var(--g);transform:scale(1.4);}
+
+/* section title */
+.demo-section-title{position:absolute;top:28px;left:50%;transform:translateX(-50%);z-index:10;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
+
+.demo-inner{position:relative;z-index:2;width:100%;max-width:1140px;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+
+/* left */
+.demo-left{color:#fff;}
+.demo-left-steps{position:relative;min-height:220px;}
+.demo-ls{position:absolute;top:0;left:0;right:0;opacity:0;transform:translateY(18px);transition:opacity 0.5s,transform 0.5s;}
+.demo-ls.active{opacity:1;transform:translateY(0);}
+.demo-ls.exit{opacity:0;transform:translateY(-18px);}
+.demo-pill{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);background:rgba(29,158,117,0.15);border:1px solid rgba(29,158,117,0.3);padding:5px 14px;border-radius:999px;margin-bottom:20px;}
+.demo-h{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:700;line-height:1.15;margin-bottom:16px;}
+.demo-h em{font-style:italic;color:var(--g);}
+.demo-sub{font-size:15px;color:rgba(255,255,255,0.5);line-height:1.65;max-width:380px;}
+
+/* right */
+.demo-right{position:relative;min-height:460px;}
+.demo-card-wrap{position:absolute;top:0;left:0;right:0;opacity:0;transform:translateX(28px) scale(0.97);transition:opacity 0.55s cubic-bezier(0.4,0,0.2,1),transform 0.55s cubic-bezier(0.4,0,0.2,1);pointer-events:none;}
+.demo-card-wrap.active{opacity:1;transform:translateX(0) scale(1);pointer-events:auto;}
+.demo-card-wrap.exit{opacity:0;transform:translateX(-28px) scale(0.97);}
+
+.mock-card{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.5);}
+.mock-topbar{background:#1a1a1a;padding:12px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.mock-dots{display:flex;gap:5px;}
+.mock-dot{width:10px;height:10px;border-radius:50%;}
+.mock-dot.r{background:#FF5F57;}.mock-dot.y{background:#FEBC2E;}.mock-dot.g{background:#28C840;}
+.mock-topbar-label{font-size:11px;font-weight:600;color:rgba(255,255,255,0.3);margin-left:6px;font-family:'Syne',sans-serif;}
+.mock-body{padding:20px 22px;background:#fff;}
+
+.mock-input-row{display:flex;flex-direction:column;gap:7px;margin-bottom:12px;}
+.mock-input-field{background:#f5f4f1;border-radius:8px;padding:9px 13px;display:flex;justify-content:space-between;align-items:center;}
+.mock-input-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);}
+.mock-input-val{font-size:12px;font-weight:600;color:var(--ink);}
+.mock-gen-btn{background:var(--ink);color:#fff;border-radius:9px;padding:10px 16px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;font-family:'Syne',sans-serif;border:none;width:100%;transition:background 0.15s;}
+.mock-gen-btn:hover{background:var(--g);}
+.mock-gen-btn .spin{display:none;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.mock-gen-btn.loading .spin{display:block;}
+.mock-gen-btn.loading .btn-txt{display:none;}
+
+.mock-output{background:#f9f8f5;border-radius:12px;padding:14px;margin-top:12px;border:1.5px solid rgba(29,158,117,0.2);position:relative;overflow:hidden;}
+.mock-output::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g),#5DCAA5);}
+.mock-out-title{font-size:12px;font-weight:800;color:var(--ink);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(0,0,0,0.07);}
+
+.out-section{margin-bottom:9px;}
+.out-sec-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--g);margin-bottom:4px;}
+.out-line{padding:2px 0 2px 12px;position:relative;font-size:11px;color:#333;line-height:1.5;}
+.out-line::before{content:'·';position:absolute;left:0;color:var(--g);font-weight:700;font-size:14px;line-height:1.2;}
+.out-tag-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:3px;}
+.out-tag{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:var(--gl);color:var(--gd);}
+.out-score{display:inline-flex;align-items:center;gap:8px;margin-bottom:8px;}
+.out-score-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;background:var(--g);padding:4px 12px;border-radius:8px;}
+.out-score-lbl{font-size:11px;color:var(--muted);}
+.out-fb-pos{background:#f0faf6;border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:8px 10px;margin-bottom:6px;}
+.out-fb-imp{background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:8px 10px;}
+.out-fb-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;}
+.out-fb-pos .out-fb-lbl{color:var(--gd);}.out-fb-imp .out-fb-lbl{color:#C2410C;}
+.out-fb-txt{font-size:11px;color:#444;line-height:1.5;}
+.out-q-opts{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px;}
+.out-opt{font-size:10px;padding:4px 8px;border-radius:6px;background:#fff;border:1px solid var(--border);color:#555;}
+.out-opt.correct{background:var(--gl);border-color:var(--g);color:var(--gd);font-weight:700;}
+
+/* progress line at bottom of demo */
+.demo-progress{position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);}
+.demo-progress-fill{height:100%;background:var(--g);transition:width 0.15s linear;}
+
+/* ══════════════════════════════
+   HOW IT WORKS STICKY SCROLL
+══════════════════════════════ */
 .diagram-sticky-wrap{position:relative;height:600vh;}
-.diagram-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-
-/* big background word — fades between steps */
-.bg-word{
-  position:absolute;
-  font-family:'Playfair Display',serif;
-  font-size:clamp(120px,22vw,260px);
-  font-weight:700;font-style:italic;
-  color:rgba(29,158,117,0.055);
-  user-select:none;white-space:nowrap;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  pointer-events:none;z-index:0;
-  transition:opacity 0.5s;
-  will-change:transform,opacity;
-}
-
+.diagram-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--paper);}
+.bg-word{position:absolute;font-family:'Playfair Display',serif;font-size:clamp(120px,22vw,260px);font-weight:700;font-style:italic;color:rgba(29,158,117,0.05);user-select:none;white-space:nowrap;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;will-change:transform;}
 .diagram-scene{position:relative;z-index:1;width:100%;max-width:1080px;padding:0 20px;}
-
-/* step wrapper */
-.d-step{
-  position:absolute;top:0;left:0;right:0;
-  display:flex;flex-direction:column;align-items:center;
-  opacity:0;transform:translateY(20px);
-  transition:opacity 0.55s cubic-bezier(0.4,0,0.2,1),transform 0.55s cubic-bezier(0.4,0,0.2,1);
-  pointer-events:none;padding:0 16px;
-  will-change:opacity,transform;
-}
+.d-step{position:absolute;top:0;left:0;right:0;display:flex;flex-direction:column;align-items:center;opacity:0;transform:translateY(20px);transition:opacity 0.55s cubic-bezier(0.4,0,0.2,1),transform 0.55s cubic-bezier(0.4,0,0.2,1);pointer-events:none;padding:0 16px;will-change:opacity,transform;}
 .d-step.active{opacity:1;transform:translateY(0);pointer-events:auto;}
 .d-step.exit-up{opacity:0;transform:translateY(-20px);}
-
 .step-pill{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);background:var(--gl);padding:5px 16px;border-radius:999px;margin-bottom:24px;}
-
-/* ── DESKTOP: single row with connectors ── */
-.nodes-row{
-  display:flex;align-items:stretch;justify-content:center;
-  gap:0;margin-bottom:32px;width:100%;
-}
+.nodes-row{display:flex;align-items:stretch;justify-content:center;gap:0;margin-bottom:32px;width:100%;}
 .node-wrap{display:flex;align-items:center;}
-
-.node-box{
-  width:clamp(140px,16vw,200px);
-  min-height:clamp(140px,16vw,190px);
-  padding:clamp(16px,2.5vw,28px) clamp(12px,2vw,20px);
-  border-radius:20px;text-align:center;
-  cursor:pointer;position:relative;
-  border:2px solid transparent;
-  background:#fff;
-  box-shadow:0 4px 24px rgba(0,0,0,0.09);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  opacity:0;transform:translateY(18px) scale(0.93);
-}
-.d-step .node-box{
-  transition:
-    opacity 0.45s,
-    transform 0.45s cubic-bezier(0.34,1.4,0.64,1),
-    box-shadow 0.22s,border-color 0.22s,background 0.22s;
-}
+.node-box{width:clamp(140px,16vw,200px);min-height:clamp(140px,16vw,190px);padding:clamp(16px,2.5vw,28px) clamp(12px,2vw,20px);border-radius:20px;text-align:center;cursor:pointer;position:relative;border:2px solid transparent;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.08);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transform:translateY(18px) scale(0.93);transition:opacity 0.45s,transform 0.45s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.22s,border-color 0.22s,background 0.22s;}
 .node-wrap:nth-child(1) .node-box{transition-delay:0.04s;}
 .node-wrap:nth-child(2) .node-box{transition-delay:0.11s;}
 .node-wrap:nth-child(3) .node-box{transition-delay:0.18s;}
 .node-wrap:nth-child(4) .node-box{transition-delay:0.25s;}
 .d-step.active .node-box{opacity:1;transform:translateY(0) scale(1);}
-
-.node-box:hover{transform:translateY(-6px) scale(1)!important;box-shadow:0 18px 52px rgba(0,0,0,0.14);border-color:var(--g);}
+.node-box:hover{transform:translateY(-6px) scale(1)!important;box-shadow:0 18px 52px rgba(0,0,0,0.13);border-color:var(--g);}
 .node-box.lit{border-color:var(--g);background:var(--gl);}
-
 .node-icon{font-size:clamp(28px,4vw,40px);margin-bottom:10px;line-height:1;}
 .node-label{font-size:clamp(12px,1.4vw,15px);font-weight:700;color:var(--ink);line-height:1.3;}
 .node-sub{font-size:clamp(10px,1.1vw,12px);color:var(--muted);font-weight:400;margin-top:4px;}
-
-.tip-bub{
-  position:absolute;bottom:calc(100% + 10px);left:50%;
-  transform:translateX(-50%) translateY(4px);
-  background:var(--ink);color:#fff;font-size:11px;font-weight:600;
-  padding:5px 11px;border-radius:8px;white-space:nowrap;
-  opacity:0;transition:opacity 0.18s,transform 0.18s;pointer-events:none;z-index:10;
-}
+.tip-bub{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(4px);background:var(--ink);color:#fff;font-size:11px;font-weight:600;padding:5px 11px;border-radius:8px;white-space:nowrap;opacity:0;transition:opacity 0.18s,transform 0.18s;pointer-events:none;z-index:10;}
 .tip-bub::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
 .node-box:hover .tip-bub,.node-box.lit .tip-bub{opacity:1;transform:translateX(-50%) translateY(0);}
-
-/* connector */
-.connector{
-  width:clamp(16px,2.5vw,44px);height:2px;
-  background:var(--g);position:relative;margin:0 2px;
-  transform-origin:left;flex-shrink:0;align-self:center;
-  opacity:0;transform:scaleX(0);
-  transition:opacity 0.3s,transform 0.4s cubic-bezier(0.4,0,0.2,1);
-}
+.connector{width:clamp(16px,2.5vw,44px);height:2px;background:var(--g);position:relative;margin:0 2px;transform-origin:left;flex-shrink:0;align-self:center;opacity:0;transform:scaleX(0);transition:opacity 0.3s,transform 0.4s cubic-bezier(0.4,0,0.2,1);}
 .connector::after{content:'';position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left-color:var(--g);border-right:none;}
 .d-step.active .connector{opacity:1;transform:scaleX(1);}
 .connector:nth-child(2){transition-delay:0.16s;}
 .connector:nth-child(4){transition-delay:0.26s;}
 .connector:nth-child(6){transition-delay:0.36s;}
-
-/* caption */
 .step-cap{text-align:center;}
 .step-cap h2{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,48px);font-weight:700;line-height:1.2;margin-bottom:10px;}
 .step-cap h2 em{font-style:italic;color:var(--g);}
 .step-cap p{font-size:clamp(14px,1.6vw,16px);color:var(--muted);max-width:460px;margin:0 auto;line-height:1.65;}
 
-/* ── MOBILE: 2×2 grid, no connectors ── */
-@media(max-width:600px){
-  .diagram-sticky-wrap{height:500vh;}
-  .bg-word{font-size:clamp(80px,28vw,130px);}
-  .nodes-row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    width:100%;max-width:360px;
-    margin-bottom:24px;
-  }
-  .node-wrap{display:contents;}
-  .connector{display:none;}
-  .node-box{
-    width:100%;min-height:130px;
-    padding:20px 12px;border-radius:18px;
-  }
-  .node-icon{font-size:32px;margin-bottom:8px;}
-  .node-label{font-size:13px;}
-  .node-sub{font-size:11px;}
-  .step-pill{margin-bottom:18px;}
-  .step-cap h2{font-size:clamp(20px,6vw,28px);}
-  .step-cap p{font-size:13px;}
-  .tip-bub{display:none;}
-}
-
-/* ── TABLET: compact row ── */
-@media(min-width:601px) and (max-width:860px){
-  .node-box{
-    width:clamp(110px,18vw,158px);
-    min-height:clamp(120px,18vw,158px);
-    padding:16px 10px;
-  }
-  .connector{width:clamp(10px,2vw,24px);}
-}
-
-/* ─── TONE SECTION ─── */
+/* TONE */
 .tone-section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 24px;background:var(--ink);position:relative;overflow:hidden;}
 .tone-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 100%,rgba(29,158,117,0.18) 0%,transparent 70%);}
 .tone-inner{position:relative;z-index:1;max-width:900px;width:100%;text-align:center;}
@@ -193,8 +193,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .tone-intro{font-size:17px;color:rgba(255,255,255,0.5);margin-bottom:44px;line-height:1.6;}
 .subject-chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;}
 .s-chip{padding:8px 20px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.15);font-size:13px;font-weight:600;color:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.2s;background:transparent;font-family:'Syne',sans-serif;}
-.s-chip:hover{border-color:var(--g);color:var(--g);}
-.s-chip.on{background:var(--g);border-color:var(--g);color:#fff;}
+.s-chip:hover{border-color:var(--g);color:var(--g);}.s-chip.on{background:var(--g);border-color:var(--g);color:#fff;}
 .tone-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:32px;}
 .t-card{border:1.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:26px 18px;cursor:pointer;transition:all 0.25s;text-align:left;background:rgba(255,255,255,0.04);position:relative;overflow:hidden;}
 .t-card::before{content:'';position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,rgba(29,158,117,0.15),transparent);transition:opacity 0.25s;}
@@ -218,11 +217,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .award-inner h2 em{font-style:italic;color:var(--g);}
 .award-inner>p{font-size:18px;color:var(--muted);max-width:480px;margin:0 auto 48px;line-height:1.65;}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px;}
-.stat{padding:28px 16px;background:#fff;border-radius:16px;border:1px solid var(--border);}
+.stat{padding:28px 16px;background:#fff;border-radius:16px;border:1px solid var(--border);transition:transform 0.2s,box-shadow 0.2s;}
+.stat:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.08);}
 .stat-n{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:var(--g);line-height:1;margin-bottom:6px;}
 .stat-l{font-size:12px;color:var(--muted);font-weight:600;}
 
-/* PRICING — paid only */
+/* PRICING */
 .pricing-section{padding:100px 24px;background:var(--paper);}
 .pricing-inner{max-width:900px;margin:0 auto;}
 .sec-head{text-align:center;margin-bottom:56px;}
@@ -231,7 +231,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .sec-head p{font-size:17px;color:var(--muted);}
 .pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;}
 .pc{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:36px 28px;position:relative;transition:transform 0.2s,box-shadow 0.2s;}
-.pc:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,0.09);}
+.pc:hover{transform:translateY(-5px);box-shadow:0 24px 70px rgba(0,0,0,0.1);}
 .pc.hot{border-color:var(--g);}
 .pc.hot::before{content:'Most popular';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:999px;white-space:nowrap;letter-spacing:0.04em;}
 .p-tier{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
@@ -252,11 +252,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .fcta h2{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,72px);font-weight:700;color:#fff;margin-bottom:16px;line-height:1.1;}
 .fcta h2 em{font-style:italic;color:var(--gl);}
 .fcta p{font-size:18px;color:rgba(255,255,255,0.75);margin-bottom:36px;}
-.btn-w{background:#fff;color:var(--gd);padding:16px 40px;border-radius:12px;font-size:16px;font-weight:800;text-decoration:none;display:inline-block;transition:transform 0.1s;font-family:'Syne',sans-serif;}
-.btn-w:hover{transform:translateY(-2px);}
+.btn-w{background:#fff;color:var(--gd);padding:16px 40px;border-radius:12px;font-size:16px;font-weight:800;text-decoration:none;display:inline-block;transition:transform 0.15s,box-shadow 0.15s;font-family:'Syne',sans-serif;}
+.btn-w:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.2);}
 footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
-.f-logo{font-size:16px;font-weight:800;color:#fff;}
-.f-logo span{color:var(--g);}
+.f-logo{font-size:16px;font-weight:800;color:#fff;}.f-logo span{color:var(--g);}
 .f-links{display:flex;gap:20px;}
 .f-links a{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;}
 .f-links a:hover{color:#fff;}
@@ -264,86 +263,34 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
 .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s,transform 0.7s;}
 .reveal.in{opacity:1;transform:translateY(0);}
 
-@media(max-width:600px){nav{padding:0 20px;}.hero{padding:80px 20px 60px;}.stats{grid-template-columns:1fr 1fr 1fr;gap:10px;}.stat{padding:20px 10px;}.stat-n{font-size:32px;}.pgrid{grid-template-columns:1fr;}.tone-cards{grid-template-columns:1fr 1fr;}footer{padding:24px 20px;flex-direction:column;align-items:flex-start;gap:12px;}}
-
-/* ─── EXAMPLES SECTION ─── */
-.examples-section{padding:100px 24px;background:#f3f2ef;}
-.examples-inner{max-width:1080px;margin:0 auto;}
-.ex-tabs{display:flex;gap:10px;justify-content:center;margin-bottom:40px;flex-wrap:wrap;}
-.ex-tab{padding:11px 28px;border-radius:999px;border:1.5px solid var(--border);background:#fff;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;font-family:'Syne',sans-serif;transition:all 0.2s;}
-.ex-tab:hover{border-color:var(--g);color:var(--g);}
-.ex-tab.active{background:var(--g);border-color:var(--g);color:#fff;}
-.ex-panels{position:relative;}
-.ex-panel{display:none;animation:exFadeIn 0.45s cubic-bezier(0.4,0,0.2,1);}
-.ex-panel.active{display:block;}
-@keyframes exFadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.ex-split{display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:start;}
-.ex-arrow-mid{font-size:28px;color:var(--g);align-self:center;padding-top:32px;font-weight:700;opacity:0.4;}
-.ex-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
-.ex-input-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:24px;box-shadow:0 2px 16px rgba(0,0,0,0.06);}
-.ex-field{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.06);}
-.ex-field:last-of-type{border-bottom:none;}
-.ex-field-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;flex-shrink:0;margin-right:12px;}
-.ex-field-val{font-size:13px;font-weight:600;color:var(--ink);text-align:right;}
-.ex-student-answer{padding:10px 0;}
-.ex-student-text{font-size:13px;color:#555;line-height:1.65;font-style:italic;background:#faf9f6;padding:12px;border-radius:10px;border:1px solid var(--border);}
-.ex-generate-btn{margin-top:16px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:700;text-align:center;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 0.15s;}
-.ex-generate-btn:hover{background:var(--g);}
-.ex-arrow{transition:transform 0.2s;}
-.ex-generate-btn:hover .ex-arrow{transform:translateX(4px);}
-.ex-output-card{background:#fff;border:1.5px solid var(--g);border-radius:20px;padding:24px;box-shadow:0 4px 32px rgba(29,158,117,0.12);position:relative;overflow:hidden;}
-.ex-output-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g),#5DCAA5);}
-.ex-out-title{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,0.07);}
-.ex-section-block{margin-bottom:14px;}
-.ex-section-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--g);margin-bottom:7px;}
-.ex-section-body{display:flex;flex-direction:column;gap:4px;}
-.ex-bullet{font-size:13px;color:#333;padding-left:14px;position:relative;line-height:1.5;}
-.ex-bullet::before{content:'·';position:absolute;left:0;color:var(--g);font-weight:700;font-size:16px;line-height:1.2;}
-.ex-timeline{display:flex;flex-direction:column;gap:6px;}
-.ex-time-item{display:flex;align-items:baseline;gap:10px;font-size:12px;color:#333;line-height:1.5;}
-.ex-time-badge{background:var(--gl);color:var(--gd);font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;white-space:nowrap;flex-shrink:0;}
-.ex-diff-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.ex-diff-card{font-size:12px;color:#444;padding:10px 12px;border-radius:10px;line-height:1.5;}
-.ex-diff-card.support{background:#EFF6FF;border:1px solid #BFDBFE;}
-.ex-diff-card.extend{background:#FEF3C7;border:1px solid #FCD34D;}
-.ex-diff-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;}
-.ex-diff-card.support .ex-diff-label{color:#1D4ED8;}
-.ex-diff-card.extend .ex-diff-label{color:#92400E;}
-.ex-diagram-preview{margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.07);}
-.ex-diagram-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;}
-.ex-quiz-q{background:#faf9f6;border-radius:12px;padding:14px;margin-bottom:10px;}
-.ex-q-num{font-size:10px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;}
-.ex-q-text{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:10px;line-height:1.4;}
-.ex-q-options{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
-.ex-opt{font-size:12px;padding:6px 10px;border-radius:7px;background:#fff;border:1px solid var(--border);color:#555;}
-.ex-opt.correct{background:var(--gl);border-color:var(--g);color:var(--gd);font-weight:700;}
-.ex-q-short{font-size:12px;color:var(--muted);font-style:italic;padding:8px 10px;background:#fff;border-radius:8px;border:1px dashed var(--border);}
-.ex-key-box{background:#f0faf6;border:1px solid rgba(29,158,117,0.3);border-radius:12px;padding:14px;margin-bottom:10px;}
-.ex-key-label{font-size:10px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
-.ex-key-row{display:flex;gap:10px;margin-bottom:6px;font-size:12px;align-items:baseline;}
-.ex-key-q{font-weight:800;color:var(--gd);min-width:24px;}
-.ex-key-a{color:#333;line-height:1.5;}
-.ex-formula-box{background:var(--ink);border-radius:12px;padding:14px;text-align:center;}
-.ex-formula-label{font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:7px;}
-.ex-formula{font-size:16px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;gap:4px;}
-.ex-frac{display:inline-flex;flex-direction:column;align-items:center;gap:1px;font-size:12px;}
-.ex-num{border-bottom:1.5px solid rgba(255,255,255,0.5);padding-bottom:2px;}
-.ex-den{padding-top:2px;}
-.ex-score-row{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(0,0,0,0.07);}
-.ex-score-badge{background:var(--g);color:#fff;font-family:'Playfair Display',serif;font-size:26px;font-weight:700;padding:8px 18px;border-radius:12px;}
-.ex-score-desc{font-size:13px;color:var(--muted);line-height:1.4;}
-.ex-feedback-block{border-radius:12px;padding:13px;margin-bottom:10px;}
-.ex-feedback-block.positive{background:#f0faf6;border:1px solid rgba(29,158,117,0.25);}
-.ex-feedback-block.improve{background:#FFF7ED;border:1px solid #FED7AA;}
-.ex-fb-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
-.ex-feedback-block.positive .ex-fb-label{color:var(--gd);}
-.ex-feedback-block.improve .ex-fb-label{color:#C2410C;}
-.ex-fb-text{font-size:12px;color:#333;line-height:1.6;}
-.ex-model-box{background:#faf9f6;border-radius:12px;padding:13px;border:1px solid var(--border);}
-.ex-model-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:7px;}
-.ex-model-text{font-size:12px;color:#444;line-height:1.65;font-style:italic;}
-@media(max-width:700px){.ex-split{grid-template-columns:1fr;gap:16px;}.ex-arrow-mid{display:none;}.ex-q-options{grid-template-columns:1fr;}.ex-diff-row{grid-template-columns:1fr;}.examples-section{padding:60px 16px;}}
-
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:0 20px;}
+  .demo-inner{grid-template-columns:1fr;gap:20px;padding:0 20px;}
+  .demo-right{min-height:auto;position:relative;}
+  .demo-card-wrap{position:relative;top:auto;left:auto;right:auto;}
+  .demo-card-wrap:not(.active){display:none;}
+  .demo-card-wrap.exit{display:none;}
+  .demo-sticky-wrap{height:380vh;}
+  .demo-step-label{top:16px;left:20px;}
+  .demo-section-title{display:none;}
+  .diagram-sticky-wrap{height:500vh;}
+  .bg-word{font-size:clamp(80px,28vw,130px);}
+  .nodes-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:360px;margin-bottom:24px;}
+  .node-wrap{display:contents;}.connector{display:none;}
+  .node-box{width:100%;min-height:130px;padding:20px 12px;border-radius:18px;}
+  .node-icon{font-size:32px;margin-bottom:8px;}.node-label{font-size:13px;}.node-sub{font-size:11px;}
+  .tip-bub{display:none;}
+  .stats{grid-template-columns:1fr 1fr 1fr;gap:10px;}.stat{padding:20px 10px;}.stat-n{font-size:32px;}
+  .pgrid{grid-template-columns:1fr;}
+  .tone-cards{grid-template-columns:1fr 1fr;}
+  footer{padding:24px 20px;flex-direction:column;align-items:flex-start;gap:12px;}
+  .hero-trust{gap:16px;}
+}
+@media(min-width:601px) and (max-width:860px){
+  .node-box{width:clamp(110px,18vw,158px);min-height:clamp(120px,18vw,158px);padding:16px 10px;}
+  .connector{width:clamp(10px,2vw,24px);}
+}
 </style>
 </head>
 <body>
@@ -355,34 +302,185 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
     <a href="#" class="nav-cta">Get started</a>
   </div>
 </nav>
-
 <div class="jprog"><div class="jprog-fill" id="jpf"></div></div>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="top">
   <div class="hero-bg"></div>
+  <div class="hero-orb hero-orb1"></div>
+  <div class="hero-orb hero-orb2"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">✦ Smart tools built for teachers</div>
     <h1>Give your students<br/><em>more.</em> Do less.</h1>
     <p class="hero-sub">Lesson plans, quizzes, grading — done in seconds. Not hours. Your tireless teaching assistant, always ready.</p>
     <div class="hero-actions">
       <a href="#pricing" class="btn-dark">See plans →</a>
-      <a href="#diagram" class="btn-outline">See how it works ↓</a>
+      <a href="#demo" class="btn-outline">See it in action ↓</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item"><div class="trust-dot"></div>Lesson plans in 30s</div>
+      <div class="trust-item"><div class="trust-dot"></div>Quizzes with answer keys</div>
+      <div class="trust-item"><div class="trust-dot"></div>Instant grading & feedback</div>
     </div>
   </div>
   <div class="scroll-hint">
-    <span>scroll to explore</span>
+    <span>scroll to see it work</span>
     <div class="scroll-arrow"></div>
   </div>
 </section>
 
-<!-- SEAMLESS SCROLL DIAGRAM -->
+<!-- DEMO STICKY SCROLL -->
+<div class="demo-sticky-wrap" id="demo">
+  <div class="demo-sticky">
+    <div class="demo-bg"></div>
+    <div class="demo-step-label">
+      <div class="demo-step-counter" id="demoCounter">01 / 03</div>
+      <div class="demo-step-dots">
+        <div class="demo-step-dot active" data-di="0"></div>
+        <div class="demo-step-dot" data-di="1"></div>
+        <div class="demo-step-dot" data-di="2"></div>
+      </div>
+    </div>
+    <div class="demo-section-title">✦ See it in action</div>
+
+    <div class="demo-inner">
+      <div class="demo-left">
+        <div class="demo-left-steps" id="demoLeftSteps">
+          <div class="demo-ls active" data-di="0">
+            <div class="demo-pill">📋 Lesson planning</div>
+            <div class="demo-h">Full lesson plan.<br/><em>18 seconds.</em></div>
+            <p class="demo-sub">Type a topic in plain English. Get structured objectives, a timed lesson flow, differentiation strategies, and a diagram — instantly.</p>
+          </div>
+          <div class="demo-ls" data-di="1">
+            <div class="demo-pill">📐 Quiz generation</div>
+            <div class="demo-h">Quizzes with<br/><em>answer keys</em> included.</div>
+            <p class="demo-sub">Multiple choice, short answer, worked examples — all generated with a complete answer key and formula sheets ready to print.</p>
+          </div>
+          <div class="demo-ls" data-di="2">
+            <div class="demo-pill">✅ Auto grading</div>
+            <div class="demo-h">Paste. Grade.<br/><em>Done in 9 seconds.</em></div>
+            <p class="demo-sub">Paste any student answer. Get a score, structured feedback on what went well, what to improve, and a model answer excerpt.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-right" id="demoRight">
+        <!-- Card 0: Lesson plan -->
+        <div class="demo-card-wrap active" data-di="0">
+          <div class="mock-card">
+            <div class="mock-topbar">
+              <div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div>
+              <div class="mock-topbar-label">EasyToTeach — Lesson Planner</div>
+            </div>
+            <div class="mock-body">
+              <div class="mock-input-row">
+                <div class="mock-input-field"><span class="mock-input-label">Subject</span><span class="mock-input-val">Biology · High School</span></div>
+                <div class="mock-input-field"><span class="mock-input-label">Topic</span><span class="mock-input-val">Photosynthesis</span></div>
+                <div class="mock-input-field"><span class="mock-input-label">Duration</span><span class="mock-input-val">45 min · include differentiation</span></div>
+              </div>
+              <button class="mock-gen-btn" id="genBtn0"><div class="spin"></div><span class="btn-txt">Generate lesson plan →</span></button>
+              <div class="mock-output">
+                <div class="mock-out-title">🌿 Photosynthesis — 45 min Lesson Plan</div>
+                <div class="out-section">
+                  <div class="out-sec-label">🎯 Learning objectives</div>
+                  <div class="out-line">Explain light-dependent and light-independent reactions</div>
+                  <div class="out-line">Write the balanced equation for photosynthesis</div>
+                </div>
+                <div class="out-section">
+                  <div class="out-sec-label">📋 Lesson flow</div>
+                  <div class="out-tag-row">
+                    <span class="out-tag">0–5 min Hook</span>
+                    <span class="out-tag">5–20 min Instruction</span>
+                    <span class="out-tag">20–35 min Activity</span>
+                    <span class="out-tag">35–45 min Exit ticket</span>
+                  </div>
+                </div>
+                <div class="out-section">
+                  <div class="out-sec-label">♿ Differentiation</div>
+                  <div class="out-line">Support: word bank + pre-labelled diagram</div>
+                  <div class="out-line">Extend: compare C3 vs C4 plants</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 1: Quiz -->
+        <div class="demo-card-wrap" data-di="1">
+          <div class="mock-card">
+            <div class="mock-topbar">
+              <div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div>
+              <div class="mock-topbar-label">EasyToTeach — Quiz Generator</div>
+            </div>
+            <div class="mock-body">
+              <div class="mock-input-row">
+                <div class="mock-input-field"><span class="mock-input-label">Topic</span><span class="mock-input-val">Quadratic equations · Grade 10</span></div>
+                <div class="mock-input-field"><span class="mock-input-label">Format</span><span class="mock-input-val">5 questions · MC + Short answer</span></div>
+              </div>
+              <button class="mock-gen-btn" id="genBtn1"><div class="spin"></div><span class="btn-txt">Generate quiz + answer key →</span></button>
+              <div class="mock-output">
+                <div class="mock-out-title">📐 Quadratic Equations — Quiz</div>
+                <div class="out-section">
+                  <div class="out-sec-label">Q1 — Multiple choice</div>
+                  <div style="font-size:11px;color:#333;margin-bottom:5px;">Which is a solution to x² − 5x + 6 = 0?</div>
+                  <div class="out-q-opts">
+                    <div class="out-opt">A. x = 1</div><div class="out-opt">B. x = 2</div>
+                    <div class="out-opt correct">C. x = 3 ✓</div><div class="out-opt">D. x = 4</div>
+                  </div>
+                </div>
+                <div class="out-section" style="margin-top:9px;">
+                  <div class="out-sec-label">🔑 Answer key</div>
+                  <div class="out-line">Q1 → C. Factors to (x−2)(x−3)=0</div>
+                  <div class="out-line">Q2 → x=½ or x=−2 via quadratic formula</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Grading -->
+        <div class="demo-card-wrap" data-di="2">
+          <div class="mock-card">
+            <div class="mock-topbar">
+              <div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div>
+              <div class="mock-topbar-label">EasyToTeach — Answer Grader</div>
+            </div>
+            <div class="mock-body">
+              <div class="mock-input-row">
+                <div class="mock-input-field"><span class="mock-input-label">Question</span><span class="mock-input-val">Causes of WW1 · 8 marks</span></div>
+                <div class="mock-input-field"><span class="mock-input-label">Rubric</span><span class="mock-input-val">Focus on analysis, not just listing facts</span></div>
+              </div>
+              <button class="mock-gen-btn" id="genBtn2"><div class="spin"></div><span class="btn-txt">Grade + give feedback →</span></button>
+              <div class="mock-output">
+                <div class="mock-out-title">✅ Grading Result</div>
+                <div class="out-score">
+                  <div class="out-score-num">5 / 8</div>
+                  <div class="out-score-lbl">Good foundation — needs deeper analysis</div>
+                </div>
+                <div class="out-fb-pos">
+                  <div class="out-fb-lbl">✓ What went well</div>
+                  <div class="out-fb-txt">Correctly identifies assassination as trigger. Mentions alliance system and nationalism. Includes Britain's entry via Belgium.</div>
+                </div>
+                <div class="out-fb-imp" style="margin-top:6px;">
+                  <div class="out-fb-lbl">↑ To improve</div>
+                  <div class="out-fb-txt">No MAIN framework used. Causes listed, not analysed. No long-term vs short-term distinction.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-progress"><div class="demo-progress-fill" id="demoProgressFill"></div></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS STICKY SCROLL -->
 <div class="diagram-sticky-wrap" id="diagram">
   <div class="diagram-sticky">
     <div class="bg-word" id="bgWord"></div>
-    <div class="diagram-scene" id="diagramScene">
-      <!-- steps injected by JS -->
-    </div>
+    <div class="diagram-scene" id="diagramScene"></div>
   </div>
 </div>
 
@@ -391,8 +489,8 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
   <div class="tone-bg"></div>
   <div class="tone-inner reveal">
     <div class="tone-eyebrow">✦ Smart content generator</div>
-    <h2>Want a diagram<br/>for <em>Science?</em></h2>
-    <p class="tone-intro">Pick any subject. Choose your tone. EasyToTeach adapts to your classroom — not the other way around.</p>
+    <h2>Any subject.<br/><em>Any tone.</em></h2>
+    <p class="tone-intro">EasyToTeach adapts to your classroom — not the other way around.</p>
     <div class="subject-chips">
       <button class="s-chip on" data-s="Science">🔬 Science</button>
       <button class="s-chip" data-s="History">📜 History</button>
@@ -413,182 +511,6 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
   </div>
 </section>
 
-<!-- EXAMPLES SECTION -->
-<section class="examples-section" id="examples">
-  <div class="examples-inner">
-    <div class="sec-head reveal">
-      <h2>See it in <em>action.</em></h2>
-      <p>Real outputs. Real classrooms. 30 seconds each.</p>
-    </div>
-
-    <div class="ex-tabs reveal">
-      <button class="ex-tab active" data-ex="lecture">🎓 Lecture plan</button>
-      <button class="ex-tab" data-ex="maths">📐 Maths quiz</button>
-      <button class="ex-tab" data-ex="grading">✅ Grading</button>
-    </div>
-
-    <div class="ex-panels">
-
-      <!-- LECTURE -->
-      <div class="ex-panel active" id="ex-lecture">
-        <div class="ex-split">
-          <div class="ex-input-col">
-            <div class="ex-label">Teacher types</div>
-            <div class="ex-input-card">
-              <div class="ex-field"><span class="ex-field-label">Subject</span><span class="ex-field-val">Biology · High School</span></div>
-              <div class="ex-field"><span class="ex-field-label">Topic</span><span class="ex-field-val">Photosynthesis</span></div>
-              <div class="ex-field"><span class="ex-field-label">Duration</span><span class="ex-field-val">45 minutes</span></div>
-              <div class="ex-field"><span class="ex-field-label">Include</span><span class="ex-field-val">Objectives, Activities, Differentiation</span></div>
-              <div class="ex-generate-btn">Generate lesson plan <span class="ex-arrow">→</span></div>
-            </div>
-          </div>
-          <div class="ex-arrow-mid">→</div>
-          <div class="ex-output-col">
-            <div class="ex-label">Ready in 18 seconds</div>
-            <div class="ex-output-card">
-              <div class="ex-out-title">🌿 Photosynthesis — 45 min Lesson Plan</div>
-              <div class="ex-section-block">
-                <div class="ex-section-head">🎯 Learning objectives</div>
-                <div class="ex-section-body">
-                  <div class="ex-bullet">Students will explain the light-dependent and light-independent reactions</div>
-                  <div class="ex-bullet">Students will identify chlorophyll's role in energy capture</div>
-                  <div class="ex-bullet">Students will write the balanced equation for photosynthesis</div>
-                </div>
-              </div>
-              <div class="ex-section-block">
-                <div class="ex-section-head">📋 Lesson flow</div>
-                <div class="ex-timeline">
-                  <div class="ex-time-item"><span class="ex-time-badge">0–5 min</span><span>Hook: "Why do plants need sunlight but we don't?"</span></div>
-                  <div class="ex-time-item"><span class="ex-time-badge">5–20 min</span><span>Direct instruction: chloroplast structure, light reactions</span></div>
-                  <div class="ex-time-item"><span class="ex-time-badge">20–35 min</span><span>Activity: label the chloroplast diagram in pairs</span></div>
-                  <div class="ex-time-item"><span class="ex-time-badge">35–42 min</span><span>Write the equation, peer check</span></div>
-                  <div class="ex-time-item"><span class="ex-time-badge">42–45 min</span><span>Exit ticket: one sentence summary</span></div>
-                </div>
-              </div>
-              <div class="ex-section-block">
-                <div class="ex-section-head">♿ Differentiation</div>
-                <div class="ex-diff-row">
-                  <div class="ex-diff-card support"><div class="ex-diff-label">Support</div>Pre-labelled diagram, word bank provided</div>
-                  <div class="ex-diff-card extend"><div class="ex-diff-label">Extend</div>Compare C3 vs C4 plants, research task</div>
-                </div>
-              </div>
-              <div class="ex-diagram-preview">
-                <div class="ex-diagram-label">📊 Diagram included</div>
-                <svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:320px;display:block;margin-top:8px;">
-                  <rect x="10" y="30" width="80" height="60" rx="8" fill="#E1F5EE" stroke="#1D9E75" stroke-width="1.5"/>
-                  <text x="50" y="55" text-anchor="middle" font-size="9" font-weight="700" fill="#0F6E56" font-family="sans-serif">Chloroplast</text>
-                  <text x="50" y="68" text-anchor="middle" font-size="8" fill="#0F6E56" font-family="sans-serif">Light reactions</text>
-                  <text x="50" y="80" text-anchor="middle" font-size="8" fill="#0F6E56" font-family="sans-serif">H₂O → O₂ + ATP</text>
-                  <line x1="90" y1="60" x2="120" y2="60" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr)"/>
-                  <rect x="120" y="30" width="80" height="60" rx="8" fill="#E1F5EE" stroke="#1D9E75" stroke-width="1.5"/>
-                  <text x="160" y="55" text-anchor="middle" font-size="9" font-weight="700" fill="#0F6E56" font-family="sans-serif">Calvin Cycle</text>
-                  <text x="160" y="68" text-anchor="middle" font-size="8" fill="#0F6E56" font-family="sans-serif">CO₂ + ATP →</text>
-                  <text x="160" y="80" text-anchor="middle" font-size="8" fill="#0F6E56" font-family="sans-serif">Glucose (C₆H₁₂O₆)</text>
-                  <line x1="200" y1="60" x2="230" y2="60" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr)"/>
-                  <rect x="230" y="38" width="76" height="44" rx="8" fill="#fff" stroke="#1D9E75" stroke-width="1.5"/>
-                  <text x="268" y="56" text-anchor="middle" font-size="9" font-weight="700" fill="#0F6E56" font-family="sans-serif">Output</text>
-                  <text x="268" y="69" text-anchor="middle" font-size="8" fill="#0F6E56" font-family="sans-serif">O₂ + Glucose</text>
-                  <text x="50" y="18" text-anchor="middle" font-size="8" fill="#888" font-family="sans-serif">☀️ Light energy in</text>
-                  <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1D9E75"/></marker></defs>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- MATHS -->
-      <div class="ex-panel" id="ex-maths">
-        <div class="ex-split">
-          <div class="ex-input-col">
-            <div class="ex-label">Teacher types</div>
-            <div class="ex-input-card">
-              <div class="ex-field"><span class="ex-field-label">Subject</span><span class="ex-field-val">Math · Grade 10</span></div>
-              <div class="ex-field"><span class="ex-field-label">Topic</span><span class="ex-field-val">Quadratic equations</span></div>
-              <div class="ex-field"><span class="ex-field-label">Questions</span><span class="ex-field-val">5 questions · Medium</span></div>
-              <div class="ex-field"><span class="ex-field-label">Types</span><span class="ex-field-val">Multiple choice + Short answer</span></div>
-              <div class="ex-generate-btn">Generate quiz + answer key <span class="ex-arrow">→</span></div>
-            </div>
-          </div>
-          <div class="ex-arrow-mid">→</div>
-          <div class="ex-output-col">
-            <div class="ex-label">Ready in 12 seconds</div>
-            <div class="ex-output-card">
-              <div class="ex-out-title">📐 Quadratic Equations — Quiz</div>
-              <div class="ex-quiz-q">
-                <div class="ex-q-num">Q1</div>
-                <div class="ex-q-text">Which of the following is a solution to x² − 5x + 6 = 0?</div>
-                <div class="ex-q-options">
-                  <div class="ex-opt">A. x = 1</div>
-                  <div class="ex-opt">B. x = 2</div>
-                  <div class="ex-opt correct">C. x = 3 ✓</div>
-                  <div class="ex-opt">D. x = 4</div>
-                </div>
-              </div>
-              <div class="ex-quiz-q">
-                <div class="ex-q-num">Q2</div>
-                <div class="ex-q-text">Use the quadratic formula to solve: 2x² + 3x − 2 = 0</div>
-                <div class="ex-q-short">Short answer — show working</div>
-              </div>
-              <div class="ex-key-box">
-                <div class="ex-key-label">🔑 Answer key</div>
-                <div class="ex-key-row"><span class="ex-key-q">Q1</span><span class="ex-key-a">C — factors to (x−2)(x−3)=0, so x=2 or x=3. Option C is one correct root.</span></div>
-                <div class="ex-key-row"><span class="ex-key-q">Q2</span><span class="ex-key-a">x = ½ or x = −2. Using x = (−3 ± √(9+16)) / 4 = (−3 ± 5) / 4</span></div>
-              </div>
-              <div class="ex-formula-box">
-                <div class="ex-formula-label">Formula sheet included</div>
-                <div class="ex-formula">x = <span class="ex-frac"><span class="ex-num">−b ± √(b²−4ac)</span><span class="ex-den">2a</span></span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- GRADING -->
-      <div class="ex-panel" id="ex-grading">
-        <div class="ex-split">
-          <div class="ex-input-col">
-            <div class="ex-label">Teacher pastes</div>
-            <div class="ex-input-card">
-              <div class="ex-field"><span class="ex-field-label">Question</span><span class="ex-field-val">Explain the causes of World War I. (8 marks)</span></div>
-              <div class="ex-student-answer">
-                <div class="ex-field-label" style="margin-bottom:6px;">Student's answer</div>
-                <div class="ex-student-text">"World War 1 started because of the assassination of Franz Ferdinand in 1914. This made Austria-Hungary angry at Serbia. The alliance system meant other countries got pulled in. Germany invaded Belgium which made Britain join. Nationalism was also a big cause because countries wanted to be powerful."</div>
-              </div>
-              <div class="ex-field"><span class="ex-field-label">Rubric</span><span class="ex-field-val">Out of 8 · focus on analysis</span></div>
-              <div class="ex-generate-btn">Grade + give feedback <span class="ex-arrow">→</span></div>
-            </div>
-          </div>
-          <div class="ex-arrow-mid">→</div>
-          <div class="ex-output-col">
-            <div class="ex-label">Ready in 9 seconds</div>
-            <div class="ex-output-card">
-              <div class="ex-out-title">✅ Grading Result</div>
-              <div class="ex-score-row">
-                <div class="ex-score-badge">5 / 8</div>
-                <div class="ex-score-desc">Good foundation — needs deeper analysis</div>
-              </div>
-              <div class="ex-feedback-block positive">
-                <div class="ex-fb-label">✓ What went well</div>
-                <div class="ex-fb-text">Correctly identifies the assassination as a trigger event. Mentions alliance system and nationalism — both key causes. Includes Britain's entry via Belgium — shows awareness of the wider context.</div>
-              </div>
-              <div class="ex-feedback-block improve">
-                <div class="ex-fb-label">↑ What to improve</div>
-                <div class="ex-fb-text">Causes are listed rather than analysed. No mention of MAIN (Militarism, Alliances, Imperialism, Nationalism) framework. Long-term vs short-term causes not distinguished. No use of specific dates or evidence beyond July 1914.</div>
-              </div>
-              <div class="ex-model-box">
-                <div class="ex-model-label">📝 Model answer excerpt</div>
-                <div class="ex-model-text">"The assassination of Archduke Franz Ferdinand on 28 June 1914 acted as the immediate trigger, but underlying tensions — particularly the rigid alliance system (Triple Entente vs Triple Alliance), fierce imperial rivalry, and rising nationalist movements — had created conditions for war for decades..."</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- AWARD -->
 <section class="award-section">
   <div class="award-inner reveal">
@@ -604,7 +526,7 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
   </div>
 </section>
 
-<!-- PRICING — paid only -->
+<!-- PRICING -->
 <section class="pricing-section" id="pricing">
   <div class="pricing-inner">
     <div class="sec-head reveal">
@@ -613,47 +535,21 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
     </div>
     <div class="pgrid">
       <div class="pc reveal">
-        <div class="p-tier">Starter</div>
-        <div class="p-price"><sup>$</sup>9</div>
-        <div class="p-mo">per month</div>
-        <div class="p-gens">100 generations / month</div>
-        <ul class="p-feats">
-          <li>Lesson planner</li>
-          <li>Quiz generator</li>
-          <li>Answer grader</li>
-          <li>PDF export</li>
-          <li>Cloud history</li>
-          <li>Priority support</li>
-        </ul>
+        <div class="p-tier">Starter</div><div class="p-price"><sup>$</sup>9</div>
+        <div class="p-mo">per month</div><div class="p-gens">100 generations / month</div>
+        <ul class="p-feats"><li>Lesson planner</li><li>Quiz generator</li><li>Answer grader</li><li>PDF export</li><li>Cloud history</li><li>Priority support</li></ul>
         <a href="#" class="p-btn">Go Starter</a>
       </div>
       <div class="pc hot reveal">
-        <div class="p-tier">Pro</div>
-        <div class="p-price"><sup>$</sup>19</div>
-        <div class="p-mo">per month</div>
-        <div class="p-gens">Unlimited generations</div>
-        <ul class="p-feats">
-          <li>Everything in Starter</li>
-          <li>Standards alignment</li>
-          <li>Advanced rubrics</li>
-          <li>Analytics dashboard</li>
-          <li>Regenerate &amp; refine</li>
-          <li>Early access to new tools</li>
-        </ul>
+        <div class="p-tier">Pro</div><div class="p-price"><sup>$</sup>19</div>
+        <div class="p-mo">per month</div><div class="p-gens">Unlimited generations</div>
+        <ul class="p-feats"><li>Everything in Starter</li><li>Standards alignment</li><li>Advanced rubrics</li><li>Analytics dashboard</li><li>Regenerate &amp; refine</li><li>Early access to new tools</li></ul>
         <a href="#" class="p-btn">Go Pro</a>
       </div>
       <div class="pc reveal">
-        <div class="p-tier">School</div>
-        <div class="p-price"><sup>$</sup>49</div>
-        <div class="p-mo">per month</div>
-        <div class="p-gens">5 teacher seats · unlimited</div>
-        <ul class="p-feats">
-          <li>Everything in Pro</li>
-          <li>Shared resource library</li>
-          <li>Admin dashboard</li>
-          <li>Invoice billing</li>
-          <li>Dedicated support</li>
-        </ul>
+        <div class="p-tier">School</div><div class="p-price"><sup>$</sup>49</div>
+        <div class="p-mo">per month</div><div class="p-gens">5 teacher seats · unlimited</div>
+        <ul class="p-feats"><li>Everything in Pro</li><li>Shared resource library</li><li>Admin dashboard</li><li>Invoice billing</li><li>Dedicated support</li></ul>
         <a href="mailto:support@easytoteach.com" class="p-btn">Contact us</a>
       </div>
     </div>
@@ -677,235 +573,150 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
 </footer>
 
 <script>
-// ─── STEPS DATA ───
+// ══ DEMO STICKY ══
+const DEMO_STEPS = 3;
+const demoWrap = document.getElementById('demo');
+const demoLSEls = document.querySelectorAll('.demo-ls');
+const demoCardEls = document.querySelectorAll('.demo-card-wrap');
+const demoDotEls = document.querySelectorAll('.demo-step-dot');
+const demoCounter = document.getElementById('demoCounter');
+const demoProgressFill = document.getElementById('demoProgressFill');
+let activeDemoStep = 0;
+
+function setDemoStep(si) {
+  if (si === activeDemoStep) return;
+  // left
+  demoLSEls[activeDemoStep].classList.remove('active');
+  demoLSEls[activeDemoStep].classList.add('exit');
+  const pl = activeDemoStep;
+  setTimeout(() => demoLSEls[pl].classList.remove('exit'), 500);
+  demoLSEls[si].classList.add('active');
+  // card
+  demoCardEls[activeDemoStep].classList.remove('active');
+  demoCardEls[activeDemoStep].classList.add('exit');
+  const pc = activeDemoStep;
+  setTimeout(() => demoCardEls[pc].classList.remove('exit'), 500);
+  demoCardEls[si].classList.add('active');
+  // dots & counter
+  demoDotEls.forEach((d,i) => d.classList.toggle('active', i === si));
+  demoCounter.textContent = String(si+1).padStart(2,'0') + ' / 0' + DEMO_STEPS;
+  activeDemoStep = si;
+}
+
+// ══ HOW IT WORKS ══
 const STEPS = [
-  {
-    pill:'What do you need?', bg:'Create',
-    caption:'What do you need <em>today?</em>',
-    sub:'Click any card — everything starts with a simple choice.',
-    nodes:[
-      {i:'📝',l:'Create Quizzes',s:'Test knowledge',t:'Done in 10 seconds'},
-      {i:'✅',l:'Grade Answers',s:'Instant feedback',t:'Paste & score instantly'},
-      {i:'🎓',l:'Lecture Plans',s:'Full lesson ready',t:'With objectives & hooks'},
-      {i:'📊',l:'Tests & Exams',s:'Full assessments',t:'Answer keys included'},
-    ]
-  },
-  {
-    pill:'Pick your subject', bg:'Choose',
-    caption:'Pick your <em>subject.</em>',
-    sub:'Every subject, every level. Kindergarten to university.',
-    nodes:[
-      {i:'🔬',l:'Science',s:'All branches',t:'Bio, Chem, Physics'},
-      {i:'📐',l:'Math',s:'K-12 & uni',t:'Algebra to Calculus'},
-      {i:'📖',l:'English',s:'ELA & literature',t:'Essays to grammar'},
-      {i:'🌍',l:'History',s:'World & local',t:'Primary sources too'},
-    ]
-  },
-  {
-    pill:'Set the tone', bg:'Tone',
-    caption:'Choose the <em>right tone.</em>',
-    sub:'Playful for kids. Precise for exams. Witty for college. You decide.',
-    nodes:[
-      {i:'🎨',l:'Fun & friendly',s:'Early grades',t:'Sparks real curiosity'},
-      {i:'📋',l:'Professional',s:'High school+',t:'Exam-ready content'},
-      {i:'⚡',l:'Fun for adults',s:'College level',t:'Actually engaging'},
-      {i:'🎮',l:'Interactive',s:'All ages',t:'Students explore it'},
-    ]
-  },
-  {
-    pill:'Generate in seconds', bg:'Generate',
-    caption:'<em>30 seconds.</em> That\'s all.',
-    sub:'Type a topic in plain English. EasyToTeach writes the whole thing.',
-    nodes:[
-      {i:'✍️',l:'Type your topic',s:'Plain English',t:'"Photosynthesis"'},
-      {i:'⚙️',l:'Magic happens',s:'Under 30 seconds',t:'Powered by smarts'},
-      {i:'📄',l:'Review & edit',s:'Yours to keep',t:'Full control always'},
-      {i:'📤',l:'Export & teach',s:'PDF or copy',t:'Ready to use now'},
-    ]
-  },
-  {
-    pill:'The result', bg:'Win',
-    caption:'Win the <em>best teacher</em> award.',
-    sub:'More time for students. Better lessons. Less burnout.',
-    nodes:[
-      {i:'⏱️',l:'6h saved',s:'every week',t:'Real time, real life'},
-      {i:'🏆',l:'Best Teacher',s:'award winner',t:'You earned it'},
-      {i:'💚',l:'Less burnout',s:'more joy',t:'Sustainable teaching'},
-      {i:'⭐',l:'Happy students',s:'better results',t:'They will notice'},
-    ]
-  },
+  {pill:'What do you need?',bg:'Create',caption:'What do you need <em>today?</em>',sub:'Click any card — everything starts with a simple choice.',nodes:[{i:'📝',l:'Create Quizzes',s:'Test knowledge',t:'Done in 10 seconds'},{i:'✅',l:'Grade Answers',s:'Instant feedback',t:'Paste & score instantly'},{i:'🎓',l:'Lecture Plans',s:'Full lesson ready',t:'With objectives & hooks'},{i:'📊',l:'Tests & Exams',s:'Full assessments',t:'Answer keys included'}]},
+  {pill:'Pick your subject',bg:'Choose',caption:'Pick your <em>subject.</em>',sub:'Every subject, every level. Kindergarten to university.',nodes:[{i:'🔬',l:'Science',s:'All branches',t:'Bio, Chem, Physics'},{i:'📐',l:'Math',s:'K-12 & uni',t:'Algebra to Calculus'},{i:'📖',l:'English',s:'ELA & literature',t:'Essays to grammar'},{i:'🌍',l:'History',s:'World & local',t:'Primary sources too'}]},
+  {pill:'Set the tone',bg:'Tone',caption:'Choose the <em>right tone.</em>',sub:'Playful for kids. Precise for exams. Witty for college. You decide.',nodes:[{i:'🎨',l:'Fun & friendly',s:'Early grades',t:'Sparks real curiosity'},{i:'📋',l:'Professional',s:'High school+',t:'Exam-ready content'},{i:'⚡',l:'Fun for adults',s:'College level',t:'Actually engaging'},{i:'🎮',l:'Interactive',s:'All ages',t:'Students explore it'}]},
+  {pill:'Generate in seconds',bg:'Generate',caption:'<em>30 seconds.</em> That\'s all.',sub:'Type a topic in plain English. EasyToTeach writes the whole thing.',nodes:[{i:'✍️',l:'Type your topic',s:'Plain English',t:'"Photosynthesis"'},{i:'⚙️',l:'Magic happens',s:'Under 30 seconds',t:'Powered by smarts'},{i:'📄',l:'Review & edit',s:'Yours to keep',t:'Full control always'},{i:'📤',l:'Export & teach',s:'PDF or copy',t:'Ready to use now'}]},
+  {pill:'The result',bg:'Win',caption:'Win the <em>best teacher</em> award.',sub:'More time for students. Better lessons. Less burnout.',nodes:[{i:'⏱️',l:'6h saved',s:'every week',t:'Real time, real life'},{i:'🏆',l:'Best Teacher',s:'award winner',t:'You earned it'},{i:'💚',l:'Less burnout',s:'more joy',t:'Sustainable teaching'},{i:'⭐',l:'Happy students',s:'better results',t:'They will notice'}]},
 ];
 
-// ─── BUILD STEPS INTO DOM ───
 const scene = document.getElementById('diagramScene');
-// Container for all steps — absolutely positioned inside scene
-scene.style.position = 'relative';
-scene.style.width = '100%';
-
-// We need a reference height; steps are centered vertically
-// Use a flex wrapper
+scene.style.cssText = 'position:relative;width:100%;';
 const stepsWrap = document.createElement('div');
 stepsWrap.style.cssText = 'position:relative;width:100%;min-height:320px;';
 scene.appendChild(stepsWrap);
 
 const stepEls = [];
-STEPS.forEach((s, si) => {
+STEPS.forEach((s,si) => {
   const el = document.createElement('div');
-  el.className = 'd-step' + (si === 0 ? ' active' : '');
-  el.style.cssText = si === 0
+  el.className = 'd-step' + (si===0?' active':'');
+  el.style.cssText = si===0
     ? 'position:relative;width:100%;display:flex;flex-direction:column;align-items:center;'
     : 'position:absolute;top:0;left:0;right:0;width:100%;display:flex;flex-direction:column;align-items:center;';
-
-  // pill
   const pill = document.createElement('div');
-  pill.className = 'step-pill';
-  pill.textContent = s.pill;
-  el.appendChild(pill);
-
-  // nodes row
-  const row = document.createElement('div');
-  row.className = 'nodes-row';
-  s.nodes.forEach((n, ni) => {
-    const wrap = document.createElement('div');
-    wrap.className = 'node-wrap';
-
-    const box = document.createElement('div');
-    box.className = 'node-box';
-    box.innerHTML = `<div class="tip-bub">${n.t}</div><div class="node-icon">${n.i}</div><div class="node-label">${n.l}</div><div class="node-sub">${n.s}</div>`;
-    box.addEventListener('click', () => box.classList.toggle('lit'));
-    wrap.appendChild(box);
-    row.appendChild(wrap);
-
-    if (ni < s.nodes.length - 1) {
-      const conn = document.createElement('div');
-      conn.className = 'connector';
-      row.appendChild(conn);
-    }
+  pill.className='step-pill';pill.textContent=s.pill;el.appendChild(pill);
+  const row = document.createElement('div');row.className='nodes-row';
+  s.nodes.forEach((n,ni)=>{
+    const wrap=document.createElement('div');wrap.className='node-wrap';
+    const box=document.createElement('div');box.className='node-box';
+    box.innerHTML=`<div class="tip-bub">${n.t}</div><div class="node-icon">${n.i}</div><div class="node-label">${n.l}</div><div class="node-sub">${n.s}</div>`;
+    box.addEventListener('click',()=>box.classList.toggle('lit'));
+    wrap.appendChild(box);row.appendChild(wrap);
+    if(ni<s.nodes.length-1){const c=document.createElement('div');c.className='connector';row.appendChild(c);}
   });
   el.appendChild(row);
-
-  // caption
-  const cap = document.createElement('div');
-  cap.className = 'step-cap';
-  cap.innerHTML = `<h2>${s.caption}</h2><p>${s.sub}</p>`;
+  const cap=document.createElement('div');cap.className='step-cap';
+  cap.innerHTML=`<h2>${s.caption}</h2><p>${s.sub}</p>`;
   el.appendChild(cap);
-
-  stepsWrap.appendChild(el);
-  stepEls.push(el);
+  stepsWrap.appendChild(el);stepEls.push(el);
 });
 
-// ─── SEAMLESS SCROLL DRIVER ───
-// Uses requestAnimationFrame + scroll position for buttery smoothness
+// ══ SCROLL DRIVER ══
 const bgWord = document.getElementById('bgWord');
 const diagramWrap = document.getElementById('diagram');
-let lastScrollY = -1;
-let rafId = null;
-let activeStep = 0;
-
-function lerp(a, b, t) { return a + (b - a) * t; }
+let lastSY = -1, activeStep = 0;
+bgWord.textContent = STEPS[0].bg;
 
 function onFrame() {
   const sy = window.scrollY;
-  if (sy === lastScrollY) { rafId = requestAnimationFrame(onFrame); return; }
-  lastScrollY = sy;
+  if (sy !== lastSY) {
+    lastSY = sy;
 
-  const rect = diagramWrap.getBoundingClientRect();
-  const totalScroll = diagramWrap.offsetHeight - window.innerHeight;
-  const scrolled = -rect.top;
-  const p = Math.max(0, Math.min(1, scrolled / totalScroll));
+    // demo scroll
+    const dr = demoWrap.getBoundingClientRect();
+    const dTotal = demoWrap.offsetHeight - window.innerHeight;
+    const dP = Math.max(0, Math.min(1, -dr.top / dTotal));
+    setDemoStep(Math.min(Math.floor(dP * DEMO_STEPS), DEMO_STEPS - 1));
+    demoProgressFill.style.width = (dP * 100) + '%';
 
-  // progress bar
-  document.getElementById('jpf').style.width = (p * 100) + '%';
-
-  // which step
-  const rawStep = p * STEPS.length;
-  const si = Math.min(Math.floor(rawStep), STEPS.length - 1);
-  const within = rawStep - si; // 0→1 within step
-
-  // transition threshold: start crossfade at 0.75 within step
-  const FADE_START = 0.72;
-
-  if (si !== activeStep) {
-    // step changed — activate new, deactivate old
-    stepEls[activeStep].classList.remove('active');
-    stepEls[activeStep].classList.add('exit-up');
-    // remove exit-up after transition
-    const prev = activeStep;
-    setTimeout(() => {
-      stepEls[prev].classList.remove('exit-up');
-      stepEls[prev].style.position = 'absolute';
-    }, 600);
-
-    activeStep = si;
-    if (si === 0) {
-      stepEls[0].style.position = 'relative';
-    } else {
-      stepEls[si].style.position = 'absolute';
+    // how it works scroll
+    const wr = diagramWrap.getBoundingClientRect();
+    const wTotal = diagramWrap.offsetHeight - window.innerHeight;
+    const wP = Math.max(0, Math.min(1, -wr.top / wTotal));
+    const raw = wP * STEPS.length;
+    const si = Math.min(Math.floor(raw), STEPS.length - 1);
+    const within = raw - si;
+    if (si !== activeStep) {
+      stepEls[activeStep].classList.remove('active');
+      stepEls[activeStep].classList.add('exit-up');
+      const prev = activeStep;
+      setTimeout(()=>{stepEls[prev].classList.remove('exit-up');stepEls[prev].style.position='absolute';},600);
+      activeStep = si;
+      stepEls[si].style.position = si===0?'relative':'absolute';
+      stepEls[si].classList.add('active');
+      bgWord.textContent = STEPS[si].bg;
     }
-    stepEls[si].classList.add('active');
-    bgWord.textContent = STEPS[si].bg;
+    bgWord.style.transform = `translate(-50%,-50%) scale(${1 + within*0.04})`;
+
+    // overall progress bar
+    document.getElementById('jpf').style.width = (sy / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
   }
-
-  // Smooth bg word scale based on within-step progress
-  const scale = 1 + within * 0.04;
-  bgWord.style.transform = `translate(-50%,-50%) scale(${scale})`;
-
-  rafId = requestAnimationFrame(onFrame);
+  requestAnimationFrame(onFrame);
 }
+requestAnimationFrame(onFrame);
 
-// init first state
-bgWord.textContent = STEPS[0].bg;
-bgWord.style.transform = 'translate(-50%,-50%) scale(1)';
-rafId = requestAnimationFrame(onFrame);
+// generate button easter egg
+[0,1,2].forEach(i=>{
+  const btn=document.getElementById('genBtn'+i);
+  if(!btn)return;
+  btn.addEventListener('click',()=>{
+    btn.classList.add('loading');
+    setTimeout(()=>btn.classList.remove('loading'),1400);
+  });
+});
 
-// ─── TONE PICKER ───
-const previews = {
-  kids:{Science:'"Hey curious minds! 🌱 Today we\'re going on a plant adventure — let\'s find out how leaves turn sunlight into actual food. Spoiler: it\'s basically plant magic. Ready? Let\'s go!"',History:'"Time travel alert! 🚀 We\'re zooming back to ancient Egypt — pyramids, pharaohs, and mummies (the cool kind). Buckle up, time explorers!"',Math:'"Numbers are like superheroes 🦸 — and today we\'re learning their secret powers! Ready to become a math hero?"',Biology:'"Psst... your body has TRILLIONS of tiny workers inside it right now 🦠 Want to meet them? Let\'s explore the world\'s smallest city — YOU!"',Geography:'"Planet Earth has seriously wild places 🌋 From the coldest tundra to the hottest desert — adventure starts NOW!"'},
-  pro:{Science:'"This lesson covers photosynthesis: the biochemical conversion of light energy to chemical energy in plant cells. Students will examine light-dependent and light-independent reactions and apply knowledge to exam-style questions."',History:'"This module examines causal factors of World War I, with attention to the alliance system, imperial rivalries, and the assassination at Sarajevo. Students will analyse primary sources and construct structured analytical responses."',Math:'"This lesson introduces quadratic equations. Students will derive the quadratic formula, apply it to equations of the form ax²+bx+c=0, and interpret discriminant values to determine the nature of roots."',Biology:'"This lesson examines cell division through mitosis and meiosis. Students will compare both processes, identify each stage, and evaluate their significance in growth, repair, and reproduction."',Geography:'"This session focuses on tectonic plate boundaries and their geomorphological consequences. Students will classify boundary types and evaluate the socioeconomic impact of tectonic hazards."'},
-  adult:{Science:'"Plants figured out how to eat sunlight before humans discovered fire. Photosynthesis is the original life hack — and today we\'re breaking down exactly how they pull it off. Chlorophyll is about to become your new favourite word."',History:'"One assassination. One archduke. Four years of chaos that reshaped the entire world. How does one bullet start a war that kills 20 million people? It\'s messier and more fascinating than the textbook version."',Math:'"Quadratic equations sound terrifying. They\'re not. They\'re just a fancy way of asking where does this curve hit the ground — which matters for everything from physics to profit margins."',Biology:'"Your DNA just copied itself while you were reading this sentence. Cell division happens billions of times a day in your body, mostly without a single mistake. When it does make a mistake? That\'s where things get interesting."',Geography:'"The ground under your feet is moving right now. Not fast — about as fast as your fingernails grow — but constantly, relentlessly, building pressure that eventually turns into earthquakes and volcanoes."'},
-  interactive:{Science:'"[Click the sun to start] → Light hits the leaf → [Click the chloroplast] → See inside → [Drag CO₂ in] → Watch glucose form in real time. You control the photosynthesis."',History:'"[Choose a country in 1914] → See their alliances light up → [Trigger the assassination] → Watch the dominoes fall → [Click any nation] → Read why they entered the war."',Math:'"[Move sliders a, b, c] → Watch the parabola shift live → [Click the roots] → See the formula solve step by step → [Try your own values] → Build intuition, not just answers."',Biology:'"[Start with one cell] → Click to trigger mitosis → [Drag chromosomes to the poles] → Watch division complete → [Compare with meiosis] → Spot the differences yourself."',Geography:'"[Spin the globe] → Click any volcano → [Slide the timeline] → Watch eruption history → [Pull plates apart] → See a new ocean form. You\'re in charge of the planet."'},
+// ══ TONE PICKER ══
+const previews={
+  kids:{Science:'"Hey curious minds! 🌱 Today we\'re going on a plant adventure — let\'s find out how leaves turn sunlight into actual food. Spoiler: it\'s basically plant magic. Ready? Let\'s go!"',History:'"Time travel alert! 🚀 We\'re zooming back to ancient Egypt — pyramids, pharaohs, and mummies. Buckle up, time explorers!"',Math:'"Numbers are like superheroes 🦸 — and today we\'re learning their secret powers! Ready to become a math hero?"',Biology:'"Psst... your body has TRILLIONS of tiny workers inside it right now 🦠 Want to meet them?"',Geography:'"Planet Earth has seriously wild places 🌋 From the coldest tundra to the hottest desert — adventure starts NOW!"'},
+  pro:{Science:'"This lesson covers photosynthesis: the biochemical conversion of light energy to chemical energy in plant cells."',History:'"This module examines causal factors of World War I, with attention to the alliance system and imperial rivalries."',Math:'"This lesson introduces quadratic equations. Students will derive the quadratic formula and interpret discriminant values."',Biology:'"This lesson examines cell division through mitosis and meiosis. Students will compare both processes and identify each stage."',Geography:'"This session focuses on tectonic plate boundaries and their geomorphological consequences."'},
+  adult:{Science:'"Plants figured out how to eat sunlight before humans discovered fire. Photosynthesis is the original life hack."',History:'"One assassination. One archduke. Four years of chaos that reshaped the world. It\'s messier than the textbook version."',Math:'"Quadratic equations sound terrifying. They\'re not. They just ask where does this curve hit the ground."',Biology:'"Your DNA just copied itself while you read this sentence. Cell division happens billions of times a day."',Geography:'"The ground under your feet is moving right now — about as fast as your fingernails grow."'},
+  interactive:{Science:'"[Click the sun] → Light hits the leaf → [Click the chloroplast] → [Drag CO₂ in] → Watch glucose form."',History:'"[Choose a country in 1914] → See alliances light up → [Trigger the assassination] → Watch the dominoes fall."',Math:'"[Move sliders a, b, c] → Watch the parabola shift live → [Click the roots] → See the formula solve step by step."',Biology:'"[Start with one cell] → Click to trigger mitosis → [Drag chromosomes] → Watch division complete."',Geography:'"[Spin the globe] → Click any volcano → [Slide the timeline] → Watch eruption history."'},
 };
-
-let selTone='kids', selSubj='Science';
-function updatePreview(animate) {
-  const pt = document.getElementById('prevText');
-  document.getElementById('prevSubj').textContent = selSubj;
-  if (animate) {
-    pt.classList.add('fade');
-    setTimeout(() => { pt.textContent = previews[selTone][selSubj]; pt.classList.remove('fade'); }, 260);
-  } else {
-    pt.textContent = previews[selTone][selSubj];
-  }
+let selTone='kids',selSubj='Science';
+function updatePreview(animate){
+  const pt=document.getElementById('prevText');
+  document.getElementById('prevSubj').textContent=selSubj;
+  if(animate){pt.classList.add('fade');setTimeout(()=>{pt.textContent=previews[selTone][selSubj];pt.classList.remove('fade');},260);}
+  else{pt.textContent=previews[selTone][selSubj];}
 }
-document.querySelectorAll('.t-card').forEach(c => {
-  c.addEventListener('click', () => {
-    document.querySelectorAll('.t-card').forEach(x => x.classList.remove('on'));
-    c.classList.add('on'); selTone = c.dataset.t; updatePreview(true);
-  });
-});
-document.querySelectorAll('.s-chip').forEach(c => {
-  c.addEventListener('click', () => {
-    document.querySelectorAll('.s-chip').forEach(x => x.classList.remove('on'));
-    c.classList.add('on'); selSubj = c.dataset.s; updatePreview(true);
-  });
-});
+document.querySelectorAll('.t-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('.t-card').forEach(x=>x.classList.remove('on'));c.classList.add('on');selTone=c.dataset.t;updatePreview(true);});});
+document.querySelectorAll('.s-chip').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('.s-chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');selSubj=c.dataset.s;updatePreview(true);});});
 
-// ─── REVEAL ON SCROLL ───
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
-
-// ─── EXAMPLES TABS ───
-document.querySelectorAll('.ex-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.ex-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.ex-panel').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('ex-' + tab.dataset.ex).classList.add('active');
-  });
-});
-
+// REVEAL
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
 </script>
 </body>
 </html>
