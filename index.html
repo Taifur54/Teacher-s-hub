@@ -9,16 +9,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-:root{
-  --g:#1D9E75;--gd:#0F6E56;--gl:#E1F5EE;
-  --ink:#0e0e0e;--paper:#faf9f6;--muted:#888;--border:rgba(0,0,0,0.1);
-}
+:root{--g:#1D9E75;--gd:#0F6E56;--gl:#E1F5EE;--ink:#0e0e0e;--paper:#faf9f6;--muted:#888;--border:rgba(0,0,0,0.1);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
 ::selection{background:var(--g);color:#fff;}
 
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;background:rgba(250,249,246,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
 .nav-logo{font-size:18px;font-weight:800;letter-spacing:-0.5px;}
 .nav-logo span{color:var(--g);}
@@ -27,21 +23,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-cta{background:var(--ink);color:var(--paper)!important;padding:8px 20px;border-radius:8px;transition:background 0.15s;}
 .nav-cta:hover{background:var(--g);}
 
-/* PROGRESS BAR */
 .jprog{position:fixed;top:60px;left:0;right:0;height:3px;background:rgba(0,0,0,0.06);z-index:150;}
 .jprog-fill{height:100%;background:var(--g);width:0%;will-change:width;}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;position:relative;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;z-index:0;
-  background:radial-gradient(ellipse 60% 50% at 20% 80%,rgba(29,158,117,0.13) 0%,transparent 70%),
-             radial-gradient(ellipse 40% 60% at 80% 20%,rgba(29,158,117,0.08) 0%,transparent 70%);}
+.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 60% 50% at 20% 80%,rgba(29,158,117,0.13) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 80% 20%,rgba(29,158,117,0.08) 0%,transparent 70%);}
 .hero-orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0;}
 .hero-orb1{width:500px;height:500px;top:-100px;right:-150px;background:radial-gradient(circle,rgba(29,158,117,0.07) 0%,transparent 70%);animation:orbFloat1 8s ease-in-out infinite;}
 .hero-orb2{width:350px;height:350px;bottom:-80px;left:-100px;background:radial-gradient(circle,rgba(29,158,117,0.06) 0%,transparent 70%);animation:orbFloat2 10s ease-in-out infinite;}
 @keyframes orbFloat1{0%,100%{transform:translate(0,0)}50%{transform:translate(-20px,15px)}}
 @keyframes orbFloat2{0%,100%{transform:translate(0,0)}50%{transform:translate(15px,-20px)}}
-
 .hero-content{position:relative;z-index:1;max-width:860px;}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);background:var(--gl);padding:6px 16px;border-radius:999px;margin-bottom:32px;opacity:0;animation:fadeUp 0.7s 0.1s forwards;}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(48px,8vw,96px);line-height:1.0;font-weight:700;color:var(--ink);margin-bottom:28px;letter-spacing:-1px;opacity:0;animation:fadeUp 0.8s 0.25s forwards;}
@@ -52,50 +44,37 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .trust-item{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted);}
 .trust-dot{width:6px;height:6px;border-radius:50%;background:var(--g);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-
 .btn-dark{background:var(--ink);color:var(--paper);padding:14px 32px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;transition:background 0.2s,transform 0.15s,box-shadow 0.2s;box-shadow:0 4px 20px rgba(0,0,0,0.15);}
 .btn-dark:hover{background:var(--g);transform:translateY(-3px);box-shadow:0 8px 30px rgba(29,158,117,0.3);}
 .btn-outline{background:transparent;color:var(--ink);padding:14px 32px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;border:1.5px solid rgba(0,0,0,0.18);transition:border-color 0.15s,color 0.15s,background 0.15s;}
 .btn-outline:hover{border-color:var(--g);color:var(--g);background:var(--gl);}
 
-.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);z-index:1;animation:bob 2s ease-in-out infinite;}
-.scroll-arrow{width:18px;height:18px;border-right:2px solid var(--g);border-bottom:2px solid var(--g);transform:rotate(45deg);}
-@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
-
-/* ══════════════════════════════
-   DEMO STICKY SCROLL
-══════════════════════════════ */
-.demo-sticky-wrap{position:relative;height:400vh;background:var(--ink);}
+/* ══ DEMO STICKY ══ */
+.demo-sticky-wrap{position:relative;height:750vh;background:var(--ink);}
 .demo-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.demo-bg{position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 70% 60% at 10% 50%,rgba(29,158,117,0.12) 0%,transparent 60%),
-             radial-gradient(ellipse 50% 80% at 90% 50%,rgba(29,158,117,0.07) 0%,transparent 60%);}
+.demo-bg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 10% 50%,rgba(29,158,117,0.12) 0%,transparent 60%),radial-gradient(ellipse 50% 80% at 90% 50%,rgba(29,158,117,0.07) 0%,transparent 60%);}
 
-/* top label */
 .demo-step-label{position:absolute;top:28px;left:40px;z-index:10;display:flex;align-items:center;gap:14px;}
 .demo-step-counter{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);}
 .demo-step-dots{display:flex;gap:6px;}
-.demo-step-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);transition:background 0.3s,transform 0.3s;cursor:pointer;}
+.demo-step-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);transition:background 0.3s,transform 0.3s;}
 .demo-step-dot.active{background:var(--g);transform:scale(1.4);}
-
-/* section title */
 .demo-section-title{position:absolute;top:28px;left:50%;transform:translateX(-50%);z-index:10;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
 
-.demo-inner{position:relative;z-index:2;width:100%;max-width:1140px;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.demo-inner{position:relative;z-index:2;width:100%;max-width:1160px;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
 
-/* left */
 .demo-left{color:#fff;}
-.demo-left-steps{position:relative;min-height:220px;}
+.demo-left-steps{position:relative;min-height:240px;}
 .demo-ls{position:absolute;top:0;left:0;right:0;opacity:0;transform:translateY(18px);transition:opacity 0.5s,transform 0.5s;}
 .demo-ls.active{opacity:1;transform:translateY(0);}
 .demo-ls.exit{opacity:0;transform:translateY(-18px);}
 .demo-pill{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);background:rgba(29,158,117,0.15);border:1px solid rgba(29,158,117,0.3);padding:5px 14px;border-radius:999px;margin-bottom:20px;}
-.demo-h{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:700;line-height:1.15;margin-bottom:16px;}
+.demo-h{font-family:'Playfair Display',serif;font-size:clamp(26px,3.8vw,50px);font-weight:700;line-height:1.15;margin-bottom:16px;}
 .demo-h em{font-style:italic;color:var(--g);}
-.demo-sub{font-size:15px;color:rgba(255,255,255,0.5);line-height:1.65;max-width:380px;}
+.demo-sub{font-size:15px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:380px;}
+.demo-sub strong{color:rgba(255,255,255,0.8);font-weight:600;}
 
-/* right */
-.demo-right{position:relative;min-height:460px;}
+.demo-right{position:relative;min-height:480px;}
 .demo-card-wrap{position:absolute;top:0;left:0;right:0;opacity:0;transform:translateX(28px) scale(0.97);transition:opacity 0.55s cubic-bezier(0.4,0,0.2,1),transform 0.55s cubic-bezier(0.4,0,0.2,1);pointer-events:none;}
 .demo-card-wrap.active{opacity:1;transform:translateX(0) scale(1);pointer-events:auto;}
 .demo-card-wrap.exit{opacity:0;transform:translateX(-28px) scale(0.97);}
@@ -106,48 +85,80 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .mock-dot{width:10px;height:10px;border-radius:50%;}
 .mock-dot.r{background:#FF5F57;}.mock-dot.y{background:#FEBC2E;}.mock-dot.g{background:#28C840;}
 .mock-topbar-label{font-size:11px;font-weight:600;color:rgba(255,255,255,0.3);margin-left:6px;font-family:'Syne',sans-serif;}
-.mock-body{padding:20px 22px;background:#fff;}
+.mock-body{padding:18px 20px;background:#fff;}
 
-.mock-input-row{display:flex;flex-direction:column;gap:7px;margin-bottom:12px;}
-.mock-input-field{background:#f5f4f1;border-radius:8px;padding:9px 13px;display:flex;justify-content:space-between;align-items:center;}
+.mock-input-row{display:flex;flex-direction:column;gap:6px;margin-bottom:11px;}
+.mock-input-field{background:#f5f4f1;border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;}
 .mock-input-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);}
 .mock-input-val{font-size:12px;font-weight:600;color:var(--ink);}
-.mock-gen-btn{background:var(--ink);color:#fff;border-radius:9px;padding:10px 16px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;font-family:'Syne',sans-serif;border:none;width:100%;transition:background 0.15s;}
+.mock-gen-btn{background:var(--ink);color:#fff;border-radius:9px;padding:10px 16px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;font-family:'Syne',sans-serif;border:none;width:100%;transition:background 0.15s;margin-bottom:11px;}
 .mock-gen-btn:hover{background:var(--g);}
 .mock-gen-btn .spin{display:none;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .mock-gen-btn.loading .spin{display:block;}
 .mock-gen-btn.loading .btn-txt{display:none;}
 
-.mock-output{background:#f9f8f5;border-radius:12px;padding:14px;margin-top:12px;border:1.5px solid rgba(29,158,117,0.2);position:relative;overflow:hidden;}
+.mock-output{background:#f9f8f5;border-radius:12px;padding:13px;border:1.5px solid rgba(29,158,117,0.2);position:relative;overflow:hidden;}
 .mock-output::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g),#5DCAA5);}
-.mock-out-title{font-size:12px;font-weight:800;color:var(--ink);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(0,0,0,0.07);}
+.mock-out-title{font-size:12px;font-weight:800;color:var(--ink);margin-bottom:9px;padding-bottom:7px;border-bottom:1px solid rgba(0,0,0,0.07);}
 
-.out-section{margin-bottom:9px;}
+.out-section{margin-bottom:8px;}
 .out-sec-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--g);margin-bottom:4px;}
 .out-line{padding:2px 0 2px 12px;position:relative;font-size:11px;color:#333;line-height:1.5;}
 .out-line::before{content:'·';position:absolute;left:0;color:var(--g);font-weight:700;font-size:14px;line-height:1.2;}
 .out-tag-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:3px;}
 .out-tag{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:var(--gl);color:var(--gd);}
-.out-score{display:inline-flex;align-items:center;gap:8px;margin-bottom:8px;}
+.out-score{display:inline-flex;align-items:center;gap:8px;margin-bottom:7px;}
 .out-score-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;background:var(--g);padding:4px 12px;border-radius:8px;}
 .out-score-lbl{font-size:11px;color:var(--muted);}
-.out-fb-pos{background:#f0faf6;border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:8px 10px;margin-bottom:6px;}
-.out-fb-imp{background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:8px 10px;}
+.out-fb-pos{background:#f0faf6;border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:7px 10px;margin-bottom:5px;}
+.out-fb-imp{background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:7px 10px;}
 .out-fb-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;}
 .out-fb-pos .out-fb-lbl{color:var(--gd);}.out-fb-imp .out-fb-lbl{color:#C2410C;}
 .out-fb-txt{font-size:11px;color:#444;line-height:1.5;}
-.out-q-opts{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px;}
+.out-q-opts{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:5px;}
 .out-opt{font-size:10px;padding:4px 8px;border-radius:6px;background:#fff;border:1px solid var(--border);color:#555;}
 .out-opt.correct{background:var(--gl);border-color:var(--g);color:var(--gd);font-weight:700;}
 
-/* progress line at bottom of demo */
+/* diagram inside card */
+.out-diagram{margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,0,0,0.06);}
+.out-diagram-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:5px;}
+
+/* essay markup */
+.out-essay{font-size:11px;color:#333;line-height:1.7;font-style:italic;background:#fff;border-radius:8px;padding:8px 10px;border:1px solid var(--border);}
+.out-essay mark.good{background:#d1fae5;border-radius:3px;font-style:normal;}
+.out-essay mark.fix{background:#FEF3C7;border-radius:3px;font-style:normal;}
+
+/* rubric rows */
+.rubric-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.rubric-label{font-size:10px;font-weight:700;color:#444;min-width:80px;flex-shrink:0;}
+.rubric-bar-wrap{flex:1;background:#eee;border-radius:999px;height:6px;}
+.rubric-bar{height:100%;border-radius:999px;background:var(--g);}
+.rubric-score{font-size:10px;font-weight:700;color:var(--gd);min-width:28px;text-align:right;}
+
+/* vocab table */
+.vocab-table{width:100%;border-collapse:collapse;font-size:10px;}
+.vocab-table th{text-align:left;padding:4px 6px;background:var(--gl);color:var(--gd);font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:0.06em;}
+.vocab-table td{padding:4px 6px;border-bottom:1px solid rgba(0,0,0,0.05);color:#333;}
+.vocab-table tr:last-child td{border-bottom:none;}
+
+/* timeline */
+.out-timeline{display:flex;flex-direction:column;gap:5px;}
+.out-time-item{display:flex;align-items:baseline;gap:8px;font-size:11px;color:#333;}
+.out-time-badge{background:var(--gl);color:var(--gd);font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;white-space:nowrap;flex-shrink:0;}
+
+/* diff cards */
+.out-diff-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:5px;}
+.out-diff-card{font-size:10px;color:#444;padding:7px 9px;border-radius:8px;line-height:1.5;}
+.out-diff-card.sup{background:#EFF6FF;border:1px solid #BFDBFE;}
+.out-diff-card.ext{background:#FEF3C7;border:1px solid #FCD34D;}
+.out-diff-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;}
+.out-diff-card.sup .out-diff-label{color:#1D4ED8;}.out-diff-card.ext .out-diff-label{color:#92400E;}
+
 .demo-progress{position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);}
 .demo-progress-fill{height:100%;background:var(--g);transition:width 0.15s linear;}
 
-/* ══════════════════════════════
-   HOW IT WORKS STICKY SCROLL
-══════════════════════════════ */
+/* ══ HOW IT WORKS ══ */
 .diagram-sticky-wrap{position:relative;height:600vh;}
 .diagram-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--paper);}
 .bg-word{position:absolute;font-family:'Playfair Display',serif;font-size:clamp(120px,22vw,260px);font-weight:700;font-style:italic;color:rgba(29,158,117,0.05);user-select:none;white-space:nowrap;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;will-change:transform;}
@@ -247,7 +258,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .pc.hot .p-btn{background:var(--g);color:#fff;border-color:var(--g);}
 .pc.hot .p-btn:hover{background:var(--gd);}
 
-/* FOOTER CTA */
 .fcta{background:var(--g);padding:100px 24px;text-align:center;}
 .fcta h2{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,72px);font-weight:700;color:#fff;margin-bottom:16px;line-height:1.1;}
 .fcta h2 em{font-style:italic;color:var(--gl);}
@@ -259,19 +269,17 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
 .f-links{display:flex;gap:20px;}
 .f-links a{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;}
 .f-links a:hover{color:#fff;}
-
 .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s,transform 0.7s;}
 .reveal.in{opacity:1;transform:translateY(0);}
 
-/* MOBILE */
 @media(max-width:768px){
   nav{padding:0 20px;}
   .demo-inner{grid-template-columns:1fr;gap:20px;padding:0 20px;}
   .demo-right{min-height:auto;position:relative;}
-  .demo-card-wrap{position:relative;top:auto;left:auto;right:auto;}
+  .demo-card-wrap{position:relative;}
   .demo-card-wrap:not(.active){display:none;}
   .demo-card-wrap.exit{display:none;}
-  .demo-sticky-wrap{height:380vh;}
+  .demo-sticky-wrap{height:700vh;}
   .demo-step-label{top:16px;left:20px;}
   .demo-section-title{display:none;}
   .diagram-sticky-wrap{height:500vh;}
@@ -279,7 +287,6 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
   .nodes-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:360px;margin-bottom:24px;}
   .node-wrap{display:contents;}.connector{display:none;}
   .node-box{width:100%;min-height:130px;padding:20px 12px;border-radius:18px;}
-  .node-icon{font-size:32px;margin-bottom:8px;}.node-label{font-size:13px;}.node-sub{font-size:11px;}
   .tip-bub{display:none;}
   .stats{grid-template-columns:1fr 1fr 1fr;gap:10px;}.stat{padding:20px 10px;}.stat-n{font-size:32px;}
   .pgrid{grid-template-columns:1fr;}
@@ -323,55 +330,69 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
       <div class="trust-item"><div class="trust-dot"></div>Instant grading & feedback</div>
     </div>
   </div>
-  <div class="scroll-hint">
-    <span>scroll to see it work</span>
-    <div class="scroll-arrow"></div>
-  </div>
 </section>
 
-<!-- DEMO STICKY SCROLL -->
+<!-- ══ DEMO STICKY SCROLL — 6 steps ══ -->
 <div class="demo-sticky-wrap" id="demo">
   <div class="demo-sticky">
     <div class="demo-bg"></div>
     <div class="demo-step-label">
-      <div class="demo-step-counter" id="demoCounter">01 / 03</div>
-      <div class="demo-step-dots">
-        <div class="demo-step-dot active" data-di="0"></div>
-        <div class="demo-step-dot" data-di="1"></div>
-        <div class="demo-step-dot" data-di="2"></div>
-      </div>
+      <div class="demo-step-counter" id="demoCounter">01 / 06</div>
+      <div class="demo-step-dots" id="demoDotContainer"></div>
     </div>
     <div class="demo-section-title">✦ See it in action</div>
 
     <div class="demo-inner">
+      <!-- LEFT TEXT PANELS -->
       <div class="demo-left">
         <div class="demo-left-steps" id="demoLeftSteps">
+
           <div class="demo-ls active" data-di="0">
             <div class="demo-pill">📋 Lesson planning</div>
             <div class="demo-h">Full lesson plan.<br/><em>18 seconds.</em></div>
-            <p class="demo-sub">Type a topic in plain English. Get structured objectives, a timed lesson flow, differentiation strategies, and a diagram — instantly.</p>
+            <p class="demo-sub">Type a topic. Get a complete structured lesson — objectives, timed flow, differentiation strategies, and a ready-to-use diagram. <strong>No prep hours needed.</strong></p>
           </div>
+
           <div class="demo-ls" data-di="1">
+            <div class="demo-pill">🧬 Science diagrams</div>
+            <div class="demo-h">Visual diagrams<br/><em>generated instantly.</em></div>
+            <p class="demo-sub">EasyToTeach builds labelled diagrams automatically — cell structures, circuits, food chains, water cycles. <strong>Print-ready in seconds.</strong></p>
+          </div>
+
+          <div class="demo-ls" data-di="2">
             <div class="demo-pill">📐 Quiz generation</div>
             <div class="demo-h">Quizzes with<br/><em>answer keys</em> included.</div>
-            <p class="demo-sub">Multiple choice, short answer, worked examples — all generated with a complete answer key and formula sheets ready to print.</p>
+            <p class="demo-sub">Multiple choice, short answer, worked examples — all generated with a complete answer key and formula sheet. <strong>Ready to print or share.</strong></p>
           </div>
-          <div class="demo-ls" data-di="2">
+
+          <div class="demo-ls" data-di="3">
+            <div class="demo-pill">✍️ Essay feedback</div>
+            <div class="demo-h">Instant essay<br/><em>markup & scoring.</em></div>
+            <p class="demo-sub">Paste any essay. Get inline annotations, a rubric breakdown by criteria, and a model paragraph. <strong>Feedback that actually teaches.</strong></p>
+          </div>
+
+          <div class="demo-ls" data-di="4">
+            <div class="demo-pill">📚 Vocabulary builder</div>
+            <div class="demo-h">Vocabulary lists<br/><em>with context built in.</em></div>
+            <p class="demo-sub">Generate topic-specific vocabulary tables with definitions, example sentences, and difficulty ratings. <strong>Differentiated by level automatically.</strong></p>
+          </div>
+
+          <div class="demo-ls" data-di="5">
             <div class="demo-pill">✅ Auto grading</div>
             <div class="demo-h">Paste. Grade.<br/><em>Done in 9 seconds.</em></div>
-            <p class="demo-sub">Paste any student answer. Get a score, structured feedback on what went well, what to improve, and a model answer excerpt.</p>
+            <p class="demo-sub">Paste any student answer. Get a score, what went well, what to improve, and a model answer excerpt. <strong>Works for any subject, any mark scheme.</strong></p>
           </div>
+
         </div>
       </div>
 
+      <!-- RIGHT MOCK UI CARDS -->
       <div class="demo-right" id="demoRight">
-        <!-- Card 0: Lesson plan -->
+
+        <!-- CARD 0: Lesson plan -->
         <div class="demo-card-wrap active" data-di="0">
           <div class="mock-card">
-            <div class="mock-topbar">
-              <div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div>
-              <div class="mock-topbar-label">EasyToTeach — Lesson Planner</div>
-            </div>
+            <div class="mock-topbar"><div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div><div class="mock-topbar-label">EasyToTeach — Lesson Planner</div></div>
             <div class="mock-body">
               <div class="mock-input-row">
                 <div class="mock-input-field"><span class="mock-input-label">Subject</span><span class="mock-input-val">Biology · High School</span></div>
@@ -382,42 +403,97 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
               <div class="mock-output">
                 <div class="mock-out-title">🌿 Photosynthesis — 45 min Lesson Plan</div>
                 <div class="out-section">
-                  <div class="out-sec-label">🎯 Learning objectives</div>
+                  <div class="out-sec-label">🎯 Objectives</div>
                   <div class="out-line">Explain light-dependent and light-independent reactions</div>
                   <div class="out-line">Write the balanced equation for photosynthesis</div>
                 </div>
                 <div class="out-section">
                   <div class="out-sec-label">📋 Lesson flow</div>
-                  <div class="out-tag-row">
-                    <span class="out-tag">0–5 min Hook</span>
-                    <span class="out-tag">5–20 min Instruction</span>
-                    <span class="out-tag">20–35 min Activity</span>
-                    <span class="out-tag">35–45 min Exit ticket</span>
+                  <div class="out-timeline">
+                    <div class="out-time-item"><span class="out-time-badge">0–5 min</span>Hook: "Why do plants need sunlight but we don't?"</div>
+                    <div class="out-time-item"><span class="out-time-badge">5–20 min</span>Direct instruction: chloroplast & light reactions</div>
+                    <div class="out-time-item"><span class="out-time-badge">20–35 min</span>Pair activity: label the chloroplast diagram</div>
+                    <div class="out-time-item"><span class="out-time-badge">35–45 min</span>Write equation, peer check, exit ticket</div>
                   </div>
                 </div>
-                <div class="out-section">
-                  <div class="out-sec-label">♿ Differentiation</div>
-                  <div class="out-line">Support: word bank + pre-labelled diagram</div>
-                  <div class="out-line">Extend: compare C3 vs C4 plants</div>
+                <div class="out-diff-row">
+                  <div class="out-diff-card sup"><div class="out-diff-label">Support</div>Word bank + pre-labelled diagram</div>
+                  <div class="out-diff-card ext"><div class="out-diff-label">Extend</div>Compare C3 vs C4 plants</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Card 1: Quiz -->
+        <!-- CARD 1: Science diagram -->
         <div class="demo-card-wrap" data-di="1">
           <div class="mock-card">
-            <div class="mock-topbar">
-              <div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div>
-              <div class="mock-topbar-label">EasyToTeach — Quiz Generator</div>
+            <div class="mock-topbar"><div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div><div class="mock-topbar-label">EasyToTeach — Diagram Generator</div></div>
+            <div class="mock-body">
+              <div class="mock-input-row">
+                <div class="mock-input-field"><span class="mock-input-label">Topic</span><span class="mock-input-val">Animal cell structure</span></div>
+                <div class="mock-input-field"><span class="mock-input-label">Style</span><span class="mock-input-val">Labelled · Printable · High school</span></div>
+              </div>
+              <button class="mock-gen-btn" id="genBtn1"><div class="spin"></div><span class="btn-txt">Generate diagram →</span></button>
+              <div class="mock-output">
+                <div class="mock-out-title">🔬 Animal Cell — Labelled Diagram</div>
+                <!-- SVG cell diagram -->
+                <svg viewBox="0 0 310 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:4px 0;">
+                  <defs>
+                    <radialGradient id="cellGrad" cx="45%" cy="45%">
+                      <stop offset="0%" stop-color="#E1F5EE"/>
+                      <stop offset="100%" stop-color="#c8eedf"/>
+                    </radialGradient>
+                  </defs>
+                  <!-- Cell membrane -->
+                  <ellipse cx="155" cy="98" rx="130" ry="80" fill="url(#cellGrad)" stroke="#1D9E75" stroke-width="2"/>
+                  <!-- Nucleus -->
+                  <ellipse cx="130" cy="95" rx="38" ry="32" fill="#fff" stroke="#0F6E56" stroke-width="1.5"/>
+                  <ellipse cx="130" cy="95" rx="22" ry="18" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+                  <!-- Mitochondria -->
+                  <ellipse cx="220" cy="75" rx="22" ry="12" fill="#fff" stroke="#1D9E75" stroke-width="1.2"/>
+                  <path d="M210,75 Q216,69 222,75 Q228,81 234,75" fill="none" stroke="#1D9E75" stroke-width="1"/>
+                  <!-- Vacuole -->
+                  <ellipse cx="210" cy="125" rx="16" ry="12" fill="rgba(29,158,117,0.12)" stroke="#1D9E75" stroke-width="1"/>
+                  <!-- Ribosome dots -->
+                  <circle cx="170" cy="85" r="3" fill="#0F6E56" opacity="0.6"/>
+                  <circle cx="180" cy="110" r="3" fill="#0F6E56" opacity="0.6"/>
+                  <circle cx="160" cy="120" r="3" fill="#0F6E56" opacity="0.6"/>
+                  <!-- Labels -->
+                  <line x1="90" y1="95" x2="55" y2="80" stroke="#888" stroke-width="0.8"/>
+                  <text x="52" y="77" font-size="8" font-family="sans-serif" fill="#333" text-anchor="end">Nucleus</text>
+                  <line x1="220" y1="63" x2="220" y2="42" stroke="#888" stroke-width="0.8"/>
+                  <text x="220" y="39" font-size="8" font-family="sans-serif" fill="#333" text-anchor="middle">Mitochondria</text>
+                  <line x1="210" y1="137" x2="240" y2="158" stroke="#888" stroke-width="0.8"/>
+                  <text x="243" y="161" font-size="8" font-family="sans-serif" fill="#333">Vacuole</text>
+                  <line x1="280" y1="98" x2="296" y2="98" stroke="#888" stroke-width="0.8"/>
+                  <text x="298" y="101" font-size="8" font-family="sans-serif" fill="#333">Cell membrane</text>
+                  <line x1="130" y1="63" x2="130" y2="42" stroke="#888" stroke-width="0.8"/>
+                  <text x="130" y="39" font-size="8" font-family="sans-serif" fill="#333" text-anchor="middle">Nucleolus</text>
+                  <text x="175" y="83" font-size="7" font-family="sans-serif" fill="#0F6E56">●</text>
+                  <line x1="176" y1="79" x2="185" y2="68" stroke="#888" stroke-width="0.8"/>
+                  <text x="187" y="66" font-size="8" font-family="sans-serif" fill="#333">Ribosomes</text>
+                </svg>
+                <div class="out-tag-row" style="margin-top:6px;">
+                  <span class="out-tag">✓ Print-ready</span>
+                  <span class="out-tag">✓ Editable labels</span>
+                  <span class="out-tag">✓ PDF export</span>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+
+        <!-- CARD 2: Quiz -->
+        <div class="demo-card-wrap" data-di="2">
+          <div class="mock-card">
+            <div class="mock-topbar"><div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div><div class="mock-topbar-label">EasyToTeach — Quiz Generator</div></div>
             <div class="mock-body">
               <div class="mock-input-row">
                 <div class="mock-input-field"><span class="mock-input-label">Topic</span><span class="mock-input-val">Quadratic equations · Grade 10</span></div>
                 <div class="mock-input-field"><span class="mock-input-label">Format</span><span class="mock-input-val">5 questions · MC + Short answer</span></div>
               </div>
-              <button class="mock-gen-btn" id="genBtn1"><div class="spin"></div><span class="btn-txt">Generate quiz + answer key →</span></button>
+              <button class="mock-gen-btn" id="genBtn2"><div class="spin"></div><span class="btn-txt">Generate quiz + answer key →</span></button>
               <div class="mock-output">
                 <div class="mock-out-title">📐 Quadratic Equations — Quiz</div>
                 <div class="out-section">
@@ -428,29 +504,99 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
                     <div class="out-opt correct">C. x = 3 ✓</div><div class="out-opt">D. x = 4</div>
                   </div>
                 </div>
-                <div class="out-section" style="margin-top:9px;">
+                <div class="out-section" style="margin-top:8px;">
                   <div class="out-sec-label">🔑 Answer key</div>
                   <div class="out-line">Q1 → C. Factors to (x−2)(x−3)=0</div>
                   <div class="out-line">Q2 → x=½ or x=−2 via quadratic formula</div>
+                </div>
+                <!-- formula diagram -->
+                <div style="background:var(--ink);border-radius:8px;padding:9px;text-align:center;margin-top:8px;">
+                  <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;">Formula sheet included</div>
+                  <div style="font-size:14px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;gap:4px;">
+                    x =
+                    <span style="display:inline-flex;flex-direction:column;align-items:center;gap:1px;font-size:11px;">
+                      <span style="border-bottom:1.5px solid rgba(255,255,255,0.4);padding-bottom:2px;">−b ± √(b²−4ac)</span>
+                      <span style="padding-top:2px;">2a</span>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Card 2: Grading -->
-        <div class="demo-card-wrap" data-di="2">
+        <!-- CARD 3: Essay feedback -->
+        <div class="demo-card-wrap" data-di="3">
           <div class="mock-card">
-            <div class="mock-topbar">
-              <div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div>
-              <div class="mock-topbar-label">EasyToTeach — Answer Grader</div>
+            <div class="mock-topbar"><div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div><div class="mock-topbar-label">EasyToTeach — Essay Feedback</div></div>
+            <div class="mock-body">
+              <div class="mock-input-row">
+                <div class="mock-input-field"><span class="mock-input-label">Task</span><span class="mock-input-val">Discuss the causes of WW1 · 8 marks</span></div>
+                <div class="mock-input-field"><span class="mock-input-label">Level</span><span class="mock-input-val">GCSE · Focus on analysis</span></div>
+              </div>
+              <button class="mock-gen-btn" id="genBtn3"><div class="spin"></div><span class="btn-txt">Analyse essay →</span></button>
+              <div class="mock-output">
+                <div class="mock-out-title">✍️ Essay Analysis</div>
+                <div class="out-section">
+                  <div class="out-sec-label">📝 Marked excerpt</div>
+                  <div class="out-essay">"<mark class="good">The assassination of Franz Ferdinand</mark> triggered the war, but <mark class="fix">countries were already angry</mark> because of alliances and nationalism."</div>
+                  <div style="display:flex;gap:8px;margin-top:5px;">
+                    <span style="font-size:9px;background:#d1fae5;padding:2px 6px;border-radius:4px;color:#065F46;font-weight:700;">✓ Good — specific event</span>
+                    <span style="font-size:9px;background:#FEF3C7;padding:2px 6px;border-radius:4px;color:#92400E;font-weight:700;">↑ Vague — needs analysis</span>
+                  </div>
+                </div>
+                <div class="out-section" style="margin-top:8px;">
+                  <div class="out-sec-label">📊 Rubric breakdown</div>
+                  <div class="rubric-row"><span class="rubric-label">Knowledge</span><div class="rubric-bar-wrap"><div class="rubric-bar" style="width:80%"></div></div><span class="rubric-score">4/5</span></div>
+                  <div class="rubric-row"><span class="rubric-label">Analysis</span><div class="rubric-bar-wrap"><div class="rubric-bar" style="width:40%"></div></div><span class="rubric-score">2/5</span></div>
+                  <div class="rubric-row"><span class="rubric-label">Evidence</span><div class="rubric-bar-wrap"><div class="rubric-bar" style="width:60%"></div></div><span class="rubric-score">3/5</span></div>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+
+        <!-- CARD 4: Vocabulary builder -->
+        <div class="demo-card-wrap" data-di="4">
+          <div class="mock-card">
+            <div class="mock-topbar"><div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div><div class="mock-topbar-label">EasyToTeach — Vocabulary Builder</div></div>
+            <div class="mock-body">
+              <div class="mock-input-row">
+                <div class="mock-input-field"><span class="mock-input-label">Topic</span><span class="mock-input-val">Climate change · Geography</span></div>
+                <div class="mock-input-field"><span class="mock-input-label">Level</span><span class="mock-input-val">Grade 9 · 8 key terms</span></div>
+              </div>
+              <button class="mock-gen-btn" id="genBtn4"><div class="spin"></div><span class="btn-txt">Build vocabulary list →</span></button>
+              <div class="mock-output">
+                <div class="mock-out-title">🌍 Climate Change — Vocabulary</div>
+                <table class="vocab-table">
+                  <thead><tr><th>Term</th><th>Definition</th><th>Level</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>Greenhouse effect</strong></td><td>Trapping of heat by atmospheric gases</td><td><span style="color:var(--g);font-weight:700;">●●○</span></td></tr>
+                    <tr><td><strong>Carbon sink</strong></td><td>Natural system absorbing CO₂ (e.g. oceans)</td><td><span style="color:var(--g);font-weight:700;">●●●</span></td></tr>
+                    <tr><td><strong>Albedo</strong></td><td>Reflectivity of a surface to sunlight</td><td><span style="color:#C2410C;font-weight:700;">●●●</span></td></tr>
+                    <tr><td><strong>Permafrost</strong></td><td>Ground frozen continuously for 2+ years</td><td><span style="color:var(--g);font-weight:700;">●●○</span></td></tr>
+                  </tbody>
+                </table>
+                <div class="out-tag-row" style="margin-top:8px;">
+                  <span class="out-tag">✓ Example sentences</span>
+                  <span class="out-tag">✓ Difficulty rated</span>
+                  <span class="out-tag">✓ Flashcard export</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5: Grading -->
+        <div class="demo-card-wrap" data-di="5">
+          <div class="mock-card">
+            <div class="mock-topbar"><div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div><div class="mock-topbar-label">EasyToTeach — Answer Grader</div></div>
             <div class="mock-body">
               <div class="mock-input-row">
                 <div class="mock-input-field"><span class="mock-input-label">Question</span><span class="mock-input-val">Causes of WW1 · 8 marks</span></div>
                 <div class="mock-input-field"><span class="mock-input-label">Rubric</span><span class="mock-input-val">Focus on analysis, not just listing facts</span></div>
               </div>
-              <button class="mock-gen-btn" id="genBtn2"><div class="spin"></div><span class="btn-txt">Grade + give feedback →</span></button>
+              <button class="mock-gen-btn" id="genBtn5"><div class="spin"></div><span class="btn-txt">Grade + give feedback →</span></button>
               <div class="mock-output">
                 <div class="mock-out-title">✅ Grading Result</div>
                 <div class="out-score">
@@ -461,7 +607,7 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
                   <div class="out-fb-lbl">✓ What went well</div>
                   <div class="out-fb-txt">Correctly identifies assassination as trigger. Mentions alliance system and nationalism. Includes Britain's entry via Belgium.</div>
                 </div>
-                <div class="out-fb-imp" style="margin-top:6px;">
+                <div class="out-fb-imp" style="margin-top:5px;">
                   <div class="out-fb-lbl">↑ To improve</div>
                   <div class="out-fb-txt">No MAIN framework used. Causes listed, not analysed. No long-term vs short-term distinction.</div>
                 </div>
@@ -469,8 +615,9 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
             </div>
           </div>
         </div>
-      </div>
-    </div>
+
+      </div><!-- /demo-right -->
+    </div><!-- /demo-inner -->
 
     <div class="demo-progress"><div class="demo-progress-fill" id="demoProgressFill"></div></div>
   </div>
@@ -529,21 +676,18 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
 <!-- PRICING -->
 <section class="pricing-section" id="pricing">
   <div class="pricing-inner">
-    <div class="sec-head reveal">
-      <h2>Pick your <em>plan.</em></h2>
-      <p>Every plan includes all three tools. Cancel anytime.</p>
-    </div>
+    <div class="sec-head reveal"><h2>Pick your <em>plan.</em></h2><p>Every plan includes all tools. Cancel anytime.</p></div>
     <div class="pgrid">
       <div class="pc reveal">
         <div class="p-tier">Starter</div><div class="p-price"><sup>$</sup>9</div>
         <div class="p-mo">per month</div><div class="p-gens">100 generations / month</div>
-        <ul class="p-feats"><li>Lesson planner</li><li>Quiz generator</li><li>Answer grader</li><li>PDF export</li><li>Cloud history</li><li>Priority support</li></ul>
+        <ul class="p-feats"><li>Lesson planner</li><li>Quiz generator</li><li>Answer grader</li><li>Diagram generator</li><li>PDF export</li><li>Cloud history</li></ul>
         <a href="#" class="p-btn">Go Starter</a>
       </div>
       <div class="pc hot reveal">
         <div class="p-tier">Pro</div><div class="p-price"><sup>$</sup>19</div>
         <div class="p-mo">per month</div><div class="p-gens">Unlimited generations</div>
-        <ul class="p-feats"><li>Everything in Starter</li><li>Standards alignment</li><li>Advanced rubrics</li><li>Analytics dashboard</li><li>Regenerate &amp; refine</li><li>Early access to new tools</li></ul>
+        <ul class="p-feats"><li>Everything in Starter</li><li>Essay feedback & rubrics</li><li>Vocabulary builder</li><li>Standards alignment</li><li>Analytics dashboard</li><li>Early access to new tools</li></ul>
         <a href="#" class="p-btn">Go Pro</a>
       </div>
       <div class="pc reveal">
@@ -556,7 +700,6 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
   </div>
 </section>
 
-<!-- FOOTER CTA -->
 <section class="fcta">
   <h2>Your students deserve<br/>your <em>best.</em></h2>
   <p>Stop burning hours on paperwork. Start showing up fully.</p>
@@ -573,37 +716,44 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
 </footer>
 
 <script>
-// ══ DEMO STICKY ══
-const DEMO_STEPS = 3;
-const demoWrap = document.getElementById('demo');
-const demoLSEls = document.querySelectorAll('.demo-ls');
+// ══ BUILD DEMO DOTS ══
+const DEMO_STEPS = 6;
+const dotContainer = document.getElementById('demoDotContainer');
+for(let i=0;i<DEMO_STEPS;i++){
+  const d = document.createElement('div');
+  d.className = 'demo-step-dot' + (i===0?' active':'');
+  d.dataset.di = i;
+  dotContainer.appendChild(d);
+}
+
+const demoWrap    = document.getElementById('demo');
+const demoLSEls   = document.querySelectorAll('.demo-ls');
 const demoCardEls = document.querySelectorAll('.demo-card-wrap');
-const demoDotEls = document.querySelectorAll('.demo-step-dot');
+const demoDotEls  = document.querySelectorAll('.demo-step-dot');
 const demoCounter = document.getElementById('demoCounter');
 const demoProgressFill = document.getElementById('demoProgressFill');
 let activeDemoStep = 0;
 
 function setDemoStep(si) {
   if (si === activeDemoStep) return;
-  // left
   demoLSEls[activeDemoStep].classList.remove('active');
   demoLSEls[activeDemoStep].classList.add('exit');
   const pl = activeDemoStep;
-  setTimeout(() => demoLSEls[pl].classList.remove('exit'), 500);
+  setTimeout(()=>demoLSEls[pl].classList.remove('exit'),500);
   demoLSEls[si].classList.add('active');
-  // card
+
   demoCardEls[activeDemoStep].classList.remove('active');
   demoCardEls[activeDemoStep].classList.add('exit');
   const pc = activeDemoStep;
-  setTimeout(() => demoCardEls[pc].classList.remove('exit'), 500);
+  setTimeout(()=>demoCardEls[pc].classList.remove('exit'),500);
   demoCardEls[si].classList.add('active');
-  // dots & counter
-  demoDotEls.forEach((d,i) => d.classList.toggle('active', i === si));
+
+  demoDotEls.forEach((d,i)=>d.classList.toggle('active',i===si));
   demoCounter.textContent = String(si+1).padStart(2,'0') + ' / 0' + DEMO_STEPS;
   activeDemoStep = si;
 }
 
-// ══ HOW IT WORKS ══
+// ══ HOW IT WORKS STEPS ══
 const STEPS = [
   {pill:'What do you need?',bg:'Create',caption:'What do you need <em>today?</em>',sub:'Click any card — everything starts with a simple choice.',nodes:[{i:'📝',l:'Create Quizzes',s:'Test knowledge',t:'Done in 10 seconds'},{i:'✅',l:'Grade Answers',s:'Instant feedback',t:'Paste & score instantly'},{i:'🎓',l:'Lecture Plans',s:'Full lesson ready',t:'With objectives & hooks'},{i:'📊',l:'Tests & Exams',s:'Full assessments',t:'Answer keys included'}]},
   {pill:'Pick your subject',bg:'Choose',caption:'Pick your <em>subject.</em>',sub:'Every subject, every level. Kindergarten to university.',nodes:[{i:'🔬',l:'Science',s:'All branches',t:'Bio, Chem, Physics'},{i:'📐',l:'Math',s:'K-12 & uni',t:'Algebra to Calculus'},{i:'📖',l:'English',s:'ELA & literature',t:'Essays to grammar'},{i:'🌍',l:'History',s:'World & local',t:'Primary sources too'}]},
@@ -613,21 +763,18 @@ const STEPS = [
 ];
 
 const scene = document.getElementById('diagramScene');
-scene.style.cssText = 'position:relative;width:100%;';
+scene.style.cssText='position:relative;width:100%;';
 const stepsWrap = document.createElement('div');
-stepsWrap.style.cssText = 'position:relative;width:100%;min-height:320px;';
+stepsWrap.style.cssText='position:relative;width:100%;min-height:320px;';
 scene.appendChild(stepsWrap);
 
-const stepEls = [];
-STEPS.forEach((s,si) => {
-  const el = document.createElement('div');
-  el.className = 'd-step' + (si===0?' active':'');
-  el.style.cssText = si===0
-    ? 'position:relative;width:100%;display:flex;flex-direction:column;align-items:center;'
-    : 'position:absolute;top:0;left:0;right:0;width:100%;display:flex;flex-direction:column;align-items:center;';
-  const pill = document.createElement('div');
-  pill.className='step-pill';pill.textContent=s.pill;el.appendChild(pill);
-  const row = document.createElement('div');row.className='nodes-row';
+const stepEls=[];
+STEPS.forEach((s,si)=>{
+  const el=document.createElement('div');
+  el.className='d-step'+(si===0?' active':'');
+  el.style.cssText=si===0?'position:relative;width:100%;display:flex;flex-direction:column;align-items:center;':'position:absolute;top:0;left:0;right:0;width:100%;display:flex;flex-direction:column;align-items:center;';
+  const pill=document.createElement('div');pill.className='step-pill';pill.textContent=s.pill;el.appendChild(pill);
+  const row=document.createElement('div');row.className='nodes-row';
   s.nodes.forEach((n,ni)=>{
     const wrap=document.createElement('div');wrap.className='node-wrap';
     const box=document.createElement('div');box.className='node-box';
@@ -644,72 +791,65 @@ STEPS.forEach((s,si) => {
 });
 
 // ══ SCROLL DRIVER ══
-const bgWord = document.getElementById('bgWord');
-const diagramWrap = document.getElementById('diagram');
-let lastSY = -1, activeStep = 0;
-bgWord.textContent = STEPS[0].bg;
+const bgWord=document.getElementById('bgWord');
+const diagramWrap=document.getElementById('diagram');
+let lastSY=-1,activeStep=0;
+bgWord.textContent=STEPS[0].bg;
 
-function onFrame() {
-  const sy = window.scrollY;
-  if (sy !== lastSY) {
-    lastSY = sy;
-
-    // demo scroll
-    const dr = demoWrap.getBoundingClientRect();
-    const dTotal = demoWrap.offsetHeight - window.innerHeight;
-    const dP = Math.max(0, Math.min(1, -dr.top / dTotal));
-    setDemoStep(Math.min(Math.floor(dP * DEMO_STEPS), DEMO_STEPS - 1));
-    demoProgressFill.style.width = (dP * 100) + '%';
-
-    // how it works scroll
-    const wr = diagramWrap.getBoundingClientRect();
-    const wTotal = diagramWrap.offsetHeight - window.innerHeight;
-    const wP = Math.max(0, Math.min(1, -wr.top / wTotal));
-    const raw = wP * STEPS.length;
-    const si = Math.min(Math.floor(raw), STEPS.length - 1);
-    const within = raw - si;
-    if (si !== activeStep) {
+function onFrame(){
+  const sy=window.scrollY;
+  if(sy!==lastSY){
+    lastSY=sy;
+    // demo
+    const dr=demoWrap.getBoundingClientRect();
+    const dTotal=demoWrap.offsetHeight-window.innerHeight;
+    const dP=Math.max(0,Math.min(1,-dr.top/dTotal));
+    setDemoStep(Math.min(Math.floor(dP*DEMO_STEPS),DEMO_STEPS-1));
+    demoProgressFill.style.width=(dP*100)+'%';
+    // how it works
+    const wr=diagramWrap.getBoundingClientRect();
+    const wTotal=diagramWrap.offsetHeight-window.innerHeight;
+    const wP=Math.max(0,Math.min(1,-wr.top/wTotal));
+    const raw=wP*STEPS.length;
+    const si=Math.min(Math.floor(raw),STEPS.length-1);
+    const within=raw-si;
+    if(si!==activeStep){
       stepEls[activeStep].classList.remove('active');
       stepEls[activeStep].classList.add('exit-up');
-      const prev = activeStep;
+      const prev=activeStep;
       setTimeout(()=>{stepEls[prev].classList.remove('exit-up');stepEls[prev].style.position='absolute';},600);
-      activeStep = si;
-      stepEls[si].style.position = si===0?'relative':'absolute';
+      activeStep=si;
+      stepEls[si].style.position=si===0?'relative':'absolute';
       stepEls[si].classList.add('active');
-      bgWord.textContent = STEPS[si].bg;
+      bgWord.textContent=STEPS[si].bg;
     }
-    bgWord.style.transform = `translate(-50%,-50%) scale(${1 + within*0.04})`;
-
-    // overall progress bar
-    document.getElementById('jpf').style.width = (sy / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+    bgWord.style.transform=`translate(-50%,-50%) scale(${1+within*0.04})`;
+    document.getElementById('jpf').style.width=(sy/(document.body.scrollHeight-window.innerHeight)*100)+'%';
   }
   requestAnimationFrame(onFrame);
 }
 requestAnimationFrame(onFrame);
 
-// generate button easter egg
-[0,1,2].forEach(i=>{
+// generate buttons
+for(let i=0;i<DEMO_STEPS;i++){
   const btn=document.getElementById('genBtn'+i);
-  if(!btn)return;
-  btn.addEventListener('click',()=>{
-    btn.classList.add('loading');
-    setTimeout(()=>btn.classList.remove('loading'),1400);
-  });
-});
+  if(!btn)continue;
+  btn.addEventListener('click',()=>{btn.classList.add('loading');setTimeout(()=>btn.classList.remove('loading'),1400);});
+}
 
 // ══ TONE PICKER ══
 const previews={
-  kids:{Science:'"Hey curious minds! 🌱 Today we\'re going on a plant adventure — let\'s find out how leaves turn sunlight into actual food. Spoiler: it\'s basically plant magic. Ready? Let\'s go!"',History:'"Time travel alert! 🚀 We\'re zooming back to ancient Egypt — pyramids, pharaohs, and mummies. Buckle up, time explorers!"',Math:'"Numbers are like superheroes 🦸 — and today we\'re learning their secret powers! Ready to become a math hero?"',Biology:'"Psst... your body has TRILLIONS of tiny workers inside it right now 🦠 Want to meet them?"',Geography:'"Planet Earth has seriously wild places 🌋 From the coldest tundra to the hottest desert — adventure starts NOW!"'},
-  pro:{Science:'"This lesson covers photosynthesis: the biochemical conversion of light energy to chemical energy in plant cells."',History:'"This module examines causal factors of World War I, with attention to the alliance system and imperial rivalries."',Math:'"This lesson introduces quadratic equations. Students will derive the quadratic formula and interpret discriminant values."',Biology:'"This lesson examines cell division through mitosis and meiosis. Students will compare both processes and identify each stage."',Geography:'"This session focuses on tectonic plate boundaries and their geomorphological consequences."'},
-  adult:{Science:'"Plants figured out how to eat sunlight before humans discovered fire. Photosynthesis is the original life hack."',History:'"One assassination. One archduke. Four years of chaos that reshaped the world. It\'s messier than the textbook version."',Math:'"Quadratic equations sound terrifying. They\'re not. They just ask where does this curve hit the ground."',Biology:'"Your DNA just copied itself while you read this sentence. Cell division happens billions of times a day."',Geography:'"The ground under your feet is moving right now — about as fast as your fingernails grow."'},
-  interactive:{Science:'"[Click the sun] → Light hits the leaf → [Click the chloroplast] → [Drag CO₂ in] → Watch glucose form."',History:'"[Choose a country in 1914] → See alliances light up → [Trigger the assassination] → Watch the dominoes fall."',Math:'"[Move sliders a, b, c] → Watch the parabola shift live → [Click the roots] → See the formula solve step by step."',Biology:'"[Start with one cell] → Click to trigger mitosis → [Drag chromosomes] → Watch division complete."',Geography:'"[Spin the globe] → Click any volcano → [Slide the timeline] → Watch eruption history."'},
+  kids:{Science:'"Hey curious minds! 🌱 Let\'s find out how leaves turn sunlight into actual food. Spoiler: it\'s basically plant magic!"',History:'"Time travel alert! 🚀 We\'re zooming back to ancient Egypt. Buckle up, time explorers!"',Math:'"Numbers are like superheroes 🦸 — today we learn their secret powers!"',Biology:'"Your body has TRILLIONS of tiny workers inside it right now 🦠 Want to meet them?"',Geography:'"Planet Earth has seriously wild places 🌋 Adventure starts NOW!"'},
+  pro:{Science:'"This lesson covers photosynthesis: the biochemical conversion of light energy to chemical energy in plant cells."',History:'"This module examines causal factors of World War I, with attention to the alliance system and imperial rivalries."',Math:'"This lesson introduces quadratic equations. Students will derive the quadratic formula and interpret discriminant values."',Biology:'"This lesson examines cell division through mitosis and meiosis. Students will compare both processes."',Geography:'"This session focuses on tectonic plate boundaries and their geomorphological consequences."'},
+  adult:{Science:'"Plants figured out how to eat sunlight before humans discovered fire. Photosynthesis is the original life hack."',History:'"One assassination. One archduke. Four years of chaos. It\'s messier than the textbook version."',Math:'"Quadratic equations sound terrifying. They\'re not. They just ask where does this curve hit the ground."',Biology:'"Your DNA just copied itself while you read this sentence. Billions of times a day, mostly without a single mistake."',Geography:'"The ground under your feet is moving right now — about as fast as your fingernails grow."'},
+  interactive:{Science:'"[Click the sun] → Light hits the leaf → [Drag CO₂ in] → Watch glucose form. You control the photosynthesis."',History:'"[Choose a country in 1914] → See alliances light up → [Trigger the assassination] → Watch the dominoes fall."',Math:'"[Move sliders a, b, c] → Watch the parabola shift live → [Click roots] → See the formula solve step by step."',Biology:'"[Start with one cell] → Click to trigger mitosis → [Drag chromosomes] → Watch division complete."',Geography:'"[Spin the globe] → Click any volcano → [Slide the timeline] → Watch eruption history."'},
 };
 let selTone='kids',selSubj='Science';
 function updatePreview(animate){
   const pt=document.getElementById('prevText');
   document.getElementById('prevSubj').textContent=selSubj;
   if(animate){pt.classList.add('fade');setTimeout(()=>{pt.textContent=previews[selTone][selSubj];pt.classList.remove('fade');},260);}
-  else{pt.textContent=previews[selTone][selSubj];}
+  else pt.textContent=previews[selTone][selSubj];
 }
 document.querySelectorAll('.t-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('.t-card').forEach(x=>x.classList.remove('on'));c.classList.add('on');selTone=c.dataset.t;updatePreview(true);});});
 document.querySelectorAll('.s-chip').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('.s-chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');selSubj=c.dataset.s;updatePreview(true);});});
