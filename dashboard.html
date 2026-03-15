@@ -406,6 +406,7 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
       <div class="nav-section-label">Tools</div>
       <div class="nav-item active" onclick="showPanel('home')"><span class="nav-icon">🏠</span>Home</div>
       <div class="nav-item" onclick="openTool('lesson')"><span class="nav-icon">📋</span>Lesson Planner</div>
+      <div class="nav-item" onclick="openTool('lessongen')"><span class="nav-icon">📝</span>Lesson Generator</div>
       <div class="nav-item" onclick="openTool('diagram')"><span class="nav-icon">🔬</span>Diagram Generator</div>
       <div class="nav-item" onclick="openTool('quiz')"><span class="nav-icon">📐</span>Quiz Generator</div>
       <div class="nav-item" onclick="openTool('essay')"><span class="nav-icon">✍️</span>Essay Feedback</div>
@@ -459,6 +460,12 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
             <span class="tool-card-icon">📋</span>
             <div class="tool-card-name">Lesson Planner</div>
             <div class="tool-card-desc">Full lesson with objectives, flow & differentiation</div>
+          </div>
+          <div class="tool-card" onclick="openTool('lessongen')">
+            <span class="tool-card-time">~20s</span>
+            <span class="tool-card-icon">📝</span>
+            <div class="tool-card-name">Lesson Generator</div>
+            <div class="tool-card-desc">Full written lesson content — hook, explanation, examples</div>
           </div>
           <div class="tool-card" onclick="openTool('diagram')">
             <span class="tool-card-time">~12s</span>
@@ -698,6 +705,11 @@ function openTool(tool){
       <div class="tool-field"><label>Topic</label><input id="tf2" placeholder="e.g. Photosynthesis"/></div>
       <div class="tool-field"><label>Duration</label><input id="tf3" placeholder="e.g. 45 minutes"/></div>
       <div class="tool-field"><label>Include (optional)</label><input id="tf4" placeholder="e.g. differentiation, group activity"/></div>`},
+    lessongen:{icon:'📝',title:'Lesson Generator',sub:'Full written lesson content — ready to deliver',fields:`
+      <div class="tool-field"><label>Subject & level</label><input id="tf1" placeholder="e.g. Biology · High School"/></div>
+      <div class="tool-field"><label>Topic</label><input id="tf2" placeholder="e.g. Photosynthesis"/></div>
+      <div class="tool-field"><label>Tone</label><select id="tf3"><option value="">Select tone</option><option>Fun & friendly</option><option>Professional</option><option>Fun for adults</option><option>Interactive</option></select></div>
+      <div class="tool-field"><label>Length</label><select id="tf4"><option value="">Select length</option><option>Short intro (10 min)</option><option>Full lesson (45 min)</option><option>Deep dive (60 min)</option></select></div>`},
     diagram:{icon:'🔬',title:'Diagram Generator',sub:'Labelled diagrams, print-ready',fields:`
       <div class="tool-field"><label>Topic</label><input id="tf1" placeholder="e.g. Animal cell structure"/></div>
       <div class="tool-field"><label>Subject & level</label><input id="tf2" placeholder="e.g. Biology · Grade 9"/></div>
@@ -732,6 +744,7 @@ function openTool(tool){
 }
 
 // ══ TOOL RUNNER ══
+let lastTopic = '', lastLevel = '';
 function runTool(){
   const btn = document.getElementById('toolGenBtn');
   btn.classList.add('loading');
@@ -739,18 +752,39 @@ function runTool(){
   const f2 = (document.getElementById('tf2')||{value:''}).value;
   const f3 = (document.getElementById('tf3')||{value:''}).value;
   const f4 = (document.getElementById('tf4')||{value:''}).value;
+  if(currentTool==='lesson'){ lastTopic=f2||f1; lastLevel=f1; }
   setTimeout(()=>{
     btn.classList.remove('loading');
     const out = generateOutput(currentTool,f1,f2,f3,f4);
     document.getElementById('toolOutput').innerHTML = out;
-    document.getElementById('outputActions').style.display='flex';
-    // update stats
+    const actions = document.getElementById('outputActions');
+    actions.style.display='flex';
+    // show "next step" button after lesson plan
+    if(currentTool==='lesson'){
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'out-action-btn next-step-btn';
+      nextBtn.innerHTML = '📝 Now generate lesson content →';
+      nextBtn.onclick = ()=>openLessonGen();
+      nextBtn.style.cssText='background:var(--ink);color:#fff;border-color:var(--ink);margin-left:auto;';
+      actions.appendChild(nextBtn);
+    }
     stats.gen++;
     if(currentTool==='lesson') stats.plans++;
     if(currentTool==='quiz') stats.quizzes++;
     localStorage.setItem('yt_stats',JSON.stringify(stats));
     updateStats();
   }, 1600);
+}
+
+function openLessonGen(){
+  openTool('lessongen');
+  // pre-fill with last topic & level
+  setTimeout(()=>{
+    const tf1 = document.getElementById('tf1');
+    const tf2 = document.getElementById('tf2');
+    if(tf1) tf1.value = lastLevel;
+    if(tf2) tf2.value = lastTopic;
+  }, 50);
 }
 
 function generateOutput(tool,f1,f2,f3,f4){
@@ -810,6 +844,27 @@ ${f4?`<div class="out-s"><div class="out-s-lbl">📎 Includes</div><div class="o
 <div class="out-fb-pos" style="margin-top:10px;"><div class="out-fb-lbl">✓ What went well</div><div class="out-fb-txt">Relevant points made with supporting detail. Shows understanding of core concepts.</div></div>
 <div class="out-fb-imp" style="margin-top:6px;"><div class="out-fb-lbl">↑ To improve</div><div class="out-fb-txt">Needs more specific evidence and stronger analytical links. Refer to the mark scheme criteria more explicitly.</div></div>
 <div class="out-s" style="margin-top:10px;"><div class="out-s-lbl">📝 Model answer hint</div><div class="out-line">A stronger answer would include: specific terminology, causal links, and structured paragraphs (point → evidence → analysis).</div></div>`,
+
+    lessongen:`<div class="output-title">📝 ${f2||topic} — Full Lesson Content</div>
+<div class="out-s"><div class="out-s-lbl">🪝 Opening hook</div>
+<div class="out-line" style="font-style:italic;color:#555;">"Have you ever wondered why ${f2||topic} matters in real life? Today you're going to find out — and by the end of this lesson, you'll never look at it the same way."</div></div>
+<div class="out-s"><div class="out-s-lbl">📖 Main explanation</div>
+<div class="out-line">Start with the core concept: introduce the key idea in one clear sentence.</div>
+<div class="out-line">Break it down into 3 digestible parts — each building on the last.</div>
+<div class="out-line">Use a real-world analogy students can connect to immediately.</div></div>
+<div class="out-s"><div class="out-s-lbl">💡 Worked example</div>
+<div class="out-line">Walk through a concrete example step-by-step on the board.</div>
+<div class="out-line">Highlight the key moment where most students go wrong.</div>
+<div class="out-line">Invite a student to explain it back in their own words.</div></div>
+<div class="out-s"><div class="out-s-lbl">❓ Discussion questions</div>
+<div class="out-line">What would happen if [key variable] changed? Why?</div>
+<div class="out-line">Can you think of where you've seen ${f2||topic} outside of school?</div>
+<div class="out-line">What's the most surprising thing about what we just learned?</div></div>
+<div class="out-s"><div class="out-s-lbl">🎯 Closing summary</div>
+<div class="out-line">Recap the 3 key points in plain language.</div>
+<div class="out-line">Connect back to the opening hook — did we answer the question?</div>
+<div class="out-line">Preview what's coming next lesson to build anticipation.</div></div>
+<div class="out-tag-row" style="margin-top:8px;"><span class="out-tag">Tone: ${f3||'Friendly'}</span><span class="out-tag">Length: ${f4||'45 min'}</span><span class="out-tag">Level: ${f1||'General'}</span></div>`,
   };
   return templates[tool]||'<p>Output generated.</p>';
 }
