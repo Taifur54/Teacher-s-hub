@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EasyToTeach — Win the Best Teacher Award This Year</title>
+<meta name="description" content="Plan lessons, create quizzes, grade answers — Smart tools for teachers who want their time back."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{--g:#1D9E75;--gd:#0F6E56;--gl:#E1F5EE;--ink:#0e0e0e;--paper:#faf9f6;--muted:#888;--border:rgba(0,0,0,0.1);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
+::selection{background:var(--g);color:#fff;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;background:rgba(250,249,246,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{font-size:18px;font-weight:800;letter-spacing:-0.5px;}
+.nav-logo span{color:var(--g);}
+.nav-right{display:flex;align-items:center;gap:24px;}
+.nav-right a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;}
+.nav-cta{background:var(--ink);color:var(--paper)!important;padding:8px 20px;border-radius:8px;}
+.nav-cta:hover{background:var(--g);}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 60% 50% at 20% 80%,rgba(29,158,117,0.12) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 80% 20%,rgba(29,158,117,0.08) 0%,transparent 70%);}
+.hero-content{position:relative;z-index:1;max-width:860px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);background:var(--gl);padding:6px 16px;border-radius:999px;margin-bottom:32px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(48px,8vw,96px);line-height:1.0;font-weight:700;color:var(--ink);margin-bottom:28px;letter-spacing:-1px;}
+.hero h1 em{font-style:italic;color:var(--g);}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--muted);font-weight:400;max-width:520px;margin:0 auto 44px;line-height:1.65;}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;}
+.btn-dark{background:var(--ink);color:var(--paper);padding:14px 32px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;transition:background 0.15s,transform 0.1s;}
+.btn-dark:hover{background:var(--g);transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--ink);padding:14px 32px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;border:1.5px solid rgba(0,0,0,0.2);transition:border-color 0.15s;}
+.btn-outline:hover{border-color:var(--g);color:var(--g);}
+.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);z-index:1;animation:bob 2s ease-in-out infinite;}
+.scroll-arrow{width:18px;height:18px;border-right:2px solid var(--g);border-bottom:2px solid var(--g);transform:rotate(45deg);}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+.journey-progress{position:fixed;top:60px;left:0;right:0;height:3px;background:rgba(0,0,0,0.06);z-index:150;}
+.journey-progress-fill{height:100%;background:var(--g);width:0%;transition:width 0.08s linear;}
+
+.diagram-sticky-wrap{position:relative;height:500vh;}
+.diagram-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.diagram-bg-word{position:absolute;font-family:'Playfair Display',serif;font-size:clamp(100px,18vw,220px);font-weight:700;font-style:italic;color:rgba(29,158,117,0.06);user-select:none;white-space:nowrap;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;transition:opacity 0.4s;}
+.diagram-scene{position:relative;z-index:1;width:100%;max-width:960px;padding:0 24px;}
+.step-label{text-align:center;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);margin-bottom:28px;opacity:0;transition:opacity 0.4s;}
+.step-label.vis{opacity:1;}
+
+.nodes-row{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:nowrap;min-height:200px;}
+.node{display:flex;flex-direction:column;align-items:center;opacity:0;transform:translateY(20px) scale(0.9);transition:opacity 0.45s cubic-bezier(0.34,1.56,0.64,1),transform 0.45s cubic-bezier(0.34,1.56,0.64,1);}
+.node.on{opacity:1;transform:translateY(0) scale(1);}
+.node-box{width:clamp(110px,14vw,148px);padding:18px 10px;border-radius:16px;text-align:center;cursor:pointer;position:relative;border:2px solid transparent;transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,0.08);}
+.node-box:hover{transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,0.13);border-color:var(--g);}
+.node-box.lit{border-color:var(--g);background:var(--gl);}
+.node-icon{font-size:26px;margin-bottom:6px;}
+.node-label{font-size:12px;font-weight:700;color:var(--ink);line-height:1.3;}
+.node-sub{font-size:10px;color:var(--muted);font-weight:400;margin-top:2px;}
+.tip-bubble{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%) scale(0.85);background:var(--ink);color:#fff;font-size:11px;font-weight:600;padding:6px 12px;border-radius:8px;white-space:nowrap;opacity:0;transition:opacity 0.2s,transform 0.2s;pointer-events:none;}
+.tip-bubble::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.node-box:hover .tip-bubble,.node-box.lit .tip-bubble{opacity:1;transform:translateX(-50%) scale(1);}
+.connector{display:flex;align-items:center;margin:0 4px;opacity:0;transition:opacity 0.35s;}
+.connector.on{opacity:1;}
+.connector-line{width:clamp(20px,3vw,36px);height:2px;background:linear-gradient(90deg,var(--g),rgba(29,158,117,0.4));position:relative;}
+.connector-line::after{content:'';position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left-color:var(--g);border-right:none;}
+
+.step-caption{text-align:center;margin-top:40px;opacity:0;transform:translateY(14px);transition:opacity 0.5s 0.15s,transform 0.5s 0.15s;}
+.step-caption.vis{opacity:1;transform:translateY(0);}
+.step-caption h2{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,44px);font-weight:700;line-height:1.2;margin-bottom:10px;}
+.step-caption h2 em{font-style:italic;color:var(--g);}
+.step-caption p{font-size:15px;color:var(--muted);max-width:460px;margin:0 auto;line-height:1.65;}
+
+.tone-section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 24px;background:var(--ink);position:relative;overflow:hidden;}
+.tone-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 100%,rgba(29,158,117,0.18) 0%,transparent 70%);}
+.tone-inner{position:relative;z-index:1;max-width:900px;width:100%;text-align:center;}
+.tone-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);margin-bottom:20px;}
+.tone-inner h2{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,64px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:16px;}
+.tone-inner h2 em{font-style:italic;color:var(--g);}
+.tone-intro{font-size:17px;color:rgba(255,255,255,0.5);margin-bottom:44px;line-height:1.6;}
+.subject-chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;}
+.s-chip{padding:8px 20px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.15);font-size:13px;font-weight:600;color:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.2s;background:transparent;font-family:'Syne',sans-serif;}
+.s-chip:hover{border-color:var(--g);color:var(--g);}
+.s-chip.on{background:var(--g);border-color:var(--g);color:#fff;}
+.tone-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:32px;}
+.t-card{border:1.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:26px 18px;cursor:pointer;transition:all 0.25s;text-align:left;background:rgba(255,255,255,0.04);position:relative;overflow:hidden;}
+.t-card::before{content:'';position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,rgba(29,158,117,0.15),transparent);transition:opacity 0.25s;}
+.t-card:hover::before,.t-card.on::before{opacity:1;}
+.t-card:hover,.t-card.on{border-color:var(--g);transform:translateY(-3px);}
+.t-card.on{box-shadow:0 0 0 1px var(--g);}
+.t-emoji{font-size:30px;margin-bottom:10px;display:block;}
+.t-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:5px;}
+.t-desc{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.5;}
+.tone-preview{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:26px;text-align:left;min-height:100px;transition:all 0.35s;}
+.preview-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--g);margin-bottom:10px;}
+.preview-text{font-size:15px;color:rgba(255,255,255,0.72);line-height:1.7;font-style:italic;transition:opacity 0.3s;}
+.preview-text.fade{opacity:0;}
+
+.award-section{min-height:80vh;display:flex;align-items:center;justify-content:center;padding:100px 24px;background:var(--paper);}
+.award-inner{max-width:760px;text-align:center;}
+.trophy{font-size:72px;margin-bottom:24px;display:block;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.award-inner h2{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,72px);font-weight:700;line-height:1.1;margin-bottom:20px;}
+.award-inner h2 em{font-style:italic;color:var(--g);}
+.award-inner p{font-size:18px;color:var(--muted);max-width:480px;margin:0 auto 48px;line-height:1.65;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px;}
+.stat{padding:28px 16px;background:#fff;border-radius:16px;border:1px solid var(--border);}
+.stat-n{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:var(--g);line-height:1;margin-bottom:6px;}
+.stat-l{font-size:12px;color:var(--muted);font-weight:600;}
+
+.pricing-section{padding:100px 24px;background:var(--paper);}
+.pricing-inner{max-width:1000px;margin:0 auto;}
+.sec-head{text-align:center;margin-bottom:56px;}
+.sec-head h2{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,56px);font-weight:700;line-height:1.15;margin-bottom:12px;}
+.sec-head h2 em{font-style:italic;color:var(--g);}
+.sec-head p{font-size:17px;color:var(--muted);}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;}
+.pc{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:32px 24px;position:relative;transition:transform 0.2s;}
+.pc:hover{transform:translateY(-3px);}
+.pc.hot{border-color:var(--g);}
+.pc.hot::before{content:'Most popular';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:999px;white-space:nowrap;letter-spacing:0.04em;}
+.p-tier{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.p-price{font-family:'Playfair Display',serif;font-size:52px;font-weight:700;color:var(--ink);line-height:1;margin-bottom:4px;}
+.p-price sup{font-size:24px;vertical-align:super;}
+.p-mo{font-size:14px;color:var(--muted);margin-bottom:6px;}
+.p-gens{font-size:13px;font-weight:700;color:var(--g);padding-bottom:18px;border-bottom:1px solid var(--border);margin-bottom:18px;}
+.p-feats{list-style:none;margin-bottom:28px;}
+.p-feats li{font-size:13px;color:var(--muted);padding:4px 0 4px 18px;position:relative;}
+.p-feats li::before{content:'✓';position:absolute;left:0;color:var(--g);font-weight:700;}
+.p-btn{display:block;text-align:center;padding:12px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;border:1.5px solid var(--border);color:var(--ink);transition:all 0.15s;font-family:'Syne',sans-serif;}
+.p-btn:hover{border-color:var(--g);color:var(--g);}
+.pc.hot .p-btn{background:var(--g);color:#fff;border-color:var(--g);}
+.pc.hot .p-btn:hover{background:var(--gd);}
+
+.fcta{background:var(--g);padding:100px 24px;text-align:center;}
+.fcta h2{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,72px);font-weight:700;color:#fff;margin-bottom:16px;line-height:1.1;}
+.fcta h2 em{font-style:italic;color:var(--gl);}
+.fcta p{font-size:18px;color:rgba(255,255,255,0.75);margin-bottom:36px;}
+.btn-w{background:#fff;color:var(--gd);padding:16px 40px;border-radius:12px;font-size:16px;font-weight:800;text-decoration:none;display:inline-block;transition:transform 0.1s;font-family:'Syne',sans-serif;}
+.btn-w:hover{transform:translateY(-2px);}
+
+footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.f-logo{font-size:16px;font-weight:800;color:#fff;}
+.f-logo span{color:var(--g);}
+.f-links{display:flex;gap:20px;}
+.f-links a{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;}
+.f-links a:hover{color:#fff;}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s,transform 0.7s;}
+.reveal.in{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Easy<span>To</span>Teach</div>
+  <div class="nav-right">
+    <a href="#pricing">Pricing</a>
+    <a href="#" class="nav-cta">Start free</a>
+  </div>
+</nav>
+
+<div class="journey-progress"><div class="journey-progress-fill" id="jpf"></div></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">✦ Smart tools built for teachers</div>
+    <h1>Give your students<br/><em>more.</em> Do less.</h1>
+    <p class="hero-sub">Lesson plans, quizzes, grading — done in seconds. Not hours. Your tireless teaching assistant, always ready.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-dark">Start free — no card needed</a>
+      <a href="#diagram" class="btn-outline">See how it works ↓</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>scroll to explore</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- SCROLL DIAGRAM -->
+<div class="diagram-sticky-wrap" id="diagram">
+  <div class="diagram-sticky">
+    <div class="diagram-bg-word" id="bgWord">Create</div>
+    <div class="diagram-scene">
+      <div class="step-label" id="stepLabel">Step 1 of 5</div>
+      <div class="nodes-row" id="nodesRow"></div>
+      <div class="step-caption" id="stepCaption">
+        <h2 id="captionH"></h2>
+        <p id="captionP"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TONE PICKER -->
+<section class="tone-section" id="tonePicker">
+  <div class="tone-bg"></div>
+  <div class="tone-inner reveal">
+    <div class="tone-eyebrow">✦ Smart content generator</div>
+    <h2>Want a diagram<br/>for <em>Science?</em></h2>
+    <p class="tone-intro">Pick any subject. Choose your tone. EasyToTeach adapts to your classroom — not the other way around.</p>
+    <div class="subject-chips">
+      <button class="s-chip on" data-s="Science">🔬 Science</button>
+      <button class="s-chip" data-s="History">📜 History</button>
+      <button class="s-chip" data-s="Math">📐 Math</button>
+      <button class="s-chip" data-s="Biology">🧬 Biology</button>
+      <button class="s-chip" data-s="Geography">🌍 Geography</button>
+    </div>
+    <div class="tone-cards">
+      <div class="t-card on" data-t="kids"><span class="t-emoji">🎨</span><div class="t-name">Fun & friendly</div><div class="t-desc">Playful and bright — sparks curiosity in younger learners</div></div>
+      <div class="t-card" data-t="pro"><span class="t-emoji">📋</span><div class="t-name">Professional</div><div class="t-desc">Clear, precise, academic — perfect for high school and exam prep</div></div>
+      <div class="t-card" data-t="adult"><span class="t-emoji">⚡</span><div class="t-name">Fun for adults</div><div class="t-desc">Witty and engaging — makes college students actually pay attention</div></div>
+      <div class="t-card" data-t="interactive"><span class="t-emoji">🎮</span><div class="t-name">Interactive</div><div class="t-desc">Click-through and explorable — students discover rather than read</div></div>
+    </div>
+    <div class="tone-preview">
+      <div class="preview-label">Preview — <span id="prevSubj">Science</span> intro</div>
+      <div class="preview-text" id="prevText">"Hey curious minds! 🌱 Today we're going on a plant adventure — let's find out how leaves turn sunlight into actual food. Spoiler: it's basically plant magic. Ready? Let's go!"</div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARD -->
+<section class="award-section">
+  <div class="award-inner reveal">
+    <span class="trophy">🏆</span>
+    <h2>Win the <em>best teacher</em><br/>award this year.</h2>
+    <p>When you spend less time on admin and more time on your students — they notice. So does everyone else.</p>
+    <div class="stats">
+      <div class="stat reveal"><div class="stat-n">6h</div><div class="stat-l">saved per week</div></div>
+      <div class="stat reveal"><div class="stat-n">30s</div><div class="stat-l">per lesson plan</div></div>
+      <div class="stat reveal"><div class="stat-n">∞</div><div class="stat-l">energy for students</div></div>
+    </div>
+    <a href="#" class="btn-dark" style="font-size:16px;padding:16px 40px;">Start free today</a>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="sec-head reveal">
+      <h2>Simple, <em>honest</em> pricing.</h2>
+      <p>Start free forever. Upgrade when you're ready.</p>
+    </div>
+    <div class="pgrid">
+      <div class="pc reveal"><div class="p-tier">Free</div><div class="p-price"><sup>$</sup>0</div><div class="p-mo">forever</div><div class="p-gens">10 generations / month</div><ul class="p-feats"><li>Lesson planner</li><li>Quiz generator</li><li>Answer grader</li><li>Session history</li></ul><a href="#" class="p-btn">Get started</a></div>
+      <div class="pc reveal"><div class="p-tier">Starter</div><div class="p-price"><sup>$</sup>9</div><div class="p-mo">per month</div><div class="p-gens">100 generations / month</div><ul class="p-feats"><li>Everything in Free</li><li>PDF export</li><li>Cloud history</li><li>Priority support</li></ul><a href="#" class="p-btn">Go Starter</a></div>
+      <div class="pc hot reveal"><div class="p-tier">Pro</div><div class="p-price"><sup>$</sup>19</div><div class="p-mo">per month</div><div class="p-gens">Unlimited generations</div><ul class="p-feats"><li>Everything in Starter</li><li>Standards alignment</li><li>Advanced rubrics</li><li>Analytics dashboard</li><li>Regenerate &amp; refine</li></ul><a href="#" class="p-btn">Go Pro</a></div>
+      <div class="pc reveal"><div class="p-tier">School</div><div class="p-price"><sup>$</sup>49</div><div class="p-mo">per month</div><div class="p-gens">5 seats · unlimited</div><ul class="p-feats"><li>Everything in Pro</li><li>Shared library</li><li>Admin dashboard</li><li>Invoice billing</li></ul><a href="mailto:support@easytoteach.com" class="p-btn">Contact us</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="fcta">
+  <h2>Your students deserve<br/>your <em>best.</em></h2>
+  <p>Stop burning hours on paperwork. Start showing up fully.</p>
+  <a href="#" class="btn-w">Try EasyToTeach free →</a>
+</section>
+
+<footer>
+  <div class="f-logo">Easy<span>To</span>Teach</div>
+  <div class="f-links">
+    <a href="/privacy-policy.html">Privacy</a>
+    <a href="/terms-of-service.html">Terms</a>
+    <a href="mailto:support@easytoteach.com">Contact</a>
+  </div>
+</footer>
+
+<script>
+const STEPS = [
+  {label:'Step 1 of 5',bg:'What?',caption:'What do you need <em>today?</em>',sub:'Click any card — everything starts with a simple choice.',
+   nodes:[{i:'📝',l:'Create Quizzes',s:'Test knowledge',t:'Done in 10 seconds'},{i:'✅',l:'Grade Answers',s:'Instant feedback',t:'Paste & score instantly'},{i:'🎓',l:'Lecture Plans',s:'Full lesson ready',t:'With objectives & hooks'},{i:'📊',l:'Tests & Exams',s:'Full assessments',t:'Answer keys included'}]},
+  {label:'Step 2 of 5',bg:'Choose',caption:'Pick your <em>subject.</em>',sub:'Every subject, every level. From kindergarten to university.',
+   nodes:[{i:'🔬',l:'Science',s:'All branches',t:'Bio, Chem, Physics'},{i:'📐',l:'Math',s:'K-12 & uni',t:'Algebra to Calculus'},{i:'📖',l:'English',s:'ELA & literature',t:'Essays to grammar'},{i:'🌍',l:'History',s:'World & local',t:'Primary sources too'}]},
+  {label:'Step 3 of 5',bg:'Tone',caption:'Choose the <em>right tone.</em>',sub:'Playful for kids. Precise for exams. Witty for college. You pick.',
+   nodes:[{i:'🎨',l:'Fun & friendly',s:'Early grades',t:'Sparks real curiosity'},{i:'📋',l:'Professional',s:'High school+',t:'Exam-ready content'},{i:'⚡',l:'Fun for adults',s:'College level',t:'Actually engaging'},{i:'🎮',l:'Interactive',s:'All ages',t:'Students explore it'}]},
+  {label:'Step 4 of 5',bg:'Generate',caption:'<em>30 seconds.</em> That\'s all.',sub:'Type a topic in plain English. EasyToTeach writes the whole thing.',
+   nodes:[{i:'✍️',l:'Type your topic',s:'Plain English',t:'"Photosynthesis"'},{i:'⚙️',l:'Magic happens',s:'Under 30 seconds',t:'Claude-powered'},{i:'📄',l:'Review & edit',s:'It\'s yours to keep',t:'Full control always'},{i:'📤',l:'Export & teach',s:'PDF or copy',t:'Ready to use now'}]},
+  {label:'Step 5 of 5',bg:'Win',caption:'Win the <em>best teacher</em> award.',sub:'More time for students. Better lessons. Less burnout. That\'s the whole idea.',
+   nodes:[{i:'⏱️',l:'6h saved',s:'every single week',t:'Real time, real life'},{i:'🏆',l:'Best Teacher',s:'award winner',t:'You earned it'},{i:'💚',l:'Less burnout',s:'more joy',t:'Actually sustainable'},{i:'⭐',l:'Happy students',s:'better results',t:'They will notice'}]},
+];
+
+let curStep=-1, curActive=0;
+
+function buildStep(si, active) {
+  const d = STEPS[si];
+  document.getElementById('stepLabel').textContent = d.label;
+  document.getElementById('stepLabel').classList.add('vis');
+  document.getElementById('bgWord').textContent = d.bg;
+  document.getElementById('captionH').innerHTML = d.caption;
+  document.getElementById('captionP').textContent = d.sub;
+  const row = document.getElementById('nodesRow');
+  let html = '';
+  d.nodes.forEach((n,i) => {
+    html += `<div class="node${i<active?' on':''}" style="transition-delay:${i*0.08}s">
+      <div class="node-box${i===1&&active>2?' lit':''}" onclick="this.classList.toggle('lit')">
+        <div class="tip-bubble">${n.t}</div>
+        <div class="node-icon">${n.i}</div>
+        <div class="node-label">${n.l}</div>
+        <div class="node-sub">${n.s}</div>
+      </div>
+    </div>`;
+    if(i < d.nodes.length-1) html += `<div class="connector${i<active-1?' on':''}"><div class="connector-line"></div></div>`;
+  });
+  row.innerHTML = html;
+  const cap = document.getElementById('stepCaption');
+  if(active > 1) cap.classList.add('vis'); else cap.classList.remove('vis');
+}
+
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('diagram');
+  const top = el.getBoundingClientRect().top;
+  const h = el.offsetHeight - window.innerHeight;
+  const p = Math.max(0, Math.min(1, -top / h));
+  document.getElementById('jpf').style.width = (p*100)+'%';
+  const si = Math.min(Math.floor(p / (1/STEPS.length)), STEPS.length-1);
+  const wp = (p - si*(1/STEPS.length)) / (1/STEPS.length);
+  const active = Math.min(Math.ceil(wp*5),4);
+  if(si!==curStep||active!==curActive){curStep=si;curActive=active;buildStep(si,active);}
+}, {passive:true});
+
+buildStep(0,0);
+
+// TONE PICKER
+const previews = {
+  kids:{Science:'"Hey curious minds! 🌱 Today we\'re going on a plant adventure — let\'s find out how leaves turn sunlight into actual food. Spoiler: it\'s basically plant magic. Ready? Let\'s go!"',History:'"Time travel alert! 🚀 We\'re zooming back to ancient Egypt — pyramids, pharaohs, and mummies (the cool kind). Buckle up, time explorers!"',Math:'"Numbers are like superheroes 🦸 and today we\'re learning their secret powers! Ready to become a math hero?"',Biology:'"Psst... your body has TRILLIONS of tiny workers inside it right now 🦠 Want to meet them? Let\'s explore the world\'s smallest city — YOU!"',Geography:'"Planet Earth has seriously wild places 🌋 From the coldest tundra to the hottest desert — adventure starts NOW!"'},
+  pro:{Science:'"This lesson covers photosynthesis: the biochemical conversion of light energy to chemical energy in plant cells. Students will examine light-dependent and light-independent reactions, identify key molecules, and apply knowledge to exam-style questions."',History:'"This module examines causal factors of World War I, with attention to the alliance system, imperial rivalries, and the assassination at Sarajevo. Students will analyse primary sources and construct structured analytical responses."',Math:'"This lesson introduces quadratic equations. Students will derive the quadratic formula, apply it to equations of the form ax² + bx + c = 0, and interpret discriminant values to determine the nature of roots."',Biology:'"This lesson examines cell division through mitosis and meiosis. Students will compare both processes, identify each stage, and evaluate their significance in growth, repair, and reproduction."',Geography:'"This session focuses on tectonic plate boundaries and geomorphological consequences. Students will classify boundary types, analyse earthquake distribution, and evaluate socioeconomic impact of tectonic hazards."'},
+  adult:{Science:'"Plants figured out how to eat sunlight before humans discovered fire. Photosynthesis is basically the original life hack — and today we\'re breaking down exactly how they pull it off. Chlorophyll is about to become your new favourite word."',History:'"One assassination. One archduke. Four years of chaos that reshaped the entire world. How does one bullet start a war that kills 20 million people? It\'s messier and more fascinating than the textbook version."',Math:'"Quadratic equations sound terrifying. They\'re not. They\'re just a fancy way of asking where does this curve hit the ground — which turns out to matter for everything from physics to profit margins."',Biology:'"Your DNA just copied itself while you were reading this sentence. Cell division happens billions of times a day in your body, mostly without a single mistake. When it does make a mistake? That\'s where things get interesting."',Geography:'"The ground under your feet is moving right now. Not fast — about as fast as your fingernails grow — but constantly, relentlessly, building pressure that eventually turns into earthquakes and volcanoes."'},
+  interactive:{Science:'"[Click the sun to start] → Light hits the leaf → [Click the chloroplast] → See inside → [Drag CO₂ in] → Watch glucose form in real time. You control the photosynthesis."',History:'"[Choose a country in 1914] → See their alliances light up → [Trigger the assassination] → Watch the dominoes fall → [Click any nation] → Read why they entered the war."',Math:'"[Move sliders a, b, c] → Watch the parabola shift live → [Click the roots] → See the formula solve step by step → [Try your own values] → Build intuition, not just answers."',Biology:'"[Start with one cell] → Click to trigger mitosis → [Drag chromosomes to the poles] → Watch division complete → [Compare with meiosis] → Spot the differences yourself."',Geography:'"[Spin the globe] → Click any volcano → [Slide the timeline] → Watch eruption history → [Pull plates apart] → See a new ocean form. You\'re in charge of the planet."'},
+};
+
+let selTone='kids', selSubj='Science';
+function updatePreview(animate) {
+  const pt = document.getElementById('prevText');
+  document.getElementById('prevSubj').textContent = selSubj;
+  if(animate){pt.classList.add('fade');setTimeout(()=>{pt.textContent=previews[selTone][selSubj];pt.classList.remove('fade');},250);}
+  else{pt.textContent=previews[selTone][selSubj];}
+}
+document.querySelectorAll('.t-card').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.t-card').forEach(x=>x.classList.remove('on'));
+    c.classList.add('on');selTone=c.dataset.t;updatePreview(true);
+  });
+});
+document.querySelectorAll('.s-chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.s-chip').forEach(x=>x.classList.remove('on'));
+    c.classList.add('on');selSubj=c.dataset.s;updatePreview(true);
+  });
+});
+
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(r=>observer.observe(r));
+</script>
+</body>
+</html>
