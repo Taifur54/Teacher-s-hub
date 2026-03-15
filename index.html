@@ -50,7 +50,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .btn-outline:hover{border-color:var(--g);color:var(--g);background:var(--gl);}
 
 /* ══ DEMO STICKY ══ */
-.demo-sticky-wrap{position:relative;height:420vh;background:var(--ink);}
+.demo-sticky-wrap{position:relative;height:720vh;background:var(--ink);}
 .demo-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;}
 .demo-bg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 10% 50%,rgba(29,158,117,0.12) 0%,transparent 60%),radial-gradient(ellipse 50% 80% at 90% 50%,rgba(29,158,117,0.07) 0%,transparent 60%);}
 
@@ -279,7 +279,7 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
   .demo-card-wrap{position:relative;}
   .demo-card-wrap:not(.active){display:none;}
   .demo-card-wrap.exit{display:none;}
-  .demo-sticky-wrap{height:420vh;}
+  .demo-sticky-wrap{height:720vh;}
   .demo-step-label{top:16px;left:20px;}
   .demo-section-title{display:none;}
   .diagram-sticky-wrap{height:500vh;}
@@ -855,4 +855,8 @@ document.querySelectorAll('.t-card').forEach(c=>{c.addEventListener('click',()=>
 document.querySelectorAll('.s-chip').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('.s-chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');selSubj=c.dataset.s;updatePreview(true);});});
 
 // REVEAL
-const obs=new IntersectionObs
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>
