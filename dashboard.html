@@ -15,13 +15,21 @@ html{scroll-behavior:smooth;}
 body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
 ::selection{background:var(--g);color:#fff;}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:72px;background:rgba(250,249,246,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
-.nav-logo{font-size:18px;font-weight:800;letter-spacing:-0.5px;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:72px;background:rgba(250,249,246,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:background 0.4s,border-color 0.4s;}
+.nav-logo{font-size:18px;font-weight:800;letter-spacing:-0.5px;transition:color 0.4s;}
 .nav-logo span{color:var(--g);}
 .nav-right{display:flex;align-items:center;gap:24px;}
-.nav-right a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;}
-.nav-cta{background:var(--ink);color:var(--paper)!important;padding:8px 20px;border-radius:8px;transition:background 0.15s;}
+.nav-right a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;transition:color 0.4s;}
+.nav-cta{background:var(--ink);color:var(--paper)!important;padding:8px 20px;border-radius:8px;transition:background 0.4s,color 0.4s,border 0.4s;}
 .nav-cta:hover{background:var(--g);}
+
+/* dark nav — applied when scrolled into demo section */
+nav.dark{background:rgba(14,14,14,0.95);border-bottom-color:rgba(255,255,255,0.08);}
+nav.dark .nav-logo{color:#fff;}
+nav.dark .nav-right a:not(.nav-cta){color:rgba(255,255,255,0.6);}
+nav.dark .nav-right a:not(.nav-cta):hover{color:#fff;}
+nav.dark .nav-cta{background:#fff;color:var(--ink)!important;border:none;}
+nav.dark .nav-cta:hover{background:var(--gl);color:var(--gd)!important;}
 
 .jprog{position:fixed;top:72px;left:0;right:0;height:3px;background:rgba(0,0,0,0.06);z-index:150;}
 .jprog-fill{height:100%;background:var(--g);width:0%;will-change:width;}
@@ -865,7 +873,14 @@ function onFrame(){
   if(sy !== lastSY){
     lastSY = sy;
 
-    // ── DEMO scroll ──
+    // ── NAV colour switch ──
+    const nav = document.querySelector('nav');
+    const demoRect = demoWrap.getBoundingClientRect();
+    const diagramRect = diagramWrap.getBoundingClientRect();
+    // dark when demo section or diagram section (dark bg) is covering the nav
+    const inDark = (demoRect.top <= 0 && demoRect.bottom > 72) ||
+                   (diagramRect.top <= 0 && diagramRect.bottom > 72);
+    nav.classList.toggle('dark', inDark);
     const dr = demoWrap.getBoundingClientRect();
     const dTotal = demoWrap.offsetHeight - window.innerHeight;
     const dP = Math.max(0, Math.min(1, -dr.top / dTotal));
