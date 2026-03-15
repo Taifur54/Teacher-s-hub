@@ -803,25 +803,74 @@ function generateOutput(tool,f1,f2,f3,f4){
 <div class="out-line">Extend: independent research, comparative task</div></div>
 ${f4?`<div class="out-s"><div class="out-s-lbl">📎 Includes</div><div class="out-line">${f4}</div></div>`:''}`,
 
-    diagram:`<div class="output-title">🔬 ${topic} — Labelled Diagram</div>
-<div class="out-s"><div class="out-s-lbl">📊 Diagram elements</div>
-<div class="out-line">Main structure with key components labelled</div>
-<div class="out-line">Directional arrows showing process flow</div>
-<div class="out-line">Colour-coded regions for clarity</div></div>
-<div class="out-s"><div class="out-s-lbl">📎 Export options</div>
-<div class="out-tag-row"><span class="out-tag">✓ Print-ready A4</span><span class="out-tag">✓ Editable labels</span><span class="out-tag">✓ PDF export</span><span class="out-tag">✓ Blank version for students</span></div></div>
-<div class="out-s"><div class="out-s-lbl">💡 Teaching note</div>
-<div class="out-line">Diagram suitable for ${level||'your level'} — includes annotation prompts</div></div>`,
+    diagram:`<div class="output-title">🔬 Animal Cell — Labelled Diagram</div>
+<svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:8px 0;border-radius:10px;background:#f9f8f5;padding:8px;">
+  <defs>
+    <radialGradient id="cg2" cx="45%" cy="45%"><stop offset="0%" stop-color="#E1F5EE"/><stop offset="100%" stop-color="#c8eedf"/></radialGradient>
+  </defs>
+  <ellipse cx="178" cy="112" rx="148" ry="92" fill="url(#cg2)" stroke="#1D9E75" stroke-width="2"/>
+  <ellipse cx="152" cy="108" rx="42" ry="36" fill="#fff" stroke="#0F6E56" stroke-width="1.5"/>
+  <ellipse cx="152" cy="108" rx="24" ry="20" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+  <ellipse cx="255" cy="85" rx="26" ry="14" fill="#fff" stroke="#1D9E75" stroke-width="1.3"/>
+  <path d="M242,85 Q249,78 256,85 Q263,92 270,85" fill="none" stroke="#1D9E75" stroke-width="1.1"/>
+  <ellipse cx="240" cy="145" rx="18" ry="13" fill="rgba(29,158,117,0.13)" stroke="#1D9E75" stroke-width="1"/>
+  <circle cx="196" cy="95" r="3.5" fill="#0F6E56" opacity="0.65"/>
+  <circle cx="208" cy="122" r="3.5" fill="#0F6E56" opacity="0.65"/>
+  <circle cx="183" cy="135" r="3.5" fill="#0F6E56" opacity="0.65"/>
+  <rect x="88" y="155" width="50" height="14" rx="4" fill="#fff" stroke="#1D9E75" stroke-width="0.8" opacity="0.7"/>
+  <text x="113" y="165" font-size="7.5" font-family="sans-serif" fill="#0F6E56" text-anchor="middle" font-weight="600">Smooth ER</text>
+  <line x1="108" y1="155" x2="120" y2="135" stroke="#aaa" stroke-width="0.8"/>
+  <line x1="108" y1="108" x2="72" y2="95" stroke="#888" stroke-width="0.8"/>
+  <text x="70" y="92" font-size="8" font-family="sans-serif" fill="#333" text-anchor="end">Nucleus</text>
+  <line x1="255" y1="71" x2="255" y2="48" stroke="#888" stroke-width="0.8"/>
+  <text x="255" y="45" font-size="8" font-family="sans-serif" fill="#333" text-anchor="middle">Mitochondria</text>
+  <line x1="240" y1="158" x2="270" y2="178" stroke="#888" stroke-width="0.8"/>
+  <text x="273" y="181" font-size="8" font-family="sans-serif" fill="#333">Vacuole</text>
+  <line x1="322" y1="112" x2="338" y2="112" stroke="#888" stroke-width="0.8"/>
+  <text x="340" y="115" font-size="8" font-family="sans-serif" fill="#333">Cell membrane</text>
+  <line x1="152" y1="72" x2="152" y2="48" stroke="#888" stroke-width="0.8"/>
+  <text x="152" y="45" font-size="8" font-family="sans-serif" fill="#333" text-anchor="middle">Nucleolus</text>
+  <line x1="197" y1="91" x2="210" y2="72" stroke="#888" stroke-width="0.8"/>
+  <text x="212" y="69" font-size="8" font-family="sans-serif" fill="#333">Ribosomes</text>
+</svg>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">
+  <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--gl);color:var(--gd);">✓ Print-ready</span>
+  <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--gl);color:var(--gd);">✓ Editable labels</span>
+  <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--gl);color:var(--gd);">✓ Blank version included</span>
+  <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--gl);color:var(--gd);">✓ PDF export</span>
+</div>`,
 
-    quiz:`<div class="output-title">📐 ${topic} — Quiz</div>
-<div class="out-s"><div class="out-s-lbl">Q1 — Multiple choice</div>
-<div class="out-line">Which of the following best describes ${topic}?</div>
-<div class="out-tag-row"><span class="out-tag">A. Option one</span><span class="out-tag">B. Option two</span><span class="out-tag" style="background:var(--g);color:#fff;">C. Correct ✓</span><span class="out-tag">D. Option four</span></div></div>
-<div class="out-s"><div class="out-s-lbl">Q2 — Short answer</div>
-<div class="out-line">Explain in your own words how ${topic} works. (3 marks)</div></div>
-<div class="out-s"><div class="out-s-lbl">🔑 Answer key</div>
-<div class="out-line">Q1 → C. Detailed explanation provided</div>
-<div class="out-line">Q2 → Model answer: 3 key points required for full marks</div></div>`,
+    quiz:`<div class="output-title">📐 Quadratic Equations — Quiz · Grade 10</div>
+<div style="background:#faf9f6;border-radius:10px;padding:12px;margin-bottom:10px;">
+  <div style="font-size:9px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Q1 — Multiple choice</div>
+  <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.4;">Which of the following is a solution to x² − 5x + 6 = 0?</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+    <div style="font-size:11px;padding:5px 9px;border-radius:6px;background:#fff;border:1px solid var(--border);color:#555;">A. x = 1</div>
+    <div style="font-size:11px;padding:5px 9px;border-radius:6px;background:#fff;border:1px solid var(--border);color:#555;">B. x = 2</div>
+    <div style="font-size:11px;padding:5px 9px;border-radius:6px;background:var(--gl);border:1px solid var(--g);color:var(--gd);font-weight:700;">C. x = 3 ✓</div>
+    <div style="font-size:11px;padding:5px 9px;border-radius:6px;background:#fff;border:1px solid var(--border);color:#555;">D. x = 4</div>
+  </div>
+</div>
+<div style="background:#faf9f6;border-radius:10px;padding:12px;margin-bottom:10px;">
+  <div style="font-size:9px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Q2 — Short answer</div>
+  <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:6px;line-height:1.4;">Use the quadratic formula to solve: 2x² + 3x − 2 = 0. Show your working.</div>
+  <div style="font-size:11px;color:var(--muted);font-style:italic;padding:7px 9px;background:#fff;border-radius:7px;border:1px dashed var(--border);">Student answer space</div>
+</div>
+<div style="background:#f0faf6;border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:12px;margin-bottom:10px;">
+  <div style="font-size:9px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:7px;">🔑 Answer key</div>
+  <div style="font-size:11px;color:#333;margin-bottom:4px;"><strong style="color:var(--gd);">Q1 →</strong> C. Factors to (x−2)(x−3)=0, giving x=2 or x=3. Option C is one correct root.</div>
+  <div style="font-size:11px;color:#333;"><strong style="color:var(--gd);">Q2 →</strong> x = ½ or x = −2, using x = (−3 ± √(9+16)) ÷ 4 = (−3 ± 5) ÷ 4</div>
+</div>
+<div style="background:var(--ink);border-radius:10px;padding:11px;text-align:center;">
+  <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">Formula sheet included</div>
+  <div style="font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;gap:5px;">
+    x =
+    <span style="display:inline-flex;flex-direction:column;align-items:center;gap:1px;font-size:12px;">
+      <span style="border-bottom:1.5px solid rgba(255,255,255,0.4);padding-bottom:2px;">−b ± √(b²−4ac)</span>
+      <span style="padding-top:2px;">2a</span>
+    </span>
+  </div>
+</div>`,
 
     essay:`<div class="output-title">✍️ Essay Feedback</div>
 <div class="out-s"><div class="out-s-lbl">📊 Score</div>
