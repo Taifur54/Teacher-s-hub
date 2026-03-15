@@ -15,13 +15,21 @@ html{scroll-behavior:smooth;}
 body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
 ::selection{background:var(--g);color:#fff;}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:72px;background:rgba(250,249,246,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
-.nav-logo{font-size:18px;font-weight:800;letter-spacing:-0.5px;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:72px;background:rgba(250,249,246,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:background 0.4s,border-color 0.4s;}
+.nav-logo{font-size:18px;font-weight:800;letter-spacing:-0.5px;transition:color 0.4s;}
 .nav-logo span{color:var(--g);}
 .nav-right{display:flex;align-items:center;gap:24px;}
-.nav-right a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;}
-.nav-cta{background:var(--ink);color:var(--paper)!important;padding:8px 20px;border-radius:8px;transition:background 0.15s;}
+.nav-right a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;transition:color 0.4s;}
+.nav-cta{background:var(--ink);color:var(--paper)!important;padding:8px 20px;border-radius:8px;transition:background 0.4s,color 0.4s,border 0.4s;}
 .nav-cta:hover{background:var(--g);}
+
+/* dark nav — applied when scrolled into demo section */
+nav.dark{background:rgba(14,14,14,0.95);border-bottom-color:rgba(255,255,255,0.08);}
+nav.dark .nav-logo{color:#fff;}
+nav.dark .nav-right a:not(.nav-cta){color:rgba(255,255,255,0.6);}
+nav.dark .nav-right a:not(.nav-cta):hover{color:#fff;}
+nav.dark .nav-cta{background:#fff;color:var(--ink)!important;border:none;}
+nav.dark .nav-cta:hover{background:var(--gl);color:var(--gd)!important;}
 
 .jprog{position:fixed;top:72px;left:0;right:0;height:3px;background:rgba(0,0,0,0.06);z-index:150;}
 .jprog-fill{height:100%;background:var(--g);width:0%;will-change:width;}
@@ -50,42 +58,70 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .btn-outline:hover{border-color:var(--g);color:var(--g);background:var(--gl);}
 
 /* ══ DEMO STICKY ══ */
-.demo-sticky-wrap{position:relative;height:calc(100vh * 7);background:var(--ink);}
-.demo-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;}
+.demo-sticky-wrap{position:relative;height:calc(100vh * 8);background:var(--ink);}
+.demo-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding-top:72px;}
 .demo-bg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 10% 50%,rgba(29,158,117,0.12) 0%,transparent 60%),radial-gradient(ellipse 50% 80% at 90% 50%,rgba(29,158,117,0.07) 0%,transparent 60%);}
 
-.demo-step-label{position:absolute;top:18px;left:40px;z-index:10;display:flex;align-items:center;gap:14px;}
+.demo-step-label{position:absolute;top:20px;left:40px;z-index:10;display:flex;align-items:center;gap:14px;}
 .demo-step-counter{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);}
 .demo-step-dots{display:flex;gap:6px;}
 .demo-step-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);transition:background 0.3s,transform 0.3s;}
 .demo-step-dot.active{background:var(--g);transform:scale(1.4);}
-.demo-section-title{position:absolute;top:18px;left:50%;transform:translateX(-50%);z-index:10;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
+.demo-section-title{position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
 
-.demo-inner{position:relative;z-index:2;width:100%;max-width:1160px;margin:0 auto;padding:52px 40px 20px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;height:100vh;box-sizing:border-box;}
+.demo-inner{
+  position:relative;z-index:2;
+  width:100%;max-width:1160px;margin:0 auto;
+  padding:20px 40px 20px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:48px;align-items:center;
+  height:100vh;box-sizing:border-box;
+}
 
-.demo-left{color:#fff;display:flex;align-items:center;}
-.demo-left-steps{position:relative;min-height:220px;width:100%;}
-.demo-ls{position:absolute;top:0;left:0;right:0;opacity:0;transform:translateY(16px);transition:opacity 0.45s cubic-bezier(0.4,0,0.2,1),transform 0.45s cubic-bezier(0.4,0,0.2,1);}
-.demo-ls.active{opacity:1;transform:translateY(0);}
-.demo-ls.exit{opacity:0;transform:translateY(-16px);}
+.demo-left{color:#fff;}
+.demo-left-steps{position:relative;min-height:240px;}
+.demo-ls{
+  position:absolute;top:0;left:0;right:0;
+  opacity:0;transform:translateY(20px);
+  transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  pointer-events:none;
+}
+.demo-ls.active{opacity:1;transform:translateY(0);pointer-events:auto;}
+.demo-ls.exit{opacity:0;transform:translateY(-20px);}
 .demo-pill{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);background:rgba(29,158,117,0.15);border:1px solid rgba(29,158,117,0.3);padding:5px 14px;border-radius:999px;margin-bottom:20px;}
 .demo-h{font-family:'Playfair Display',serif;font-size:clamp(26px,3.8vw,50px);font-weight:700;line-height:1.15;margin-bottom:16px;}
 .demo-h em{font-style:italic;color:var(--g);}
 .demo-sub{font-size:15px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:380px;}
 .demo-sub strong{color:rgba(255,255,255,0.8);font-weight:600;}
 
-.demo-right{position:relative;height:calc(100vh - 90px);max-height:680px;}
-.demo-card-wrap{position:absolute;top:0;left:0;right:0;bottom:0;opacity:0;transform:translateX(24px) scale(0.98);transition:opacity 0.45s cubic-bezier(0.4,0,0.2,1),transform 0.45s cubic-bezier(0.4,0,0.2,1);pointer-events:none;}
+/* right column — fixed height based on viewport */
+.demo-right{
+  position:relative;
+  height:calc(100vh - 132px);
+  max-height:580px;
+  min-height:360px;
+}
+.demo-card-wrap{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  opacity:0;
+  transform:translateX(32px) scale(0.97);
+  transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  pointer-events:none;
+}
 .demo-card-wrap.active{opacity:1;transform:translateX(0) scale(1);pointer-events:auto;}
-.demo-card-wrap.exit{opacity:0;transform:translateX(-24px) scale(0.98);}
+.demo-card-wrap.exit{opacity:0;transform:translateX(-32px) scale(0.97);}
 
-.mock-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.5);height:100%;display:flex;flex-direction:column;}
-.mock-topbar{background:#1a1a1a;padding:12px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.mock-card{
+  background:#fff;border-radius:20px;overflow:hidden;
+  box-shadow:0 32px 80px rgba(0,0,0,0.5);
+  height:100%;display:flex;flex-direction:column;
+}
+.mock-topbar{background:#1a1a1a;padding:12px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0;}
 .mock-dots{display:flex;gap:5px;}
 .mock-dot{width:10px;height:10px;border-radius:50%;}
 .mock-dot.r{background:#FF5F57;}.mock-dot.y{background:#FEBC2E;}.mock-dot.g{background:#28C840;}
 .mock-topbar-label{font-size:11px;font-weight:600;color:rgba(255,255,255,0.3);margin-left:6px;font-family:'Syne',sans-serif;}
-.mock-body{padding:14px 18px;background:#fff;overflow-y:auto;flex:1;min-height:0;}
+.mock-body{padding:16px 18px;background:#fff;overflow-y:auto;flex:1;min-height:0;}
 
 .mock-input-row{display:flex;flex-direction:column;gap:6px;margin-bottom:11px;}
 .mock-input-field{background:#f5f4f1;border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;}
@@ -277,21 +313,20 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
   nav{padding:0 20px;}
   .hero{padding:100px 20px 60px;}
   .hero-trust{gap:12px;flex-direction:column;align-items:center;}
-  .demo-sticky{flex-direction:column;justify-content:flex-start;padding-top:56px;}
-  .demo-inner{grid-template-columns:1fr;gap:12px;padding:0 16px;align-items:start;height:auto;}
-  .demo-left{align-items:flex-start;}
-  .demo-left-steps{min-height:140px;}
-  .demo-right{height:auto;max-height:none;position:relative;}
+  .demo-sticky{justify-content:flex-start;padding-top:60px;}
+  .demo-inner{grid-template-columns:1fr;gap:16px;padding:60px 16px 20px;height:auto;align-items:start;}
+  .demo-left-steps{min-height:160px;}
+  .demo-right{height:auto;max-height:none;min-height:auto;position:relative;}
   .demo-card-wrap{position:relative;top:auto;left:auto;right:auto;bottom:auto;transform:none !important;height:auto;}
   .demo-card-wrap:not(.active){display:none;}
   .demo-card-wrap.exit{display:none;}
-  .demo-sticky-wrap{height:calc(100vh * 7);}
+  .demo-sticky-wrap{height:calc(100vh * 8);}
+  .mock-card{height:auto;max-height:52vh;border-radius:16px;}
+  .mock-body{max-height:calc(52vh - 44px);padding:12px 14px;}
+  .mock-input-val{font-size:11px;max-width:150px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .demo-step-label{top:14px;left:16px;}
   .demo-section-title{display:none;}
-  .mock-card{border-radius:16px;height:auto;max-height:55vh;}
-  .mock-body{max-height:calc(55vh - 44px);padding:12px 14px;}
-  .mock-input-val{font-size:11px;max-width:160px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .demo-h{font-size:clamp(20px,5.5vw,32px);}
+  .demo-h{font-size:clamp(20px,5.5vw,30px);}
   .demo-sub{font-size:13px;line-height:1.6;}
   .demo-pill{font-size:9px;padding:4px 12px;}
   .diagram-sticky-wrap{height:500vh;}
@@ -759,23 +794,31 @@ const demoCounter = document.getElementById('demoCounter');
 const demoProgressFill = document.getElementById('demoProgressFill');
 let activeDemoStep = 0;
 
+
 function setDemoStep(si) {
   if (si === activeDemoStep) return;
-  demoLSEls[activeDemoStep].classList.remove('active');
-  demoLSEls[activeDemoStep].classList.add('exit');
-  const pl = activeDemoStep;
-  setTimeout(()=>demoLSEls[pl].classList.remove('exit'),600);
-  demoLSEls[si].classList.add('active');
 
-  demoCardEls[activeDemoStep].classList.remove('active');
-  demoCardEls[activeDemoStep].classList.add('exit');
-  const pc = activeDemoStep;
-  setTimeout(()=>demoCardEls[pc].classList.remove('exit'),600);
-  demoCardEls[si].classList.add('active');
+  // debounce — don't fire if another change is pending within 80ms
+  if(demoStepTimer) clearTimeout(demoStepTimer);
+  demoStepTimer = setTimeout(()=>{
+    if(si === activeDemoStep) return;
 
-  demoDotEls.forEach((d,i)=>d.classList.toggle('active',i===si));
-  demoCounter.textContent = String(si+1).padStart(2,'0') + ' / 0' + DEMO_STEPS;
-  activeDemoStep = si;
+    demoLSEls[activeDemoStep].classList.remove('active');
+    demoLSEls[activeDemoStep].classList.add('exit');
+    const pl = activeDemoStep;
+    setTimeout(()=>demoLSEls[pl].classList.remove('exit'), 650);
+    demoLSEls[si].classList.add('active');
+
+    demoCardEls[activeDemoStep].classList.remove('active');
+    demoCardEls[activeDemoStep].classList.add('exit');
+    const pc = activeDemoStep;
+    setTimeout(()=>demoCardEls[pc].classList.remove('exit'), 650);
+    demoCardEls[si].classList.add('active');
+
+    demoDotEls.forEach((d,i)=>d.classList.toggle('active',i===si));
+    demoCounter.textContent = String(si+1).padStart(2,'0') + ' / 0' + DEMO_STEPS;
+    activeDemoStep = si;
+  }, 80);
 }
 
 // ══ HOW IT WORKS STEPS ══
@@ -818,38 +861,64 @@ STEPS.forEach((s,si)=>{
 // ══ SCROLL DRIVER ══
 const bgWord=document.getElementById('bgWord');
 const diagramWrap=document.getElementById('diagram');
-let lastSY=-1,activeStep=0;
+const nav=document.querySelector('nav');
+let lastSY=-1, activeStep=0;
+let demoStepTimer=null;
 bgWord.textContent=STEPS[0].bg;
 
 function onFrame(){
-  const sy=window.scrollY;
-  if(sy!==lastSY){
-    lastSY=sy;
-    // demo
-    const dr=demoWrap.getBoundingClientRect();
-    const dTotal=demoWrap.offsetHeight-window.innerHeight;
-    const dP=Math.max(0,Math.min(1,-dr.top/dTotal));
-    setDemoStep(Math.min(Math.floor(dP*DEMO_STEPS),DEMO_STEPS-1));
-    demoProgressFill.style.width=(dP*100)+'%';
-    // how it works
-    const wr=diagramWrap.getBoundingClientRect();
-    const wTotal=diagramWrap.offsetHeight-window.innerHeight;
-    const wP=Math.max(0,Math.min(1,-wr.top/wTotal));
-    const raw=wP*STEPS.length;
-    const si=Math.min(Math.floor(raw),STEPS.length-1);
-    const within=raw-si;
-    if(si!==activeStep){
+  const sy = window.scrollY;
+  if(sy !== lastSY){
+    lastSY = sy;
+
+    // ── NAV colour switch ──
+    const demoRect = demoWrap.getBoundingClientRect();
+    const diagramRect = diagramWrap.getBoundingClientRect();
+    const toneEl = document.querySelector('.tone-section');
+    const toneRect = toneEl ? toneEl.getBoundingClientRect() : {top:9999,bottom:0};
+    const inDark = (demoRect.top <= 0 && demoRect.bottom > 72) ||
+                   (toneRect.top <= 0 && toneRect.bottom > 72);
+    nav.classList.toggle('dark', inDark);
+    const dr = demoWrap.getBoundingClientRect();
+    const dTotal = demoWrap.offsetHeight - window.innerHeight;
+    const dP = Math.max(0, Math.min(1, -dr.top / dTotal));
+
+    // use 0.15 deadzone at start and end of each step so card stays visible longer
+    const rawDemoStep = dP * DEMO_STEPS;
+    const dsi = Math.min(Math.floor(rawDemoStep), DEMO_STEPS - 1);
+    const dWithin = rawDemoStep - dsi;
+    // only change step when we're clearly into the next one (past 15% threshold)
+    const targetStep = dWithin > 0.15 && dsi < DEMO_STEPS - 1
+      ? dsi
+      : dsi;
+    setDemoStep(Math.min(Math.floor(dP * DEMO_STEPS), DEMO_STEPS - 1));
+    demoProgressFill.style.width = (dP * 100) + '%';
+
+    // ── HOW IT WORKS scroll ──
+    const wr = diagramWrap.getBoundingClientRect();
+    const wTotal = diagramWrap.offsetHeight - window.innerHeight;
+    const wP = Math.max(0, Math.min(1, -wr.top / wTotal));
+    const raw = wP * STEPS.length;
+    const si = Math.min(Math.floor(raw), STEPS.length - 1);
+    const within = raw - si;
+
+    if(si !== activeStep){
       stepEls[activeStep].classList.remove('active');
       stepEls[activeStep].classList.add('exit-up');
-      const prev=activeStep;
-      setTimeout(()=>{stepEls[prev].classList.remove('exit-up');stepEls[prev].style.position='absolute';},600);
-      activeStep=si;
-      stepEls[si].style.position=si===0?'relative':'absolute';
+      const prev = activeStep;
+      setTimeout(()=>{
+        stepEls[prev].classList.remove('exit-up');
+        stepEls[prev].style.position = 'absolute';
+      }, 600);
+      activeStep = si;
+      stepEls[si].style.position = si === 0 ? 'relative' : 'absolute';
       stepEls[si].classList.add('active');
-      bgWord.textContent=STEPS[si].bg;
+      bgWord.textContent = STEPS[si].bg;
     }
-    bgWord.style.transform=`translate(-50%,-50%) scale(${1+within*0.04})`;
-    document.getElementById('jpf').style.width=(sy/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+    bgWord.style.transform = `translate(-50%,-50%) scale(${1 + within * 0.04})`;
+
+    // overall progress
+    document.getElementById('jpf').style.width = (sy / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
   }
   requestAnimationFrame(onFrame);
 }
