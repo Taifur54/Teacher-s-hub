@@ -601,21 +601,6 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
               <span class="profile-saved-msg" id="profileSavedMsg">✓ Saved!</span>
             </div>
           </div>
-
-          <!-- API KEY SETTINGS -->
-          <div class="profile-card">
-            <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px;">API Key</div>
-            <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">Your Anthropic API key — stored locally on your device only.</div>
-            <div class="profile-edit-field">
-              <label>Anthropic API Key</label>
-              <input type="password" id="apiKeyInput" placeholder="sk-ant-..." style="font-family:monospace;"/>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <button class="profile-save-btn" onclick="saveApiKey()">Save key</button>
-              <button style="background:transparent;border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted);" onclick="clearApiKey()">Remove key</button>
-              <span class="profile-saved-msg" id="apiKeySavedMsg">✓ Saved!</span>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -623,13 +608,19 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
   </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// ══ CONFIG — paste your keys here ══
+const SUPABASE_URL = 'https://pmmwyxbkdoxtjugytcpa.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_yPw2eEwVi5AhRB2r-xSCYQ_db39uPRX';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 // ══ STATE ══
 let profile = JSON.parse(localStorage.getItem('yt_profile')||'{}');
 let stats   = JSON.parse(localStorage.getItem('yt_stats')||'{"gen":0,"plans":0,"quizzes":0}');
 let isGuest = false;
 let currentTool = null;
-let apiKey = localStorage.getItem('yt_apikey')||'';
+let currentUser = null;
 
 // ══ AUTH ══
 function switchAuthTab(tab){
@@ -637,31 +628,74 @@ function switchAuthTab(tab){
   document.getElementById('auth-login').style.display = tab==='login'?'block':'none';
   document.getElementById('auth-signup').style.display = tab==='signup'?'block':'none';
 }
-function doLogin(){
+
+async function doLogin(){
   const email = document.getElementById('login-email').value.trim();
-  if(!email){alert('Please enter your email.');return;}
-  if(!profile.email) profile.email = email;
+  const pass  = document.getElementById('login-pass').value.trim();
+  if(!email||!pass){ alert('Please enter your email and password.'); return; }
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if(error){ alert('Login failed: ' + error.message); return; }
+  currentUser = data.user;
   isGuest = false;
+  await loadProfileFromDB();
   gotoProfileOrDash();
 }
-function doSignup(){
+
+async function doSignup(){
   const name  = document.getElementById('signup-name').value.trim();
   const email = document.getElementById('signup-email').value.trim();
-  if(!name||!email){alert('Please fill in your name and email.');return;}
+  const pass  = document.getElementById('signup-pass').value.trim();
+  if(!name||!email||!pass){ alert('Please fill in all fields.'); return; }
+  const { data, error } = await sb.auth.signUp({ email, password: pass });
+  if(error){ alert('Signup failed: ' + error.message); return; }
+  currentUser = data.user;
   profile.fname = name.split(' ')[0];
   profile.lname = name.split(' ').slice(1).join(' ');
   profile.email = email;
-  localStorage.setItem('yt_profile', JSON.stringify(profile));
   isGuest = false;
   showScreen('screen-profile');
 }
+
+async function loadProfileFromDB(){
+  if(!currentUser) return;
+  const { data } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+  if(data){
+    profile.fname   = data.fname||'';
+    profile.lname   = data.lname||'';
+    profile.school  = data.school||'';
+    profile.subject = data.subject||'';
+    profile.grade   = data.grade||'';
+    profile.email   = data.email||'';
+    profile.avatar  = data.avatar_url||null;
+    localStorage.setItem('yt_profile', JSON.stringify(profile));
+  }
+}
+
+async function saveProfileToDB(){
+  if(!currentUser) return;
+  await sb.from('profiles').upsert({
+    id:         currentUser.id,
+    fname:      profile.fname,
+    lname:      profile.lname,
+    school:     profile.school,
+    subject:    profile.subject,
+    grade:      profile.grade,
+    email:      profile.email,
+    avatar_url: profile.avatar||null,
+  });
+}
 function doGuest(){
   isGuest = true;
+  currentUser = null;
   profile = {fname:'Guest',lname:'Teacher',school:'',subject:'',grade:'',email:''};
   gotoProfileOrDash();
 }
-function doLogout(){
+async function doLogout(){
+  if(!isGuest) await sb.auth.signOut();
   isGuest = false;
+  currentUser = null;
+  profile = {};
+  localStorage.removeItem('yt_profile');
   showScreen('screen-auth');
 }
 function gotoProfileOrDash(){
@@ -671,7 +705,7 @@ function gotoProfileOrDash(){
 
 // ══ PROFILE SETUP ══
 let setupAvatarData = null;
-function saveProfile(){
+async function saveProfile(){
   profile.fname   = document.getElementById('setup-fname').value.trim() || 'Teacher';
   profile.lname   = document.getElementById('setup-lname').value.trim() || '';
   profile.school  = document.getElementById('setup-school').value.trim();
@@ -680,11 +714,13 @@ function saveProfile(){
   profile.email   = document.getElementById('setup-email').value.trim();
   if(setupAvatarData) profile.avatar = setupAvatarData;
   localStorage.setItem('yt_profile', JSON.stringify(profile));
+  await saveProfileToDB();
   enterDash();
 }
-function skipProfile(){
+async function skipProfile(){
   if(!profile.fname) profile.fname = 'Teacher';
   localStorage.setItem('yt_profile', JSON.stringify(profile));
+  await saveProfileToDB();
   enterDash();
 }
 
@@ -895,54 +931,47 @@ async function runTool(){
     return;
   }
 
-  // ── LOGGED IN — use real Claude API ──
-  if(!apiKey){
-    const key = prompt('Enter your Anthropic API key to enable generation:');
-    if(!key){ return; }
-    apiKey = key.trim();
-    localStorage.setItem('yt_apikey', apiKey);
-  }
-
+  // ── LOGGED IN — call Supabase edge function (API key stays server-side) ──
   btn.classList.add('loading');
   document.getElementById('toolOutput').innerHTML = `<div class="output-placeholder"><div class="ph-icon" style="animation:spin 1s linear infinite;display:inline-block;">⚙️</div><p style="margin-top:12px;">Generating your ${document.getElementById('toolPanelTitle').textContent.toLowerCase()}...<br/><span style="font-size:11px;color:#bbb;">This takes about 15–20 seconds</span></p></div>`;
   document.getElementById('outputActions').style.display='none';
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const { data: { session } } = await sb.auth.getSession();
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/generate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
+        'Authorization': `Bearer ${session.access_token}`,
+        'apikey': SUPABASE_ANON_KEY
       },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1500,
-        messages: [{
-          role: 'user',
-          content: buildPrompt(currentTool, f1, f2, f3, f4)
-        }]
-      })
+      body: JSON.stringify({ prompt: buildPrompt(currentTool, f1, f2, f3, f4) })
     });
 
-    if(!response.ok){
-      const err = await response.json();
-      throw new Error(err.error?.message||'API error');
+    const data = await response.json();
+
+    if(data.error === 'trial_expired'){
+      btn.classList.remove('loading');
+      document.getElementById('toolOutput').innerHTML = `
+        <div style="text-align:center;padding:32px 20px;">
+          <div style="font-size:36px;margin-bottom:12px;">⏰</div>
+          <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px;">Your free trial has ended</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;">Upgrade to keep using YesTeachers — from $9/month.</div>
+          <a href="index.html#pricing" style="background:var(--g);color:#fff;padding:11px 24px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;">See plans →</a>
+        </div>`;
+      return;
     }
 
-    const data = await response.json();
-    const text = data.content[0].text;
+    if(data.error === 'maintenance' || !response.ok){
+      throw new Error(data.error||'Something went wrong');
+    }
 
-    // render the response nicely
     btn.classList.remove('loading');
-    document.getElementById('toolOutput').innerHTML = `<div class="output-title">${document.getElementById('toolPanelIcon').textContent} ${f2||f1} — ${document.getElementById('toolPanelTitle').textContent}</div><div class="output-result">${formatResponse(text)}</div>`;
+    document.getElementById('toolOutput').innerHTML = `<div class="output-title">${document.getElementById('toolPanelIcon').textContent} ${f2||f1} — ${document.getElementById('toolPanelTitle').textContent}</div><div class="output-result">${formatResponse(data.result)}</div>`;
     const actions = document.getElementById('outputActions');
     actions.style.display='flex';
 
-    // next step button after lesson plan
     if(currentTool==='lesson'){
-      // remove existing next btn if any
       const existing = actions.querySelector('.next-step-btn');
       if(existing) existing.remove();
       const nextBtn = document.createElement('button');
@@ -959,15 +988,14 @@ async function runTool(){
     localStorage.setItem('yt_stats',JSON.stringify(stats));
     updateStats();
 
-  } catch(err) {
+  } catch(err){
     btn.classList.remove('loading');
-    const isDown = err.message?.includes('529')||err.message?.includes('overloaded')||err.message?.includes('network');
+    const isDown = err.message?.includes('maintenance')||err.message?.includes('overloaded');
     document.getElementById('toolOutput').innerHTML = `
       <div style="text-align:center;padding:32px 20px;">
         <div style="font-size:36px;margin-bottom:12px;">${isDown?'🔧':'⚠️'}</div>
         <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px;">${isDown?'Maintenance going on':'Something went wrong'}</div>
         <div style="font-size:13px;color:var(--muted);line-height:1.6;">${isDown?'We\'ll be back in 30 minutes or so.':'Please check your connection and try again.'}</div>
-        ${!isDown?`<div style="font-size:11px;color:#bbb;margin-top:8px;">${err.message}</div>`:''}
       </div>`;
     document.getElementById('outputActions').style.display='none';
   }
@@ -1215,7 +1243,7 @@ function loadProfileEditFields(){
   document.getElementById('profileDisplaySubject').textContent = profile.subject||'No subject';
   setAllAvatars(profile.avatar||null);
 }
-function saveProfileEdit(){
+async function saveProfileEdit(){
   profile.fname   = document.getElementById('profile-fname').value.trim()||'Teacher';
   profile.lname   = document.getElementById('profile-lname').value.trim();
   profile.school  = document.getElementById('profile-school').value.trim();
@@ -1223,6 +1251,7 @@ function saveProfileEdit(){
   profile.grade   = document.getElementById('profile-grade').value;
   profile.email   = document.getElementById('profile-email').value.trim();
   localStorage.setItem('yt_profile',JSON.stringify(profile));
+  await saveProfileToDB();
   refreshProfileUI();
   loadProfileEditFields();
   const msg = document.getElementById('profileSavedMsg');
@@ -1254,12 +1283,20 @@ function closeSidebar(){
   document.getElementById('mobOverlay').classList.remove('show');
 }
 
-// ══ INIT ══
-// if profile already saved, skip setup
-if(profile.fname){
-  isGuest = false;
-  enterDash();
-}
+// ══ INIT — check if already logged in ══
+(async()=>{
+  const { data: { session } } = await sb.auth.getSession();
+  if(session){
+    currentUser = session.user;
+    isGuest = false;
+    await loadProfileFromDB();
+    enterDash();
+  } else if(profile.fname){
+    // had a guest/local session
+    isGuest = false;
+    enterDash();
+  }
+})();
 </script>
 </body>
 </html>
