@@ -535,6 +535,15 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
               </div>
               <a href="index.html#pricing" class="trial-upgrade-link">See plans →</a>
             </div>
+            <!-- Promo code redemption — only show if no active trial -->
+            <div id="profilePromoWrap" style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+              <div style="font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Redeem a promo code</div>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                <input type="text" id="profile-promo-input" placeholder="e.g. PROMO1MONTHTRIAL" style="flex:1;min-width:180px;background:#faf9f6;border:1.5px solid var(--border);border-radius:9px;padding:10px 13px;font-size:13px;color:var(--ink);outline:none;transition:border-color 0.2s;text-transform:uppercase;letter-spacing:0.05em;" oninput="this.value=this.value.toUpperCase()" onfocus="this.style.borderColor='var(--g)'" onblur="this.style.borderColor='var(--border)'"/>
+                <button onclick="redeemProfilePromo()" id="profile-promo-btn" style="background:var(--ink);color:#fff;border:none;border-radius:9px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;transition:background 0.15s;white-space:nowrap;">Apply code</button>
+              </div>
+              <div id="profile-promo-msg" style="font-size:12px;margin-top:8px;display:none;"></div>
+            </div>
           </div>
 
           <div class="profile-card">
@@ -846,21 +855,86 @@ function renderTrialUI() {
     infoCard.style.display = 'block';
     const badge  = document.getElementById('trialStatusBadge');
     const detail = document.getElementById('trialStatusDetail');
+    const promoWrap = document.getElementById('profilePromoWrap');
     if (t.status === 'active') {
       badge.textContent = `✓ Active — ${t.daysLeft} days left`;
       badge.className   = 'trial-status-badge active';
       detail.textContent = `Expires ${t.expDate.toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'})}`;
+      promoWrap.style.display = 'none'; // already on trial, hide the input
     } else if (t.status === 'expired') {
       badge.textContent = '⏰ Expired';
       badge.className   = 'trial-status-badge expired';
       detail.textContent = `Ended ${t.expDate.toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'})}`;
+      promoWrap.style.display = 'block';
     } else {
       badge.textContent = 'No trial';
       badge.className   = 'trial-status-badge none';
-      detail.textContent = 'You don\'t have a free trial on this account.';
+      detail.textContent = 'Enter a promo code below to activate your free trial.';
+      promoWrap.style.display = 'block';
     }
   } else {
     infoCard.style.display = 'none';
+  }
+}
+
+// ══ REDEEM PROMO FROM PROFILE PAGE ══
+async function redeemProfilePromo() {
+  const input = document.getElementById('profile-promo-input');
+  const msg   = document.getElementById('profile-promo-msg');
+  const btn   = document.getElementById('profile-promo-btn');
+  const code  = input.value.trim().toUpperCase();
+
+  if (!code) { showPromoMsg('Please enter a promo code.', 'error'); return; }
+  if (!currentUser) { showPromoMsg('You need to be logged in to redeem a code.', 'error'); return; }
+
+  btn.textContent = 'Checking…'; btn.disabled = true;
+
+  const { data, error } = await sb
+    .from('promo_codes')
+    .select('id, type, used')
+    .eq('code', code)
+    .single();
+
+  if (error || !data) {
+    showPromoMsg('✗ Invalid promo code.', 'error');
+    btn.textContent = 'Apply code'; btn.disabled = false; return;
+  }
+  if (data.used) {
+    showPromoMsg('✗ This code has already been used.', 'error');
+    btn.textContent = 'Apply code'; btn.disabled = false; return;
+  }
+
+  // check if already on active trial
+  const t = getTrialStatus();
+  if (t.status === 'active') {
+    showPromoMsg('✗ You already have an active trial running.', 'error');
+    btn.textContent = 'Apply code'; btn.disabled = false; return;
+  }
+
+  const days = data.type === '1month' ? 30 : 14;
+  const trial_expires_at = new Date(Date.now() + days * 86400000).toISOString();
+
+  await sb.from('promo_codes').update({
+    used: true, used_by: currentUser.id, used_at: new Date().toISOString()
+  }).eq('id', data.id);
+
+  await sb.from('profiles').upsert({ id: currentUser.id, trial_expires_at });
+
+  profile.trial_expires_at = trial_expires_at;
+  localStorage.setItem('yt_profile', JSON.stringify(profile));
+
+  const label = data.type === '1month' ? '1 month' : '2 weeks';
+  showPromoMsg(`✓ Success! Your ${label} free trial is now active.`, 'success');
+  input.value = '';
+  btn.textContent = 'Apply code'; btn.disabled = false;
+
+  // refresh all trial UI
+  renderTrialUI();
+
+  function showPromoMsg(text, type) {
+    msg.textContent = text;
+    msg.style.color = type === 'success' ? 'var(--g)' : '#f87171';
+    msg.style.display = 'block';
   }
 }
 
