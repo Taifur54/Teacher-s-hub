@@ -58,7 +58,7 @@ nav.dark .nav-cta:hover{background:var(--gl);color:var(--gd)!important;}
 .btn-outline:hover{border-color:var(--g);color:var(--g);background:var(--gl);}
 
 /* ══ DEMO STICKY ══ */
-.demo-sticky-wrap{position:relative;height:calc(100vh * 5);background:var(--ink);}
+.demo-sticky-wrap{position:relative;height:calc(100vh * 3.5);background:var(--ink);}
 .demo-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding-top:72px;}
 .demo-bg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 10% 50%,rgba(29,158,117,0.12) 0%,transparent 60%),radial-gradient(ellipse 50% 80% at 90% 50%,rgba(29,158,117,0.07) 0%,transparent 60%);}
 
@@ -320,7 +320,7 @@ footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:spac
   .demo-card-wrap{position:relative;top:auto;left:auto;right:auto;bottom:auto;transform:none !important;height:auto;}
   .demo-card-wrap:not(.active){display:none;}
   .demo-card-wrap.exit{display:none;}
-  .demo-sticky-wrap{height:calc(100vh * 5);}
+  .demo-sticky-wrap{height:calc(100vh * 3.5);}
   .mock-card{height:auto;max-height:52vh;border-radius:16px;}
   .mock-body{max-height:calc(52vh - 44px);padding:12px 14px;}
   .mock-input-val{font-size:11px;max-width:150px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -818,7 +818,7 @@ function setDemoStep(si) {
     demoDotEls.forEach((d,i)=>d.classList.toggle('active',i===si));
     demoCounter.textContent = String(si+1).padStart(2,'0') + ' / 0' + DEMO_STEPS;
     activeDemoStep = si;
-  }, 80);
+  }, 30);
 }
 
 // ══ HOW IT WORKS STEPS ══
