@@ -939,12 +939,31 @@ async function runTool(){
   document.getElementById('outputActions').style.display='none';
 
   try {
-    const { data: { session } } = await sb.auth.getSession();
+    const { data: { session }, error: sessionError } = await sb.auth.getSession();
+
+    if(sessionError || !session){
+      // try refreshing session
+      const { data: refreshData } = await sb.auth.refreshSession();
+      if(!refreshData.session){
+        btn.classList.remove('loading');
+        document.getElementById('toolOutput').innerHTML = `
+          <div style="text-align:center;padding:32px 20px;">
+            <div style="font-size:36px;margin-bottom:12px;">🔒</div>
+            <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px;">Session expired</div>
+            <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;">Please log in again to continue.</div>
+            <button onclick="doLogout()" style="background:var(--g);color:#fff;border:none;padding:11px 24px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;">Log in again</button>
+          </div>`;
+        return;
+      }
+    }
+
+    const token = (await sb.auth.getSession()).data.session.access_token;
+
     const response = await fetch(`${SUPABASE_URL}/functions/v1/generate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.access_token}`,
+        'Authorization': `Bearer ${token}`,
         'apikey': SUPABASE_ANON_KEY
       },
       body: JSON.stringify({ prompt: buildPrompt(currentTool, f1, f2, f3, f4) })
@@ -1000,7 +1019,8 @@ async function runTool(){
       <div style="text-align:center;padding:32px 20px;">
         <div style="font-size:36px;margin-bottom:12px;">${isDown?'🔧':'⚠️'}</div>
         <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px;">${isDown?'Maintenance going on':'Something went wrong'}</div>
-        <div style="font-size:13px;color:var(--muted);line-height:1.6;">${isDown?'We\'ll be back in 30 minutes or so.':'Please check your connection and try again.'}</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;">${isDown?'We\'ll be back in 30 minutes or so.':'Please try again.'}</div>
+        <div style="font-size:11px;color:#bbb;margin-top:8px;font-family:monospace;">${err.message}</div>
       </div>`;
     document.getElementById('outputActions').style.display='none';
   }
