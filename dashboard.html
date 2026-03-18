@@ -1420,6 +1420,11 @@ function getCurrentFieldValues() {
   };
 }
 
+function applyPresetByIndex(i) {
+  const preset = (window._renderedPresets || [])[i];
+  if (preset) applyPreset(preset);
+}
+
 function applyPreset(preset) {
   // Set curriculum
   const currInput = document.getElementById('curriculumInput');
@@ -1452,9 +1457,11 @@ function renderPresetChips() {
     return;
   }
 
-  wrap.innerHTML = ordered.map(p => `
+  // Store ordered list for index-based access
+  window._renderedPresets = ordered;
+  wrap.innerHTML = ordered.map((p, i) => `
     <div class="preset-chip" title="${p.tool !== currentTool ? 'From: ' + p.tool : ''}" style="${p.tool !== currentTool ? 'opacity:0.55;' : ''}">
-      <span class="preset-chip-name" onclick="applyPreset(${JSON.stringify(p).replace(/"/g,'&quot;')})">${p.name}</span>
+      <span class="preset-chip-name" onclick="applyPresetByIndex(${i})">${p.name}</span>
       <span class="preset-chip-del" onclick="deletePreset('${p.id}')" title="Delete">✕</span>
     </div>
   `).join('');
@@ -1522,18 +1529,16 @@ async function deletePreset(id) {
   renderPresetChips();
 }
 
-// Close modal on overlay click
-document.getElementById('presetModalOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closePresetModal();
-});
-
-// Enter key saves preset
-document.getElementById('presetNameInput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') confirmSavePreset();
-});
-
 // ══ INIT ══
 (async () => {
+  // Attach preset modal event listeners safely after DOM is ready
+  document.getElementById('presetModalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closePresetModal();
+  });
+  document.getElementById('presetNameInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') confirmSavePreset();
+  });
+
   const { data: { session } } = await sb.auth.getSession();
   if (session) { currentUser = session.user; isGuest = false; await loadProfileFromDB(); enterDash(); }
   else if (profile.fname) { isGuest = false; enterDash(); }
