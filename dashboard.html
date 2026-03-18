@@ -745,7 +745,9 @@ document.addEventListener('input', e => {
 
 // ══ SOURCE MATERIAL ══
 function isProUser() {
-  return ['pro','school'].includes(userPlan);
+  // Trial users get full Pro access
+  const t = getTrialStatus();
+  return ['pro','school'].includes(userPlan) || t.status === 'active';
 }
 
 function toggleSource() {
