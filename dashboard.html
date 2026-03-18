@@ -246,6 +246,8 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
 .source-toggle.locked{cursor:default;}
 .source-toggle.locked:hover{background:#faf9f6;}
 .source-pro-badge{font-size:9px;font-weight:700;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:2px 7px;border-radius:999px;margin-left:6px;letter-spacing:0.04em;}
+.preset-save-link{font-size:10px;font-weight:700;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:999px;transition:color 0.15s;white-space:nowrap;}
+.preset-save-link:hover{color:var(--g);}
 
 /* output */
 .output-placeholder{text-align:center;padding:40px 20px;color:var(--muted);}
@@ -604,10 +606,18 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
             <!-- TOOL SPECIFIC FIELDS -->
             <div id="toolInputFields"></div>
 
+            <!-- ── PRESETS (bottom, subtle) ── -->
+            <div class="presets-wrap" id="presetsWrap" style="margin-bottom:12px;">
+              <div class="presets-chips" id="presetsChips"></div>
+            </div>
+
             <button class="tool-generate-btn" id="toolGenBtn" onclick="runTool()">
               <div class="spin"></div>
               <span class="btn-lbl">Generate →</span>
             </button>
+            <div style="text-align:right;margin-top:8px;">
+              <span onclick="openPresetModal()" style="font-size:11px;color:var(--muted);cursor:pointer;font-weight:600;" onmouseover="this.style.color='var(--g)'" onmouseout="this.style.color='var(--muted)'">💾 Save as preset</span>
+            </div>
           </div>
 
           <div class="tool-output-card">
@@ -1452,19 +1462,20 @@ function renderPresetChips() {
   const otherPresets = presets.filter(p => p.tool !== currentTool);
   const ordered      = [...toolPresets, ...otherPresets];
 
+  window._renderedPresets = ordered;
+
   if (ordered.length === 0) {
-    wrap.innerHTML = '<span class="preset-empty">No presets yet — fill in the fields below and save.</span>';
+    // Nothing shown when empty — save link only appears after first preset
+    wrap.innerHTML = '';
     return;
   }
 
-  // Store ordered list for index-based access
-  window._renderedPresets = ordered;
   wrap.innerHTML = ordered.map((p, i) => `
-    <div class="preset-chip" title="${p.tool !== currentTool ? 'From: ' + p.tool : ''}" style="${p.tool !== currentTool ? 'opacity:0.55;' : ''}">
+    <div class="preset-chip" title="${p.tool !== currentTool ? 'From: ' + p.tool : ''}" style="${p.tool !== currentTool ? 'opacity:0.5;' : ''}">
       <span class="preset-chip-name" onclick="applyPresetByIndex(${i})">${p.name}</span>
       <span class="preset-chip-del" onclick="deletePreset('${p.id}')" title="Delete">✕</span>
     </div>
-  `).join('');
+  `).join('') + `<span class="preset-save-link" onclick="openPresetModal()" title="Save current fields as preset">+ save</span>`;
 }
 
 function openPresetModal() {
