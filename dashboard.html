@@ -319,6 +319,39 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
   .tools-grid{grid-template-columns:1fr;}
   .stats-row{grid-template-columns:1fr;}
 }
+
+/* ══ PRESETS ══ */
+.presets-wrap{margin-bottom:16px;}
+.presets-label{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em;display:flex;align-items:center;justify-content:space-between;}
+.presets-label a{font-size:10px;font-weight:700;color:var(--g);cursor:pointer;text-transform:none;letter-spacing:0;}
+.presets-chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.preset-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;border:1.5px solid var(--border);font-size:11px;font-weight:700;color:var(--ink);cursor:pointer;transition:all 0.15s;background:#fff;white-space:nowrap;max-width:160px;}
+.preset-chip:hover{border-color:var(--g);color:var(--g);}
+.preset-chip-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.preset-chip-del{font-size:10px;color:var(--muted);margin-left:2px;flex-shrink:0;line-height:1;}
+.preset-chip-del:hover{color:#ef4444;}
+.preset-empty{font-size:11px;color:var(--muted);font-style:italic;}
+.save-preset-btn{background:transparent;border:1.5px dashed var(--border);border-radius:999px;padding:5px 12px;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.save-preset-btn:hover{border-color:var(--g);color:var(--g);}
+
+/* Preset modal */
+.preset-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.2s;}
+.preset-modal-overlay.show{opacity:1;pointer-events:auto;}
+.preset-modal{background:#fff;border-radius:20px;padding:32px;width:100%;max-width:420px;box-shadow:0 32px 80px rgba(0,0,0,0.2);transform:translateY(16px);transition:transform 0.2s;}
+.preset-modal-overlay.show .preset-modal{transform:translateY(0);}
+.preset-modal h3{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.preset-modal p{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.5;}
+.preset-modal-field{margin-bottom:14px;}
+.preset-modal-field label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);margin-bottom:5px;}
+.preset-modal-field input{width:100%;background:#faf9f6;border:1.5px solid var(--border);border-radius:9px;padding:10px 13px;font-size:13px;color:var(--ink);outline:none;transition:border-color 0.2s;}
+.preset-modal-field input:focus{border-color:var(--g);background:#fff;}
+.preset-modal-preview{background:#f5f4f1;border-radius:10px;padding:12px 14px;margin-bottom:20px;font-size:11px;color:var(--muted);line-height:1.8;}
+.preset-modal-preview strong{color:var(--ink);font-weight:700;}
+.preset-modal-actions{display:flex;gap:8px;justify-content:flex-end;}
+.preset-cancel-btn{background:transparent;border:1.5px solid var(--border);border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:all 0.15s;}
+.preset-cancel-btn:hover{border-color:var(--ink);color:var(--ink);}
+.preset-save-btn{background:var(--g);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;transition:background 0.15s;}
+.preset-save-btn:hover{background:var(--gd);}
 </style>
 </head>
 <body>
@@ -503,6 +536,17 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
             <div class="tool-section-label">Input</div>
 
             <!-- ── CURRICULUM SELECTOR (NEW) ── -->
+            <!-- ── PRESETS (NEW) ── -->
+            <div class="presets-wrap" id="presetsWrap">
+              <div class="presets-label">
+                My presets
+                <a onclick="openPresetModal()">+ Save current as preset</a>
+              </div>
+              <div class="presets-chips" id="presetsChips">
+                <span class="preset-empty">No presets yet — fill in the fields below and save.</span>
+              </div>
+            </div>
+
             <div class="curriculum-wrap">
               <span class="curriculum-label">Curriculum / Standard <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;">(optional)</span></span>
               <div class="curriculum-input-row">
@@ -988,7 +1032,7 @@ async function redeemProfilePromo() {
 
 // ══ DASHBOARD ══
 function enterDash() {
-  showScreen('screen-dashboard'); refreshProfileUI(); renderTrialUI(); updateStats();
+  showScreen('screen-dashboard'); refreshProfileUI(); renderTrialUI(); updateStats(); loadPresets();
   if (isGuest) document.getElementById('guestBanner').style.display='block';
   updateGreeting();
 }
@@ -1047,6 +1091,7 @@ function openTool(tool) {
   updateSourceState();
   document.getElementById('sourceSection').classList.remove('open','has-content');
   renderSourceSection();
+  renderPresetChips();
   if (document.getElementById('sourcePasteText')) document.getElementById('sourcePasteText').value = '';
   // reset curriculum
   document.getElementById('curriculumInput').value = '';
@@ -1211,7 +1256,24 @@ function downloadOutputPDF() {
   const curriculum = (document.getElementById('curriculumInput').value||'').trim();
   const currLine = curriculum ? `<div style="font-size:11px;color:var(--muted);margin-top:2px;">${curriculum}</div>` : '';
   const win = window.open('','_blank');
-  win.document.write(`<!DOCTYPE html><html><head><title>${title}</title><style>@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Syne',sans-serif;background:#fff;color:#0e0e0e;padding:48px;max-width:760px;margin:0 auto;}.header{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:2px solid #1D9E75;margin-bottom:28px;}.logo{font-size:18px;font-weight:800;}.logo span{color:#1D9E75;}.meta{font-size:11px;color:#888;text-align:right;line-height:1.6;}h1{font-size:18px;font-weight:700;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,0.08);}.content{font-size:13px;color:#333;line-height:1.8;}.out-line{padding:3px 0 3px 14px;position:relative;font-size:13px;}.out-line::before{content:'·';position:absolute;left:0;color:#1D9E75;font-weight:700;font-size:16px;line-height:1.2;}.footer{margin-top:40px;padding-top:16px;border-top:1px solid rgba(0,0,0,0.08);display:flex;justify-content:space-between;font-size:10px;color:#aaa;}svg{width:100%;max-width:600px;display:block;margin:12px auto;}</style></head><body><div class="header"><div class="logo">Yes<span>Teachers</span>!${currLine}</div><div class="meta"><div>${teacherName}</div><div>${date}</div></div></div><h1>${title}</h1><div class="content">${resultEl.innerHTML}</div><div class="footer"><span>Generated by YesTeachers! — yesteachers.com</span><span>For classroom use only</span></div><script>window.onload=()=>window.print();<\/script></body></html>`);
+  win.document.write(`<!DOCTYPE html><html><head><title>${title}</title><style>@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Syne',sans-serif;background:#fff;color:#0e0e0e;padding:48px;max-width:760px;margin:0 auto;}.header{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:2px solid #1D9E75;margin-bottom:28px;}.logo{font-size:18px;font-weight:800;}.logo span{color:#1D9E75;}.meta{font-size:11px;color:#888;text-align:right;line-height:1.6;}h1{font-size:18px;font-weight:700;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,0.08);}.content{font-size:13px;color:#333;line-height:1.8;}.out-line{padding:3px 0 3px 14px;position:relative;font-size:13px;}.out-line::before{content:'·';position:absolute;left:0;color:#1D9E75;font-weight:700;font-size:16px;line-height:1.2;}.footer{margin-top:40px;padding-top:16px;border-top:1px solid rgba(0,0,0,0.08);display:flex;justify-content:space-between;font-size:10px;color:#aaa;}svg{width:100%;max-width:600px;display:block;margin:12px auto;}</style></head><body><div class="header"><div class="logo">Yes<span>Teachers</span>!${currLine}</div><div class="meta"><div>${teacherName}</div><div>${date}</div></div></div><h1>${title}</h1><div class="content">${resultEl.innerHTML}</div><div class="footer"><span>Generated by YesTeachers! — yesteachers.com</span><span>For classroom use only</span></div><script>window.onload=()=>window.print();<\/script>
+<!-- ══ PRESET SAVE MODAL ══ -->
+<div class="preset-modal-overlay" id="presetModalOverlay">
+  <div class="preset-modal">
+    <h3>💾 Save as preset</h3>
+    <p>Give this combination a name so you can load it instantly next time.</p>
+    <div class="preset-modal-field">
+      <label>Preset name</label>
+      <input type="text" id="presetNameInput" placeholder="e.g. Grade 10 Biology GCSE" maxlength="40"/>
+    </div>
+    <div class="preset-modal-preview" id="presetModalPreview"></div>
+    <div class="preset-modal-actions">
+      <button class="preset-cancel-btn" onclick="closePresetModal()">Cancel</button>
+      <button class="preset-save-btn" onclick="confirmSavePreset()">Save preset</button>
+    </div>
+  </div>
+</div>
+</body></html>`);
   win.document.close();
 }
 
@@ -1320,6 +1382,156 @@ function updateGreeting() { document.getElementById('topbarGreeting').textConten
 function openSidebar()  { document.getElementById('sidebar').classList.add('open');    document.getElementById('mobOverlay').classList.add('show'); }
 function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mobOverlay').classList.remove('show'); }
 
+
+// ══════════════════════════════════════
+//  PRESETS SYSTEM
+// ══════════════════════════════════════
+
+let presets = []; // array of { id, name, curriculum, tf1, tf2, tf3, tf4, tool }
+let pendingPresetData = null;
+
+// Load presets from localStorage (guests) or Supabase (logged in)
+async function loadPresets() {
+  if (isGuest || !currentUser) {
+    presets = JSON.parse(localStorage.getItem('yt_presets') || '[]');
+  } else {
+    const { data } = await sb.from('profiles').select('presets').eq('id', currentUser.id).single();
+    presets = data?.presets || [];
+  }
+  renderPresetChips();
+}
+
+async function savePresetsToStorage() {
+  if (isGuest || !currentUser) {
+    localStorage.setItem('yt_presets', JSON.stringify(presets));
+  } else {
+    await sb.from('profiles').upsert({ id: currentUser.id, presets });
+  }
+}
+
+function getCurrentFieldValues() {
+  return {
+    tool:       currentTool,
+    curriculum: (document.getElementById('curriculumInput')?.value || '').trim(),
+    tf1:        (document.getElementById('tf1')?.value || '').trim(),
+    tf2:        (document.getElementById('tf2')?.value || '').trim(),
+    tf3:        (document.getElementById('tf3')?.value || '').trim(),
+    tf4:        (document.getElementById('tf4')?.value || '').trim(),
+  };
+}
+
+function applyPreset(preset) {
+  // Set curriculum
+  const currInput = document.getElementById('curriculumInput');
+  if (currInput) {
+    currInput.value = preset.curriculum || '';
+    document.querySelectorAll('.c-chip').forEach(c => {
+      c.classList.toggle('selected', c.textContent.trim() === preset.curriculum);
+    });
+  }
+  // Set tool fields — only if matching tool, otherwise just set what we can
+  const setField = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+  setField('tf1', preset.tf1);
+  setField('tf2', preset.tf2);
+  setField('tf3', preset.tf3);
+  setField('tf4', preset.tf4);
+}
+
+function renderPresetChips() {
+  const wrap = document.getElementById('presetsChips');
+  if (!wrap) return;
+
+  // Filter to show all presets (not tool-specific — teacher might want cross-tool presets)
+  // Show tool-matching ones first, then others dimmed
+  const toolPresets  = presets.filter(p => p.tool === currentTool);
+  const otherPresets = presets.filter(p => p.tool !== currentTool);
+  const ordered      = [...toolPresets, ...otherPresets];
+
+  if (ordered.length === 0) {
+    wrap.innerHTML = '<span class="preset-empty">No presets yet — fill in the fields below and save.</span>';
+    return;
+  }
+
+  wrap.innerHTML = ordered.map(p => `
+    <div class="preset-chip" title="${p.tool !== currentTool ? 'From: ' + p.tool : ''}" style="${p.tool !== currentTool ? 'opacity:0.55;' : ''}">
+      <span class="preset-chip-name" onclick="applyPreset(${JSON.stringify(p).replace(/"/g,'&quot;')})">${p.name}</span>
+      <span class="preset-chip-del" onclick="deletePreset('${p.id}')" title="Delete">✕</span>
+    </div>
+  `).join('');
+}
+
+function openPresetModal() {
+  const vals = getCurrentFieldValues();
+  pendingPresetData = vals;
+
+  // Build preview of what will be saved
+  const toolNames = {lesson:'Lesson Planner',lessongen:'Lesson Generator',diagram:'Diagram Generator',quiz:'Quiz Generator',essay:'Essay Feedback',vocab:'Vocabulary Builder',grade:'Answer Grader',analogy:'Analogy Generator'};
+  const lines = [];
+  if (vals.tool)       lines.push(`<strong>Tool:</strong> ${toolNames[vals.tool] || vals.tool}`);
+  if (vals.curriculum) lines.push(`<strong>Curriculum:</strong> ${vals.curriculum}`);
+  if (vals.tf1)        lines.push(`<strong>Field 1:</strong> ${vals.tf1}`);
+  if (vals.tf2)        lines.push(`<strong>Field 2:</strong> ${vals.tf2}`);
+  if (vals.tf3)        lines.push(`<strong>Field 3:</strong> ${vals.tf3}`);
+  if (vals.tf4)        lines.push(`<strong>Field 4:</strong> ${vals.tf4}`);
+
+  if (lines.length <= 1) {
+    alert('Fill in some fields first — there's nothing to save yet.');
+    return;
+  }
+
+  document.getElementById('presetModalPreview').innerHTML = lines.join('<br/>');
+  document.getElementById('presetNameInput').value = '';
+
+  // Suggest a name from curriculum + tf1/tf2
+  const suggested = [vals.curriculum, vals.tf2 || vals.tf1].filter(Boolean).join(' — ');
+  if (suggested) document.getElementById('presetNameInput').value = suggested;
+
+  document.getElementById('presetModalOverlay').classList.add('show');
+  setTimeout(() => document.getElementById('presetNameInput').focus(), 200);
+}
+
+function closePresetModal() {
+  document.getElementById('presetModalOverlay').classList.remove('show');
+  pendingPresetData = null;
+}
+
+async function confirmSavePreset() {
+  const name = document.getElementById('presetNameInput').value.trim();
+  if (!name) { document.getElementById('presetNameInput').focus(); return; }
+  if (!pendingPresetData) return;
+
+  const preset = {
+    id:   Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+    name: name,
+    ...pendingPresetData,
+  };
+
+  presets.push(preset);
+  await savePresetsToStorage();
+  renderPresetChips();
+  closePresetModal();
+
+  // Flash confirmation
+  const btn = document.querySelector('.presets-label a');
+  if (btn) { const orig = btn.textContent; btn.textContent = '✓ Saved!'; btn.style.color='var(--g)'; setTimeout(()=>{ btn.textContent=orig; btn.style.color=''; },2000); }
+}
+
+async function deletePreset(id) {
+  presets = presets.filter(p => p.id !== id);
+  await savePresetsToStorage();
+  renderPresetChips();
+}
+
+// Close modal on overlay click
+document.getElementById('presetModalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closePresetModal();
+});
+
+// Enter key saves preset
+document.getElementById('presetNameInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') confirmSavePreset();
+});
+
 // ══ INIT ══
 (async () => {
   const { data: { session } } = await sb.auth.getSession();
@@ -1327,5 +1539,22 @@ function closeSidebar() { document.getElementById('sidebar').classList.remove('o
   else if (profile.fname) { isGuest = false; enterDash(); }
 })();
 </script>
+
+<!-- ══ PRESET SAVE MODAL ══ -->
+<div class="preset-modal-overlay" id="presetModalOverlay">
+  <div class="preset-modal">
+    <h3>💾 Save as preset</h3>
+    <p>Give this combination a name so you can load it instantly next time.</p>
+    <div class="preset-modal-field">
+      <label>Preset name</label>
+      <input type="text" id="presetNameInput" placeholder="e.g. Grade 10 Biology GCSE" maxlength="40"/>
+    </div>
+    <div class="preset-modal-preview" id="presetModalPreview"></div>
+    <div class="preset-modal-actions">
+      <button class="preset-cancel-btn" onclick="closePresetModal()">Cancel</button>
+      <button class="preset-save-btn" onclick="confirmSavePreset()">Save preset</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
