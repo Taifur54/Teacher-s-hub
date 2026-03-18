@@ -900,7 +900,8 @@ function getSourceContext() {
 }
 
 function hasSourceMaterial() {
-  const paste = (document.getElementById('sourcePasteText').value || '').trim();
+  const el = document.getElementById('sourcePasteText');
+  const paste = el ? (el.value || '').trim() : '';
   return paste.length > 0 || uploadedFiles.length > 0;
 }
 
@@ -1341,9 +1342,10 @@ function copyOutput() {
 // ══ GUEST-MODE TEMPLATE OUTPUT ══
 function generateOutput(tool, f1, f2, f3, f4) {
   const topic = f1||f2||'your topic';
-  const curriculum = (document.getElementById('curriculumInput').value||'').trim();
+  const currEl = document.getElementById('curriculumInput');
+  const curriculum = currEl ? (currEl.value||'').trim() : '';
   const currTag = curriculum ? `<div class="out-tag" style="background:#EFF6FF;color:#1D4ED8;">${curriculum}</div>` : '';
-  const srcTag = hasSourceMaterial() ? `<div class="output-source-badge" style="display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;background:#EFF6FF;color:#1D4ED8;margin-bottom:10px;">📎 Generated from your source material</div><br/>` : '';
+  const srcTag = '';  // guests never have source material
   const templates = {
     lesson:`${srcTag}<div class="output-title">📋 ${topic} — Lesson Plan${curriculum?' <span style="font-size:10px;font-weight:600;color:var(--muted);">('+curriculum+')</span>':''}</div><div class="out-s"><div class="out-s-lbl">🎯 Learning objectives</div><div class="out-line">Students will understand the core concepts of ${topic}</div><div class="out-line">Students will apply knowledge through structured activities</div><div class="out-line">Students will demonstrate understanding via exit ticket</div></div><div class="out-s"><div class="out-s-lbl">📋 Lesson flow (${f3||'45 min'})</div><div class="out-tag-row">${currTag}<span class="out-tag">0–5 min Hook</span><span class="out-tag">5–20 min Instruction</span><span class="out-tag">20–35 min Activity</span><span class="out-tag">35–45 min Exit ticket</span></div></div><div class="out-s"><div class="out-s-lbl">♿ Differentiation</div><div class="out-line">Support: visual aids, word bank, sentence starters</div><div class="out-line">Extend: independent research, comparative task</div></div>`,
     lessongen:`${srcTag}<div class="output-title">📝 ${f2||topic} — Full Lesson Content</div><div class="out-s"><div class="out-s-lbl">🪝 Opening hook</div><div class="out-line" style="font-style:italic;color:#555;">"Have you ever wondered why ${f2||topic} matters in real life?"</div></div><div class="out-s"><div class="out-s-lbl">📖 Main explanation</div><div class="out-line">Start with the core concept in one clear sentence.</div><div class="out-line">Break into 3 digestible parts — each building on the last.</div></div><div class="out-s"><div class="out-s-lbl">🎯 Closing summary</div><div class="out-line">Recap the 3 key points in plain language.</div></div>`,
