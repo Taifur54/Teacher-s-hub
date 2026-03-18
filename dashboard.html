@@ -167,7 +167,7 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
 .tool-input-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;}
 .tool-output-card{background:#fff;border:1.5px solid var(--g);border-radius:16px;padding:24px;position:relative;overflow:hidden;}
 .tool-output-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g),#5DCAA5);}
-.tool-section-label{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.tool-section-label{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
 .tool-field{margin-bottom:14px;}
 .tool-field label{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.06em;}
 .tool-field input,.tool-field textarea,.tool-field select{width:100%;background:#faf9f6;border:1.5px solid var(--border);border-radius:9px;padding:10px 13px;font-size:13px;color:var(--ink);outline:none;transition:border-color 0.2s;resize:vertical;}
@@ -253,19 +253,19 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
 .output-placeholder{text-align:center;padding:40px 20px;color:var(--muted);}
 .output-placeholder .ph-icon{font-size:36px;margin-bottom:12px;opacity:0.4;}
 .output-placeholder p{font-size:13px;line-height:1.6;}
-.output-result{font-size:13px;color:var(--ink);line-height:1.8;white-space:pre-wrap;}
-.output-title{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.output-result{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-wrap;}
+.output-title{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
 .out-s{margin-bottom:12px;}
-.out-s-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--g);margin-bottom:5px;}
-.out-line{padding:3px 0 3px 14px;position:relative;font-size:12px;color:#333;line-height:1.5;}
+.out-s-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--g);margin-bottom:5px;}
+.out-line{padding:4px 0 4px 14px;position:relative;font-size:14px;color:#333;line-height:1.5;}
 .out-line::before{content:'·';position:absolute;left:0;color:var(--g);font-weight:700;font-size:15px;line-height:1.2;}
 .out-tag-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;}
-.out-tag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--gl);color:var(--gd);}
+.out-tag{font-size:12px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--gl);color:var(--gd);}
 .out-fb-pos{background:#f0faf6;border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:9px 11px;margin-bottom:7px;}
 .out-fb-imp{background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:9px 11px;}
-.out-fb-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;}
+.out-fb-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;}
 .out-fb-pos .out-fb-lbl{color:var(--gd);}.out-fb-imp .out-fb-lbl{color:#C2410C;}
-.out-fb-txt{font-size:12px;color:#444;line-height:1.5;}
+.out-fb-txt{font-size:14px;color:#444;line-height:1.5;}
 .output-actions{display:flex;gap:8px;margin-top:16px;}
 .out-action-btn{padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--ink);transition:all 0.15s;}
 .out-action-btn:hover{border-color:var(--g);color:var(--g);}
@@ -273,7 +273,7 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
 .out-action-btn.primary:hover{background:var(--gd);}
 
 /* source badge in output */
-.output-source-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;background:#EFF6FF;color:#1D4ED8;margin-bottom:10px;}
+.output-source-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:#EFF6FF;color:#1D4ED8;margin-bottom:10px;}
 
 /* ── PROFILE PANEL ── */
 .profile-panel-inner{max-width:560px;}
@@ -1349,7 +1349,7 @@ function generateOutput(tool, f1, f2, f3, f4) {
 
   const templates = {
 
-lesson: `${srcTag}<div class="output-title">📋 Photosynthesis — 45 min Lesson Plan <span style="font-size:10px;font-weight:600;color:var(--muted);">Biology · High School</span></div>
+lesson: `${srcTag}<div class="output-title">📋 Photosynthesis — 45 min Lesson Plan <span style="font-size:14px;font-weight:600;color:var(--muted);">Biology · High School</span></div>
 <div class="out-s"><div class="out-s-lbl">🎯 Learning Objectives</div>
 <div class="out-line">Explain the two stages of photosynthesis: the light-dependent and light-independent (Calvin cycle) reactions</div>
 <div class="out-line">Write and interpret the balanced equation: 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂</div>
@@ -1366,7 +1366,7 @@ lesson: `${srcTag}<div class="output-title">📋 Photosynthesis — 45 min Lesso
 <div class="out-s"><div class="out-s-lbl">📎 Resources Needed</div>
 <div class="out-tag-row">${currTag}<span class="out-tag">Chloroplast diagram worksheet</span><span class="out-tag">Card sort set</span><span class="out-tag">3× limiting factor graphs</span><span class="out-tag">Mini whiteboards</span></div></div>`,
 
-lessongen: `${srcTag}<div class="output-title">📝 Photosynthesis — Full Lesson Content <span style="font-size:10px;font-weight:600;color:var(--muted);">Biology · High School</span></div>
+lessongen: `${srcTag}<div class="output-title">📝 Photosynthesis — Full Lesson Content <span style="font-size:14px;font-weight:600;color:var(--muted);">Biology · High School</span></div>
 <div class="out-s"><div class="out-s-lbl">🪝 Opening Hook</div>
 <div class="out-line" style="font-style:italic;color:#444;">"Here's a strange fact — a 100-year-old oak tree weighs around 100 tonnes. The soil it grew in barely lost any mass at all. So where did all that mass come from? The answer is thin air. Today you're going to understand exactly how a tree builds itself out of a gas."</div></div>
 <div class="out-s"><div class="out-s-lbl">📖 Main Explanation</div>
@@ -1384,7 +1384,7 @@ lessongen: `${srcTag}<div class="output-title">📝 Photosynthesis — Full Less
 <div class="out-line">It happens in two stages: light-dependent (thylakoid) and Calvin cycle (stroma).</div>
 <div class="out-line">Rate is controlled by limiting factors: light intensity, CO₂ concentration, and temperature.</div></div>`,
 
-diagram: `${srcTag}<div class="output-title">🔬 Animal Cell — Labelled Diagram <span style="font-size:10px;font-weight:600;color:var(--muted);">Biology · Grade 9</span></div>
+diagram: `${srcTag}<div class="output-title">🔬 Animal Cell — Labelled Diagram <span style="font-size:14px;font-weight:600;color:var(--muted);">Biology · Grade 9</span></div>
 <svg viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:8px 0;border-radius:10px;background:#f9f8f5;padding:10px;">
   <defs><radialGradient id="cg3" cx="45%" cy="42%"><stop offset="0%" stop-color="#E8F8F2"/><stop offset="100%" stop-color="#C8EEE0"/></radialGradient></defs>
   <ellipse cx="232" cy="152" rx="178" ry="118" fill="url(#cg3)" stroke="#1D9E75" stroke-width="2.5"/>
@@ -1414,54 +1414,54 @@ diagram: `${srcTag}<div class="output-title">🔬 Animal Cell — Labelled Diagr
 </svg>
 <div class="out-tag-row">${currTag}<span class="out-tag">✓ Print-ready</span><span class="out-tag">✓ 7 structures labelled</span><span class="out-tag">✓ PDF export</span></div>`,
 
-quiz: `${srcTag}<div class="output-title">📐 Quadratic Equations — Quiz <span style="font-size:10px;font-weight:600;color:var(--muted);">Math · Grade 10 · 5 Questions</span></div>
+quiz: `${srcTag}<div class="output-title">📐 Quadratic Equations — Quiz <span style="font-size:14px;font-weight:600;color:var(--muted);">Math · Grade 10 · 5 Questions</span></div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="background:#faf9f6;border-radius:10px;padding:13px;">
-  <div style="font-size:9px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Q1 — Multiple choice</div>
-  <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px;">What are the solutions to x² − 5x + 6 = 0?</div>
+  <div style="font-size:15px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Q1 — Multiple choice</div>
+  <div style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;">What are the solutions to x² − 5x + 6 = 0?</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
-    <div style="font-size:11px;padding:5px 9px;border-radius:6px;background:#fff;border:1px solid var(--border);color:#555;">A. x = 1 and x = 6</div>
-    <div style="font-size:11px;padding:5px 9px;border-radius:6px;background:var(--gl);border:1px solid var(--g);color:var(--gd);font-weight:700;">B. x = 2 and x = 3 ✓</div>
-    <div style="font-size:11px;padding:5px 9px;border-radius:6px;background:#fff;border:1px solid var(--border);color:#555;">C. x = −2 and x = −3</div>
-    <div style="font-size:11px;padding:5px 9px;border-radius:6px;background:#fff;border:1px solid var(--border);color:#555;">D. x = 0 and x = 5</div>
+    <div style="font-size:15px;padding:5px 9px;border-radius:6px;background:#fff;border:1px solid var(--border);color:#555;">A. x = 1 and x = 6</div>
+    <div style="font-size:15px;padding:5px 9px;border-radius:6px;background:var(--gl);border:1px solid var(--g);color:var(--gd);font-weight:700;">B. x = 2 and x = 3 ✓</div>
+    <div style="font-size:15px;padding:5px 9px;border-radius:6px;background:#fff;border:1px solid var(--border);color:#555;">C. x = −2 and x = −3</div>
+    <div style="font-size:15px;padding:5px 9px;border-radius:6px;background:#fff;border:1px solid var(--border);color:#555;">D. x = 0 and x = 5</div>
   </div>
-  <div style="font-size:10px;color:var(--muted);margin-top:6px;">Explanation: Factorise → (x−2)(x−3) = 0 → x = 2 or x = 3</div>
+  <div style="font-size:14px;color:var(--muted);margin-top:6px;">Explanation: Factorise → (x−2)(x−3) = 0 → x = 2 or x = 3</div>
 </div>
 <div style="background:#faf9f6;border-radius:10px;padding:13px;">
-  <div style="font-size:9px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;">Q2 — Short answer</div>
-  <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:5px;">Use the quadratic formula to solve 2x² + 3x − 2 = 0. Show all working.</div>
-  <div style="font-size:10px;color:var(--muted);">Answer: x = ½ or x = −2 &nbsp;|&nbsp; Discriminant = 9 + 16 = 25 ✓</div>
+  <div style="font-size:15px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;">Q2 — Short answer</div>
+  <div style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:5px;">Use the quadratic formula to solve 2x² + 3x − 2 = 0. Show all working.</div>
+  <div style="font-size:14px;color:var(--muted);">Answer: x = ½ or x = −2 &nbsp;|&nbsp; Discriminant = 9 + 16 = 25 ✓</div>
 </div>
 <div style="background:#faf9f6;border-radius:10px;padding:13px;">
-  <div style="font-size:9px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;">Q3 — Short answer</div>
-  <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:5px;">A ball is thrown upward. Its height h (metres) after t seconds is h = −5t² + 20t. When does it hit the ground?</div>
-  <div style="font-size:10px;color:var(--muted);">Answer: −5t(t − 4) = 0 → t = 0 (launch) or t = 4 seconds</div>
+  <div style="font-size:15px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;">Q3 — Short answer</div>
+  <div style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:5px;">A ball is thrown upward. Its height h (metres) after t seconds is h = −5t² + 20t. When does it hit the ground?</div>
+  <div style="font-size:14px;color:var(--muted);">Answer: −5t(t − 4) = 0 → t = 0 (launch) or t = 4 seconds</div>
 </div></div>
 <div style="background:var(--ink);border-radius:8px;padding:10px;text-align:center;margin-top:10px;">
-  <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;">Formula sheet included</div>
-  <div style="font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px;">x = <span style="display:inline-flex;flex-direction:column;align-items:center;gap:1px;font-size:11px;"><span style="border-bottom:1.5px solid rgba(255,255,255,0.4);padding-bottom:2px;">−b ± √(b²−4ac)</span><span style="padding-top:2px;">2a</span></span></div>
+  <div style="font-size:15px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;">Formula sheet included</div>
+  <div style="font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px;">x = <span style="display:inline-flex;flex-direction:column;align-items:center;gap:1px;font-size:15px;"><span style="border-bottom:1.5px solid rgba(255,255,255,0.4);padding-bottom:2px;">−b ± √(b²−4ac)</span><span style="padding-top:2px;">2a</span></span></div>
 </div>`,
 
-essay: `${srcTag}<div class="output-title">✍️ Essay Feedback — Causes of WW1 <span style="font-size:10px;font-weight:600;color:var(--muted);">GCSE · 8 marks</span></div>
+essay: `${srcTag}<div class="output-title">✍️ Essay Feedback — Causes of WW1 <span style="font-size:14px;font-weight:600;color:var(--muted);">GCSE · 8 marks</span></div>
 <div class="out-s"><div class="out-s-lbl">📊 Score</div>
 <div style="display:inline-flex;align-items:center;gap:12px;margin-bottom:4px;">
   <span style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff;background:var(--g);padding:5px 16px;border-radius:10px;">5 / 8</span>
-  <span style="font-size:12px;color:var(--muted);line-height:1.5;">Good foundation —<br/>needs analytical depth</span>
+  <span style="font-size:14px;color:var(--muted);line-height:1.5;">Good foundation —<br/>needs analytical depth</span>
 </div></div>
-<div style="background:#f5f4f1;border-radius:9px;padding:10px 12px;margin-bottom:10px;font-size:11px;color:#444;line-height:1.7;font-style:italic;">
+<div style="background:#f5f4f1;border-radius:9px;padding:10px 12px;margin-bottom:10px;font-size:15px;color:#444;line-height:1.7;font-style:italic;">
 "<mark style="background:#d1fae5;border-radius:3px;font-style:normal;padding:1px 3px;">The assassination of Archduke Franz Ferdinand in Sarajevo in June 1914</mark> triggered the war. <mark style="background:#FEF3C7;border-radius:3px;font-style:normal;padding:1px 3px;">Countries were already angry at each other</mark> because of the alliance system and <mark style="background:#d1fae5;border-radius:3px;font-style:normal;padding:1px 3px;">rising nationalism across Europe.</mark>"
 <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
-  <span style="font-size:9px;background:#d1fae5;padding:2px 6px;border-radius:4px;color:#065F46;font-weight:700;">✓ Specific event + date</span>
-  <span style="font-size:9px;background:#FEF3C7;padding:2px 6px;border-radius:4px;color:#92400E;font-weight:700;">↑ Vague — say WHY they were angry</span>
+  <span style="font-size:15px;background:#d1fae5;padding:2px 6px;border-radius:4px;color:#065F46;font-weight:700;">✓ Specific event + date</span>
+  <span style="font-size:15px;background:#FEF3C7;padding:2px 6px;border-radius:4px;color:#92400E;font-weight:700;">↑ Vague — say WHY they were angry</span>
 </div></div>
 <div class="out-fb-pos"><div class="out-fb-lbl">✓ What went well</div>
 <div class="out-fb-txt">Correctly identifies the assassination with specific detail (Sarajevo, Franz Ferdinand). Mentions both the alliance system and nationalism — two of the four MAIN causes. Answer is logically structured.</div></div>
 <div class="out-fb-imp" style="margin-top:7px;"><div class="out-fb-lbl">↑ To improve</div>
 <div class="out-fb-txt">Use the MAIN framework explicitly: Militarism, Alliances, Imperialism, Nationalism. Explain the alliance system mechanically — how did it turn a local assassination into a world war? Add a long-term vs short-term distinction to reach the top band.</div></div>
 <div class="out-s" style="margin-top:10px;"><div class="out-s-lbl">📝 Model answer excerpt</div>
-<div style="background:#f0faf6;border-radius:8px;padding:9px 11px;font-size:11px;color:#333;line-height:1.7;font-style:italic;">"While the assassination of Archduke Franz Ferdinand acted as the immediate trigger, the underlying causes had been building for decades. The alliance system transformed a bilateral conflict into a continental war — when Austria-Hungary declared war on Serbia, Russia mobilised in support, triggering Germany's obligations to Austria and France's to Russia..."</div></div>`,
+<div style="background:#f0faf6;border-radius:8px;padding:9px 11px;font-size:15px;color:#333;line-height:1.7;font-style:italic;">"While the assassination of Archduke Franz Ferdinand acted as the immediate trigger, the underlying causes had been building for decades. The alliance system transformed a bilateral conflict into a continental war — when Austria-Hungary declared war on Serbia, Russia mobilised in support, triggering Germany's obligations to Austria and France's to Russia..."</div></div>`,
 
-vocab: `${srcTag}<div class="output-title">📚 Climate Change — Vocabulary List <span style="font-size:10px;font-weight:600;color:var(--muted);">Geography · Grade 9 · 8 terms</span></div>
+vocab: `${srcTag}<div class="output-title">📚 Climate Change — Vocabulary List <span style="font-size:14px;font-weight:600;color:var(--muted);">Geography · Grade 9 · 8 terms</span></div>
 <div style="display:flex;flex-direction:column;gap:7px;margin-top:4px;">
 ${[
   {term:'Greenhouse effect',def:'The process by which certain atmospheric gases (CO₂, methane, water vapour) trap outgoing infrared radiation, warming Earth\'s surface.',ex:'Without the natural greenhouse effect, Earth\'s average temperature would be −18°C instead of +15°C.',level:'●●○',col:'#1D9E75'},
@@ -1471,53 +1471,53 @@ ${[
 ].map(v => `
   <div style="background:#faf9f6;border-radius:9px;padding:10px 12px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-      <span style="font-size:12px;font-weight:700;color:var(--ink);">${v.term}</span>
-      <span style="font-size:10px;font-weight:700;color:${v.col};">${v.level}</span>
+      <span style="font-size:14px;font-weight:700;color:var(--ink);">${v.term}</span>
+      <span style="font-size:14px;font-weight:700;color:${v.col};">${v.level}</span>
     </div>
-    <div style="font-size:11px;color:#444;margin-bottom:4px;line-height:1.5;">${v.def}</div>
-    <div style="font-size:10px;color:var(--muted);font-style:italic;line-height:1.4;">e.g. ${v.ex}</div>
+    <div style="font-size:15px;color:#444;margin-bottom:4px;line-height:1.5;">${v.def}</div>
+    <div style="font-size:14px;color:var(--muted);font-style:italic;line-height:1.4;">e.g. ${v.ex}</div>
   </div>`).join('')}
 </div>
 <div class="out-tag-row" style="margin-top:8px;">${currTag}<span class="out-tag">✓ Definitions</span><span class="out-tag">✓ Example sentences</span><span class="out-tag">✓ Difficulty rated</span><span class="out-tag">✓ 8 terms total</span></div>`,
 
-grade: `${srcTag}<div class="output-title">✅ Answer Graded — Water Cycle <span style="font-size:10px;font-weight:600;color:var(--muted);">6 marks</span></div>
+grade: `${srcTag}<div class="output-title">✅ Answer Graded — Water Cycle <span style="font-size:14px;font-weight:600;color:var(--muted);">6 marks</span></div>
 <div class="out-s"><div class="out-s-lbl">📊 Score</div>
 <div style="display:inline-flex;align-items:center;gap:12px;margin-bottom:4px;">
   <span style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff;background:var(--g);padding:5px 16px;border-radius:10px;">4 / 6</span>
-  <span style="font-size:12px;color:var(--muted);line-height:1.5;">Good — processes identified<br/>but lacks precision</span>
+  <span style="font-size:14px;color:var(--muted);line-height:1.5;">Good — processes identified<br/>but lacks precision</span>
 </div></div>
 <div class="out-fb-pos"><div class="out-fb-lbl">✓ What went well</div>
 <div class="out-fb-txt">Correctly identifies the three main stages: evaporation, condensation, and precipitation. Mentions oceans as the source of evaporation. Answer follows a logical sequence — this shows clear understanding of the cycle's flow.</div></div>
 <div class="out-fb-imp" style="margin-top:7px;"><div class="out-fb-lbl">↑ To improve</div>
 <div class="out-fb-txt">Missing: transpiration (plants release water vapour — worth 1 mark). "Condensation forming clouds" needs more precision — water vapour cools, condenses around dust particles to form clouds at altitude. Add "surface run-off" and "groundwater flow" for the final mark.</div></div>
 <div class="out-s" style="margin-top:10px;"><div class="out-s-lbl">📝 Full-marks model answer</div>
-<div style="background:#f0faf6;border-radius:8px;padding:9px 11px;font-size:11px;color:#333;line-height:1.7;font-style:italic;">"Water evaporates from oceans and lakes when heated by solar energy, and is also released by plants through transpiration. As water vapour rises, it cools and condenses around dust particles to form clouds (condensation). When droplets become heavy enough, precipitation occurs as rain or snow. Water then returns to the sea via surface run-off, rivers, or infiltration into groundwater stores."</div></div>`,
+<div style="background:#f0faf6;border-radius:8px;padding:9px 11px;font-size:15px;color:#333;line-height:1.7;font-style:italic;">"Water evaporates from oceans and lakes when heated by solar energy, and is also released by plants through transpiration. As water vapour rises, it cools and condenses around dust particles to form clouds (condensation). When droplets become heavy enough, precipitation occurs as rain or snow. Water then returns to the sea via surface run-off, rivers, or infiltration into groundwater stores."</div></div>`,
 
-analogy: `${srcTag}<div class="output-title">💡 Newton's First Law — 5 Analogies <span style="font-size:10px;font-weight:600;color:var(--muted);">Physics · Grade 8</span></div>
+analogy: `${srcTag}<div class="output-title">💡 Newton's First Law — 5 Analogies <span style="font-size:14px;font-weight:600;color:var(--muted);">Physics · Grade 8</span></div>
 <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
 <div style="background:#faf9f6;border-radius:10px;padding:12px 14px;">
   <div class="out-s-lbl">🔁 Analogy 1 — Everyday life</div>
-  <div style="font-size:12px;font-weight:600;color:var(--ink);margin:5px 0;">A shopping trolley on a smooth supermarket floor keeps rolling after you let go.</div>
-  <div style="font-size:11px;color:#444;line-height:1.6;">On a frictionless surface, nothing is pushing the trolley — but nothing is stopping it either. That's inertia: the trolley "wants" to keep doing what it was already doing. The only reason real trolleys stop is friction from the floor, which is a force. Remove all forces, and it rolls forever.</div>
-  <div style="font-size:10px;font-weight:700;color:var(--g);margin-top:5px;">🎯 Best for: younger students, everyone recognises this instantly</div>
+  <div style="font-size:14px;font-weight:600;color:var(--ink);margin:5px 0;">A shopping trolley on a smooth supermarket floor keeps rolling after you let go.</div>
+  <div style="font-size:15px;color:#444;line-height:1.6;">On a frictionless surface, nothing is pushing the trolley — but nothing is stopping it either. That's inertia: the trolley "wants" to keep doing what it was already doing. The only reason real trolleys stop is friction from the floor, which is a force. Remove all forces, and it rolls forever.</div>
+  <div style="font-size:14px;font-weight:700;color:var(--g);margin-top:5px;">🎯 Best for: younger students, everyone recognises this instantly</div>
 </div>
 <div style="background:#faf9f6;border-radius:10px;padding:12px 14px;">
   <div class="out-s-lbl">🔁 Analogy 2 — Sports</div>
-  <div style="font-size:12px;font-weight:600;color:var(--ink);margin:5px 0;">A football keeps flying after the kick — the player's foot is gone, but the ball doesn't care.</div>
-  <div style="font-size:11px;color:#444;line-height:1.6;">Students often think something must keep pushing a moving object. The football proves otherwise — once kicked, no force is needed to maintain motion. Air resistance and gravity eventually change it, but those are new forces acting on it, not the absence of the original one.</div>
-  <div style="font-size:10px;font-weight:700;color:var(--g);margin-top:5px;">🎯 Best for: sports fans, kinaesthetic learners</div>
+  <div style="font-size:14px;font-weight:600;color:var(--ink);margin:5px 0;">A football keeps flying after the kick — the player's foot is gone, but the ball doesn't care.</div>
+  <div style="font-size:15px;color:#444;line-height:1.6;">Students often think something must keep pushing a moving object. The football proves otherwise — once kicked, no force is needed to maintain motion. Air resistance and gravity eventually change it, but those are new forces acting on it, not the absence of the original one.</div>
+  <div style="font-size:14px;font-weight:700;color:var(--g);margin-top:5px;">🎯 Best for: sports fans, kinaesthetic learners</div>
 </div>
 <div style="background:#faf9f6;border-radius:10px;padding:12px 14px;">
   <div class="out-s-lbl">🔁 Analogy 3 — Space</div>
-  <div style="font-size:12px;font-weight:600;color:var(--ink);margin:5px 0;">The Voyager 1 probe was launched in 1977 and is still moving — nobody is pushing it.</div>
-  <div style="font-size:11px;color:#444;line-height:1.6;">In the vacuum of space, there's no air resistance and negligible gravity. Voyager 1 has been coasting for over 45 years on pure inertia. This is Newton's First Law at its most dramatic — and most literal.</div>
-  <div style="font-size:10px;font-weight:700;color:var(--g);margin-top:5px;">🎯 Best for: curious students, great for sparking follow-up questions</div>
+  <div style="font-size:14px;font-weight:600;color:var(--ink);margin:5px 0;">The Voyager 1 probe was launched in 1977 and is still moving — nobody is pushing it.</div>
+  <div style="font-size:15px;color:#444;line-height:1.6;">In the vacuum of space, there's no air resistance and negligible gravity. Voyager 1 has been coasting for over 45 years on pure inertia. This is Newton's First Law at its most dramatic — and most literal.</div>
+  <div style="font-size:14px;font-weight:700;color:var(--g);margin-top:5px;">🎯 Best for: curious students, great for sparking follow-up questions</div>
 </div>
 </div>`
 
   };
 
-  return templates[tool] || `<div class="output-title">✨ ${topic}</div><p style="font-size:13px;color:var(--muted);">Output generated.</p>`;
+  return templates[tool] || `<div class="output-title">✨ ${topic}</div><p style="font-size:15px;color:var(--muted);">Output generated.</p>`;
 }
 
 // ══ PROFILE UI ══
