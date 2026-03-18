@@ -354,6 +354,20 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
 .preset-cancel-btn:hover{border-color:var(--ink);color:var(--ink);}
 .preset-save-btn{background:var(--g);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;transition:background 0.15s;}
 .preset-save-btn:hover{background:var(--gd);}
+
+/* ── TOPBAR AVATAR DROPDOWN ── */
+.topbar-avatar-wrap{position:relative;}
+.topbar-dropdown{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,0.12);min-width:180px;overflow:hidden;opacity:0;pointer-events:none;transform:translateY(6px);transition:opacity 0.18s,transform 0.18s;z-index:100;}
+.topbar-dropdown.show{opacity:1;pointer-events:auto;transform:translateY(0);}
+.topbar-dd-header{padding:14px 16px 10px;border-bottom:1px solid var(--border);}
+.topbar-dd-name{font-size:13px;font-weight:700;color:var(--ink);}
+.topbar-dd-email{font-size:11px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.topbar-dd-item{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;transition:background 0.12s;}
+.topbar-dd-item:hover{background:var(--paper);}
+.topbar-dd-item .dd-icon{font-size:15px;width:18px;text-align:center;}
+.topbar-dd-divider{height:1px;background:var(--border);margin:2px 0;}
+.topbar-dd-item.logout{color:#ef4444;}
+.topbar-dd-item.logout:hover{background:#fff5f5;}
 </style>
 </head>
 <body>
@@ -485,7 +499,18 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
       </div>
       <div class="dash-topbar-right">
         <span class="topbar-greeting" id="topbarGreeting">Good morning</span>
-        <div class="topbar-avatar" id="topbarAvatar" onclick="showPanel('profile')">🧑‍🏫</div>
+        <div class="topbar-avatar-wrap" id="topbarAvatarWrap">
+          <div class="topbar-avatar" id="topbarAvatar" onclick="toggleTopbarDropdown()">🧑‍🏫</div>
+          <div class="topbar-dropdown" id="topbarDropdown">
+            <div class="topbar-dd-header">
+              <div class="topbar-dd-name" id="ddName">Teacher</div>
+              <div class="topbar-dd-email" id="ddEmail"></div>
+            </div>
+            <div class="topbar-dd-item" onclick="goProfile()"><span class="dd-icon">👤</span>My Profile</div>
+            <div class="topbar-dd-divider"></div>
+            <div class="topbar-dd-item logout" onclick="doLogout()"><span class="dd-icon">🚪</span>Log out</div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1743,6 +1768,28 @@ async function deletePreset(id) {
   await savePresetsToStorage();
   renderPresetChips();
 }
+
+
+function toggleTopbarDropdown() {
+  const dd = document.getElementById('topbarDropdown');
+  dd.classList.toggle('show');
+  // update name/email each time
+  document.getElementById('ddName').textContent  = [profile.fname, profile.lname].filter(Boolean).join(' ') || 'Teacher';
+  document.getElementById('ddEmail').textContent = profile.email || '';
+}
+
+function goProfile() {
+  document.getElementById('topbarDropdown').classList.remove('show');
+  showPanel('profile');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('topbarAvatarWrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('topbarDropdown').classList.remove('show');
+  }
+});
 
 // ══ INIT ══
 (async () => {
