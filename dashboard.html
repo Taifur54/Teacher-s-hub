@@ -1163,14 +1163,30 @@ async function runTool() {
   const f2  = (document.getElementById('tf2') || {value:''}).value;
   const f3  = (document.getElementById('tf3') || {value:''}).value;
   const f4  = (document.getElementById('tf4') || {value:''}).value;
-  if (!f1 && !f2) { alert('Please fill in at least the topic or subject.'); return; }
+  if (!f1 && !f2 && !isGuest) { alert('Please fill in at least the topic or subject.'); return; }
   if (currentTool === 'lesson') { lastTopic = f2||f1; lastLevel = f1; }
 
   if (isGuest) {
+    // Always use demo data for guests so output is guaranteed
+    const guestDemos = {
+      lesson:   { f1:'Biology · High School', f2:'Photosynthesis', f3:'45 minutes', f4:'differentiation' },
+      lessongen:{ f1:'Biology · High School', f2:'Photosynthesis', f3:'Professional', f4:'Full lesson (45 min)' },
+      diagram:  { f1:'Animal cell structure', f2:'Biology · Grade 9', f3:'Labelled, simple, printable' },
+      quiz:     { f1:'Quadratic equations', f2:'Math · Grade 10', f3:'5', f4:'Multiple choice + short answer' },
+      essay:    { f1:'Explain the causes of WW1 (8 marks)', f2:'Student answer here', f3:'GCSE · Focus on analysis' },
+      vocab:    { f1:'Climate change', f2:'Geography · Grade 9', f3:'8' },
+      grade:    { f1:'Describe the water cycle (6 marks)', f2:'Student answer here', f3:'Out of 6' },
+      analogy:  { f1:"Newton's First Law of Motion", f2:'Physics · Grade 8', f3:'13 year olds' },
+    };
+    const gd = guestDemos[currentTool] || {};
+    const gf1 = f1 || gd.f1 || 'Sample topic';
+    const gf2 = f2 || gd.f2 || '';
+    const gf3 = f3 || gd.f3 || '';
+    const gf4 = f4 || gd.f4 || '';
     btn.classList.add('loading');
     setTimeout(() => {
       btn.classList.remove('loading');
-      document.getElementById('toolOutput').innerHTML = generateOutput(currentTool, f1, f2, f3, f4);
+      document.getElementById('toolOutput').innerHTML = generateOutput(currentTool, gf1, gf2, gf3, gf4);
       const actions = document.getElementById('outputActions');
       actions.style.display = 'flex';
       actions.innerHTML = `<button class="out-action-btn" onclick="copyOutput()">Copy text</button><button class="out-action-btn primary" onclick="runTool()">Regenerate</button>`;
