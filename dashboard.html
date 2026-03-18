@@ -1097,6 +1097,29 @@ function openTool(tool) {
   document.getElementById('outputActions').style.display = 'none';
   document.getElementById('topbarTitle').textContent = t.title;
 
+  // Pre-fill demo values for guest mode so it works as a live explainer
+  if (isGuest) {
+    const demos = {
+      lesson:   { tf1:'Biology · High School', tf2:'Photosynthesis', tf3:'45 minutes', tf4:'differentiation' },
+      lessongen:{ tf1:'Biology · High School', tf2:'Photosynthesis', tf3:'Professional', tf4:'Full lesson (45 min)' },
+      diagram:  { tf1:'Animal cell structure', tf2:'Biology · Grade 9', tf3:'Labelled, simple, printable' },
+      quiz:     { tf1:'Quadratic equations', tf2:'Math · Grade 10', tf3:'5', tf4:'Multiple choice + short answer' },
+      essay:    { tf1:'Explain the causes of WW1 (8 marks)', tf2:'The war started mainly because of the assassination of Franz Ferdinand. Countries were already angry because of alliances and nationalism.', tf3:'GCSE · Focus on analysis' },
+      vocab:    { tf1:'Climate change', tf2:'Geography · Grade 9', tf3:'8' },
+      grade:    { tf1:'Describe the water cycle (6 marks)', tf2:'The water cycle involves evaporation from oceans, condensation forming clouds, and precipitation falling as rain.', tf3:'Out of 6, focus on process stages' },
+      analogy:  { tf1:"Newton's First Law of Motion", tf2:'Physics · Grade 8', tf3:'13 year olds' },
+    };
+    const d = demos[tool];
+    if (d) {
+      setTimeout(() => {
+        if (d.tf1 && document.getElementById('tf1')) document.getElementById('tf1').value = d.tf1;
+        if (d.tf2 && document.getElementById('tf2')) document.getElementById('tf2').value = d.tf2;
+        if (d.tf3 && document.getElementById('tf3')) document.getElementById('tf3').value = d.tf3;
+        if (d.tf4 && document.getElementById('tf4')) document.getElementById('tf4').value = d.tf4;
+      }, 30);
+    }
+  }
+
   // reset source state
   uploadedFiles = [];
   renderUploadedFiles();
