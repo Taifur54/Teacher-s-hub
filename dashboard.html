@@ -1958,55 +1958,448 @@ document.addEventListener('click', function(e) {
 const LANGS = {
   en: {
     flag:'🇬🇧', name:'English',
-    welcome:'Welcome back,', tools:'Your tools', thisMonth:'This month',
-    generate:'Generate →', generating:'Generating…',
-    back:'← Back', saveChanges:'Save changes', logOut:'Log out',
-    myProfile:'My Profile', dashboard:'Dashboard',
-    fillFields:'Please fill in at least the topic or subject.',
+    // Nav & sidebar
+    editProfile:'Edit profile →',
+    noInstitution:'No institution set', noSubject:'No subject',
+    logOut:'Log out',
+    // Topbar
     goodMorning:'Good morning', goodAfternoon:'Good afternoon', goodEvening:'Good evening',
+    // Home panel
+    welcomeBack:'Welcome back,',
+    welcomeSub:`What would you like to create today? Pick a tool below and be ready in seconds.`,
+    yourTools:'Your tools', thisMonth:'This month',
+    generationsUsed:'Generations used', lessonPlansCreated:'Lesson plans created', quizzesGenerated:'Quizzes generated',
+    // Guest banner
+    guestTitle:'You\'re browsing as a guest.', guestSub:`Create a free account to save your work and set up your profile.`,
+    createAccount:'Create account →',
+    // Tool cards
+    lessonPlannerDesc:'Full lesson with objectives, flow & differentiation',
+    lessonGeneratorDesc:'Full written lesson content — hook, explanation, examples',
+    diagramGeneratorDesc:'Labelled science & concept diagrams, print-ready',
+    quizGeneratorDesc:'MC + short answer quizzes with answer keys',
+    essayFeedbackDesc:'Inline markup, rubric scores & model paragraphs',
+    vocabularyBuilderDesc:'Definitions, examples & difficulty ratings by topic',
+    answerGraderDesc:'Score + structured feedback for any answer',
+    analogyGeneratorDesc:`Explain any concept 5 different ways`,
+    // Tool panel
+    back:'← Back',
+    fillFieldsSub:`Fill in the details and generate in seconds`,
+    outputLabel:'Output',
+    inputLabel:'Input',
+    placeholderTitle:`Fill in the fields and hit generate.`,
+    placeholderSub:`Your result will appear here.`,
+    generate:'Generate →', generating:'Generating…',
+    downloadPDF:'⬇ Download PDF', regenerate:'Regenerate', copyText:'Copy text',
+    // Curriculum
+    curriculumLabel:'Curriculum / Standard',
+    curriculumOptional:'optional',
+    curriculumPlaceholder:`e.g. GCSE AQA Biology, Common Core Grade 8, CBSE Class 10…`,
+    // Source material
+    sourceMaterialTitle:'Your source material',
+    sourceMaterialSub:'Add your own pages, notes or excerpts. AI grounds output in your material.',
+    pasteTab:'📋 Paste text',
+    uploadTab:'📷 Upload pages',
+    pastePlaceholder:'Paste excerpts from your textbook, notes, or any material here…',
+    pasteHint:'Tip: label each source for best results — e.g. [Campbell Biology Ch.8] before the text',
+    uploadZoneText:'Drop pages here or click to browse',
+    uploadZoneSub:'Photos of textbook pages, PDFs, or screenshots · Up to 5 files',
+    proFeature:'Pro feature',
+    proFeatureSub:'Upload textbook pages or paste your own material. Available on Pro & School plans.',
+    upgradeToPro:'Upgrade to Pro →',
+    sourceAdded:'✓ Added',
+    generatedFromSource:'📎 Generated from your source material',
+    // Presets
+    myPresets:'My presets',
+    saveAsPreset:'+ Save current as preset',
+    noPresets:`No presets yet — fill in the fields below and save.`,
+    savePresetTitle:'💾 Save as preset',
+    savePresetSub:`Give this combination a name so you can load it instantly next time.`,
+    presetNameLabel:'Preset name',
+    presetNamePlaceholder:'e.g. Grade 10 Biology GCSE',
+    cancel:'Cancel', save:'Save preset',
+    // Profile panel
+    myProfile:'My Profile', dashboard:'Dashboard',
+    freeTrialStatus:'Free trial status',
+    redeemPromoCode:'Redeem a promo code',
+    promoPlaceholder:'e.g. PROMO1MONTHTRIAL',
+    applyCode:'Apply code', checking:'Checking…',
+    firstName:'First name', lastName:'Last name',
+    schoolInstitution:'School / Institution',
+    subject:'Subject', gradeLevel:'Grade level',
+    email:'Email (visible on profile)',
+    saveChanges:'Save changes', saved:'✓ Saved!',
+    seePlans:'See plans →',
+    // Trial banners
+    trialActive:'🎁 Free trial active',
+    trialExpired:'⏰ Your free trial has ended.',
+    trialUpgrade:`Upgrade to keep using YesTeachers — from $9/month.`,
+    upgradeNow:'Upgrade now →',
+    // Errors
+    fillFields:'Please fill in at least the topic or subject.',
     needHelp:'Need help?',
+    // Tool names
+    lessonPlanner:'Lesson Planner', lessonGenerator:'Lesson Generator',
+    diagramGenerator:'Diagram Generator', quizGenerator:'Quiz Generator',
+    essayFeedback:'Essay Feedback', vocabularyBuilder:'Vocabulary Builder',
+    answerGrader:'Answer Grader', analogyGenerator:'Analogy Generator',
+    // Setup screen
+    setupTitle:'Set up your profile.',
+    setupSub:`Takes 30 seconds. Helps personalise your tools.`,
+    profilePhoto:'Profile photo', uploadPhoto:'Upload photo',
+    saveProfile:`Save profile & go to dashboard →`, skipForNow:`Skip for now`,
+    // Auth screen
+    loginTab:'Log in', signupTab:'Sign up',
+    emailLabel:'Email', passwordLabel:'Password', fullNameLabel:'Full name',
+    promoCodeLabel:'Promo code', promoOptional:`optional — for free trial`,
+    loginBtn:'Log in →', signupBtn:'Create account →',
+    orDivider:'or',
+    guestBtn:`👋 Try as guest — no account needed`,
+    authNote:`By continuing you agree to our terms.`,
+    // Lang screen
+    langTitle:'Choose your language.',
+    langSub:`Pick the language you'd like to use. You can change this anytime from your profile.`,
+    langContinue:`Continue →`, langSkip:`Skip — use English`,
   },
   bn: {
     flag:'🇧🇩', name:'বাংলা',
-    welcome:'স্বাগতম,', tools:'আপনার টুলস', thisMonth:'এই মাসে',
-    generate:'তৈরি করুন →', generating:'তৈরি হচ্ছে…',
-    back:'← ফিরে যান', saveChanges:'পরিবর্তন সংরক্ষণ করুন', logOut:'লগ আউট',
-    myProfile:'আমার প্রোফাইল', dashboard:'ড্যাশবোর্ড',
-    fillFields:'অনুগ্রহ করে বিষয় বা টপিক লিখুন।',
+    editProfile:'প্রোফাইল সম্পাদনা করুন →',
+    noInstitution:'কোনো প্রতিষ্ঠান নেই', noSubject:'কোনো বিষয় নেই',
+    logOut:'লগ আউট',
     goodMorning:'শুভ সকাল', goodAfternoon:'শুভ বিকেল', goodEvening:'শুভ সন্ধ্যা',
+    welcomeBack:'স্বাগতম,',
+    welcomeSub:'আজ আপনি কী তৈরি করতে চান? নিচের টুল থেকে বেছে নিন।',
+    yourTools:'আপনার টুলস', thisMonth:'এই মাসে',
+    generationsUsed:'মোট জেনারেশন', lessonPlansCreated:'পাঠ পরিকল্পনা', quizzesGenerated:'কুইজ তৈরি',
+    guestTitle:'আপনি গেস্ট হিসেবে ব্রাউজ করছেন।', guestSub:'আপনার কাজ সংরক্ষণ করতে একটি বিনামূল্যে অ্যাকাউন্ট তৈরি করুন।',
+    createAccount:'অ্যাকাউন্ট তৈরি করুন →',
+    lessonPlannerDesc:'উদ্দেশ্য, প্রবাহ ও পার্থক্য সহ সম্পূর্ণ পাঠ',
+    lessonGeneratorDesc:'সম্পূর্ণ লিখিত পাঠের বিষয়বস্তু',
+    diagramGeneratorDesc:'লেবেলযুক্ত বিজ্ঞান ও ধারণার চিত্র',
+    quizGeneratorDesc:'উত্তর চাবিসহ কুইজ',
+    essayFeedbackDesc:'ইনলাইন মার্কআপ, রুব্রিক স্কোর ও নমুনা অনুচ্ছেদ',
+    vocabularyBuilderDesc:'সংজ্ঞা, উদাহরণ ও অসুবিধার মাত্রা',
+    answerGraderDesc:'স্কোর + কাঠামোগত প্রতিক্রিয়া',
+    analogyGeneratorDesc:'যেকোনো ধারণা ৫টি ভিন্নভাবে ব্যাখ্যা করুন',
+    back:'← ফিরে যান',
+    fillFieldsSub:'বিবরণ পূরণ করুন এবং সেকেন্ডের মধ্যে তৈরি করুন',
+    outputLabel:'আউটপুট', inputLabel:'ইনপুট',
+    placeholderTitle:'ফিল্ডগুলো পূরণ করুন এবং জেনারেট করুন।',
+    placeholderSub:'আপনার ফলাফল এখানে দেখাবে।',
+    generate:'তৈরি করুন →', generating:'তৈরি হচ্ছে…',
+    downloadPDF:'⬇ PDF ডাউনলোড', regenerate:'পুনরায় তৈরি করুন', copyText:'টেক্সট কপি করুন',
+    curriculumLabel:'পাঠ্যক্রম / মান',
+    curriculumOptional:'ঐচ্ছিক',
+    curriculumPlaceholder:'যেমন: JSC বিজ্ঞান, SSC গণিত, HSC পদার্থবিজ্ঞান…',
+    sourceMaterialTitle:'আপনার উৎস উপকরণ',
+    sourceMaterialSub:'আপনার নিজের পৃষ্ঠা, নোট বা উদ্ধৃতি যোগ করুন।',
+    pasteTab:'📋 টেক্সট পেস্ট করুন', uploadTab:'📷 পৃষ্ঠা আপলোড করুন',
+    pastePlaceholder:'এখানে আপনার পাঠ্যপুস্তক থেকে উদ্ধৃতি পেস্ট করুন…',
+    pasteHint:'টিপ: প্রতিটি উৎসের লেবেল দিন, যেমন [অধ্যায় ৮]',
+    uploadZoneText:'পৃষ্ঠাগুলো এখানে ড্রপ করুন বা ব্রাউজ করুন',
+    uploadZoneSub:'পাঠ্যপুস্তকের পৃষ্ঠার ছবি, PDF বা স্ক্রিনশট · সর্বোচ্চ ৫টি',
+    proFeature:'প্রো ফিচার',
+    proFeatureSub:'আপনার নিজের উপকরণ থেকে পাঠ তৈরি করুন। প্রো ও স্কুল প্ল্যানে উপলব্ধ।',
+    upgradeToPro:'প্রো-তে আপগ্রেড করুন →',
+    sourceAdded:'✓ যোগ হয়েছে',
+    generatedFromSource:'📎 আপনার উৎস উপকরণ থেকে তৈরি',
+    myPresets:'আমার প্রিসেট',
+    saveAsPreset:'+ বর্তমান প্রিসেট হিসেবে সংরক্ষণ করুন',
+    noPresets:'এখনো কোনো প্রিসেট নেই — নিচের ফিল্ড পূরণ করুন।',
+    savePresetTitle:'💾 প্রিসেট হিসেবে সংরক্ষণ করুন',
+    savePresetSub:'এই সমন্বয়টিকে একটি নাম দিন।',
+    presetNameLabel:'প্রিসেটের নাম',
+    presetNamePlaceholder:'যেমন: গ্রেড ১০ বিজ্ঞান SSC',
+    cancel:'বাতিল', save:'সংরক্ষণ করুন',
+    myProfile:'আমার প্রোফাইল', dashboard:'ড্যাশবোর্ড',
+    freeTrialStatus:'বিনামূল্যে ট্রায়াল স্ট্যাটাস',
+    redeemPromoCode:'প্রমো কোড রিডিম করুন',
+    promoPlaceholder:'যেমন: PROMO1MONTHTRIAL',
+    applyCode:'কোড প্রয়োগ করুন', checking:'যাচাই হচ্ছে…',
+    firstName:'প্রথম নাম', lastName:'শেষ নাম',
+    schoolInstitution:'স্কুল / প্রতিষ্ঠান',
+    subject:'বিষয়', gradeLevel:'গ্রেড স্তর',
+    email:'ইমেইল (প্রোফাইলে দৃশ্যমান)',
+    saveChanges:'পরিবর্তন সংরক্ষণ করুন', saved:'✓ সংরক্ষিত!',
+    seePlans:'প্ল্যান দেখুন →',
+    trialActive:'🎁 বিনামূল্যে ট্রায়াল সক্রিয়',
+    trialExpired:'⏰ আপনার বিনামূল্যে ট্রায়াল শেষ হয়েছে।',
+    trialUpgrade:'YesTeachers ব্যবহার চালিয়ে যেতে আপগ্রেড করুন।',
+    upgradeNow:'এখনই আপগ্রেড করুন →',
+    fillFields:'অনুগ্রহ করে বিষয় বা টপিক লিখুন।',
     needHelp:'সাহায্য দরকার?',
+    lessonPlanner:'পাঠ পরিকল্পনাকারী', lessonGenerator:'পাঠ জেনারেটর',
+    diagramGenerator:'ডায়াগ্রাম জেনারেটর', quizGenerator:'কুইজ জেনারেটর',
+    essayFeedback:'প্রবন্ধ মতামত', vocabularyBuilder:'শব্দভান্ডার নির্মাতা',
+    answerGrader:'উত্তর গ্রেডার', analogyGenerator:'উপমা জেনারেটর',
+    setupTitle:'আপনার প্রোফাইল সেট আপ করুন।',
+    setupSub:'মাত্র ৩০ সেকেন্ড লাগবে।',
+    profilePhoto:'প্রোফাইল ছবি', uploadPhoto:'ছবি আপলোড করুন',
+    saveProfile:'প্রোফাইল সংরক্ষণ করুন →', skipForNow:'এখন বাদ দিন',
+    loginTab:'লগ ইন', signupTab:'সাইন আপ',
+    emailLabel:'ইমেইল', passwordLabel:'পাসওয়ার্ড', fullNameLabel:'পূর্ণ নাম',
+    promoCodeLabel:'প্রমো কোড', promoOptional:'ঐচ্ছিক — বিনামূল্যে ট্রায়ালের জন্য',
+    loginBtn:'লগ ইন করুন →', signupBtn:'অ্যাকাউন্ট তৈরি করুন →',
+    orDivider:'অথবা',
+    guestBtn:'👋 গেস্ট হিসেবে চেষ্টা করুন — কোনো অ্যাকাউন্ট দরকার নেই',
+    authNote:'চালিয়ে যাওয়ার মাধ্যমে আপনি আমাদের শর্তাবলীতে সম্মত হচ্ছেন।',
+    langTitle:'আপনার ভাষা বেছে নিন।',
+    langSub:'আপনি যে ভাষায় ব্যবহার করতে চান তা বেছে নিন। যেকোনো সময় পরিবর্তন করা যাবে।',
+    langContinue:'চালিয়ে যান →', langSkip:'বাদ দিন — ইংরেজি ব্যবহার করুন',
   },
   es: {
     flag:'🇪🇸', name:'Español',
-    welcome:'Bienvenido,', tools:'Tus herramientas', thisMonth:'Este mes',
-    generate:'Generar →', generating:'Generando…',
-    back:'← Volver', saveChanges:'Guardar cambios', logOut:'Cerrar sesión',
-    myProfile:'Mi perfil', dashboard:'Panel',
-    fillFields:'Por favor, rellena al menos el tema o la asignatura.',
+    editProfile:'Editar perfil →',
+    noInstitution:'Sin institución', noSubject:'Sin asignatura',
+    logOut:'Cerrar sesión',
     goodMorning:'Buenos días', goodAfternoon:'Buenas tardes', goodEvening:'Buenas noches',
+    welcomeBack:'Bienvenido,',
+    welcomeSub:'¿Qué quieres crear hoy? Elige una herramienta y estará listo en segundos.',
+    yourTools:'Tus herramientas', thisMonth:'Este mes',
+    generationsUsed:'Generaciones usadas', lessonPlansCreated:'Planes de clase creados', quizzesGenerated:'Cuestionarios generados',
+    guestTitle:'Estás navegando como invitado.', guestSub:'Crea una cuenta gratuita para guardar tu trabajo.',
+    createAccount:'Crear cuenta →',
+    lessonPlannerDesc:'Clase completa con objetivos, flujo y diferenciación',
+    lessonGeneratorDesc:'Contenido completo de la clase por escrito',
+    diagramGeneratorDesc:'Diagramas de ciencias y conceptos con etiquetas',
+    quizGeneratorDesc:'Cuestionarios MC con claves de respuestas',
+    essayFeedbackDesc:'Marcado en línea, puntuaciones y párrafos modelo',
+    vocabularyBuilderDesc:'Definiciones, ejemplos y niveles de dificultad',
+    answerGraderDesc:'Puntuación + retroalimentación estructurada',
+    analogyGeneratorDesc:'Explica cualquier concepto de 5 maneras diferentes',
+    back:'← Volver',
+    fillFieldsSub:'Rellena los detalles y genera en segundos',
+    outputLabel:'Resultado', inputLabel:'Entrada',
+    placeholderTitle:'Rellena los campos y pulsa generar.',
+    placeholderSub:'Tu resultado aparecerá aquí.',
+    generate:'Generar →', generating:'Generando…',
+    downloadPDF:'⬇ Descargar PDF', regenerate:'Regenerar', copyText:'Copiar texto',
+    curriculumLabel:'Currículo / Estándar',
+    curriculumOptional:'opcional',
+    curriculumPlaceholder:'p.ej. Bachillerato Biología, Common Core Grado 8…',
+    sourceMaterialTitle:'Tu material fuente',
+    sourceMaterialSub:'Añade tus propias páginas, notas o extractos.',
+    pasteTab:'📋 Pegar texto', uploadTab:'📷 Subir páginas',
+    pastePlaceholder:'Pega extractos de tu libro de texto aquí…',
+    pasteHint:'Consejo: etiqueta cada fuente, p.ej. [Capítulo 8]',
+    uploadZoneText:'Suelta páginas aquí o haz clic para buscar',
+    uploadZoneSub:'Fotos de páginas, PDFs o capturas · Hasta 5 archivos',
+    proFeature:'Función Pro',
+    proFeatureSub:'Sube páginas de tu libro de texto. Disponible en planes Pro y School.',
+    upgradeToPro:'Actualizar a Pro →',
+    sourceAdded:'✓ Añadido',
+    generatedFromSource:'📎 Generado desde tu material fuente',
+    myPresets:'Mis ajustes', saveAsPreset:'+ Guardar como ajuste',
+    noPresets:'Aún no hay ajustes — rellena los campos y guarda.',
+    savePresetTitle:'💾 Guardar como ajuste',
+    savePresetSub:'Dale un nombre a esta combinación.',
+    presetNameLabel:'Nombre del ajuste', presetNamePlaceholder:'p.ej. Grado 10 Biología',
+    cancel:'Cancelar', save:'Guardar ajuste',
+    myProfile:'Mi perfil', dashboard:'Panel',
+    freeTrialStatus:'Estado de prueba gratuita',
+    redeemPromoCode:'Canjear código promocional',
+    promoPlaceholder:'p.ej. PROMO1MONTHTRIAL',
+    applyCode:'Aplicar código', checking:'Verificando…',
+    firstName:'Nombre', lastName:'Apellido',
+    schoolInstitution:'Escuela / Institución',
+    subject:'Asignatura', gradeLevel:'Nivel de grado',
+    email:'Correo electrónico (visible en perfil)',
+    saveChanges:'Guardar cambios', saved:'✓ ¡Guardado!',
+    seePlans:'Ver planes →',
+    trialActive:'🎁 Prueba gratuita activa',
+    trialExpired:'⏰ Tu prueba gratuita ha terminado.',
+    trialUpgrade:'Actualiza para seguir usando YesTeachers — desde $9/mes.',
+    upgradeNow:'Actualizar ahora →',
+    fillFields:'Por favor, rellena al menos el tema o la asignatura.',
     needHelp:'¿Necesitas ayuda?',
+    lessonPlanner:'Planificador de clases', lessonGenerator:'Generador de clases',
+    diagramGenerator:'Generador de diagramas', quizGenerator:'Generador de cuestionarios',
+    essayFeedback:'Retroalimentación de ensayos', vocabularyBuilder:'Constructor de vocabulario',
+    answerGrader:'Calificador de respuestas', analogyGenerator:'Generador de analogías',
+    setupTitle:'Configura tu perfil.',
+    setupSub:'30 segundos. Ayuda a personalizar tus herramientas.',
+    profilePhoto:'Foto de perfil', uploadPhoto:'Subir foto',
+    saveProfile:'Guardar perfil e ir al panel →', skipForNow:'Omitir por ahora',
+    loginTab:'Iniciar sesión', signupTab:'Registrarse',
+    emailLabel:'Correo electrónico', passwordLabel:'Contraseña', fullNameLabel:'Nombre completo',
+    promoCodeLabel:'Código promocional', promoOptional:'opcional — para prueba gratuita',
+    loginBtn:'Iniciar sesión →', signupBtn:'Crear cuenta →',
+    orDivider:'o',
+    guestBtn:'👋 Probar como invitado — sin cuenta',
+    authNote:'Al continuar aceptas nuestros términos.',
+    langTitle:'Elige tu idioma.',
+    langSub:'Selecciona el idioma que deseas usar. Puedes cambiarlo en cualquier momento.',
+    langContinue:'Continuar →', langSkip:'Omitir — usar inglés',
   },
   de: {
     flag:'🇩🇪', name:'Deutsch',
-    welcome:'Willkommen zurück,', tools:'Deine Werkzeuge', thisMonth:'Diesen Monat',
-    generate:'Generieren →', generating:'Wird generiert…',
-    back:'← Zurück', saveChanges:'Änderungen speichern', logOut:'Abmelden',
-    myProfile:'Mein Profil', dashboard:'Dashboard',
-    fillFields:'Bitte gib mindestens das Thema oder Fach ein.',
+    editProfile:'Profil bearbeiten →',
+    noInstitution:'Keine Institution', noSubject:'Kein Fach',
+    logOut:'Abmelden',
     goodMorning:'Guten Morgen', goodAfternoon:'Guten Tag', goodEvening:'Guten Abend',
+    welcomeBack:'Willkommen zurück,',
+    welcomeSub:'Was möchtest du heute erstellen? Wähle ein Tool und sei in Sekunden bereit.',
+    yourTools:'Deine Werkzeuge', thisMonth:'Diesen Monat',
+    generationsUsed:'Generierungen verwendet', lessonPlansCreated:'Unterrichtspläne erstellt', quizzesGenerated:'Quiz erstellt',
+    guestTitle:'Du browst als Gast.', guestSub:'Erstelle ein kostenloses Konto, um deine Arbeit zu speichern.',
+    createAccount:'Konto erstellen →',
+    lessonPlannerDesc:'Vollständige Stunde mit Zielen, Ablauf & Differenzierung',
+    lessonGeneratorDesc:'Vollständiger schriftlicher Unterrichtsinhalt',
+    diagramGeneratorDesc:'Beschriftete Wissenschafts- und Konzeptdiagramme',
+    quizGeneratorDesc:'MC + Kurzantwort-Quiz mit Lösungsschlüsseln',
+    essayFeedbackDesc:'Inline-Markup, Rubrik-Punkte & Musterabsätze',
+    vocabularyBuilderDesc:'Definitionen, Beispiele & Schwierigkeitsbewertungen',
+    answerGraderDesc:'Punktzahl + strukturiertes Feedback',
+    analogyGeneratorDesc:'Erkläre jeden Begriff auf 5 verschiedene Arten',
+    back:'← Zurück',
+    fillFieldsSub:'Fülle die Details aus und generiere in Sekunden',
+    outputLabel:'Ausgabe', inputLabel:'Eingabe',
+    placeholderTitle:'Fülle die Felder aus und klicke auf Generieren.',
+    placeholderSub:'Dein Ergebnis erscheint hier.',
+    generate:'Generieren →', generating:'Wird generiert…',
+    downloadPDF:'⬇ PDF herunterladen', regenerate:'Neu generieren', copyText:'Text kopieren',
+    curriculumLabel:'Lehrplan / Standard',
+    curriculumOptional:'optional',
+    curriculumPlaceholder:'z.B. Abitur Biologie, Gymnasium Mathematik…',
+    sourceMaterialTitle:'Dein Quellmaterial',
+    sourceMaterialSub:'Füge deine eigenen Seiten, Notizen oder Auszüge hinzu.',
+    pasteTab:'📋 Text einfügen', uploadTab:'📷 Seiten hochladen',
+    pastePlaceholder:'Füge Auszüge aus deinem Lehrbuch hier ein…',
+    pasteHint:'Tipp: Beschrifte jede Quelle, z.B. [Kapitel 8]',
+    uploadZoneText:'Seiten hier ablegen oder zum Durchsuchen klicken',
+    uploadZoneSub:'Fotos von Seiten, PDFs oder Screenshots · Bis zu 5 Dateien',
+    proFeature:'Pro-Funktion',
+    proFeatureSub:'Lade Lehrbuchseiten hoch. Verfügbar in Pro- und School-Plänen.',
+    upgradeToPro:'Auf Pro upgraden →',
+    sourceAdded:'✓ Hinzugefügt',
+    generatedFromSource:'📎 Aus deinem Quellmaterial generiert',
+    myPresets:'Meine Voreinstellungen', saveAsPreset:'+ Als Voreinstellung speichern',
+    noPresets:'Noch keine Voreinstellungen — fülle die Felder aus und speichere.',
+    savePresetTitle:'💾 Als Voreinstellung speichern',
+    savePresetSub:'Gib dieser Kombination einen Namen.',
+    presetNameLabel:'Name der Voreinstellung', presetNamePlaceholder:'z.B. Klasse 10 Biologie',
+    cancel:'Abbrechen', save:'Voreinstellung speichern',
+    myProfile:'Mein Profil', dashboard:'Dashboard',
+    freeTrialStatus:'Kostenloser Teststatuts',
+    redeemPromoCode:'Aktionscode einlösen',
+    promoPlaceholder:'z.B. PROMO1MONTHTRIAL',
+    applyCode:'Code anwenden', checking:'Wird geprüft…',
+    firstName:'Vorname', lastName:'Nachname',
+    schoolInstitution:'Schule / Institution',
+    subject:'Fach', gradeLevel:'Klassenstufe',
+    email:'E-Mail (im Profil sichtbar)',
+    saveChanges:'Änderungen speichern', saved:'✓ Gespeichert!',
+    seePlans:'Pläne ansehen →',
+    trialActive:'🎁 Kostenlose Testversion aktiv',
+    trialExpired:'⏰ Deine kostenlose Testversion ist abgelaufen.',
+    trialUpgrade:'Upgrade, um YesTeachers weiter zu nutzen — ab $9/Monat.',
+    upgradeNow:'Jetzt upgraden →',
+    fillFields:'Bitte gib mindestens das Thema oder Fach ein.',
     needHelp:'Brauche Hilfe?',
+    lessonPlanner:'Unterrichtsplaner', lessonGenerator:'Unterrichtsgenerator',
+    diagramGenerator:'Diagrammgenerator', quizGenerator:'Quiz-Generator',
+    essayFeedback:'Aufsatz-Feedback', vocabularyBuilder:'Vokabeltrainer',
+    answerGrader:'Antwortbewerter', analogyGenerator:'Analogiegenerator',
+    setupTitle:'Richte dein Profil ein.',
+    setupSub:'30 Sekunden. Hilft, deine Tools zu personalisieren.',
+    profilePhoto:'Profilfoto', uploadPhoto:'Foto hochladen',
+    saveProfile:'Profil speichern und zum Dashboard →', skipForNow:'Jetzt überspringen',
+    loginTab:'Anmelden', signupTab:'Registrieren',
+    emailLabel:'E-Mail', passwordLabel:'Passwort', fullNameLabel:'Vollständiger Name',
+    promoCodeLabel:'Aktionscode', promoOptional:'optional — für kostenlose Testversion',
+    loginBtn:'Anmelden →', signupBtn:'Konto erstellen →',
+    orDivider:'oder',
+    guestBtn:'👋 Als Gast ausprobieren — kein Konto erforderlich',
+    authNote:'Mit dem Fortfahren stimmst du unseren Bedingungen zu.',
+    langTitle:'Wähle deine Sprache.',
+    langSub:'Wähle die Sprache, die du verwenden möchtest. Du kannst sie jederzeit ändern.',
+    langContinue:'Weiter →', langSkip:'Überspringen — Englisch verwenden',
   },
   fr: {
     flag:'🇫🇷', name:'Français',
-    welcome:'Bon retour,', tools:'Vos outils', thisMonth:'Ce mois-ci',
-    generate:'Générer →', generating:'Génération…',
-    back:'← Retour', saveChanges:'Enregistrer', logOut:'Se déconnecter',
-    myProfile:'Mon profil', dashboard:'Tableau de bord',
-    fillFields:'Veuillez remplir au moins le sujet ou la matière.',
+    editProfile:'Modifier le profil →',
+    noInstitution:'Aucune institution', noSubject:'Aucune matière',
+    logOut:'Se déconnecter',
     goodMorning:'Bonjour', goodAfternoon:'Bon après-midi', goodEvening:'Bonsoir',
-    needHelp:'Besoin d\'aide?',
+    welcomeBack:'Bon retour,',
+    welcomeSub:`Que voulez-vous créer aujourd'hui ? Choisissez un outil et soyez prêt en secondes.`,
+    yourTools:'Vos outils', thisMonth:'Ce mois-ci',
+    generationsUsed:'Générations utilisées', lessonPlansCreated:'Plans de cours créés', quizzesGenerated:'Quiz générés',
+    guestTitle:`Vous naviguez en tant qu'invité.`, guestSub:'Créez un compte gratuit pour sauvegarder votre travail.',
+    createAccount:'Créer un compte →',
+    lessonPlannerDesc:'Cours complet avec objectifs, déroulement et différenciation',
+    lessonGeneratorDesc:'Contenu de cours complet rédigé',
+    diagramGeneratorDesc:'Diagrammes scientifiques et conceptuels étiquetés',
+    quizGeneratorDesc:'QCM + réponses courtes avec corrigés',
+    essayFeedbackDesc:'Balisage en ligne, scores de rubrique et paragraphes modèles',
+    vocabularyBuilderDesc:'Définitions, exemples et niveaux de difficulté',
+    answerGraderDesc:'Score + retour structuré',
+    analogyGeneratorDesc:`Expliquez n'importe quel concept de 5 façons différentes`,
+    back:'← Retour',
+    fillFieldsSub:'Remplissez les détails et générez en quelques secondes',
+    outputLabel:'Résultat', inputLabel:'Entrée',
+    placeholderTitle:'Remplissez les champs et cliquez sur Générer.',
+    placeholderSub:'Votre résultat apparaîtra ici.',
+    generate:'Générer →', generating:'Génération en cours…',
+    downloadPDF:'⬇ Télécharger PDF', regenerate:'Régénérer', copyText:'Copier le texte',
+    curriculumLabel:'Programme / Standard',
+    curriculumOptional:'optionnel',
+    curriculumPlaceholder:'ex. Bac Biologie, Brevet Mathématiques…',
+    sourceMaterialTitle:'Votre matériel source',
+    sourceMaterialSub:'Ajoutez vos propres pages, notes ou extraits.',
+    pasteTab:'📋 Coller du texte', uploadTab:'📷 Télécharger des pages',
+    pastePlaceholder:'Collez des extraits de votre manuel ici…',
+    pasteHint:'Conseil : étiquetez chaque source, ex. [Chapitre 8]',
+    uploadZoneText:'Déposez des pages ici ou cliquez pour parcourir',
+    uploadZoneSub:`Photos de pages, PDFs ou captures · Jusqu'à 5 fichiers`,
+    proFeature:'Fonctionnalité Pro',
+    proFeatureSub:'Téléchargez des pages de manuel. Disponible avec les plans Pro et School.',
+    upgradeToPro:'Passer à Pro →',
+    sourceAdded:'✓ Ajouté',
+    generatedFromSource:'📎 Généré depuis votre matériel source',
+    myPresets:'Mes préréglages', saveAsPreset:'+ Enregistrer comme préréglage',
+    noPresets:'Pas encore de préréglages — remplissez les champs et sauvegardez.',
+    savePresetTitle:'💾 Enregistrer comme préréglage',
+    savePresetSub:'Donnez un nom à cette combinaison.',
+    presetNameLabel:'Nom du préréglage', presetNamePlaceholder:'ex. Terminale Biologie Bac',
+    cancel:'Annuler', save:'Enregistrer le préréglage',
+    myProfile:'Mon profil', dashboard:'Tableau de bord',
+    freeTrialStatus:`Statut de l'essai gratuit`,
+    redeemPromoCode:'Utiliser un code promo',
+    promoPlaceholder:'ex. PROMO1MONTHTRIAL',
+    applyCode:'Appliquer le code', checking:'Vérification…',
+    firstName:'Prénom', lastName:'Nom de famille',
+    schoolInstitution:'École / Institution',
+    subject:'Matière', gradeLevel:'Niveau de classe',
+    email:'E-mail (visible sur le profil)',
+    saveChanges:'Enregistrer les modifications', saved:'✓ Enregistré !',
+    seePlans:'Voir les plans →',
+    trialActive:'🎁 Essai gratuit actif',
+    trialExpired:'⏰ Votre essai gratuit est terminé.',
+    trialUpgrade:'Passez à la version supérieure pour continuer — à partir de 9 $/mois.',
+    upgradeNow:'Mettre à niveau maintenant →',
+    fillFields:'Veuillez remplir au moins le sujet ou la matière.',
+    needHelp:`Besoin d'aide ?`,
+    lessonPlanner:'Planificateur de cours', lessonGenerator:'Générateur de cours',
+    diagramGenerator:'Générateur de diagrammes', quizGenerator:'Générateur de quiz',
+    essayFeedback:'Retour sur les dissertations', vocabularyBuilder:'Constructeur de vocabulaire',
+    answerGrader:'Correcteur de réponses', analogyGenerator:`Générateur d'analogies`,
+    setupTitle:'Configurez votre profil.',
+    setupSub:'30 secondes. Aide à personnaliser vos outils.',
+    profilePhoto:'Photo de profil', uploadPhoto:'Télécharger une photo',
+    saveProfile:'Enregistrer le profil et aller au tableau de bord →', skipForNow:`Passer pour l'instant`,
+    loginTab:'Se connecter', signupTab:`S'inscrire`,
+    emailLabel:'E-mail', passwordLabel:'Mot de passe', fullNameLabel:'Nom complet',
+    promoCodeLabel:'Code promo', promoOptional:`optionnel — pour l'essai gratuit`,
+    loginBtn:'Se connecter →', signupBtn:'Créer un compte →',
+    orDivider:'ou',
+    guestBtn:`👋 Essayer en tant qu'invité — sans compte`,
+    authNote:'En continuant, vous acceptez nos conditions.',
+    langTitle:'Choisissez votre langue.',
+    langSub:'Choisissez la langue que vous souhaitez utiliser. Vous pouvez la modifier à tout moment.',
+    langContinue:'Continuer →', langSkip:`Ignorer — utiliser l'anglais`,
   },
 };
+
 
 let currentLang = localStorage.getItem('yt_lang') || null;
 let selectedLangCode = 'en';
@@ -2053,30 +2446,151 @@ function confirmLang() {
 
 function applyLang() {
   if (!currentLang) return;
-  // Apply translations to static elements
-  const el = (id) => document.getElementById(id);
-  // section titles
-  const secTitles = document.querySelectorAll('.section-title');
-  if (secTitles[0]) secTitles[0].textContent = t('tools');
-  if (secTitles[1]) secTitles[1].textContent = t('thisMonth');
-  // generate button
-  const genBtn = document.querySelector('.btn-lbl');
-  if (genBtn) genBtn.textContent = t('generate');
-  // back button
-  const backBtn = document.querySelector('.tool-back');
-  if (backBtn) backBtn.textContent = t('back');
-  // logout
-  const logoutBtn = document.querySelector('.logout-btn');
-  if (logoutBtn) logoutBtn.textContent = t('logOut');
-  // save changes
-  const saveBtn = document.querySelector('.profile-save-btn');
-  if (saveBtn) saveBtn.textContent = t('saveChanges');
-  // sidebar lang badge
-  const sbLang = document.getElementById('sbLang');
-  if (sbLang) sbLang.textContent = LANGS[currentLang]?.flag + ' ' + LANGS[currentLang]?.name;
-  // help tooltip
-  const helpTip = document.querySelector('.help-tooltip');
-  if (helpTip) helpTip.textContent = t('needHelp');
+  const $ = (id) => document.getElementById(id);
+  const $$ = (sel) => document.querySelectorAll(sel);
+  const set = (id, key) => { const el=$(id); if(el) el.textContent=t(key); };
+  const setHTML = (id, val) => { const el=$(id); if(el) el.innerHTML=val; };
+  const setPH = (id, key) => { const el=$(id); if(el) el.placeholder=t(key); };
+  const setAll = (sel, key) => $$(sel).forEach(el => el.textContent=t(key));
+
+  // ── AUTH SCREEN ──
+  $$('.auth-tab')[0] && ($$('.auth-tab')[0].textContent = t('loginTab'));
+  $$('.auth-tab')[1] && ($$('.auth-tab')[1].textContent = t('signupTab'));
+  const loginBtn = $('login-btn'); if(loginBtn) loginBtn.textContent = t('loginBtn');
+  const signupBtn = $('signup-btn'); if(signupBtn) signupBtn.textContent = t('signupBtn');
+  const guestBtn = document.querySelector('.guest-btn'); if(guestBtn) guestBtn.textContent = t('guestBtn');
+  document.querySelectorAll('.auth-field label').forEach((lbl, i) => {
+    const keys = ['emailLabel','passwordLabel'];
+    if(keys[i]) lbl.textContent = t(keys[i]);
+  });
+  const authNote = document.querySelector('.auth-note'); if(authNote) authNote.textContent = t('authNote');
+  const authDivider = document.querySelector('.auth-divider'); if(authDivider) authDivider.textContent = t('orDivider');
+
+  // ── SETUP SCREEN ──
+  const setupH2 = document.querySelector('#screen-profile .setup-header h2');
+  if(setupH2) setupH2.innerHTML = t('setupTitle').replace('profile.','<em>profile.</em>');
+  const setupP = document.querySelector('#screen-profile .setup-header p');
+  if(setupP) setupP.textContent = t('setupSub');
+  const setupSubmit = document.querySelector('.setup-submit');
+  if(setupSubmit) setupSubmit.textContent = t('saveProfile');
+  const setupSkip = document.querySelector('.setup-skip');
+  if(setupSkip) setupSkip.textContent = t('skipForNow');
+
+  // ── LANGUAGE SCREEN ──
+  const langTitle = document.querySelector('.lang-title');
+  if(langTitle) langTitle.innerHTML = t('langTitle').replace('language.','<em>language.</em>');
+  const langSub = document.querySelector('.lang-sub'); if(langSub) langSub.textContent = t('langSub');
+  const langContinue = document.querySelector('.lang-continue-btn'); if(langContinue) langContinue.textContent = t('langContinue');
+  const langSkip = document.querySelector('.lang-skip'); if(langSkip) langSkip.textContent = t('langSkip');
+
+  // ── SIDEBAR ──
+  set('sbName', null); // name stays personal
+  const sbSchool = $('sbSchool'); if(sbSchool && !sbSchool.dataset.custom) sbSchool.textContent = t('noInstitution');
+  const sbSubject = $('sbSubject'); if(sbSubject && sbSubject.textContent === 'No subject' || sbSubject?.textContent === LANGS['en']?.noSubject) sbSubject.textContent = t('noSubject');
+  const sbEdit = document.querySelector('.sb-edit'); if(sbEdit) sbEdit.textContent = t('editProfile');
+  const sbLang = $('sbLang'); if(sbLang) sbLang.textContent = (LANGS[currentLang]?.flag||'') + ' ' + (LANGS[currentLang]?.name||'');
+  const logoutBtn = document.querySelector('.logout-btn'); if(logoutBtn) logoutBtn.textContent = t('logOut');
+
+  // ── HOME PANEL ──
+  const welcomeBanner = document.querySelector('.welcome-banner p');
+  if(welcomeBanner) welcomeBanner.textContent = t('welcomeSub');
+  const secTitles = $$('.section-title');
+  if(secTitles[0]) secTitles[0].textContent = t('yourTools');
+  if(secTitles[1]) secTitles[1].textContent = t('thisMonth');
+  const statLabels = $$('.stat-card-l');
+  if(statLabels[0]) statLabels[0].textContent = t('generationsUsed');
+  if(statLabels[1]) statLabels[1].textContent = t('lessonPlansCreated');
+  if(statLabels[2]) statLabels[2].textContent = t('quizzesGenerated');
+
+  // Tool card descriptions
+  const toolDescs = $$('.tool-card-desc');
+  const descKeys = ['lessonPlannerDesc','lessonGeneratorDesc','diagramGeneratorDesc','quizGeneratorDesc','essayFeedbackDesc','vocabularyBuilderDesc','answerGraderDesc','analogyGeneratorDesc'];
+  toolDescs.forEach((el,i) => { if(descKeys[i]) el.textContent = t(descKeys[i]); });
+
+  // Tool card names
+  const toolNames = $$('.tool-card-name');
+  const nameKeys = ['lessonPlanner','lessonGenerator','diagramGenerator','quizGenerator','essayFeedback','vocabularyBuilder','answerGrader','analogyGenerator'];
+  toolNames.forEach((el,i) => { if(nameKeys[i]) el.textContent = t(nameKeys[i]); });
+
+  // Guest banner
+  const guestBannerP = document.querySelector('.guest-banner p');
+  if(guestBannerP) guestBannerP.innerHTML = '<strong>' + t('guestTitle') + '</strong><br/>' + t('guestSub');
+  const guestSignupBtn = document.querySelector('.guest-signup-btn');
+  if(guestSignupBtn) guestSignupBtn.textContent = t('createAccount');
+
+  // ── TOOL PANEL ──
+  const backBtn = document.querySelector('.tool-back'); if(backBtn) backBtn.textContent = t('back');
+  const toolSecLabels = $$('.tool-section-label');
+  if(toolSecLabels[0]) toolSecLabels[0].textContent = t('inputLabel');
+  if(toolSecLabels[1]) toolSecLabels[1].textContent = t('outputLabel');
+  const genBtnLbl = document.querySelector('.btn-lbl'); if(genBtnLbl) genBtnLbl.textContent = t('generate');
+  const phTitle = document.querySelector('.output-placeholder p');
+  if(phTitle) phTitle.innerHTML = t('placeholderTitle') + '<br/>' + t('placeholderSub');
+
+  // Curriculum
+  const currLabel = document.querySelector('.curriculum-label');
+  if(currLabel) currLabel.childNodes[0] && (currLabel.childNodes[0].textContent = t('curriculumLabel') + ' ');
+  const currInput = $('curriculumInput'); if(currInput) currInput.placeholder = t('curriculumPlaceholder');
+
+  // Source material
+  const srcToggleText = document.querySelector('.source-toggle-text');
+  if(srcToggleText) srcToggleText.textContent = t('sourceMaterialTitle');
+  const srcTabs = $$('.source-tab');
+  if(srcTabs[0]) srcTabs[0].textContent = t('pasteTab');
+  if(srcTabs[1]) srcTabs[1].textContent = t('uploadTab');
+  const srcPaste = $('sourcePasteText'); if(srcPaste) srcPaste.placeholder = t('pastePlaceholder');
+  const srcHint = document.querySelector('.source-paste-hint'); if(srcHint) srcHint.textContent = t('pasteHint');
+  const uploadText = document.querySelector('.upload-zone-text'); if(uploadText) uploadText.textContent = t('uploadZoneText');
+  const uploadSub = document.querySelector('.upload-zone-sub'); if(uploadSub) uploadSub.textContent = t('uploadZoneSub');
+  const proGateTitle = document.querySelector('.source-pro-gate-title'); if(proGateTitle) proGateTitle.textContent = t('proFeature');
+  const proGateSub = document.querySelector('.source-pro-gate-sub'); if(proGateSub) proGateSub.textContent = t('proFeatureSub');
+  const proUpgradeBtn = document.querySelector('.source-pro-upgrade-btn'); if(proUpgradeBtn) proUpgradeBtn.textContent = t('upgradeToPro');
+
+  // Presets
+  const presetsLabel = document.querySelector('.presets-label');
+  if(presetsLabel && presetsLabel.childNodes[0]) presetsLabel.childNodes[0].textContent = t('myPresets') + ' ';
+  const savePresetLink = document.querySelector('.presets-label a');
+  if(savePresetLink) savePresetLink.textContent = t('saveAsPreset');
+  const saveAsPresetLink = document.querySelector('[onclick="openPresetModal()"]');
+  // preset modal
+  const pmTitle = document.querySelector('.preset-modal h3'); if(pmTitle) pmTitle.textContent = t('savePresetTitle');
+  const pmSub = document.querySelector('.preset-modal p'); if(pmSub) pmSub.textContent = t('savePresetSub');
+  const pmLabel = document.querySelector('.preset-modal-field label'); if(pmLabel) pmLabel.textContent = t('presetNameLabel');
+  const pmInput = $('presetNameInput'); if(pmInput) pmInput.placeholder = t('presetNamePlaceholder');
+  const pmCancel = document.querySelector('.preset-cancel-btn'); if(pmCancel) pmCancel.textContent = t('cancel');
+  const pmSave = document.querySelector('.preset-save-btn'); if(pmSave) pmSave.textContent = t('save');
+
+  // ── PROFILE PANEL ──
+  const profileSaveBtn = document.querySelector('.profile-save-btn'); if(profileSaveBtn) profileSaveBtn.textContent = t('saveChanges');
+  const profileSavedMsg = $('profileSavedMsg'); if(profileSavedMsg) profileSavedMsg.textContent = t('saved');
+  const trialH4 = document.querySelector('.trial-info-card h4'); if(trialH4) trialH4.textContent = t('freeTrialStatus');
+  const trialUpgradeLink = document.querySelector('.trial-upgrade-link'); if(trialUpgradeLink) trialUpgradeLink.textContent = t('seePlans');
+  const profilePromoLabel = document.querySelector('#profilePromoWrap > div:first-child');
+  if(profilePromoLabel) profilePromoLabel.textContent = t('redeemPromoCode');
+  const profilePromoInput = $('profile-promo-input'); if(profilePromoInput) profilePromoInput.placeholder = t('promoPlaceholder');
+  const profilePromoBtn = $('profile-promo-btn'); if(profilePromoBtn) profilePromoBtn.textContent = t('applyCode');
+
+  // Profile edit field labels
+  const profileLabels = document.querySelectorAll('.profile-edit-field label');
+  const profileLabelKeys = ['firstName','lastName','schoolInstitution','subject','gradeLevel','email'];
+  // These labels are paired — use index
+  profileLabels.forEach((lbl, i) => { if(profileLabelKeys[i]) lbl.textContent = t(profileLabelKeys[i]); });
+
+  // ── HELP WIDGET ──
+  const helpTip = document.querySelector('.help-tooltip'); if(helpTip) helpTip.textContent = t('needHelp');
+
+  // ── SIDEBAR NAV ──
+  const navItems = $$('.nav-item');
+  // Home, Lesson Planner, Lesson Generator, Diagram, Quiz, Essay, Vocab, Grade, Analogy, Profile
+  const navKeys = [null,'lessonPlanner','lessonGenerator','diagramGenerator','quizGenerator','essayFeedback','vocabularyBuilder','answerGrader','analogyGenerator','myProfile'];
+  navItems.forEach((item, i) => {
+    if(navKeys[i]) {
+      const icon = item.querySelector('.nav-icon');
+      const iconText = icon ? icon.textContent : '';
+      item.textContent = t(navKeys[i]);
+      if(icon) { icon.textContent = iconText; item.prepend(icon); }
+    }
+  });
 }
 
 function getGreeting() {
@@ -2169,7 +2683,7 @@ const HELP_DATA = [
       {
         q: `How do I download my output as a PDF?`,
         preview: `Print or save any generated output`,
-        a: `After generating any output, click the <strong>⬇ Download PDF</strong> button. This opens a print-ready page with your name, date, and YesTeachers branding. Use your browser's print dialog to save as PDF.`,
+        a: `After generating any output, click the <strong>⬇ Download PDF</strong> button. This opens a print-ready page with your name, date, and YesTeachers branding. Use your browser print dialog to save as PDF.`,
         example: `Generate a quiz → click Download PDF → print view opens → Ctrl+P (Windows) or Cmd+P (Mac) → Save as PDF.`
       },
     ]
@@ -2178,7 +2692,7 @@ const HELP_DATA = [
     section: '💳 Plans & Account',
     items: [
       {
-        q: `What's included in each plan?`,
+        q: `What\'s included in each plan?`,
         preview: `Starter $9 · Pro $19 · School $49`,
         a: `<strong>Starter ($9/mo):</strong> 100 generations/month, core tools, PDF export.<br/><br/><strong>Pro ($19/mo):</strong> Unlimited generations, all tools, source material uploads, standards alignment.<br/><br/><strong>School ($49/mo):</strong> 5 teacher seats, shared library, admin dashboard.`,
         example: `Most solo teachers go Pro — unlimited generations and source material upload make it worth it for daily classroom use.`
