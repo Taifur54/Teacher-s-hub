@@ -461,7 +461,7 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
     <p class="lang-sub">Pick the language you'd like to use.<br/>You can change this anytime from your profile.</p>
     <div class="lang-grid">
       <div class="lang-card selected" onclick="selectLang(this,'en')" data-lang="en">
-        <span class="lang-card-flag">🇬🇧</span>
+        <span class="lang-card-flag">🌐</span>
         <div class="lang-card-name">English</div>
         <div class="lang-card-native">English</div>
         <div class="lang-card-check">✓</div>
@@ -593,7 +593,7 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
       <span class="sb-subject" id="sbSubject">No subject</span>
       <div id="sbTrialBadge" style="display:none;"></div>
       <span class="sb-edit" onclick="showPanel('profile')">Edit profile →</span>
-      <span class="sb-lang" id="sbLang" onclick="showLangPicker()" title="Change language">🇬🇧 English</span>
+      <span class="sb-lang" id="sbLang" onclick="showLangPicker()" title="Change language">🌐 English</span>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section-label">Tools</div>
@@ -1964,7 +1964,7 @@ document.addEventListener('click', function(e) {
 
 const LANGS = {
   en: {
-    flag:'🇬🇧', name:'English',
+    flag:'🌐', name:'English',
     // Nav & sidebar
     editProfile:'Edit profile →',
     noInstitution:'No institution set', noSubject:'No subject',
