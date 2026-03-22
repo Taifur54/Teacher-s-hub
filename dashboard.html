@@ -749,8 +749,8 @@ let userPlan = 'none'; // set after login: 'none', 'starter', 'pro', 'school'
 function selectChip(el, val) {
   document.querySelectorAll('.c-chip').forEach(c => c.classList.remove('selected'));
   const input = document.getElementById('curriculumInput');
+  if (!input) return;
   if (input.value.trim() === val) {
-    // toggle off
     input.value = '';
   } else {
     el.classList.add('selected');
@@ -1155,7 +1155,7 @@ function openTool(tool) {
   renderPresetChips();
   if (document.getElementById('sourcePasteText')) document.getElementById('sourcePasteText').value = '';
   // reset curriculum
-  document.getElementById('curriculumInput').value = '';
+  const ci = document.getElementById('curriculumInput'); if (ci) ci.value = '';
   document.querySelectorAll('.c-chip').forEach(c => c.classList.remove('selected'));
 
   closeSidebar();
@@ -1165,7 +1165,7 @@ function openTool(tool) {
 let lastTopic = '', lastLevel = '';
 
 function buildPrompt(tool, f1, f2, f3, f4) {
-  const curriculum = (document.getElementById('curriculumInput').value || '').trim();
+  const curriculum = (document.getElementById('curriculumInput')?.value || '').trim();
   const currNote   = curriculum ? `\nCurriculum / Standard: ${curriculum}\nEnsure all content, terminology, and mark scheme language aligns precisely with this curriculum.` : '';
   const srcCtx     = getSourceContext() || '';
   const srcNote    = srcCtx ? `\n\nIMPORTANT: The teacher has provided their own source material below. Ground the output specifically in this material — use the concepts, examples, vocabulary and structure from it rather than generic knowledge. Reference the source content directly where relevant.${srcCtx}` : '';
@@ -1185,10 +1185,10 @@ function buildPrompt(tool, f1, f2, f3, f4) {
 
 async function runTool() {
   const btn = document.getElementById('toolGenBtn');
-  const f1  = (document.getElementById('tf1') || {value:''}).value;
-  const f2  = (document.getElementById('tf2') || {value:''}).value;
-  const f3  = (document.getElementById('tf3') || {value:''}).value;
-  const f4  = (document.getElementById('tf4') || {value:''}).value;
+  const f1  = (document.getElementById('tf1')?.value || '');
+  const f2  = (document.getElementById('tf2')?.value || '');
+  const f3  = (document.getElementById('tf3')?.value || '');
+  const f4  = (document.getElementById('tf4')?.value || '');
   if (!f1 && !f2 && !isGuest) { alert('Please fill in at least the topic or subject.'); return; }
   if (currentTool === 'lesson') { lastTopic = f2||f1; lastLevel = f1; }
 
@@ -1231,7 +1231,7 @@ async function runTool() {
     const token = (await sb.auth.getSession()).data.session.access_token;
 
     // Build request body — include images if any
-    const sourceText = (document.getElementById('sourcePasteText') && document.getElementById('sourcePasteText').value || '').trim();
+    const sourceText = (document.getElementById('sourcePasteText')?.value || '').trim();
     const requestBody = { prompt: buildPrompt(currentTool, f1, f2, f3, f4), hasSourceText: sourceText.length > 0 };
     if (uploadedFiles.length > 0) {
       requestBody.images = uploadedFiles.map(f => ({ data: f.data, type: f.type, name: f.name }));
@@ -1330,7 +1330,7 @@ function downloadOutputPDF() {
   const title = titleEl ? titleEl.innerText : 'YesTeachers Output';
   const teacherName = [profile.fname, profile.lname].filter(Boolean).join(' ') || 'Teacher';
   const date = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
-  const curriculum = (document.getElementById('curriculumInput').value||'').trim();
+  const curriculum = (document.getElementById('curriculumInput')?.value||'').trim();
   const currLine = curriculum ? `<div style="font-size:11px;color:var(--muted);margin-top:2px;">${curriculum}</div>` : '';
   const win = window.open('','_blank');
   win.document.write(`<!DOCTYPE html><html><head><title>${title}</title><style>@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Syne',sans-serif;background:#fff;color:#0e0e0e;padding:48px;max-width:760px;margin:0 auto;}.header{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:2px solid #1D9E75;margin-bottom:28px;}.logo{font-size:18px;font-weight:800;}.logo span{color:#1D9E75;}.meta{font-size:11px;color:#888;text-align:right;line-height:1.6;}h1{font-size:18px;font-weight:700;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,0.08);}.content{font-size:13px;color:#333;line-height:1.8;}.out-line{padding:3px 0 3px 14px;position:relative;font-size:13px;}.out-line::before{content:'·';position:absolute;left:0;color:#1D9E75;font-weight:700;font-size:16px;line-height:1.2;}.footer{margin-top:40px;padding-top:16px;border-top:1px solid rgba(0,0,0,0.08);display:flex;justify-content:space-between;font-size:10px;color:#aaa;}svg{width:100%;max-width:600px;display:block;margin:12px auto;}</style></head><body><div class="header"><div class="logo">Yes<span>Teachers</span>!${currLine}</div><div class="meta"><div>${teacherName}</div><div>${date}</div></div></div><h1>${title}</h1><div class="content">${resultEl.innerHTML}</div><div class="footer"><span>Generated by YesTeachers! — yesteachers.com</span><span>For classroom use only</span></div><script>window.onload=()=>window.print();<\/script>
