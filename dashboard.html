@@ -368,9 +368,133 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
 .topbar-dd-divider{height:1px;background:var(--border);margin:2px 0;}
 .topbar-dd-item.logout{color:#ef4444;}
 .topbar-dd-item.logout:hover{background:#fff5f5;}
+
+/* ══ LANGUAGE SELECTOR SCREEN ══ */
+#screen-language{align-items:center;justify-content:center;background:var(--ink);flex-direction:column;position:relative;overflow:hidden;}
+.lang-orb1{position:absolute;width:500px;height:500px;top:-150px;right:-150px;border-radius:50%;background:radial-gradient(circle,rgba(29,158,117,0.12) 0%,transparent 70%);pointer-events:none;}
+.lang-orb2{position:absolute;width:350px;height:350px;bottom:-100px;left:-100px;border-radius:50%;background:radial-gradient(circle,rgba(29,158,117,0.08) 0%,transparent 70%);pointer-events:none;}
+.lang-box{position:relative;z-index:1;text-align:center;padding:40px 20px;width:100%;max-width:560px;}
+.lang-logo{font-size:24px;font-weight:800;color:#fff;margin-bottom:8px;letter-spacing:-0.5px;}
+.lang-logo span{color:var(--g);}
+.lang-title{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,42px);font-weight:700;color:#fff;margin-bottom:8px;line-height:1.2;}
+.lang-title em{font-style:italic;color:var(--g);}
+.lang-sub{font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:40px;line-height:1.6;}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px;}
+.lang-card{background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px 16px;cursor:pointer;transition:all 0.2s;text-align:left;position:relative;overflow:hidden;}
+.lang-card::before{content:'';position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,rgba(29,158,117,0.15),transparent);transition:opacity 0.2s;}
+.lang-card:hover::before,.lang-card.selected::before{opacity:1;}
+.lang-card:hover,.lang-card.selected{border-color:var(--g);transform:translateY(-2px);}
+.lang-card.selected{box-shadow:0 0 0 1px var(--g);}
+.lang-card-flag{font-size:32px;margin-bottom:8px;display:block;}
+.lang-card-name{font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;}
+.lang-card-native{font-size:12px;color:rgba(255,255,255,0.4);}
+.lang-card-check{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:50%;background:var(--g);display:none;align-items:center;justify-content:center;font-size:11px;color:#fff;}
+.lang-card.selected .lang-card-check{display:flex;}
+.lang-continue-btn{width:100%;background:var(--g);color:#fff;border:none;border-radius:12px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;transition:background 0.15s,transform 0.1s;font-family:'Syne',sans-serif;}
+.lang-continue-btn:hover{background:var(--gd);transform:translateY(-1px);}
+.lang-skip{display:block;text-align:center;font-size:12px;color:rgba(255,255,255,0.3);margin-top:14px;cursor:pointer;transition:color 0.15s;}
+.lang-skip:hover{color:rgba(255,255,255,0.6);}
+
+/* Language badge in sidebar */
+.sb-lang{display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;background:rgba(0,0,0,0.06);color:var(--muted);cursor:pointer;}
+.sb-lang:hover{background:var(--gl);color:var(--gd);}
+
+/* ══ HELP WIDGET ══ */
+.help-bubble{position:fixed;bottom:28px;right:28px;z-index:300;display:flex;flex-direction:column;align-items:flex-end;gap:12px;}
+.help-btn{width:52px;height:52px;border-radius:50%;background:var(--ink);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.25);transition:all 0.2s;position:relative;font-family:'Syne',sans-serif;}
+.help-btn:hover{background:var(--g);transform:scale(1.08);}
+.help-btn-icon{font-size:20px;transition:transform 0.2s;}
+.help-btn.open .help-btn-icon{transform:rotate(45deg);}
+.help-pulse{position:absolute;top:-2px;right:-2px;width:14px;height:14px;border-radius:50%;background:var(--g);border:2px solid #fff;animation:helpPulse 2s ease-in-out infinite;}
+@keyframes helpPulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.3);opacity:0.7;}}
+.help-btn.open .help-pulse{display:none;}
+.help-tooltip{background:var(--ink);color:#fff;font-size:11px;font-weight:700;padding:6px 12px;border-radius:8px;white-space:nowrap;opacity:0;transform:translateX(8px);transition:all 0.2s;pointer-events:none;position:absolute;right:60px;bottom:12px;}
+.help-bubble:hover .help-tooltip{opacity:1;transform:translateX(0);}
+.help-btn.open ~ .help-tooltip,.help-panel.show ~ .help-btn .help-tooltip{opacity:0 !important;}
+
+.help-panel{
+  position:fixed;bottom:92px;right:28px;z-index:299;
+  width:340px;max-height:70vh;
+  background:#fff;border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.18);
+  border:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden;
+  opacity:0;pointer-events:none;
+  transform:translateY(16px) scale(0.97);
+  transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.help-panel.show{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);}
+.help-panel-header{padding:18px 20px 14px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.help-panel-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.help-panel-sub{font-size:11px;color:var(--muted);}
+.help-search{padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.help-search input{width:100%;background:#f5f4f1;border:none;border-radius:8px;padding:8px 12px;font-size:12px;color:var(--ink);outline:none;font-family:'Syne',sans-serif;}
+.help-search input::placeholder{color:#bbb;}
+.help-body{overflow-y:auto;flex:1;padding:12px;}
+.help-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);padding:4px 8px 6px;margin-top:4px;}
+.help-q{padding:10px 12px;border-radius:10px;cursor:pointer;transition:background 0.15s;margin-bottom:3px;}
+.help-q:hover{background:var(--paper);}
+.help-q-text{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.help-q-preview{font-size:11px;color:var(--muted);line-height:1.4;}
+.help-answer-panel{display:none;flex-direction:column;height:100%;}
+.help-answer-panel.show{display:flex;}
+.help-answer-back{display:flex;align-items:center;gap:6px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;font-size:12px;font-weight:700;color:var(--muted);transition:color 0.15s;flex-shrink:0;}
+.help-answer-back:hover{color:var(--ink);}
+.help-answer-body{padding:16px;overflow-y:auto;flex:1;}
+.help-answer-q{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:12px;line-height:1.4;}
+.help-answer-text{font-size:13px;color:#444;line-height:1.7;}
+.help-answer-text strong{color:var(--ink);font-weight:700;}
+.help-answer-example{background:var(--gl);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:11px;color:var(--gd);line-height:1.6;}
+.help-answer-example-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--g);margin-bottom:4px;}
 </style>
 </head>
 <body>
+
+
+<!-- ══ LANGUAGE SELECTOR SCREEN ══ -->
+<div class="screen" id="screen-language" style="display:none;flex-direction:column;">
+  <div class="lang-orb1"></div>
+  <div class="lang-orb2"></div>
+  <div class="lang-box">
+    <div class="lang-logo">Yes<span>Teachers</span>!</div>
+    <h2 class="lang-title">Choose your <em>language.</em></h2>
+    <p class="lang-sub">Pick the language you'd like to use.<br/>You can change this anytime from your profile.</p>
+    <div class="lang-grid">
+      <div class="lang-card selected" onclick="selectLang(this,'en')" data-lang="en">
+        <span class="lang-card-flag">🇬🇧</span>
+        <div class="lang-card-name">English</div>
+        <div class="lang-card-native">English</div>
+        <div class="lang-card-check">✓</div>
+      </div>
+      <div class="lang-card" onclick="selectLang(this,'bn')" data-lang="bn">
+        <span class="lang-card-flag">🇧🇩</span>
+        <div class="lang-card-name">Bengali</div>
+        <div class="lang-card-native">বাংলা</div>
+        <div class="lang-card-check">✓</div>
+      </div>
+      <div class="lang-card" onclick="selectLang(this,'es')" data-lang="es">
+        <span class="lang-card-flag">🇪🇸</span>
+        <div class="lang-card-name">Spanish</div>
+        <div class="lang-card-native">Español</div>
+        <div class="lang-card-check">✓</div>
+      </div>
+      <div class="lang-card" onclick="selectLang(this,'de')" data-lang="de">
+        <span class="lang-card-flag">🇩🇪</span>
+        <div class="lang-card-name">German</div>
+        <div class="lang-card-native">Deutsch</div>
+        <div class="lang-card-check">✓</div>
+      </div>
+      <div class="lang-card" onclick="selectLang(this,'fr')" data-lang="fr">
+        <span class="lang-card-flag">🇫🇷</span>
+        <div class="lang-card-name">French</div>
+        <div class="lang-card-native">Français</div>
+        <div class="lang-card-check">✓</div>
+      </div>
+    </div>
+    <button class="lang-continue-btn" onclick="confirmLang()">Continue →</button>
+    <span class="lang-skip" onclick="confirmLang()">Skip — use English</span>
+  </div>
+</div>
 
 <!-- ══ AUTH SCREEN ══ -->
 <div class="screen active" id="screen-auth">
@@ -469,6 +593,7 @@ input,textarea,select,button{font-family:'Syne',sans-serif;}
       <span class="sb-subject" id="sbSubject">No subject</span>
       <div id="sbTrialBadge" style="display:none;"></div>
       <span class="sb-edit" onclick="showPanel('profile')">Edit profile →</span>
+      <span class="sb-lang" id="sbLang" onclick="showLangPicker()" title="Change language">🇬🇧 English</span>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section-label">Tools</div>
@@ -1071,6 +1196,8 @@ async function redeemProfilePromo() {
 // ══ DASHBOARD ══
 function enterDash() {
   showScreen('screen-dashboard'); refreshProfileUI(); renderTrialUI(); updateStats(); loadPresets();
+  document.getElementById('helpBubble').style.display = 'flex';
+  applyLang();
   if (isGuest) document.getElementById('guestBanner').style.display='block';
   updateGreeting();
 }
@@ -1189,7 +1316,7 @@ async function runTool() {
   const f2  = (document.getElementById('tf2')?.value || '');
   const f3  = (document.getElementById('tf3')?.value || '');
   const f4  = (document.getElementById('tf4')?.value || '');
-  if (!f1 && !f2 && !isGuest) { alert('Please fill in at least the topic or subject.'); return; }
+  if (!f1 && !f2 && !isGuest) { alert(t('fillFields')); return; }
   if (currentTool === 'lesson') { lastTopic = f2||f1; lastLevel = f1; }
 
   if (isGuest) {
@@ -1348,6 +1475,38 @@ function downloadOutputPDF() {
       <button class="preset-cancel-btn" onclick="closePresetModal()">Cancel</button>
       <button class="preset-save-btn" onclick="confirmSavePreset()">Save preset</button>
     </div>
+  </div>
+</div>
+
+<!-- ══ HELP WIDGET ══ -->
+<div class="help-bubble" id="helpBubble" style="display:none;">
+  <div class="help-panel" id="helpPanel">
+    <div id="helpQList" style="display:flex;flex-direction:column;height:100%;">
+      <div class="help-panel-header">
+        <div class="help-panel-title">✦ How can we help?</div>
+        <div class="help-panel-sub">Click any question for an instant answer</div>
+      </div>
+      <div class="help-search"><input type="text" placeholder="Search questions…" oninput="filterHelp(this.value)" id="helpSearchInput"/></div>
+      <div class="help-body" id="helpQBody"></div>
+    </div>
+    <div class="help-answer-panel" id="helpAnswerPanel">
+      <div class="help-answer-back" onclick="showHelpList()">← Back to questions</div>
+      <div class="help-answer-body">
+        <div class="help-answer-q" id="helpAnswerQ"></div>
+        <div class="help-answer-text" id="helpAnswerText"></div>
+        <div class="help-answer-example" id="helpAnswerExample" style="display:none;">
+          <div class="help-answer-example-label">Example</div>
+          <div id="helpAnswerExampleText"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="position:relative;">
+    <div class="help-tooltip">Need help?</div>
+    <button class="help-btn" id="helpBtn" onclick="toggleHelp()">
+      <span class="help-btn-icon">✦</span>
+      <div class="help-pulse"></div>
+    </button>
   </div>
 </div>
 </body></html>`);
@@ -1791,6 +1950,317 @@ document.addEventListener('click', function(e) {
   }
 });
 
+
+// ══════════════════════════════════════
+//  LANGUAGE SYSTEM
+// ══════════════════════════════════════
+
+const LANGS = {
+  en: {
+    flag:'🇬🇧', name:'English',
+    welcome:'Welcome back,', tools:'Your tools', thisMonth:'This month',
+    generate:'Generate →', generating:'Generating…',
+    back:'← Back', saveChanges:'Save changes', logOut:'Log out',
+    myProfile:'My Profile', dashboard:'Dashboard',
+    fillFields:'Please fill in at least the topic or subject.',
+    goodMorning:'Good morning', goodAfternoon:'Good afternoon', goodEvening:'Good evening',
+    needHelp:'Need help?',
+  },
+  bn: {
+    flag:'🇧🇩', name:'বাংলা',
+    welcome:'স্বাগতম,', tools:'আপনার টুলস', thisMonth:'এই মাসে',
+    generate:'তৈরি করুন →', generating:'তৈরি হচ্ছে…',
+    back:'← ফিরে যান', saveChanges:'পরিবর্তন সংরক্ষণ করুন', logOut:'লগ আউট',
+    myProfile:'আমার প্রোফাইল', dashboard:'ড্যাশবোর্ড',
+    fillFields:'অনুগ্রহ করে বিষয় বা টপিক লিখুন।',
+    goodMorning:'শুভ সকাল', goodAfternoon:'শুভ বিকেল', goodEvening:'শুভ সন্ধ্যা',
+    needHelp:'সাহায্য দরকার?',
+  },
+  es: {
+    flag:'🇪🇸', name:'Español',
+    welcome:'Bienvenido,', tools:'Tus herramientas', thisMonth:'Este mes',
+    generate:'Generar →', generating:'Generando…',
+    back:'← Volver', saveChanges:'Guardar cambios', logOut:'Cerrar sesión',
+    myProfile:'Mi perfil', dashboard:'Panel',
+    fillFields:'Por favor, rellena al menos el tema o la asignatura.',
+    goodMorning:'Buenos días', goodAfternoon:'Buenas tardes', goodEvening:'Buenas noches',
+    needHelp:'¿Necesitas ayuda?',
+  },
+  de: {
+    flag:'🇩🇪', name:'Deutsch',
+    welcome:'Willkommen zurück,', tools:'Deine Werkzeuge', thisMonth:'Diesen Monat',
+    generate:'Generieren →', generating:'Wird generiert…',
+    back:'← Zurück', saveChanges:'Änderungen speichern', logOut:'Abmelden',
+    myProfile:'Mein Profil', dashboard:'Dashboard',
+    fillFields:'Bitte gib mindestens das Thema oder Fach ein.',
+    goodMorning:'Guten Morgen', goodAfternoon:'Guten Tag', goodEvening:'Guten Abend',
+    needHelp:'Brauche Hilfe?',
+  },
+  fr: {
+    flag:'🇫🇷', name:'Français',
+    welcome:'Bon retour,', tools:'Vos outils', thisMonth:'Ce mois-ci',
+    generate:'Générer →', generating:'Génération…',
+    back:'← Retour', saveChanges:'Enregistrer', logOut:'Se déconnecter',
+    myProfile:'Mon profil', dashboard:'Tableau de bord',
+    fillFields:'Veuillez remplir au moins le sujet ou la matière.',
+    goodMorning:'Bonjour', goodAfternoon:'Bon après-midi', goodEvening:'Bonsoir',
+    needHelp:'Besoin d\'aide?',
+  },
+};
+
+let currentLang = localStorage.getItem('yt_lang') || null;
+let selectedLangCode = 'en';
+
+function t(key) {
+  const lang = LANGS[currentLang] || LANGS['en'];
+  return lang[key] || LANGS['en'][key] || key;
+}
+
+function selectLang(el, code) {
+  document.querySelectorAll('.lang-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedLangCode = code;
+}
+
+
+function showLangPicker() {
+  // Pre-select current language
+  document.querySelectorAll('.lang-card').forEach(c => {
+    c.classList.toggle('selected', c.dataset.lang === currentLang);
+  });
+  selectedLangCode = currentLang;
+  document.getElementById('helpBubble').style.display = 'none';
+  showScreen('screen-language');
+  // Override confirmLang to go back to dashboard
+  window._langFromDash = true;
+}
+
+// Patch confirmLang to handle coming from dashboard
+const _origConfirmLang = confirmLang;
+
+function confirmLang() {
+  currentLang = selectedLangCode;
+  localStorage.setItem('yt_lang', currentLang);
+  applyLang();
+  if (window._langFromDash) {
+    window._langFromDash = false;
+    document.getElementById('helpBubble').style.display = 'flex';
+    showScreen('screen-dashboard');
+  } else {
+    showScreen('screen-auth');
+  }
+}
+
+function applyLang() {
+  if (!currentLang) return;
+  // Apply translations to static elements
+  const el = (id) => document.getElementById(id);
+  // section titles
+  const secTitles = document.querySelectorAll('.section-title');
+  if (secTitles[0]) secTitles[0].textContent = t('tools');
+  if (secTitles[1]) secTitles[1].textContent = t('thisMonth');
+  // generate button
+  const genBtn = document.querySelector('.btn-lbl');
+  if (genBtn) genBtn.textContent = t('generate');
+  // back button
+  const backBtn = document.querySelector('.tool-back');
+  if (backBtn) backBtn.textContent = t('back');
+  // logout
+  const logoutBtn = document.querySelector('.logout-btn');
+  if (logoutBtn) logoutBtn.textContent = t('logOut');
+  // save changes
+  const saveBtn = document.querySelector('.profile-save-btn');
+  if (saveBtn) saveBtn.textContent = t('saveChanges');
+  // sidebar lang badge
+  const sbLang = document.getElementById('sbLang');
+  if (sbLang) sbLang.textContent = LANGS[currentLang]?.flag + ' ' + LANGS[currentLang]?.name;
+  // help tooltip
+  const helpTip = document.querySelector('.help-tooltip');
+  if (helpTip) helpTip.textContent = t('needHelp');
+}
+
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return t('goodMorning');
+  if (h < 17) return t('goodAfternoon');
+  return t('goodEvening');
+}
+
+
+// ══════════════════════════════════════
+//  HELP WIDGET
+// ══════════════════════════════════════
+
+const HELP_DATA = [
+  {
+    section: '🛠️ Tools',
+    items: [
+      {
+        q: `What does the Lesson Planner do?`,
+        preview: `Creates a full structured lesson in seconds`,
+        a: `The <strong>Lesson Planner</strong> generates a complete, classroom-ready lesson plan from just a topic and grade level. It includes learning objectives, a timed lesson flow, differentiation strategies for support and extension, and a list of resources needed.`,
+        example: `Topic: Photosynthesis · Biology · High School · 45 min → 3 objectives, timed breakdown (hook → instruction → activity → exit ticket), word bank for support, C3/C4 extension.`
+      },
+      {
+        q: `What does the Lesson Generator do?`,
+        preview: `Writes the full lesson content ready to deliver`,
+        a: `The <strong>Lesson Generator</strong> writes the actual content of your lesson — the words you say, the hook to open with, step-by-step explanations, worked examples, discussion questions, and a closing summary. Think of it as writing the script for your lesson.`,
+        example: `Topic: Newton's Laws · Physics · Grade 9 → opening hook, 3-step explanation, real-world worked example, 3 discussion questions, and a student summary.`
+      },
+      {
+        q: `How does the Diagram Generator work?`,
+        preview: `Builds labelled SVG diagrams you can print`,
+        a: `Type any concept and the <strong>Diagram Generator</strong> builds a labelled, print-ready SVG diagram. It works best for science topics — cell structures, circuits, ecosystems, body systems — but can handle concept maps too. Download as PDF.`,
+        example: `Topic: Animal cell structure · Biology · Grade 9 → labelled diagram with nucleus, mitochondria, vacuole, ribosomes — ready to print or embed in a worksheet.`
+      },
+      {
+        q: `How does the Quiz Generator work?`,
+        preview: `Generates quizzes with a full answer key`,
+        a: `The <strong>Quiz Generator</strong> creates multiple choice and short answer questions on any topic, complete with a full answer key and explanations for each answer. Specify how many questions and what types.`,
+        example: `Topic: Quadratic equations · Math · Grade 10 · 5 questions → 3 MC, 2 short answer, full answer key with working, and a formula sheet.`
+      },
+      {
+        q: `What does Essay Feedback do?`,
+        preview: `Marks essays with inline feedback and a score`,
+        a: `Paste any student essay and the question/rubric. The <strong>Essay Feedback</strong> tool gives you an inline-marked excerpt showing what is strong and what is weak, a rubric breakdown by criteria, a score out of 10, and a model answer excerpt.`,
+        example: `Paste a WW1 essay → score 5/8, highlighted strong/weak sentences, MAIN framework improvement tips, 3-sentence model answer.`
+      },
+      {
+        q: `What does the Vocabulary Builder do?`,
+        preview: `Builds topic word lists with definitions and examples`,
+        a: `The <strong>Vocabulary Builder</strong> generates a full word list for any topic — each term gets a clear definition, an example sentence, and a difficulty rating (Basic / Intermediate / Advanced). Great for pre-teaching or revision.`,
+        example: `Topic: Climate change · Geography · Grade 9 · 8 terms → Greenhouse effect, Carbon sink, Albedo, Permafrost — each with definition, example sentence, difficulty level.`
+      },
+      {
+        q: `How does the Answer Grader work?`,
+        preview: `Scores any student answer with detailed feedback`,
+        a: `Paste a question, a student's answer, and your mark scheme. The <strong>Answer Grader</strong> gives you a score, specific strengths, actionable improvements, and a full-marks model answer. Works for any subject and any marking style.`,
+        example: `Question: Describe the water cycle (6 marks) → paste student answer → 4/6, missing transpiration and groundwater flow, full model answer.`
+      },
+      {
+        q: `What is the Analogy Generator?`,
+        preview: `Explains any concept 5 different ways`,
+        a: `The <strong>Analogy Generator</strong> takes any concept and generates 5 completely different analogies using everyday contexts — sports, food, technology, nature, and more. Each analogy includes an explanation of why it works and who it lands best with.`,
+        example: `Concept: Newton's First Law · Grade 8 → shopping trolley, football, Voyager 1, stirring soup, rolling stone — each with a 2-sentence explanation and target audience.`
+      },
+    ]
+  },
+  {
+    section: '⚙️ Features',
+    items: [
+      {
+        q: `What is the Curriculum field for?`,
+        preview: `Aligns output to your specific exam board`,
+        a: `The <strong>Curriculum / Standard</strong> field tells the AI exactly which exam board or curriculum to align with. All terminology, mark scheme language, and content structure will match your specific standard.`,
+        example: `Type GCSE AQA Biology → AQA-aligned language and mark schemes. Type Common Core Grade 8 Math → CC-aligned questions. Or click a chip: GCSE, A-Level, IB, CBSE, AP, Australian.`
+      },
+      {
+        q: `How do I use source material?`,
+        preview: `Generate from your own textbook pages (Pro)`,
+        a: `The <strong>Source Material</strong> section (Pro feature) lets you paste excerpts from your textbook or upload photos of pages. The AI grounds its output in your specific material — perfect when you want a lesson based on your class textbook.`,
+        example: `Paste your chapter text → lesson plan, quiz, and vocabulary list all reference your exact concepts, examples and terminology — not generic content.`
+      },
+      {
+        q: `What are Presets?`,
+        preview: `Save your settings for one-click reuse`,
+        a: `<strong>Presets</strong> let you save a combination of fields — curriculum, subject, grade — under a name. Next time you open any tool, click your preset and all fields fill instantly. Great if you teach the same class every day.`,
+        example: `Save "Grade 10 Biology GCSE" → next lesson: click preset, type your topic, hit generate. Done in seconds.`
+      },
+      {
+        q: `How do I download my output as a PDF?`,
+        preview: `Print or save any generated output`,
+        a: `After generating any output, click the <strong>⬇ Download PDF</strong> button. This opens a print-ready page with your name, date, and YesTeachers branding. Use your browser's print dialog to save as PDF.`,
+        example: `Generate a quiz → click Download PDF → print view opens → Ctrl+P (Windows) or Cmd+P (Mac) → Save as PDF.`
+      },
+    ]
+  },
+  {
+    section: '💳 Plans & Account',
+    items: [
+      {
+        q: `What's included in each plan?`,
+        preview: `Starter $9 · Pro $19 · School $49`,
+        a: `<strong>Starter ($9/mo):</strong> 100 generations/month, core tools, PDF export.<br/><br/><strong>Pro ($19/mo):</strong> Unlimited generations, all tools, source material uploads, standards alignment.<br/><br/><strong>School ($49/mo):</strong> 5 teacher seats, shared library, admin dashboard.`,
+        example: `Most solo teachers go Pro — unlimited generations and source material upload make it worth it for daily classroom use.`
+      },
+      {
+        q: `How do I redeem a promo code?`,
+        preview: `Activate your free trial with a code`,
+        a: `Enter a promo code on the <strong>Sign up screen</strong> when creating your account, or inside your dashboard under <strong>My Profile → Free trial status → Redeem a promo code</strong>.`,
+        example: `Got a code? Go to My Profile → Free trial status → enter code → click Apply. Your trial activates instantly.`
+      },
+    ]
+  },
+];
+
+let helpOpen = false;
+
+function toggleHelp() {
+  helpOpen = !helpOpen;
+  document.getElementById('helpPanel').classList.toggle('show', helpOpen);
+  document.getElementById('helpBtn').classList.toggle('open', helpOpen);
+  if (helpOpen) renderHelpList();
+}
+
+function renderHelpList(filter) {
+  const body = document.getElementById('helpQBody');
+  body.innerHTML = '';
+  HELP_DATA.forEach(section => {
+    const items = filter
+      ? section.items.filter(i => i.q.toLowerCase().includes(filter.toLowerCase()) || i.preview.toLowerCase().includes(filter.toLowerCase()))
+      : section.items;
+    if (items.length === 0) return;
+    const label = document.createElement('div');
+    label.className = 'help-section-label';
+    label.textContent = section.section;
+    body.appendChild(label);
+    items.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'help-q';
+      div.innerHTML = `<div class="help-q-text">${item.q}</div><div class="help-q-preview">${item.preview}</div>`;
+      div.onclick = () => showHelpAnswer(item);
+      body.appendChild(div);
+    });
+  });
+}
+
+function filterHelp(val) {
+  renderHelpList(val.trim() || null);
+}
+
+function showHelpAnswer(item) {
+  document.getElementById('helpQList').style.display = 'none';
+  const ap = document.getElementById('helpAnswerPanel');
+  ap.classList.add('show');
+  document.getElementById('helpAnswerQ').textContent = item.q;
+  document.getElementById('helpAnswerText').innerHTML = item.a.replace(/\n\n/g,'<br/><br/>').replace(/\n/g,'<br/>');
+  const exWrap = document.getElementById('helpAnswerExample');
+  if (item.example) {
+    document.getElementById('helpAnswerExampleText').textContent = item.example;
+    exWrap.style.display = 'block';
+  } else {
+    exWrap.style.display = 'none';
+  }
+}
+
+function showHelpList() {
+  document.getElementById('helpQList').style.display = 'flex';
+  document.getElementById('helpAnswerPanel').classList.remove('show');
+  document.getElementById('helpSearchInput').value = '';
+  renderHelpList();
+}
+
+// Close help when clicking outside
+document.addEventListener('click', function(e) {
+  const bubble = document.getElementById('helpBubble');
+  if (bubble && !bubble.contains(e.target) && helpOpen) {
+    helpOpen = false;
+    document.getElementById('helpPanel').classList.remove('show');
+    document.getElementById('helpBtn').classList.remove('open');
+  }
+});
+
+
 // ══ INIT ══
 (async () => {
   // Attach preset modal event listeners safely after DOM is ready
@@ -1800,10 +2270,20 @@ document.addEventListener('click', function(e) {
   document.getElementById('presetNameInput').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') confirmSavePreset();
   });
+  // Load saved language
+  currentLang = localStorage.getItem('yt_lang') || 'en';
 
   const { data: { session } } = await sb.auth.getSession();
   if (session) { currentUser = session.user; isGuest = false; await loadProfileFromDB(); enterDash(); }
   else if (profile.fname) { isGuest = false; enterDash(); }
+  else {
+    // First visit — show language selector
+    const hasSeenLang = localStorage.getItem('yt_lang');
+    if (!hasSeenLang) {
+      showScreen('screen-language');
+    }
+    // else auth screen is already shown (default active screen)
+  }
 })();
 </script>
 
@@ -1821,6 +2301,38 @@ document.addEventListener('click', function(e) {
       <button class="preset-cancel-btn" onclick="closePresetModal()">Cancel</button>
       <button class="preset-save-btn" onclick="confirmSavePreset()">Save preset</button>
     </div>
+  </div>
+</div>
+
+<!-- ══ HELP WIDGET ══ -->
+<div class="help-bubble" id="helpBubble" style="display:none;">
+  <div class="help-panel" id="helpPanel">
+    <div id="helpQList" style="display:flex;flex-direction:column;height:100%;">
+      <div class="help-panel-header">
+        <div class="help-panel-title">✦ How can we help?</div>
+        <div class="help-panel-sub">Click any question for an instant answer</div>
+      </div>
+      <div class="help-search"><input type="text" placeholder="Search questions…" oninput="filterHelp(this.value)" id="helpSearchInput"/></div>
+      <div class="help-body" id="helpQBody"></div>
+    </div>
+    <div class="help-answer-panel" id="helpAnswerPanel">
+      <div class="help-answer-back" onclick="showHelpList()">← Back to questions</div>
+      <div class="help-answer-body">
+        <div class="help-answer-q" id="helpAnswerQ"></div>
+        <div class="help-answer-text" id="helpAnswerText"></div>
+        <div class="help-answer-example" id="helpAnswerExample" style="display:none;">
+          <div class="help-answer-example-label">Example</div>
+          <div id="helpAnswerExampleText"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="position:relative;">
+    <div class="help-tooltip">Need help?</div>
+    <button class="help-btn" id="helpBtn" onclick="toggleHelp()">
+      <span class="help-btn-icon">✦</span>
+      <div class="help-pulse"></div>
+    </button>
   </div>
 </div>
 </body>
