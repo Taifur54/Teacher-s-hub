@@ -722,7 +722,6 @@ let stepsWrap, stepEls = [], activeStep = 0;
 function buildDiagramSteps(lang) {
   const T = SITE_LANGS[lang] || SITE_LANGS['en'];
   const steps = buildSteps(T);
-  // Clear existing
   scene.innerHTML = '';
   stepEls = [];
   activeStep = 0;
@@ -749,11 +748,8 @@ function buildDiagramSteps(lang) {
     el.appendChild(cap);
     stepsWrap.appendChild(el);stepEls.push(el);
   });
-  // Reset bgWord
   if(bgWord) bgWord.textContent = steps[0].bg;
 }
-
-// buildDiagramSteps will be called from DOMContentLoaded after SITE_LANGS is ready
 
 // ══ SCROLL DRIVER ══
 const bgWord=document.getElementById('bgWord');
@@ -761,7 +757,6 @@ const diagramWrap=document.getElementById('diagram');
 const nav=document.querySelector('nav');
 let lastSY=-1;
 let demoStepTimer=null;
-// bgWord set by buildDiagramSteps
 
 function onFrame(){
   const sy = window.scrollY;
@@ -809,7 +804,7 @@ for(let i=0;i<DEMO_STEPS;i++){
 // ══ TONE PICKER ══
 const previews={
   kids:{
-    Science:`"Hey curious minds! 🌱 Let's find out how leaves turn sunlight into actual food. Spoiler: it's basically plant magic!"`,
+    Science:`"Hey curious minds! 🌱 Today we're going on a plant adventure — let's find out how leaves turn sunlight into actual food. Spoiler: it's basically plant magic. Ready? Let's go!"`,
     History:`"Time travel alert! 🚀 We're zooming back to ancient Egypt. Buckle up, time explorers!"`,
     Math:`"Numbers are like superheroes 🦸 — today we learn their secret powers!"`,
     Biology:`"Your body has TRILLIONS of tiny workers inside it right now 🦠 Want to meet them?"`,
@@ -858,7 +853,6 @@ document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
 let langBannerShown = false;
 let langBannerDismissed = localStorage.getItem('yt_lang_dismissed') === '1';
 
-// Apply language on page load
 function applySiteLang(lang) {
   const T = SITE_LANGS[lang] || SITE_LANGS['en'];
   const $ = (sel) => document.querySelector(sel);
@@ -866,12 +860,10 @@ function applySiteLang(lang) {
   const set = (sel, val) => { const el = $(sel); if(el) el.innerHTML = val; };
   const setTxt = (sel, val) => { const el = $(sel); if(el) el.textContent = val; };
 
-  // Nav
   const navLinks = $$('nav .nav-right a');
   if(navLinks[0]) navLinks[0].textContent = T.nav_pricing;
   if(navLinks[1]) navLinks[1].textContent = T.nav_signin;
 
-  // Hero
   set('.hero-eyebrow', T.hero_eyebrow);
   set('.hero h1', T.hero_h1);
   set('.hero-sub', T.hero_sub);
@@ -886,9 +878,6 @@ function applySiteLang(lang) {
     if(dot) item.prepend(dot);
   });
 
-
-
-  // Tone section
   set('.tone-eyebrow', T.tone_eyebrow);
   set('.tone-inner h2', T.tone_h);
   set('.tone-intro', T.tone_intro);
@@ -899,7 +888,6 @@ function applySiteLang(lang) {
     const desc = card.querySelector('.t-desc'); if(desc) desc.textContent = T[`tone_${tKeys[i]}_desc`] || desc.textContent;
   });
 
-  // Demo steps (left panel text)
   const demoStepEls = $$(`.demo-ls`);
   demoStepEls.forEach((el, i) => {
     const pill = el.querySelector('.demo-pill'); if(pill && T[`d${i}_pill`]) pill.innerHTML = T[`d${i}_pill`];
@@ -907,7 +895,6 @@ function applySiteLang(lang) {
     const sub  = el.querySelector('.demo-sub');  if(sub  && T[`d${i}_sub`])  sub.innerHTML  = T[`d${i}_sub`];
   });
 
-  // Mock demo cards (right side scrolling panels)
   for(let ci = 0; ci < 6; ci++) {
     const card = document.querySelector(`.demo-card-wrap[data-di="${ci}"]`);
     if(!card) continue;
@@ -934,7 +921,6 @@ function applySiteLang(lang) {
     }
     const btn = card.querySelector('.mock-gen-btn .btn-txt');
     if(btn && T[`mock_c${ci}_btn`]) btn.textContent = T[`mock_c${ci}_btn`];
-    // Card 0 diff labels
     if(ci === 0) {
       const sup = card.querySelector('.out-diff-card.sup');
       const ext = card.querySelector('.out-diff-card.ext');
@@ -943,7 +929,6 @@ function applySiteLang(lang) {
     }
   }
 
-  // Award
   set('.award-inner h2', T.award_h);
   const awardP = $('.award-inner > p'); if(awardP) awardP.textContent = T.award_p;
   const stats = $$('.stat');
@@ -952,7 +937,6 @@ function applySiteLang(lang) {
   if(stats[2]) { const n=stats[2].querySelector('.stat-n'); const l=stats[2].querySelector('.stat-l'); if(n)n.textContent=T.stat3_n; if(l)l.textContent=T.stat3_l; }
   const awardBtn = $('.award-section .btn-dark'); if(awardBtn) awardBtn.textContent = T.award_btn;
 
-  // Pricing
   set('.sec-head h2', T.pricing_h);
   const pricingSub = $('.sec-head p'); if(pricingSub) pricingSub.textContent = T.pricing_sub;
   const plans = $$('.pc');
@@ -964,49 +948,39 @@ function applySiteLang(lang) {
     const mo   = plan.querySelector('.p-mo');    if(mo)   mo.textContent = perMonth;
     const gens = plan.querySelector('.p-gens');  if(gens) gens.textContent = planGens[i] || '';
     const btn  = plan.querySelector('.p-btn');   if(btn)  btn.textContent = planBtns[i] || '';
-    const ul   = plan.querySelector('.p-feats'); 
+    const ul   = plan.querySelector('.p-feats');
     if(ul && planFeats[i]) {
       ul.innerHTML = planFeats[i].map(f => `<li>${f}</li>`).join('');
     }
-    // Most popular badge
-    const hotBadge = plan.querySelector('::before');
     if(plan.classList.contains('hot')) {
-      // Update via CSS custom property — set data attribute
       plan.dataset.popular = T.most_popular;
       plan.style.setProperty('--popular-label', `"${T.most_popular}"`);
     }
   });
 
-  // Final CTA
   set('.fcta h2', T.fcta_h);
   const fctaP = $('.fcta p'); if(fctaP) fctaP.textContent = T.fcta_p;
   const fctaBtn = $('.btn-w'); if(fctaBtn) fctaBtn.textContent = T.fcta_btn;
 
-  // Footer
   const fLinks = $$('.f-links a');
   if(fLinks[0]) fLinks[0].textContent = T.f_privacy;
   if(fLinks[1]) fLinks[1].textContent = T.f_terms;
   if(fLinks[2]) fLinks[2].textContent = T.f_contact;
 
-  // Lang banner text
   const lbt = document.getElementById('langBannerTitle'); if(lbt) lbt.textContent = T.lang_banner_title;
   const lbs = document.getElementById('langBannerSub');   if(lbs) lbs.textContent = T.lang_banner_sub;
   const lsh = document.getElementById('langScrollHintText'); if(lsh) lsh.textContent = T.lang_scroll;
 
-  // Rebuild the How It Works diagram section
   buildDiagramSteps(lang);
 
-  // Highlight active lang button
   document.querySelectorAll('.lang-banner-btn').forEach(btn => {
     btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${lang}'`));
   });
 
-  // Update tone preview text for new language
   updateTonePreviews(lang);
 }
 
 function updateTonePreviews(lang) {
-  // Update preview texts based on language
   const previewsLang = {
     en: {
       kids:{Science:`"Hey curious minds! 🌱 Today we're going on a plant adventure — let's find out how leaves turn sunlight into actual food. Spoiler: it's basically plant magic. Ready? Let's go!"`,History:`"Time travel alert! 🚀 We're zooming back to ancient Egypt. Buckle up, time explorers!"`,Math:`"Numbers are like superheroes 🦸 — today we learn their secret powers!"`,Biology:`"Your body has TRILLIONS of tiny workers inside it right now 🦠 Want to meet them?"`,Geography:`"Planet Earth has seriously wild places 🌋 Adventure starts NOW!"`},
@@ -1040,10 +1014,8 @@ function updateTonePreviews(lang) {
     },
   };
 
-  // Inject previews for selected language
   if(previewsLang[lang]) {
     window._currentPreviews = previewsLang[lang];
-    // If tone picker is visible, update the current preview
     const prevText = document.getElementById('prevText');
     const prevSubj = document.getElementById('prevSubj');
     if(prevText && prevSubj && window._selTone && window._selSubj) {
@@ -1067,7 +1039,6 @@ function checkLangBannerScroll() {
   }
 }
 
-// Show scroll hint after 3 seconds if user hasn't scrolled and hasn't set a lang
 function initLangHint() {
   if(langBannerDismissed || siteLang !== 'en') return;
   setTimeout(() => {
@@ -1083,14 +1054,11 @@ function initLangHint() {
 function selectSiteLang(lang) {
   siteLang = lang;
   localStorage.setItem('yt_lang', lang);
-  // Highlight button
   document.querySelectorAll('.lang-banner-btn').forEach(btn => {
     btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${lang}'`));
   });
-  // Apply translations immediately
   applySiteLang(lang);
   updateNavLangBtn(lang);
-  // Brief confirmation then dismiss
   setTimeout(() => {
     dismissLangBanner();
   }, lang === 'en' ? 0 : 800);
@@ -1117,7 +1085,6 @@ function updateNavLangBtn(lang) {
   if(label) label.textContent = labels[lang] || lang.toUpperCase();
 }
 
-// Patch tone picker to use language-aware previews
 function patchTonePicker() {
   window._selTone = 'kids';
   window._selSubj = 'Science';
@@ -1129,7 +1096,9 @@ function patchTonePicker() {
   });
 }
 
-// Init
+// ══ INIT ══
+// THE FIX: banner now only shows on scroll for first-time visitors.
+// Returning visitors (any lang saved OR dismissed) will never see it uninvited.
 window.addEventListener('scroll', checkLangBannerScroll, { passive: true });
 document.addEventListener('DOMContentLoaded', () => {
   const savedLang = localStorage.getItem('yt_lang') || 'en';
@@ -1138,13 +1107,11 @@ document.addEventListener('DOMContentLoaded', () => {
   applySiteLang(savedLang);
   updateNavLangBtn(savedLang);
   patchTonePicker();
-  if(!langBannerDismissed) initLangHint();
-  // If already has non-english lang saved, still show banner briefly so they can change
-  if(savedLang !== 'en') {
-    document.getElementById('langBannerWrap').classList.add('show');
+  // Only show scroll hint for brand new visitors who haven't chosen a language yet
+  if (!langBannerDismissed && !localStorage.getItem('yt_lang')) {
+    initLangHint();
   }
 });
-
 </script>
 </body>
 </html>
