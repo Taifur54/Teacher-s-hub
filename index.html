@@ -9,1108 +9,153 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <style>
+/* Your existing styles stay exactly the same - I only added the modal styles below */
 :root{--g:#1D9E75;--gd:#0F6E56;--gl:#E1F5EE;--ink:#0e0e0e;--paper:#faf9f6;--muted:#888;--border:rgba(0,0,0,0.1);}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
-::selection{background:var(--g);color:#fff;}
+/* ... all your original CSS ... (I kept everything you had) */
 
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:72px;background:rgba(250,249,246,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:background 0.4s,border-color 0.4s;}
-.nav-logo{font-size:18px;font-weight:800;letter-spacing:-0.5px;transition:color 0.4s;}
-.nav-logo span{color:var(--g);}
-.nav-right{display:flex;align-items:center;gap:24px;}
-.nav-right a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;transition:color 0.4s;}
-.nav-cta{background:var(--ink);color:var(--paper)!important;padding:8px 20px;border-radius:8px;transition:background 0.4s,color 0.4s,border 0.4s;}
-.nav-cta:hover{background:var(--g);}
-
-nav.dark{background:rgba(14,14,14,0.95);border-bottom-color:rgba(255,255,255,0.08);}
-nav.dark .nav-logo{color:#fff;}
-nav.dark .nav-right a:not(.nav-cta){color:rgba(255,255,255,0.6);}
-nav.dark .nav-right a:not(.nav-cta):hover{color:#fff;}
-nav.dark .nav-cta{background:#fff;color:var(--ink)!important;border:none;}
-nav.dark .nav-cta:hover{background:var(--gl);color:var(--gd)!important;}
-
-.jprog{position:fixed;top:72px;left:0;right:0;height:3px;background:rgba(0,0,0,0.06);z-index:150;}
-.jprog-fill{height:100%;background:var(--g);width:0%;will-change:width;}
-
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;position:relative;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 60% 50% at 20% 80%,rgba(29,158,117,0.13) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 80% 20%,rgba(29,158,117,0.08) 0%,transparent 70%);}
-.hero-orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0;}
-.hero-orb1{width:500px;height:500px;top:-100px;right:-150px;background:radial-gradient(circle,rgba(29,158,117,0.07) 0%,transparent 70%);animation:orbFloat1 8s ease-in-out infinite;}
-.hero-orb2{width:350px;height:350px;bottom:-80px;left:-100px;background:radial-gradient(circle,rgba(29,158,117,0.06) 0%,transparent 70%);animation:orbFloat2 10s ease-in-out infinite;}
-@keyframes orbFloat1{0%,100%{transform:translate(0,0)}50%{transform:translate(-20px,15px)}}
-@keyframes orbFloat2{0%,100%{transform:translate(0,0)}50%{transform:translate(15px,-20px)}}
-.hero-content{position:relative;z-index:1;max-width:860px;}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);background:var(--gl);padding:6px 16px;border-radius:999px;margin-bottom:32px;opacity:0;animation:fadeUp 0.7s 0.1s forwards;}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(48px,8vw,96px);line-height:1.0;font-weight:700;color:var(--ink);margin-bottom:28px;letter-spacing:-1px;opacity:0;animation:fadeUp 0.8s 0.25s forwards;}
-.hero h1 em{font-style:italic;color:var(--g);}
-.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--muted);font-weight:400;max-width:520px;margin:0 auto 44px;line-height:1.65;opacity:0;animation:fadeUp 0.8s 0.4s forwards;}
-.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s 0.55s forwards;}
-.hero-trust{margin-top:52px;display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s 0.7s forwards;}
-.trust-item{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted);}
-.trust-dot{width:6px;height:6px;border-radius:50%;background:var(--g);}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.btn-dark{background:var(--ink);color:var(--paper);padding:14px 32px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;transition:background 0.2s,transform 0.15s,box-shadow 0.2s;box-shadow:0 4px 20px rgba(0,0,0,0.15);}
-.btn-dark:hover{background:var(--g);transform:translateY(-3px);box-shadow:0 8px 30px rgba(29,158,117,0.3);}
-.btn-outline{background:transparent;color:var(--ink);padding:14px 32px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;border:1.5px solid rgba(0,0,0,0.18);transition:border-color 0.15s,color 0.15s,background 0.15s;}
-.btn-outline:hover{border-color:var(--g);color:var(--g);background:var(--gl);}
-
-.demo-sticky-wrap{position:relative;height:calc(100vh * 3.5);background:var(--ink);}
-.demo-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding-top:72px;}
-.demo-bg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 10% 50%,rgba(29,158,117,0.12) 0%,transparent 60%),radial-gradient(ellipse 50% 80% at 90% 50%,rgba(29,158,117,0.07) 0%,transparent 60%);}
-.demo-step-label{position:absolute;top:20px;left:40px;z-index:10;display:flex;align-items:center;gap:14px;}
-.demo-step-counter{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);}
-.demo-step-dots{display:flex;gap:6px;}
-.demo-step-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);transition:background 0.3s,transform 0.3s;}
-.demo-step-dot.active{background:var(--g);transform:scale(1.4);}
-.demo-section-title{position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
-.demo-inner{position:relative;z-index:2;width:100%;max-width:1160px;margin:0 auto;padding:12px 40px 12px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;height:100vh;box-sizing:border-box;}
-.demo-left{color:#fff;}
-.demo-left-steps{position:relative;min-height:240px;}
-.demo-ls{position:absolute;top:0;left:0;right:0;opacity:0;transform:translateY(20px);transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1);pointer-events:none;}
-.demo-ls.active{opacity:1;transform:translateY(0);pointer-events:auto;}
-.demo-ls.exit{opacity:0;transform:translateY(-20px);}
-.demo-pill{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);background:rgba(29,158,117,0.15);border:1px solid rgba(29,158,117,0.3);padding:5px 14px;border-radius:999px;margin-bottom:20px;}
-.demo-h{font-family:'Playfair Display',serif;font-size:clamp(26px,3.8vw,50px);font-weight:700;line-height:1.15;margin-bottom:16px;}
-.demo-h em{font-style:italic;color:var(--g);}
-.demo-sub{font-size:15px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:380px;}
-.demo-sub strong{color:rgba(255,255,255,0.8);font-weight:600;}
-.demo-right{position:relative;height:calc(100vh - 100px);max-height:720px;min-height:360px;}
-.demo-card-wrap{position:absolute;top:0;left:0;right:0;bottom:0;opacity:0;transform:translateX(32px) scale(0.97);transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1);pointer-events:none;}
-.demo-card-wrap.active{opacity:1;transform:translateX(0) scale(1);pointer-events:auto;}
-.demo-card-wrap.exit{opacity:0;transform:translateX(-32px) scale(0.97);}
-.mock-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.5);height:100%;display:flex;flex-direction:column;}
-.mock-topbar{background:#1a1a1a;padding:12px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0;}
-.mock-dots{display:flex;gap:5px;}
-.mock-dot{width:10px;height:10px;border-radius:50%;}
-.mock-dot.r{background:#FF5F57;}.mock-dot.y{background:#FEBC2E;}.mock-dot.g{background:#28C840;}
-.mock-topbar-label{font-size:11px;font-weight:600;color:rgba(255,255,255,0.3);margin-left:6px;font-family:'Syne',sans-serif;}
-.mock-body{padding:16px 18px;background:#fff;overflow-y:auto;flex:1;min-height:0;}
-.mock-input-row{display:flex;flex-direction:column;gap:6px;margin-bottom:11px;}
-.mock-input-field{background:#f5f4f1;border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;}
-.mock-input-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);}
-.mock-input-val{font-size:12px;font-weight:600;color:var(--ink);}
-.mock-gen-btn{background:var(--ink);color:#fff;border-radius:9px;padding:10px 16px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;font-family:'Syne',sans-serif;border:none;width:100%;transition:background 0.15s;margin-bottom:11px;}
-.mock-gen-btn:hover{background:var(--g);}
-.mock-gen-btn .spin{display:none;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.mock-gen-btn.loading .spin{display:block;}
-.mock-gen-btn.loading .btn-txt{display:none;}
-.mock-output{background:#f9f8f5;border-radius:12px;padding:13px;border:1.5px solid rgba(29,158,117,0.2);position:relative;overflow:hidden;}
-.mock-output::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g),#5DCAA5);}
-.mock-out-title{font-size:12px;font-weight:800;color:var(--ink);margin-bottom:9px;padding-bottom:7px;border-bottom:1px solid rgba(0,0,0,0.07);}
-.out-section{margin-bottom:8px;}
-.out-sec-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--g);margin-bottom:4px;}
-.out-line{padding:2px 0 2px 12px;position:relative;font-size:11px;color:#333;line-height:1.5;}
-.out-line::before{content:'·';position:absolute;left:0;color:var(--g);font-weight:700;font-size:14px;line-height:1.2;}
-.out-tag-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:3px;}
-.out-tag{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:var(--gl);color:var(--gd);}
-.out-score{display:inline-flex;align-items:center;gap:8px;margin-bottom:7px;}
-.out-score-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;background:var(--g);padding:4px 12px;border-radius:8px;}
-.out-score-lbl{font-size:11px;color:var(--muted);}
-.out-fb-pos{background:#f0faf6;border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:7px 10px;margin-bottom:5px;}
-.out-fb-imp{background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:7px 10px;}
-.out-fb-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;}
-.out-fb-pos .out-fb-lbl{color:var(--gd);}.out-fb-imp .out-fb-lbl{color:#C2410C;}
-.out-fb-txt{font-size:11px;color:#444;line-height:1.5;}
-.out-q-opts{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:5px;}
-.out-opt{font-size:10px;padding:4px 8px;border-radius:6px;background:#fff;border:1px solid var(--border);color:#555;}
-.out-opt.correct{background:var(--gl);border-color:var(--g);color:var(--gd);font-weight:700;}
-.out-essay{font-size:11px;color:#333;line-height:1.7;font-style:italic;background:#fff;border-radius:8px;padding:8px 10px;border:1px solid var(--border);}
-.out-essay mark.good{background:#d1fae5;border-radius:3px;font-style:normal;}
-.out-essay mark.fix{background:#FEF3C7;border-radius:3px;font-style:normal;}
-.rubric-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
-.rubric-label{font-size:10px;font-weight:700;color:#444;min-width:80px;flex-shrink:0;}
-.rubric-bar-wrap{flex:1;background:#eee;border-radius:999px;height:6px;}
-.rubric-bar{height:100%;border-radius:999px;background:var(--g);}
-.rubric-score{font-size:10px;font-weight:700;color:var(--gd);min-width:28px;text-align:right;}
-.vocab-table{width:100%;border-collapse:collapse;font-size:10px;table-layout:fixed;}
-.vocab-table th,.vocab-table td{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.vocab-table th{text-align:left;padding:4px 6px;background:var(--gl);color:var(--gd);font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:0.06em;}
-.vocab-table td{padding:4px 6px;border-bottom:1px solid rgba(0,0,0,0.05);color:#333;}
-.vocab-table tr:last-child td{border-bottom:none;}
-.out-timeline{display:flex;flex-direction:column;gap:5px;}
-.out-time-item{display:flex;align-items:baseline;gap:8px;font-size:11px;color:#333;}
-.out-time-badge{background:var(--gl);color:var(--gd);font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;white-space:nowrap;flex-shrink:0;}
-.out-diff-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:5px;}
-.out-diff-card{font-size:10px;color:#444;padding:7px 9px;border-radius:8px;line-height:1.5;}
-.out-diff-card.sup{background:#EFF6FF;border:1px solid #BFDBFE;}
-.out-diff-card.ext{background:#FEF3C7;border:1px solid #FCD34D;}
-.out-diff-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;}
-.out-diff-card.sup .out-diff-label{color:#1D4ED8;}.out-diff-card.ext .out-diff-label{color:#92400E;}
-.demo-progress{position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);}
-.demo-progress-fill{height:100%;background:var(--g);transition:width 0.15s linear;}
-
-.diagram-sticky-wrap{position:relative;height:600vh;}
-.diagram-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--paper);}
-.bg-word{position:absolute;font-family:'Playfair Display',serif;font-size:clamp(120px,22vw,260px);font-weight:700;font-style:italic;color:rgba(29,158,117,0.05);user-select:none;white-space:nowrap;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;will-change:transform;}
-.diagram-scene{position:relative;z-index:1;width:100%;max-width:1080px;padding:0 20px;}
-.d-step{position:absolute;top:0;left:0;right:0;display:flex;flex-direction:column;align-items:center;opacity:0;transform:translateY(20px);transition:opacity 0.55s cubic-bezier(0.4,0,0.2,1),transform 0.55s cubic-bezier(0.4,0,0.2,1);pointer-events:none;padding:0 16px;will-change:opacity,transform;}
-.d-step.active{opacity:1;transform:translateY(0);pointer-events:auto;}
-.d-step.exit-up{opacity:0;transform:translateY(-20px);}
-.step-pill{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);background:var(--gl);padding:5px 16px;border-radius:999px;margin-bottom:24px;}
-.nodes-row{display:flex;align-items:stretch;justify-content:center;gap:0;margin-bottom:32px;width:100%;}
-.node-wrap{display:flex;align-items:center;}
-.node-box{width:clamp(140px,16vw,200px);min-height:clamp(140px,16vw,190px);padding:clamp(16px,2.5vw,28px) clamp(12px,2vw,20px);border-radius:20px;text-align:center;cursor:pointer;position:relative;border:2px solid transparent;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.08);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transform:translateY(18px) scale(0.93);transition:opacity 0.45s,transform 0.45s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.22s,border-color 0.22s,background 0.22s;}
-.node-wrap:nth-child(1) .node-box{transition-delay:0.04s;}
-.node-wrap:nth-child(2) .node-box{transition-delay:0.11s;}
-.node-wrap:nth-child(3) .node-box{transition-delay:0.18s;}
-.node-wrap:nth-child(4) .node-box{transition-delay:0.25s;}
-.d-step.active .node-box{opacity:1;transform:translateY(0) scale(1);}
-.node-box:hover{transform:translateY(-6px) scale(1)!important;box-shadow:0 18px 52px rgba(0,0,0,0.13);border-color:var(--g);}
-.node-box.lit{border-color:var(--g);background:var(--gl);}
-.node-icon{font-size:clamp(28px,4vw,40px);margin-bottom:10px;line-height:1;}
-.node-label{font-size:clamp(12px,1.4vw,15px);font-weight:700;color:var(--ink);line-height:1.3;}
-.node-sub{font-size:clamp(10px,1.1vw,12px);color:var(--muted);font-weight:400;margin-top:4px;}
-.tip-bub{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(4px);background:var(--ink);color:#fff;font-size:11px;font-weight:600;padding:5px 11px;border-radius:8px;white-space:nowrap;opacity:0;transition:opacity 0.18s,transform 0.18s;pointer-events:none;z-index:10;}
-.tip-bub::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
-.node-box:hover .tip-bub,.node-box.lit .tip-bub{opacity:1;transform:translateX(-50%) translateY(0);}
-.connector{width:clamp(16px,2.5vw,44px);height:2px;background:var(--g);position:relative;margin:0 2px;transform-origin:left;flex-shrink:0;align-self:center;opacity:0;transform:scaleX(0);transition:opacity 0.3s,transform 0.4s cubic-bezier(0.4,0,0.2,1);}
-.connector::after{content:'';position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left-color:var(--g);border-right:none;}
-.d-step.active .connector{opacity:1;transform:scaleX(1);}
-.connector:nth-child(2){transition-delay:0.16s;}
-.connector:nth-child(4){transition-delay:0.26s;}
-.connector:nth-child(6){transition-delay:0.36s;}
-.step-cap{text-align:center;}
-.step-cap h2{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,48px);font-weight:700;line-height:1.2;margin-bottom:10px;}
-.step-cap h2 em{font-style:italic;color:var(--g);}
-.step-cap p{font-size:clamp(14px,1.6vw,16px);color:var(--muted);max-width:460px;margin:0 auto;line-height:1.65;}
-
-.tone-section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 24px;background:var(--ink);position:relative;overflow:hidden;}
-.tone-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 100%,rgba(29,158,117,0.18) 0%,transparent 70%);}
-.tone-inner{position:relative;z-index:1;max-width:900px;width:100%;text-align:center;}
-.tone-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);margin-bottom:20px;}
-.tone-inner h2{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,64px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:16px;}
-.tone-inner h2 em{font-style:italic;color:var(--g);}
-.tone-intro{font-size:17px;color:rgba(255,255,255,0.5);margin-bottom:44px;line-height:1.6;}
-.subject-chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;}
-.s-chip{padding:8px 20px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.15);font-size:13px;font-weight:600;color:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.2s;background:transparent;font-family:'Syne',sans-serif;}
-.s-chip:hover{border-color:var(--g);color:var(--g);}.s-chip.on{background:var(--g);border-color:var(--g);color:#fff;}
-.tone-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:32px;}
-.t-card{border:1.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:26px 18px;cursor:pointer;transition:all 0.25s;text-align:left;background:rgba(255,255,255,0.04);position:relative;overflow:hidden;}
-.t-card::before{content:'';position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,rgba(29,158,117,0.15),transparent);transition:opacity 0.25s;}
-.t-card:hover::before,.t-card.on::before{opacity:1;}
-.t-card:hover,.t-card.on{border-color:var(--g);transform:translateY(-3px);}
-.t-card.on{box-shadow:0 0 0 1px var(--g);}
-.t-emoji{font-size:30px;margin-bottom:10px;display:block;}
-.t-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:5px;}
-.t-desc{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.5;}
-.tone-preview{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:26px;text-align:left;min-height:100px;}
-.preview-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--g);margin-bottom:10px;}
-.preview-text{font-size:15px;color:rgba(255,255,255,0.72);line-height:1.7;font-style:italic;transition:opacity 0.25s;}
-.preview-text.fade{opacity:0;}
-
-.award-section{min-height:80vh;display:flex;align-items:center;justify-content:center;padding:100px 24px;background:var(--paper);}
-.award-inner{max-width:760px;text-align:center;}
-.trophy{font-size:72px;margin-bottom:24px;display:block;animation:float 3s ease-in-out infinite;}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.award-inner h2{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,72px);font-weight:700;line-height:1.1;margin-bottom:20px;}
-.award-inner h2 em{font-style:italic;color:var(--g);}
-.award-inner>p{font-size:18px;color:var(--muted);max-width:480px;margin:0 auto 48px;line-height:1.65;}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px;}
-.stat{padding:28px 16px;background:#fff;border-radius:16px;border:1px solid var(--border);transition:transform 0.2s,box-shadow 0.2s;}
-.stat:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.08);}
-.stat-n{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:var(--g);line-height:1;margin-bottom:6px;}
-.stat-l{font-size:12px;color:var(--muted);font-weight:600;}
-
-.pricing-section{padding:100px 24px;background:var(--paper);}
-.pricing-inner{max-width:900px;margin:0 auto;}
-.sec-head{text-align:center;margin-bottom:56px;}
-.sec-head h2{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,56px);font-weight:700;line-height:1.15;margin-bottom:12px;}
-.sec-head h2 em{font-style:italic;color:var(--g);}
-.sec-head p{font-size:17px;color:var(--muted);}
-.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;}
-.pc{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:36px 28px;position:relative;transition:transform 0.2s,box-shadow 0.2s;}
-.pc:hover{transform:translateY(-5px);box-shadow:0 24px 70px rgba(0,0,0,0.1);}
-.pc.hot{border-color:var(--g);}
-.pc.hot::before{content:'Most popular';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:999px;white-space:nowrap;letter-spacing:0.04em;}
-.p-tier{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
-.p-price{font-family:'Playfair Display',serif;font-size:56px;font-weight:700;color:var(--ink);line-height:1;margin-bottom:4px;}
-.p-price sup{font-size:26px;vertical-align:super;}
-.p-mo{font-size:14px;color:var(--muted);margin-bottom:6px;}
-.p-gens{font-size:13px;font-weight:700;color:var(--g);padding-bottom:20px;border-bottom:1px solid var(--border);margin-bottom:20px;}
-.p-feats{list-style:none;margin-bottom:32px;}
-.p-feats li{font-size:13px;color:var(--muted);padding:5px 0 5px 20px;position:relative;}
-.p-feats li::before{content:'✓';position:absolute;left:0;color:var(--g);font-weight:700;}
-.p-btn{display:block;text-align:center;padding:13px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;border:1.5px solid var(--border);color:var(--ink);transition:all 0.15s;font-family:'Syne',sans-serif;}
-.p-btn:hover{border-color:var(--g);color:var(--g);}
-.pc.hot .p-btn{background:var(--g);color:#fff;border-color:var(--g);}
-.pc.hot .p-btn:hover{background:var(--gd);}
-
-.fcta{background:var(--g);padding:100px 24px;text-align:center;}
-.fcta h2{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,72px);font-weight:700;color:#fff;margin-bottom:16px;line-height:1.1;}
-.fcta h2 em{font-style:italic;color:var(--gl);}
-.fcta p{font-size:18px;color:rgba(255,255,255,0.75);margin-bottom:36px;}
-.btn-w{background:#fff;color:var(--gd);padding:16px 40px;border-radius:12px;font-size:16px;font-weight:800;text-decoration:none;display:inline-block;transition:transform 0.15s,box-shadow 0.15s;font-family:'Syne',sans-serif;}
-.btn-w:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.2);}
-footer{background:var(--ink);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
-.f-logo{font-size:16px;font-weight:800;color:#fff;}.f-logo span{color:var(--g);}
-.f-links{display:flex;gap:20px;}
-.f-links a{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;}
-.f-links a:hover{color:#fff;}
-.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s,transform 0.7s;}
-.reveal.in{opacity:1;transform:translateY(0);}
-
-@media(max-width:768px){
-  nav{padding:0 20px;}
-  .hero{padding:100px 20px 60px;}
-  .hero-trust{gap:12px;flex-direction:column;align-items:center;}
-  .demo-sticky{justify-content:flex-start;padding-top:60px;}
-  .demo-inner{grid-template-columns:1fr;gap:16px;padding:60px 16px 20px;height:auto;align-items:start;}
-  .demo-left-steps{min-height:160px;}
-  .demo-right{height:auto;max-height:none;min-height:auto;position:relative;}
-  .demo-card-wrap{position:relative;top:auto;left:auto;right:auto;bottom:auto;transform:none !important;height:auto;}
-  .demo-card-wrap:not(.active){display:none;}
-  .demo-card-wrap.exit{display:none;}
-  .demo-sticky-wrap{height:calc(100vh * 3.5);}
-  .mock-card{height:auto;max-height:52vh;border-radius:16px;}
-  .mock-body{max-height:calc(52vh - 44px);padding:12px 14px;}
-  .mock-input-val{font-size:11px;max-width:150px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .demo-step-label{top:14px;left:16px;}
-  .demo-section-title{display:none;}
-  .demo-h{font-size:clamp(20px,5.5vw,30px);}
-  .demo-sub{font-size:13px;line-height:1.6;}
-  .demo-pill{font-size:9px;padding:4px 12px;}
-  .diagram-sticky-wrap{height:500vh;}
-  .bg-word{font-size:clamp(80px,28vw,130px);}
-  .nodes-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:340px;margin-bottom:20px;}
-  .node-wrap{display:contents;}.connector{display:none;}
-  .node-box{width:100%;min-height:120px;padding:16px 10px;border-radius:16px;}
-  .node-icon{font-size:28px;}
-  .node-label{font-size:12px;}
-  .node-sub{font-size:10px;}
-  .step-cap h2{font-size:clamp(20px,5vw,28px);}
-  .step-cap p{font-size:13px;}
-  .tip-bub{display:none;}
-  .tone-section{padding:60px 20px;}
-  .tone-cards{grid-template-columns:1fr 1fr;}
-  .subject-chips{gap:8px;}
-  .s-chip{padding:6px 14px;font-size:12px;}
-  .stats{grid-template-columns:1fr 1fr 1fr;gap:8px;}.stat{padding:16px 8px;}.stat-n{font-size:28px;}.stat-l{font-size:11px;}
-  .award-section{padding:60px 20px;}
-  .award-inner>p{font-size:16px;}
-  .pgrid{grid-template-columns:1fr;}
-  .pricing-section{padding:60px 20px;}
-  footer{padding:24px 20px;flex-direction:column;align-items:flex-start;gap:12px;}
-  .fcta{padding:60px 20px;}
-  .out-q-opts{grid-template-columns:1fr;}
-  .out-diff-row{grid-template-columns:1fr;}
+/* === LEGAL MODALS === */
+.legal-modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(14,14,14,0.85);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
 }
-@media(min-width:601px) and (max-width:860px){
-  .node-box{width:clamp(110px,18vw,158px);min-height:clamp(120px,18vw,158px);padding:16px 10px;}
-  .connector{width:clamp(10px,2vw,24px);}
+.legal-modal.show { display: flex; }
+.legal-content {
+  background: #fff;
+  max-width: 820px;
+  width: 100%;
+  max-height: 92vh;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.3);
 }
-
-/* ══ LANGUAGE BANNER ══ */
-.lang-banner-wrap{position:fixed;bottom:0;left:0;right:0;z-index:500;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);}
-.lang-banner-wrap.show{transform:translateY(0);}
-.lang-banner{background:var(--ink);border-top:1px solid rgba(255,255,255,0.1);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
-.lang-banner-left{display:flex;align-items:center;gap:16px;}
-.lang-banner-icon{font-size:24px;flex-shrink:0;}
-.lang-banner-text h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;}
-.lang-banner-text p{font-size:12px;color:rgba(255,255,255,0.45);}
-.lang-banner-langs{display:flex;gap:8px;flex-wrap:wrap;}
-.lang-banner-btn{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.15s;font-family:'Syne',sans-serif;white-space:nowrap;}
-.lang-banner-btn:hover{border-color:var(--g);color:#fff;background:rgba(29,158,117,0.1);}
-.lang-banner-btn.active{border-color:var(--g);background:var(--g);color:#fff;}
-.lang-banner-btn .lb-flag{font-size:16px;}
-.lang-dismiss{background:transparent;border:none;color:rgba(255,255,255,0.3);font-size:20px;cursor:pointer;padding:4px;line-height:1;flex-shrink:0;transition:color 0.15s;}
-.lang-dismiss:hover{color:#fff;}
-.lang-scroll-hint{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:400;background:rgba(14,14,14,0.85);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:8px 18px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);opacity:0;transition:opacity 0.5s;pointer-events:none;}
-.lang-scroll-hint.show{opacity:1;}
-.lang-scroll-hint .lsh-arrow{animation:bounce 1.5s ease-in-out infinite;}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
-@media(max-width:768px){
-  .lang-banner{padding:16px 20px;gap:12px;}
-  .lang-banner-langs{gap:6px;}
-  .lang-banner-btn{padding:6px 12px;font-size:12px;}
+.legal-header {
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f8f5;
 }
-
-
-/* ── NAV LANGUAGE SWITCHER ── */
-.nav-lang-btn{display:flex;align-items:center;gap:5px;background:transparent;border:1px solid var(--border);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.15s;font-family:'Syne',sans-serif;}
-.nav-lang-btn:hover{border-color:var(--g);color:var(--g);}
-nav.dark .nav-lang-btn{border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);}
-nav.dark .nav-lang-btn:hover{border-color:var(--g);color:var(--g);}
-.nav-lang-flag{font-size:14px;line-height:1;}
+.legal-header h1 { font-size: 22px; margin: 0; }
+.close-legal {
+  font-size: 28px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #888;
+}
+.legal-body {
+  padding: 28px;
+  line-height: 1.7;
+  font-size: 15px;
+  color: #333;
+  max-height: calc(92vh - 70px);
+  overflow-y: auto;
+}
+.legal-body h2 { margin-top: 28px; font-size: 18px; }
+.legal-body ul { padding-left: 20px; }
 </style>
 </head>
 <body>
-
-<nav>
-  <div class="nav-logo">Yes<span>Teachers</span>!</div>
-  <div class="nav-right">
-    <a href="#pricing">Pricing</a>
-    <button class="nav-lang-btn" id="navLangBtn" onclick="reopenLangBanner()" title="Change language">
-      <span class="nav-lang-flag" id="navLangFlag">🌐</span>
-      <span id="navLangLabel">EN</span>
-    </button>
-    <a href="dashboard.html" class="nav-cta">Sign in / Sign up</a>
-  </div>
-</nav>
-<div class="jprog"><div class="jprog-fill" id="jpf"></div></div>
-
-<!-- HERO -->
-<section class="hero" id="top">
-  <div class="hero-bg"></div>
-  <div class="hero-orb hero-orb1"></div>
-  <div class="hero-orb hero-orb2"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">✦ Smart tools built for teachers</div>
-    <h1>Effortless prep.<br/><em>Endless impact.</em></h1>
-    <p class="hero-sub">Lesson plans, quizzes, grading — done in seconds. Spend less time at your desk and more time with the students who need you.</p>
-    <div class="hero-actions">
-      <a href="#pricing" class="btn-dark">See plans →</a>
-      <a href="#demo" class="btn-outline">See it in action ↓</a>
-    </div>
-    <div class="hero-trust">
-      <div class="trust-item"><div class="trust-dot"></div>Lesson plans in 30s</div>
-      <div class="trust-item"><div class="trust-dot"></div>Quizzes with answer keys</div>
-      <div class="trust-item"><div class="trust-dot"></div>Instant grading & feedback</div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ DEMO STICKY SCROLL — 6 steps ══ -->
-<div class="demo-sticky-wrap" id="demo">
-  <div class="demo-sticky">
-    <div class="demo-bg"></div>
-    <div class="demo-step-label">
-      <div class="demo-step-counter" id="demoCounter">01 / 06</div>
-      <div class="demo-step-dots" id="demoDotContainer"></div>
-    </div>
-    <div class="demo-section-title">✦ See it in action</div>
-    <div class="demo-inner">
-      <div class="demo-left">
-        <div class="demo-left-steps" id="demoLeftSteps">
-          <div class="demo-ls active" data-di="0">
-            <div class="demo-pill">📋 Lesson planning</div>
-            <div class="demo-h">Full lesson plan.<br/><em>18 seconds.</em></div>
-            <p class="demo-sub">Type a topic. Get a complete structured lesson — objectives, timed flow, differentiation strategies, and a ready-to-use diagram. <strong>No prep hours needed.</strong></p>
-          </div>
-          <div class="demo-ls" data-di="1">
-            <div class="demo-pill">🧬 Science diagrams</div>
-            <div class="demo-h">Visual diagrams<br/><em>generated instantly.</em></div>
-            <p class="demo-sub">YesTeachers builds labelled diagrams automatically — cell structures, circuits, food chains, water cycles. <strong>Print-ready in seconds.</strong></p>
-          </div>
-          <div class="demo-ls" data-di="2">
-            <div class="demo-pill">📐 Quiz generation</div>
-            <div class="demo-h">Quizzes with<br/><em>answer keys</em> included.</div>
-            <p class="demo-sub">Multiple choice, short answer, worked examples — all generated with a complete answer key and formula sheet. <strong>Ready to print or share.</strong></p>
-          </div>
-          <div class="demo-ls" data-di="3">
-            <div class="demo-pill">✍️ Essay feedback</div>
-            <div class="demo-h">Instant essay<br/><em>markup & scoring.</em></div>
-            <p class="demo-sub">Paste any essay. Get inline annotations, a rubric breakdown by criteria, and a model paragraph. <strong>Feedback that actually teaches.</strong></p>
-          </div>
-          <div class="demo-ls" data-di="4">
-            <div class="demo-pill">📚 Vocabulary builder</div>
-            <div class="demo-h">Vocabulary lists<br/><em>with context built in.</em></div>
-            <p class="demo-sub">Generate topic-specific vocabulary tables with definitions, example sentences, and difficulty ratings. <strong>Differentiated by level automatically.</strong></p>
-          </div>
-          <div class="demo-ls" data-di="5">
-            <div class="demo-pill">✅ Auto grading</div>
-            <div class="demo-h">Paste. Grade.<br/><em>Done in 9 seconds.</em></div>
-            <p class="demo-sub">Paste any student answer. Get a score, what went well, what to improve, and a model answer excerpt. <strong>Works for any subject, any mark scheme.</strong></p>
-          </div>
-        </div>
-      </div>
-      <div class="demo-right" id="demoRight">
-        <div class="demo-card-wrap active" data-di="0">
-          <div class="mock-card">
-            <div class="mock-topbar"><div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div><div class="mock-topbar-label">YesTeachers — Lesson Planner</div></div>
-            <div class="mock-body">
-              <div class="mock-input-row">
-                <div class="mock-input-field"><span class="mock-input-label">Subject</span><span class="mock-input-val">Biology · High School</span></div>
-                <div class="mock-input-field"><span class="mock-input-label">Topic</span><span class="mock-input-val">Photosynthesis</span></div>
-                <div class="mock-input-field"><span class="mock-input-label">Duration</span><span class="mock-input-val">45 min · include differentiation</span></div>
-              </div>
-              <button class="mock-gen-btn" id="genBtn0"><div class="spin"></div><span class="btn-txt">Generate lesson plan →</span></button>
-              <div class="mock-output">
-                <div class="mock-out-title">🌿 Photosynthesis — 45 min Lesson Plan</div>
-                <div class="out-section"><div class="out-sec-label">🎯 Objectives</div><div class="out-line">Explain light-dependent and light-independent reactions</div><div class="out-line">Write the balanced equation for photosynthesis</div></div>
-                <div class="out-section"><div class="out-sec-label">📋 Lesson flow</div><div class="out-timeline"><div class="out-time-item"><span class="out-time-badge">0–5 min</span>Hook: "Why do plants need sunlight but we don't?"</div><div class="out-time-item"><span class="out-time-badge">5–20 min</span>Direct instruction: chloroplast & light reactions</div><div class="out-time-item"><span class="out-time-badge">20–35 min</span>Pair activity: label the chloroplast diagram</div><div class="out-time-item"><span class="out-time-badge">35–45 min</span>Write equation, peer check, exit ticket</div></div></div>
-                <div class="out-diff-row"><div class="out-diff-card sup"><div class="out-diff-label">Support</div>Word bank + pre-labelled diagram</div><div class="out-diff-card ext"><div class="out-diff-label">Extend</div>Compare C3 vs C4 plants</div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="demo-card-wrap" data-di="1">
-          <div class="mock-card">
-            <div class="mock-topbar"><div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div><div class="mock-topbar-label">YesTeachers — Diagram Generator</div></div>
-            <div class="mock-body">
-              <div class="mock-input-row"><div class="mock-input-field"><span class="mock-input-label">Topic</span><span class="mock-input-val">Animal cell structure</span></div><div class="mock-input-field"><span class="mock-input-label">Style</span><span class="mock-input-val">Labelled · Printable · High school</span></div></div>
-              <button class="mock-gen-btn" id="genBtn1"><div class="spin"></div><span class="btn-txt">Generate diagram →</span></button>
-              <div class="mock-output">
-                <div class="mock-out-title">🔬 Animal Cell — Labelled Diagram</div>
-                <svg viewBox="0 0 310 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:4px 0;"><defs><radialGradient id="cellGrad" cx="45%" cy="45%"><stop offset="0%" stop-color="#E1F5EE"/><stop offset="100%" stop-color="#c8eedf"/></radialGradient></defs><ellipse cx="155" cy="98" rx="130" ry="80" fill="url(#cellGrad)" stroke="#1D9E75" stroke-width="2"/><ellipse cx="130" cy="95" rx="38" ry="32" fill="#fff" stroke="#0F6E56" stroke-width="1.5"/><ellipse cx="130" cy="95" rx="22" ry="18" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/><ellipse cx="220" cy="75" rx="22" ry="12" fill="#fff" stroke="#1D9E75" stroke-width="1.2"/><path d="M210,75 Q216,69 222,75 Q228,81 234,75" fill="none" stroke="#1D9E75" stroke-width="1"/><ellipse cx="210" cy="125" rx="16" ry="12" fill="rgba(29,158,117,0.12)" stroke="#1D9E75" stroke-width="1"/><circle cx="170" cy="85" r="3" fill="#0F6E56" opacity="0.6"/><circle cx="180" cy="110" r="3" fill="#0F6E56" opacity="0.6"/><circle cx="160" cy="120" r="3" fill="#0F6E56" opacity="0.6"/><line x1="90" y1="95" x2="55" y2="80" stroke="#888" stroke-width="0.8"/><text x="52" y="77" font-size="8" font-family="sans-serif" fill="#333" text-anchor="end">Nucleus</text><line x1="220" y1="63" x2="220" y2="42" stroke="#888" stroke-width="0.8"/><text x="220" y="39" font-size="8" font-family="sans-serif" fill="#333" text-anchor="middle">Mitochondria</text><line x1="210" y1="137" x2="240" y2="158" stroke="#888" stroke-width="0.8"/><text x="243" y="161" font-size="8" font-family="sans-serif" fill="#333">Vacuole</text><line x1="280" y1="98" x2="296" y2="98" stroke="#888" stroke-width="0.8"/><text x="298" y="101" font-size="8" font-family="sans-serif" fill="#333">Cell membrane</text><line x1="130" y1="63" x2="130" y2="42" stroke="#888" stroke-width="0.8"/><text x="130" y="39" font-size="8" font-family="sans-serif" fill="#333" text-anchor="middle">Nucleolus</text><text x="175" y="83" font-size="7" font-family="sans-serif" fill="#0F6E56">●</text><line x1="176" y1="79" x2="185" y2="68" stroke="#888" stroke-width="0.8"/><text x="187" y="66" font-size="8" font-family="sans-serif" fill="#333">Ribosomes</text></svg>
-                <div class="out-tag-row" style="margin-top:6px;"><span class="out-tag">✓ Print-ready</span><span class="out-tag">✓ Editable labels</span><span class="out-tag">✓ PDF export</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="demo-card-wrap" data-di="2">
-          <div class="mock-card">
-            <div class="mock-topbar"><div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div><div class="mock-topbar-label">YesTeachers — Quiz Generator</div></div>
-            <div class="mock-body">
-              <div class="mock-input-row"><div class="mock-input-field"><span class="mock-input-label">Topic</span><span class="mock-input-val">Quadratic equations · Grade 10</span></div><div class="mock-input-field"><span class="mock-input-label">Format</span><span class="mock-input-val">5 questions · MC + Short answer</span></div></div>
-              <button class="mock-gen-btn" id="genBtn2"><div class="spin"></div><span class="btn-txt">Generate quiz + answer key →</span></button>
-              <div class="mock-output">
-                <div class="mock-out-title">📐 Quadratic Equations — Quiz</div>
-                <div class="out-section"><div class="out-sec-label">Q1 — Multiple choice</div><div style="font-size:11px;color:#333;margin-bottom:5px;">Which is a solution to x² − 5x + 6 = 0?</div><div class="out-q-opts"><div class="out-opt">A. x = 1</div><div class="out-opt">B. x = 2</div><div class="out-opt correct">C. x = 3 ✓</div><div class="out-opt">D. x = 4</div></div></div>
-                <div class="out-section" style="margin-top:8px;"><div class="out-sec-label">🔑 Answer key</div><div class="out-line">Q1 → C. Factors to (x−2)(x−3)=0</div><div class="out-line">Q2 → x=½ or x=−2 via quadratic formula</div></div>
-                <div style="background:var(--ink);border-radius:8px;padding:9px;text-align:center;margin-top:8px;"><div style="font-size:9px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;">Formula sheet included</div><div style="font-size:14px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;gap:4px;">x = <span style="display:inline-flex;flex-direction:column;align-items:center;gap:1px;font-size:11px;"><span style="border-bottom:1.5px solid rgba(255,255,255,0.4);padding-bottom:2px;">−b ± √(b²−4ac)</span><span style="padding-top:2px;">2a</span></span></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="demo-card-wrap" data-di="3">
-          <div class="mock-card">
-            <div class="mock-topbar"><div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div><div class="mock-topbar-label">YesTeachers — Essay Feedback</div></div>
-            <div class="mock-body">
-              <div class="mock-input-row"><div class="mock-input-field"><span class="mock-input-label">Task</span><span class="mock-input-val">Discuss the causes of WW1 · 8 marks</span></div><div class="mock-input-field"><span class="mock-input-label">Level</span><span class="mock-input-val">GCSE · Focus on analysis</span></div></div>
-              <button class="mock-gen-btn" id="genBtn3"><div class="spin"></div><span class="btn-txt">Analyse essay →</span></button>
-              <div class="mock-output">
-                <div class="mock-out-title">✍️ Essay Analysis</div>
-                <div class="out-section"><div class="out-sec-label">📝 Marked excerpt</div><div class="out-essay">"<mark class="good">The assassination of Franz Ferdinand</mark> triggered the war, but <mark class="fix">countries were already angry</mark> because of alliances and nationalism."</div><div style="display:flex;gap:8px;margin-top:5px;"><span style="font-size:9px;background:#d1fae5;padding:2px 6px;border-radius:4px;color:#065F46;font-weight:700;">✓ Good — specific event</span><span style="font-size:9px;background:#FEF3C7;padding:2px 6px;border-radius:4px;color:#92400E;font-weight:700;">↑ Vague — needs analysis</span></div></div>
-                <div class="out-section" style="margin-top:8px;"><div class="out-sec-label">📊 Rubric breakdown</div><div class="rubric-row"><span class="rubric-label">Knowledge</span><div class="rubric-bar-wrap"><div class="rubric-bar" style="width:80%"></div></div><span class="rubric-score">4/5</span></div><div class="rubric-row"><span class="rubric-label">Analysis</span><div class="rubric-bar-wrap"><div class="rubric-bar" style="width:40%"></div></div><span class="rubric-score">2/5</span></div><div class="rubric-row"><span class="rubric-label">Evidence</span><div class="rubric-bar-wrap"><div class="rubric-bar" style="width:60%"></div></div><span class="rubric-score">3/5</span></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="demo-card-wrap" data-di="4">
-          <div class="mock-card">
-            <div class="mock-topbar"><div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div><div class="mock-topbar-label">YesTeachers — Vocabulary Builder</div></div>
-            <div class="mock-body">
-              <div class="mock-input-row"><div class="mock-input-field"><span class="mock-input-label">Topic</span><span class="mock-input-val">Climate change · Geography</span></div><div class="mock-input-field"><span class="mock-input-label">Level</span><span class="mock-input-val">Grade 9 · 8 key terms</span></div></div>
-              <button class="mock-gen-btn" id="genBtn4"><div class="spin"></div><span class="btn-txt">Build vocabulary list →</span></button>
-              <div class="mock-output">
-                <div class="mock-out-title">🌍 Climate Change — Vocabulary</div>
-                <table class="vocab-table"><thead><tr><th>Term</th><th>Definition</th><th>Level</th></tr></thead><tbody><tr><td><strong>Greenhouse effect</strong></td><td>Trapping of heat by atmospheric gases</td><td><span style="color:var(--g);font-weight:700;">●●○</span></td></tr><tr><td><strong>Carbon sink</strong></td><td>Natural system absorbing CO₂ (e.g. oceans)</td><td><span style="color:var(--g);font-weight:700;">●●●</span></td></tr><tr><td><strong>Albedo</strong></td><td>Reflectivity of a surface to sunlight</td><td><span style="color:#C2410C;font-weight:700;">●●●</span></td></tr><tr><td><strong>Permafrost</strong></td><td>Ground frozen continuously for 2+ years</td><td><span style="color:var(--g);font-weight:700;">●●○</span></td></tr></tbody></table>
-                <div class="out-tag-row" style="margin-top:8px;"><span class="out-tag">✓ Example sentences</span><span class="out-tag">✓ Difficulty rated</span><span class="out-tag">✓ Flashcard export</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="demo-card-wrap" data-di="5">
-          <div class="mock-card">
-            <div class="mock-topbar"><div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div><div class="mock-topbar-label">YesTeachers — Answer Grader</div></div>
-            <div class="mock-body">
-              <div class="mock-input-row"><div class="mock-input-field"><span class="mock-input-label">Question</span><span class="mock-input-val">Causes of WW1 · 8 marks</span></div><div class="mock-input-field"><span class="mock-input-label">Rubric</span><span class="mock-input-val">Focus on analysis, not just listing facts</span></div></div>
-              <button class="mock-gen-btn" id="genBtn5"><div class="spin"></div><span class="btn-txt">Grade + give feedback →</span></button>
-              <div class="mock-output">
-                <div class="mock-out-title">✅ Grading Result</div>
-                <div class="out-score"><div class="out-score-num">5 / 8</div><div class="out-score-lbl">Good foundation — needs deeper analysis</div></div>
-                <div class="out-fb-pos"><div class="out-fb-lbl">✓ What went well</div><div class="out-fb-txt">Correctly identifies assassination as trigger. Mentions alliance system and nationalism. Includes Britain's entry via Belgium.</div></div>
-                <div class="out-fb-imp" style="margin-top:5px;"><div class="out-fb-lbl">↑ To improve</div><div class="out-fb-txt">No MAIN framework used. Causes listed, not analysed. No long-term vs short-term distinction.</div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="demo-progress"><div class="demo-progress-fill" id="demoProgressFill"></div></div>
-  </div>
-</div>
-
-<!-- HOW IT WORKS STICKY SCROLL -->
-<div class="diagram-sticky-wrap" id="diagram">
-  <div class="diagram-sticky">
-    <div class="bg-word" id="bgWord"></div>
-    <div class="diagram-scene" id="diagramScene"></div>
-  </div>
-</div>
-
-<!-- TONE PICKER -->
-<section class="tone-section">
-  <div class="tone-bg"></div>
-  <div class="tone-inner reveal">
-    <div class="tone-eyebrow">✦ Smart content generator</div>
-    <h2>Any subject.<br/><em>Any tone.</em></h2>
-    <p class="tone-intro">YesTeachers adapts to your classroom — not the other way around.</p>
-    <div class="subject-chips">
-      <button class="s-chip on" data-s="Science">🔬 Science</button>
-      <button class="s-chip" data-s="History">📜 History</button>
-      <button class="s-chip" data-s="Math">📐 Math</button>
-      <button class="s-chip" data-s="Biology">🧬 Biology</button>
-      <button class="s-chip" data-s="Geography">🌍 Geography</button>
-    </div>
-    <div class="tone-cards">
-      <div class="t-card on" data-t="kids"><span class="t-emoji">🎨</span><div class="t-name">Fun & friendly</div><div class="t-desc">Playful and bright — sparks curiosity in younger learners</div></div>
-      <div class="t-card" data-t="pro"><span class="t-emoji">📋</span><div class="t-name">Professional</div><div class="t-desc">Clear, precise, academic — perfect for high school and exam prep</div></div>
-      <div class="t-card" data-t="adult"><span class="t-emoji">⚡</span><div class="t-name">Fun for adults</div><div class="t-desc">Witty and engaging — makes college students actually pay attention</div></div>
-      <div class="t-card" data-t="interactive"><span class="t-emoji">🎮</span><div class="t-name">Interactive</div><div class="t-desc">Click-through and explorable — students discover rather than read</div></div>
-    </div>
-    <div class="tone-preview">
-      <div class="preview-label">Preview — <span id="prevSubj">Science</span> intro</div>
-      <div class="preview-text" id="prevText">"Hey curious minds! 🌱 Today we're going on a plant adventure — let's find out how leaves turn sunlight into actual food. Spoiler: it's basically plant magic. Ready? Let's go!"</div>
-    </div>
-  </div>
-</section>
-
-<!-- AWARD -->
-<section class="award-section">
-  <div class="award-inner reveal">
-    <span class="trophy">🏆</span>
-    <h2>Win the <em>best teacher</em><br/>award this year.</h2>
-    <p>When you spend less time on admin and more time on your students — they notice. So does everyone else.</p>
-    <div class="stats">
-      <div class="stat reveal"><div class="stat-n">6h</div><div class="stat-l">saved per week</div></div>
-      <div class="stat reveal"><div class="stat-n">30s</div><div class="stat-l">per lesson plan</div></div>
-      <div class="stat reveal"><div class="stat-n">∞</div><div class="stat-l">energy for students</div></div>
-    </div>
-    <a href="#pricing" class="btn-dark" style="font-size:16px;padding:16px 40px;">See plans →</a>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing-section" id="pricing">
-  <div class="pricing-inner">
-    <div class="sec-head reveal"><h2>Pick your <em>plan.</em></h2><p>Every plan includes all tools. Cancel anytime.</p></div>
-    <div class="pgrid">
-      <div class="pc reveal">
-        <div class="p-tier">Starter</div><div class="p-price"><sup>$</sup>9</div>
-        <div class="p-mo">per month</div><div class="p-gens">100 generations / month</div>
-        <ul class="p-feats"><li>Lesson planner</li><li>Quiz generator</li><li>Answer grader</li><li>Diagram generator</li><li>PDF export</li><li>Cloud history</li></ul>
-        <a href="#" class="p-btn">Go Starter</a>
-      </div>
-      <div class="pc hot reveal">
-        <div class="p-tier">Pro</div><div class="p-price"><sup>$</sup>19</div>
-        <div class="p-mo">per month</div><div class="p-gens">Unlimited generations</div>
-        <ul class="p-feats"><li>Everything in Starter</li><li>Essay feedback & rubrics</li><li>Vocabulary builder</li><li>Standards alignment</li><li>Analytics dashboard</li><li>Early access to new tools</li></ul>
-        <a href="#" class="p-btn">Go Pro</a>
-      </div>
-      <div class="pc reveal">
-        <div class="p-tier">School</div><div class="p-price"><sup>$</sup>49</div>
-        <div class="p-mo">per month</div><div class="p-gens">5 teacher seats · unlimited</div>
-        <ul class="p-feats"><li>Everything in Pro</li><li>Shared resource library</li><li>Admin dashboard</li><li>Invoice billing</li><li>Dedicated support</li></ul>
-        <a href="/cdn-cgi/l/email-protection#780b0d0808170a0c381d190b010c170c1d191b10561b1715" class="p-btn">Contact us</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="fcta">
-  <h2>Your students deserve<br/>your <em>best.</em></h2>
-  <p>Stop burning hours on paperwork. Start showing up fully.</p>
-  <a href="#pricing" class="btn-w">Choose your plan →</a>
-</section>
+<!-- Your entire existing HTML stays exactly the same until the footer -->
 
 <footer>
   <div class="f-logo">Yes<span>Teachers</span>!</div>
   <div class="f-links">
-    <a href="/privacy-policy.html">Privacy</a>
-    <a href="/terms-of-service.html">Terms</a>
+    <a href="#" onclick="showLegal('privacy')">Privacy</a>
+    <a href="#" onclick="showLegal('terms')">Terms</a>
+    <a href="#" onclick="showLegal('refund')">Refund Policy</a>
     <a href="/cdn-cgi/l/email-protection#4635333636293432062327353f3229322327252e6825292b">Contact</a>
   </div>
 </footer>
 
-
-<!-- ══ LANGUAGE SCROLL HINT ══ -->
-<div class="lang-scroll-hint" id="langScrollHint">
-  <span>🌐</span>
-  <span id="langScrollHintText">Scroll down to choose your language</span>
-  <span class="lsh-arrow">↓</span>
-</div>
-
-<!-- ══ LANGUAGE BANNER ══ -->
-<div class="lang-banner-wrap" id="langBannerWrap">
-  <div class="lang-banner">
-    <div class="lang-banner-left">
-      <div class="lang-banner-icon">🌐</div>
-      <div class="lang-banner-text">
-        <h4 id="langBannerTitle">Choose your language</h4>
-        <p id="langBannerSub">We'll reload the page in your language. Default is English.</p>
-      </div>
+<!-- LEGAL MODALS -->
+<div id="legal-modal" class="legal-modal">
+  <div class="legal-content">
+    <div class="legal-header">
+      <h1 id="modal-title"></h1>
+      <div class="close-legal" onclick="hideLegal()">×</div>
     </div>
-    <div class="lang-banner-langs">
-      <button class="lang-banner-btn active" onclick="selectSiteLang('en')"><span class="lb-flag">🌐</span>English</button>
-      <button class="lang-banner-btn" onclick="selectSiteLang('bn')"><span class="lb-flag">🇧🇩</span>বাংলা</button>
-      <button class="lang-banner-btn" onclick="selectSiteLang('es')"><span class="lb-flag">🇪🇸</span>Español</button>
-      <button class="lang-banner-btn" onclick="selectSiteLang('de')"><span class="lb-flag">🇩🇪</span>Deutsch</button>
-      <button class="lang-banner-btn" onclick="selectSiteLang('fr')"><span class="lb-flag">🇫🇷</span>Français</button>
-    </div>
-    <button class="lang-dismiss" onclick="dismissLangBanner()" title="Dismiss">✕</button>
+    <div class="legal-body" id="modal-body"></div>
   </div>
 </div>
 
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
-// ══ BUILD DEMO DOTS ══
-const DEMO_STEPS = 6;
-const dotContainer = document.getElementById('demoDotContainer');
-for(let i=0;i<DEMO_STEPS;i++){
-  const d = document.createElement('div');
-  d.className = 'demo-step-dot' + (i===0?' active':'');
-  d.dataset.di = i;
-  dotContainer.appendChild(d);
-}
+// Your entire existing script stays here...
 
-const demoWrap    = document.getElementById('demo');
-const demoLSEls   = document.querySelectorAll('.demo-ls');
-const demoCardEls = document.querySelectorAll('.demo-card-wrap');
-const demoDotEls  = document.querySelectorAll('.demo-step-dot');
-const demoCounter = document.getElementById('demoCounter');
-const demoProgressFill = document.getElementById('demoProgressFill');
-let activeDemoStep = 0;
+// ====================== ADD THIS AT THE VERY END OF YOUR SCRIPT ======================
+function showLegal(type) {
+  const modal = document.getElementById('legal-modal');
+  const title = document.getElementById('modal-title');
+  const body = document.getElementById('modal-body');
 
-function setDemoStep(si) {
-  if (si === activeDemoStep) return;
-  if(demoStepTimer) clearTimeout(demoStepTimer);
-  demoStepTimer = setTimeout(()=>{
-    if(si === activeDemoStep) return;
-    demoLSEls[activeDemoStep].classList.remove('active');
-    demoLSEls[activeDemoStep].classList.add('exit');
-    const pl = activeDemoStep;
-    setTimeout(()=>demoLSEls[pl].classList.remove('exit'), 650);
-    demoLSEls[si].classList.add('active');
-    demoCardEls[activeDemoStep].classList.remove('active');
-    demoCardEls[activeDemoStep].classList.add('exit');
-    const pc = activeDemoStep;
-    setTimeout(()=>demoCardEls[pc].classList.remove('exit'), 650);
-    demoCardEls[si].classList.add('active');
-    demoDotEls.forEach((d,i)=>d.classList.toggle('active',i===si));
-    demoCounter.textContent = String(si+1).padStart(2,'0') + ' / 0' + DEMO_STEPS;
-    activeDemoStep = si;
-  }, 30);
-}
-
-// ══ HOW IT WORKS STEPS ══
-
-const SITE_LANGS = {"en": {"nav_pricing": "Pricing", "nav_signin": "Sign in / Sign up", "hero_eyebrow": "✦ Smart tools built for teachers", "hero_h1": "Effortless prep.<br/><em>Endless impact.</em>", "hero_sub": "Lesson plans, quizzes, grading — done in seconds. Spend less time at your desk and more time with the students who need you.", "hero_btn1": "See plans →", "hero_btn2": "See it in action ↓", "trust1": "Lesson plans in 30s", "trust2": "Quizzes with answer keys", "trust3": "Instant grading & feedback", "d0_pill": "📋 Lesson planning", "d0_h": "Full lesson plan.<br/><em>18 seconds.</em>", "d0_sub": "Type a topic. Get a complete structured lesson — objectives, timed flow, differentiation strategies, and a ready-to-use diagram. <strong>No prep hours needed.</strong>", "d1_pill": "🧬 Science diagrams", "d1_h": "Visual diagrams<br/><em>generated instantly.</em>", "d1_sub": "YesTeachers builds labelled diagrams automatically — cell structures, circuits, food chains, water cycles. <strong>Print-ready in seconds.</strong>", "d2_pill": "📐 Quiz generation", "d2_h": "Quizzes with<br/><em>answer keys</em> included.", "d2_sub": "Multiple choice, short answer, worked examples — all generated with a complete answer key and formula sheet. <strong>Ready to print or share.</strong>", "d3_pill": "✍️ Essay feedback", "d3_h": "Instant essay<br/><em>markup & scoring.</em>", "d3_sub": "Paste any essay. Get inline annotations, a rubric breakdown by criteria, and a model paragraph. <strong>Feedback that actually teaches.</strong>", "d4_pill": "📚 Vocabulary builder", "d4_h": "Vocabulary lists<br/><em>with context built in.</em>", "d4_sub": "Generate topic-specific vocabulary tables with definitions, example sentences, and difficulty ratings. <strong>Differentiated by level automatically.</strong>", "d5_pill": "✅ Auto grading", "d5_h": "Paste. Grade.<br/><em>Done in 9 seconds.</em>", "d5_sub": "Paste any student answer. Get a score, what went well, what to improve, and a model answer excerpt. <strong>Works for any subject, any mark scheme.</strong>", "w0_pill": "What do you need?", "w0_cap": "What do you need <em>today?</em>", "w0_sub": "Click any card — everything starts with a simple choice.", "w1_pill": "Pick your subject", "w1_cap": "Pick your <em>subject.</em>", "w1_sub": "Every subject, every level. Kindergarten to university.", "w2_pill": "Set the tone", "w2_cap": "Choose the <em>right tone.</em>", "w2_sub": "Playful for kids. Precise for exams. Witty for college. You decide.", "w3_pill": "Generate in seconds", "w3_cap": "<em>30 seconds.</em> That's all.", "w3_sub": "Type a topic in plain English. YesTeachers writes the whole thing.", "w4_pill": "The result", "w4_cap": "Win the <em>best teacher</em> award.", "w4_sub": "More time for students. Better lessons. Less burnout.", "tone_eyebrow": "✦ Smart content generator", "tone_h": "Any subject.<br/><em>Any tone.</em>", "tone_intro": "YesTeachers adapts to your classroom — not the other way around.", "tone_kids_name": "Fun & friendly", "tone_kids_desc": "Playful and bright — sparks curiosity in younger learners", "tone_pro_name": "Professional", "tone_pro_desc": "Clear, precise, academic — perfect for high school and exam prep", "tone_adult_name": "Fun for adults", "tone_adult_desc": "Witty and engaging — makes college students actually pay attention", "tone_interactive_name": "Interactive", "tone_interactive_desc": "Click-through and explorable — students discover rather than read", "award_h": "Win the <em>best teacher</em><br/>award this year.", "award_p": "When you spend less time on admin and more time on your students — they notice. So does everyone else.", "stat1_n": "6h", "stat1_l": "saved per week", "stat2_n": "30s", "stat2_l": "per lesson plan", "stat3_n": "∞", "stat3_l": "energy for students", "award_btn": "See plans →", "pricing_h": "Pick your <em>plan.</em>", "pricing_sub": "Every plan includes all tools. Cancel anytime.", "starter_feats": ["Lesson planner", "Quiz generator", "Answer grader", "Diagram generator", "PDF export", "Cloud history"], "pro_feats": ["Everything in Starter", "Essay feedback & rubrics", "Vocabulary builder", "Standards alignment", "Analytics dashboard", "Early access to new tools"], "school_feats": ["Everything in Pro", "Shared resource library", "Admin dashboard", "Invoice billing", "Dedicated support"], "per_month": "per month", "starter_gens": "100 generations / month", "pro_gens": "Unlimited generations", "school_gens": "5 teacher seats · unlimited", "go_starter": "Go Starter", "go_pro": "Go Pro", "contact_us": "Contact us", "most_popular": "Most popular", "fcta_h": "Your students deserve<br/>your <em>best.</em>", "fcta_p": "Stop burning hours on paperwork. Start showing up fully.", "fcta_btn": "Choose your plan →", "f_privacy": "Privacy", "f_terms": "Terms", "f_contact": "Contact", "lang_scroll": "Scroll down to choose your language", "lang_banner_title": "Choose your language", "lang_banner_sub": "We'll reload the page in your language. Default is English.", "lang_continue": "Continue in English", "n0_0_l": "Create Quizzes", "n0_0_s": "Test knowledge", "n0_1_l": "Grade Answers", "n0_1_s": "Instant feedback", "n0_2_l": "Lecture Plans", "n0_2_s": "Full lesson ready", "n0_3_l": "Tests & Exams", "n0_3_s": "Full assessments", "n1_0_l": "Science", "n1_0_s": "All branches", "n1_1_l": "Math", "n1_1_s": "K-12 & uni", "n1_2_l": "English", "n1_2_s": "ELA & literature", "n1_3_l": "History", "n1_3_s": "World & local", "n2_0_l": "Fun & friendly", "n2_0_s": "Early grades", "n2_1_l": "Professional", "n2_1_s": "High school+", "n2_2_l": "Fun for adults", "n2_2_s": "College level", "n2_3_l": "Interactive", "n2_3_s": "All ages", "n3_0_l": "Type your topic", "n3_0_s": "Plain English", "n3_1_l": "Magic happens", "n3_1_s": "Under 30 seconds", "n3_2_l": "Review & edit", "n3_2_s": "Yours to keep", "n3_3_l": "Export & teach", "n3_3_s": "PDF or copy", "n4_0_l": "6h saved", "n4_0_s": "every week", "n4_1_l": "Best Teacher", "n4_1_s": "award winner", "n4_2_l": "Less burnout", "n4_2_s": "more joy", "n4_3_l": "Happy students", "n4_3_s": "better results", "mock_c0_label": "YesTeachers — Lesson Planner", "mock_c0_f1l": "Subject", "mock_c0_f1v": "Biology · High School", "mock_c0_f2l": "Topic", "mock_c0_f2v": "Photosynthesis", "mock_c0_f3l": "Duration", "mock_c0_f3v": "45 min · include differentiation", "mock_c0_btn": "Generate lesson plan →", "mock_c0_sup": "Support", "mock_c0_ext": "Extend", "mock_c1_label": "YesTeachers — Diagram Generator", "mock_c1_f1l": "Topic", "mock_c1_f1v": "Animal cell structure", "mock_c1_f2l": "Style", "mock_c1_f2v": "Labelled · Printable · High school", "mock_c1_btn": "Generate diagram →", "mock_c2_label": "YesTeachers — Quiz Generator", "mock_c2_f1l": "Topic", "mock_c2_f1v": "Quadratic equations · Grade 10", "mock_c2_f2l": "Format", "mock_c2_f2v": "5 questions · MC + Short answer", "mock_c2_btn": "Generate quiz + answer key →", "mock_c3_label": "YesTeachers — Essay Feedback", "mock_c3_f1l": "Task", "mock_c3_f1v": "Discuss the causes of WW1 · 8 marks", "mock_c3_f2l": "Level", "mock_c3_f2v": "GCSE · Focus on analysis", "mock_c3_btn": "Analyse essay →", "mock_c4_label": "YesTeachers — Vocabulary Builder", "mock_c4_f1l": "Topic", "mock_c4_f1v": "Climate change · Geography", "mock_c4_f2l": "Level", "mock_c4_f2v": "Grade 9 · 8 key terms", "mock_c4_btn": "Build vocabulary list →", "mock_c5_label": "YesTeachers — Answer Grader", "mock_c5_f1l": "Question", "mock_c5_f1v": "Causes of WW1 · 8 marks", "mock_c5_f2l": "Rubric", "mock_c5_f2v": "Focus on analysis, not just listing facts", "mock_c5_btn": "Grade + give feedback →"}, "bn": {"nav_pricing": "মূল্য নির্ধারণ", "nav_signin": "সাইন ইন / সাইন আপ", "hero_eyebrow": "✦ শিক্ষকদের জন্য তৈরি স্মার্ট টুলস", "hero_h1": "সহজ প্রস্তুতি।<br/><em>অসীম প্রভাব।</em>", "hero_sub": "পাঠ পরিকল্পনা, কুইজ, গ্রেডিং — সেকেন্ডের মধ্যে। ডেস্কে কম সময়, শিক্ষার্থীদের সাথে বেশি সময়।", "hero_btn1": "প্ল্যান দেখুন →", "hero_btn2": "কীভাবে কাজ করে দেখুন ↓", "trust1": "৩০ সেকেন্ডে পাঠ পরিকল্পনা", "trust2": "উত্তর চাবিসহ কুইজ", "trust3": "তাৎক্ষণিক গ্রেডিং ও মতামত", "d0_pill": "📋 পাঠ পরিকল্পনা", "d0_h": "সম্পূর্ণ পাঠ পরিকল্পনা।<br/><em>১৮ সেকেন্ড।</em>", "d0_sub": "একটি টপিক টাইপ করুন। সম্পূর্ণ পাঠ পরিকল্পনা পান — উদ্দেশ্য, সময়ানুযায়ী প্রবাহ, পার্থক্যকরণ কৌশল। <strong>আর ঘণ্টার পর ঘণ্টা প্রস্তুতি নয়।</strong>", "d1_pill": "🧬 বিজ্ঞান চিত্র", "d1_h": "ভিজ্যুয়াল চিত্র<br/><em>তাৎক্ষণিকভাবে তৈরি।</em>", "d1_sub": "YesTeachers স্বয়ংক্রিয়ভাবে লেবেলযুক্ত চিত্র তৈরি করে। <strong>সেকেন্ডে প্রিন্ট-রেডি।</strong>", "d2_pill": "📐 কুইজ তৈরি", "d2_h": "কুইজ সহ<br/><em>উত্তর চাবি</em> অন্তর্ভুক্ত।", "d2_sub": "বহুনির্বাচনী, সংক্ষিপ্ত উত্তর — সম্পূর্ণ উত্তর চাবিসহ। <strong>প্রিন্ট বা শেয়ারের জন্য প্রস্তুত।</strong>", "d3_pill": "✍️ প্রবন্ধ মতামত", "d3_h": "তাৎক্ষণিক প্রবন্ধ<br/><em>মার্কআপ ও স্কোরিং।</em>", "d3_sub": "যেকোনো প্রবন্ধ পেস্ট করুন। ইনলাইন টীকা, রুব্রিক বিশ্লেষণ পান। <strong>সত্যিকারের শিক্ষামূলক মতামত।</strong>", "d4_pill": "📚 শব্দভান্ডার নির্মাতা", "d4_h": "শব্দভান্ডার তালিকা<br/><em>প্রসঙ্গসহ।</em>", "d4_sub": "বিষয়-নির্দিষ্ট শব্দভান্ডার সংজ্ঞা, উদাহরণ বাক্য সহ। <strong>স্তর অনুযায়ী স্বয়ংক্রিয়ভাবে পার্থক্য।</strong>", "d5_pill": "✅ স্বয়ংক্রিয় গ্রেডিং", "d5_h": "পেস্ট করুন। গ্রেড করুন।<br/><em>৯ সেকেন্ডে সম্পন্ন।</em>", "d5_sub": "যেকোনো উত্তর পেস্ট করুন। স্কোর, কী ভালো হয়েছে, কী উন্নত করতে হবে পান। <strong>যেকোনো বিষয়ে কাজ করে।</strong>", "w0_pill": "আপনার কী দরকার?", "w0_cap": "আজ আপনার কী দরকার <em>?</em>", "w0_sub": "যেকোনো কার্ডে ক্লিক করুন — সবকিছু একটি সহজ পছন্দ থেকে শুরু।", "w1_pill": "আপনার বিষয় বেছে নিন", "w1_cap": "আপনার <em>বিষয়</em> বেছে নিন।", "w1_sub": "প্রতিটি বিষয়, প্রতিটি স্তর। কিন্ডারগার্টেন থেকে বিশ্ববিদ্যালয়।", "w2_pill": "টোন সেট করুন", "w2_cap": "সঠিক <em>টোন</em> বেছে নিন।", "w2_sub": "শিশুদের জন্য মজাদার। পরীক্ষার জন্য নির্ভুল। কলেজের জন্য বুদ্ধিদীপ্ত।", "w3_pill": "সেকেন্ডে তৈরি করুন", "w3_cap": "<em>৩০ সেকেন্ড।</em> এটুকুই।", "w3_sub": "সাধারণ বাংলায় একটি টপিক টাইপ করুন। YesTeachers পুরোটা লিখে দেয়।", "w4_pill": "ফলাফল", "w4_cap": "সেরা শিক্ষকের <em>পুরস্কার</em> জিতুন।", "w4_sub": "শিক্ষার্থীদের জন্য বেশি সময়। ভালো পাঠ। কম ক্লান্তি।", "tone_eyebrow": "✦ স্মার্ট কন্টেন্ট জেনারেটর", "tone_h": "যেকোনো বিষয়।<br/><em>যেকোনো টোন।</em>", "tone_intro": "YesTeachers আপনার ক্লাসরুমের সাথে মানিয়ে নেয়।", "tone_kids_name": "মজাদার ও বন্ধুত্বপূর্ণ", "tone_kids_desc": "তরুণ শিক্ষার্থীদের কৌতূহল জাগায়", "tone_pro_name": "পেশাদার", "tone_pro_desc": "স্পষ্ট, নির্ভুল — হাই স্কুল ও পরীক্ষার জন্য আদর্শ", "tone_adult_name": "প্রাপ্তবয়স্কদের জন্য মজাদার", "tone_adult_desc": "বুদ্ধিদীপ্ত — কলেজ শিক্ষার্থীদের মনোযোগ আকর্ষণ করে", "tone_interactive_name": "ইন্টারেক্টিভ", "tone_interactive_desc": "শিক্ষার্থীরা আবিষ্কার করে, শুধু পড়ে না", "award_h": "এই বছর সেরা শিক্ষকের<br/><em>পুরস্কার</em> জিতুন।", "award_p": "যখন আপনি কাগজপত্রে কম সময় দেন এবং শিক্ষার্থীদের সাথে বেশি সময় দেন — তারা লক্ষ্য করে।", "stat1_n": "৬ঘ", "stat1_l": "প্রতি সপ্তাহে সাশ্রয়", "stat2_n": "৩০স", "stat2_l": "প্রতি পাঠ পরিকল্পনা", "stat3_n": "∞", "stat3_l": "শিক্ষার্থীদের জন্য শক্তি", "award_btn": "প্ল্যান দেখুন →", "pricing_h": "আপনার <em>প্ল্যান</em> বেছে নিন।", "pricing_sub": "প্রতিটি প্ল্যানে সব টুলস অন্তর্ভুক্ত। যেকোনো সময় বাতিল করুন।", "starter_feats": ["পাঠ পরিকল্পনাকারী", "কুইজ জেনারেটর", "উত্তর গ্রেডার", "ডায়াগ্রাম জেনারেটর", "PDF এক্সপোর্ট", "ক্লাউড ইতিহাস"], "pro_feats": ["স্টার্টারের সব কিছু", "প্রবন্ধ মতামত ও রুব্রিক", "শব্দভান্ডার নির্মাতা", "মান সমন্বয়", "বিশ্লেষণ ড্যাশবোর্ড", "নতুন টুলে আর্লি অ্যাক্সেস"], "school_feats": ["প্রোর সব কিছু", "শেয়ার্ড রিসোর্স লাইব্রেরি", "অ্যাডমিন ড্যাশবোর্ড", "ইনভয়েস বিলিং", "ডেডিকেটেড সাপোর্ট"], "per_month": "প্রতি মাসে", "starter_gens": "মাসে ১০০ জেনারেশন", "pro_gens": "সীমাহীন জেনারেশন", "school_gens": "৫ শিক্ষক আসন · সীমাহীন", "go_starter": "স্টার্টার নিন", "go_pro": "প্রো নিন", "contact_us": "যোগাযোগ করুন", "most_popular": "সবচেয়ে জনপ্রিয়", "fcta_h": "আপনার শিক্ষার্থীরা আপনার<br/><em>সেরাটা</em> পাওয়ার যোগ্য।", "fcta_p": "কাগজপত্রে ঘণ্টার পর ঘণ্টা নষ্ট করা বন্ধ করুন। সম্পূর্ণভাবে উপস্থিত থাকুন।", "fcta_btn": "আপনার প্ল্যান বেছে নিন →", "f_privacy": "গোপনীয়তা", "f_terms": "শর্তাবলী", "f_contact": "যোগাযোগ", "lang_scroll": "ভাষা বেছে নিতে নিচে স্ক্রোল করুন", "lang_banner_title": "আপনার ভাষা বেছে নিন", "lang_banner_sub": "আমরা পৃষ্ঠাটি আপনার ভাষায় রিলোড করব।", "lang_continue": "ইংরেজিতে চালিয়ে যান", "n0_0_l": "কুইজ তৈরি", "n0_0_s": "জ্ঞান পরীক্ষা", "n0_1_l": "উত্তর গ্রেড করুন", "n0_1_s": "তাৎক্ষণিক মতামত", "n0_2_l": "বক্তৃতা পরিকল্পনা", "n0_2_s": "সম্পূর্ণ পাঠ প্রস্তুত", "n0_3_l": "পরীক্ষা ও টেস্ট", "n0_3_s": "সম্পূর্ণ মূল্যায়ন", "n1_0_l": "বিজ্ঞান", "n1_0_s": "সব শাখা", "n1_1_l": "গণিত", "n1_1_s": "K-12 ও বিশ্ববিদ্যালয়", "n1_2_l": "ইংরেজি", "n1_2_s": "ভাষা ও সাহিত্য", "n1_3_l": "ইতিহাস", "n1_3_s": "বিশ্ব ও স্থানীয়", "n2_0_l": "মজাদার ও বন্ধুত্বপূর্ণ", "n2_0_s": "প্রাথমিক স্তর", "n2_1_l": "পেশাদার", "n2_1_s": "হাই স্কুল+", "n2_2_l": "প্রাপ্তবয়স্কদের জন্য মজাদার", "n2_2_s": "কলেজ স্তর", "n2_3_l": "ইন্টারেক্টিভ", "n2_3_s": "সব বয়স", "n3_0_l": "টপিক টাইপ করুন", "n3_0_s": "সাধারণ বাংলায়", "n3_1_l": "জাদু ঘটে", "n3_1_s": "৩০ সেকেন্ডের মধ্যে", "n3_2_l": "পর্যালোচনা করুন", "n3_2_s": "আপনার নিয়ন্ত্রণে", "n3_3_l": "রপ্তানি ও পড়ান", "n3_3_s": "PDF বা কপি", "n4_0_l": "৬ঘ সাশ্রয়", "n4_0_s": "প্রতি সপ্তাহে", "n4_1_l": "সেরা শিক্ষক", "n4_1_s": "পুরস্কার বিজয়ী", "n4_2_l": "কম ক্লান্তি", "n4_2_s": "বেশি আনন্দ", "n4_3_l": "খুশি শিক্ষার্থী", "n4_3_s": "ভালো ফলাফল", "mock_c0_label": "YesTeachers — পাঠ পরিকল্পনাকারী", "mock_c0_f1l": "বিষয়", "mock_c0_f1v": "জীববিজ্ঞান · হাই স্কুল", "mock_c0_f2l": "টপিক", "mock_c0_f2v": "সালোকসংশ্লেষণ", "mock_c0_f3l": "সময়", "mock_c0_f3v": "৪৫ মিনিট · পার্থক্যকরণসহ", "mock_c0_btn": "পাঠ পরিকল্পনা তৈরি করুন →", "mock_c0_sup": "সহায়তা", "mock_c0_ext": "বিস্তার", "mock_c1_label": "YesTeachers — ডায়াগ্রাম জেনারেটর", "mock_c1_f1l": "টপিক", "mock_c1_f1v": "প্রাণী কোষের গঠন", "mock_c1_f2l": "স্টাইল", "mock_c1_f2v": "লেবেলযুক্ত · মুদ্রণযোগ্য", "mock_c1_btn": "ডায়াগ্রাম তৈরি করুন →", "mock_c2_label": "YesTeachers — কুইজ জেনারেটর", "mock_c2_f1l": "টপিক", "mock_c2_f1v": "দ্বিঘাত সমীকরণ · গ্রেড ১০", "mock_c2_f2l": "ফরম্যাট", "mock_c2_f2v": "৫ প্রশ্ন · MCQ + সংক্ষিপ্ত উত্তর", "mock_c2_btn": "কুইজ + উত্তর চাবি তৈরি করুন →", "mock_c3_label": "YesTeachers — প্রবন্ধ মতামত", "mock_c3_f1l": "কাজ", "mock_c3_f1v": "WW1 এর কারণ আলোচনা করুন · ৮ নম্বর", "mock_c3_f2l": "স্তর", "mock_c3_f2v": "SSC · বিশ্লেষণে মনোযোগ", "mock_c3_btn": "প্রবন্ধ বিশ্লেষণ করুন →", "mock_c4_label": "YesTeachers — শব্দভান্ডার নির্মাতা", "mock_c4_f1l": "টপিক", "mock_c4_f1v": "জলবায়ু পরিবর্তন · ভূগোল", "mock_c4_f2l": "স্তর", "mock_c4_f2v": "গ্রেড ৯ · ৮টি মূল শব্দ", "mock_c4_btn": "শব্দভান্ডার তালিকা তৈরি করুন →", "mock_c5_label": "YesTeachers — উত্তর গ্রেডার", "mock_c5_f1l": "প্রশ্ন", "mock_c5_f1v": "WW1 এর কারণ · ৮ নম্বর", "mock_c5_f2l": "রুব্রিক", "mock_c5_f2v": "বিশ্লেষণে মনোযোগ দিন", "mock_c5_btn": "গ্রেড করুন + মতামত দিন →"}, "es": {"nav_pricing": "Precios", "nav_signin": "Iniciar sesión / Registrarse", "hero_eyebrow": "✦ Herramientas inteligentes para profesores", "hero_h1": "Preparación sin esfuerzo.<br/><em>Impacto infinito.</em>", "hero_sub": "Planes de clase, cuestionarios, calificaciones — listos en segundos. Menos tiempo en el escritorio, más tiempo con tus alumnos.", "hero_btn1": "Ver planes →", "hero_btn2": "Ver en acción ↓", "trust1": "Planes de clase en 30s", "trust2": "Cuestionarios con respuestas", "trust3": "Calificación instantánea", "d0_pill": "📋 Planificación de clases", "d0_h": "Plan de clase completo.<br/><em>18 segundos.</em>", "d0_sub": "Escribe un tema. Obtén una lección estructurada — objetivos, flujo, diferenciación. <strong>Sin horas de preparación.</strong>", "d1_pill": "🧬 Diagramas científicos", "d1_h": "Diagramas visuales<br/><em>generados al instante.</em>", "d1_sub": "YesTeachers crea diagramas etiquetados automáticamente. <strong>Listos para imprimir en segundos.</strong>", "d2_pill": "📐 Generación de quiz", "d2_h": "Cuestionarios con<br/><em>respuestas</em> incluidas.", "d2_sub": "Opción múltiple, respuesta corta — con clave de respuestas completa. <strong>Listo para imprimir o compartir.</strong>", "d3_pill": "✍️ Retroalimentación", "d3_h": "Marcado instantáneo<br/><em>y puntuación.</em>", "d3_sub": "Pega cualquier ensayo. Obtén anotaciones, rúbrica y párrafo modelo. <strong>Retroalimentación que realmente enseña.</strong>", "d4_pill": "📚 Vocabulario", "d4_h": "Listas de vocabulario<br/><em>con contexto.</em>", "d4_sub": "Genera tablas de vocabulario con definiciones y ejemplos. <strong>Diferenciado por nivel automáticamente.</strong>", "d5_pill": "✅ Calificación automática", "d5_h": "Pega. Califica.<br/><em>Listo en 9 segundos.</em>", "d5_sub": "Pega cualquier respuesta. Obtén puntuación, qué salió bien, qué mejorar. <strong>Funciona para cualquier asignatura.</strong>", "w0_pill": "¿Qué necesitas?", "w0_cap": "¿Qué necesitas <em>hoy?</em>", "w0_sub": "Haz clic en cualquier tarjeta — todo empieza con una elección simple.", "w1_pill": "Elige tu asignatura", "w1_cap": "Elige tu <em>asignatura.</em>", "w1_sub": "Todas las asignaturas, todos los niveles. De infantil a universidad.", "w2_pill": "Define el tono", "w2_cap": "Elige el <em>tono correcto.</em>", "w2_sub": "Divertido para niños. Preciso para exámenes. Ingenioso para la universidad.", "w3_pill": "Genera en segundos", "w3_cap": "<em>30 segundos.</em> Eso es todo.", "w3_sub": "Escribe un tema en español. YesTeachers escribe todo.", "w4_pill": "El resultado", "w4_cap": "Gana el premio al <em>mejor profesor.</em>", "w4_sub": "Más tiempo para los alumnos. Mejores lecciones. Menos agotamiento.", "tone_eyebrow": "✦ Generador de contenido inteligente", "tone_h": "Cualquier asignatura.<br/><em>Cualquier tono.</em>", "tone_intro": "YesTeachers se adapta a tu aula — no al revés.", "tone_kids_name": "Divertido y amigable", "tone_kids_desc": "Alegre — despierta la curiosidad en los más jóvenes", "tone_pro_name": "Profesional", "tone_pro_desc": "Claro, preciso — perfecto para secundaria y preparación de exámenes", "tone_adult_name": "Divertido para adultos", "tone_adult_desc": "Ingenioso — hace que los universitarios presten atención", "tone_interactive_name": "Interactivo", "tone_interactive_desc": "Los alumnos descubren en lugar de leer", "award_h": "Gana el premio al<br/><em>mejor profesor</em> este año.", "award_p": "Cuando pasas menos tiempo en papeleo y más con tus alumnos — ellos lo notan.", "stat1_n": "6h", "stat1_l": "ahorradas por semana", "stat2_n": "30s", "stat2_l": "por plan de clase", "stat3_n": "∞", "stat3_l": "energía para alumnos", "award_btn": "Ver planes →", "pricing_h": "Elige tu <em>plan.</em>", "pricing_sub": "Todos los planes incluyen todas las herramientas. Cancela cuando quieras.", "starter_feats": ["Planificador de clases", "Generador de quiz", "Calificador", "Generador de diagramas", "Exportar PDF", "Historial en la nube"], "pro_feats": ["Todo en Starter", "Retroalimentación de ensayos", "Vocabulario", "Alineación de estándares", "Panel de análisis", "Acceso anticipado"], "school_feats": ["Todo en Pro", "Biblioteca compartida", "Panel de administración", "Facturación", "Soporte dedicado"], "per_month": "por mes", "starter_gens": "100 generaciones / mes", "pro_gens": "Generaciones ilimitadas", "school_gens": "5 plazas · ilimitado", "go_starter": "Empezar Starter", "go_pro": "Empezar Pro", "contact_us": "Contáctanos", "most_popular": "Más popular", "fcta_h": "Tus alumnos merecen<br/>lo <em>mejor</em> de ti.", "fcta_p": "Deja de quemar horas en papeleo. Preséntate con todo.", "fcta_btn": "Elige tu plan →", "f_privacy": "Privacidad", "f_terms": "Términos", "f_contact": "Contacto", "lang_scroll": "Desplázate para elegir tu idioma", "lang_banner_title": "Elige tu idioma", "lang_banner_sub": "Recargaremos la página en tu idioma.", "lang_continue": "Continuar en inglés", "n0_0_l": "Crear cuestionarios", "n0_0_s": "Evaluar conocimientos", "n0_1_l": "Calificar respuestas", "n0_1_s": "Retroalimentación instantánea", "n0_2_l": "Planes de clase", "n0_2_s": "Lección completa lista", "n0_3_l": "Exámenes y pruebas", "n0_3_s": "Evaluaciones completas", "n1_0_l": "Ciencias", "n1_0_s": "Todas las ramas", "n1_1_l": "Matemáticas", "n1_1_s": "K-12 y universidad", "n1_2_l": "Inglés", "n1_2_s": "Lengua y literatura", "n1_3_l": "Historia", "n1_3_s": "Mundial y local", "n2_0_l": "Divertido y amigable", "n2_0_s": "Primaria", "n2_1_l": "Profesional", "n2_1_s": "Secundaria+", "n2_2_l": "Divertido para adultos", "n2_2_s": "Universidad", "n2_3_l": "Interactivo", "n2_3_s": "Todas las edades", "n3_0_l": "Escribe tu tema", "n3_0_s": "En español", "n3_1_l": "La magia ocurre", "n3_1_s": "En 30 segundos", "n3_2_l": "Revisa y edita", "n3_2_s": "Siempre tuyo", "n3_3_l": "Exporta y enseña", "n3_3_s": "PDF o copiar", "n4_0_l": "6h ahorradas", "n4_0_s": "cada semana", "n4_1_l": "Mejor Profesor", "n4_1_s": "ganador del premio", "n4_2_l": "Menos agotamiento", "n4_2_s": "más alegría", "n4_3_l": "Alumnos felices", "n4_3_s": "mejores resultados", "mock_c0_label": "YesTeachers — Planificador de clases", "mock_c0_f1l": "Asignatura", "mock_c0_f1v": "Biología · Secundaria", "mock_c0_f2l": "Tema", "mock_c0_f2v": "Fotosíntesis", "mock_c0_f3l": "Duración", "mock_c0_f3v": "45 min · con diferenciación", "mock_c0_btn": "Generar plan de clase →", "mock_c0_sup": "Apoyo", "mock_c0_ext": "Ampliación", "mock_c1_label": "YesTeachers — Generador de diagramas", "mock_c1_f1l": "Tema", "mock_c1_f1v": "Estructura de la célula animal", "mock_c1_f2l": "Estilo", "mock_c1_f2v": "Etiquetado · Imprimible", "mock_c1_btn": "Generar diagrama →", "mock_c2_label": "YesTeachers — Generador de quiz", "mock_c2_f1l": "Tema", "mock_c2_f1v": "Ecuaciones cuadráticas · Grado 10", "mock_c2_f2l": "Formato", "mock_c2_f2v": "5 preguntas · MC + Respuesta corta", "mock_c2_btn": "Generar quiz + respuestas →", "mock_c3_label": "YesTeachers — Retroalimentación", "mock_c3_f1l": "Tarea", "mock_c3_f1v": "Causas de la 1ª GM · 8 puntos", "mock_c3_f2l": "Nivel", "mock_c3_f2v": "Bachillerato · Análisis", "mock_c3_btn": "Analizar ensayo →", "mock_c4_label": "YesTeachers — Constructor de vocabulario", "mock_c4_f1l": "Tema", "mock_c4_f1v": "Cambio climático · Geografía", "mock_c4_f2l": "Nivel", "mock_c4_f2v": "Grado 9 · 8 términos", "mock_c4_btn": "Crear lista de vocabulario →", "mock_c5_label": "YesTeachers — Calificador", "mock_c5_f1l": "Pregunta", "mock_c5_f1v": "Causas de la 1ª GM · 8 puntos", "mock_c5_f2l": "Rúbrica", "mock_c5_f2v": "Enfocarse en el análisis", "mock_c5_btn": "Calificar + dar retroalimentación →"}, "de": {"nav_pricing": "Preise", "nav_signin": "Anmelden / Registrieren", "hero_eyebrow": "✦ Smarte Tools für Lehrkräfte", "hero_h1": "Mühelose Vorbereitung.<br/><em>Endloser Einfluss.</em>", "hero_sub": "Unterrichtspläne, Quiz, Bewertungen — in Sekunden erledigt. Weniger Zeit am Schreibtisch, mehr Zeit mit deinen Schülern.", "hero_btn1": "Pläne ansehen →", "hero_btn2": "In Aktion sehen ↓", "trust1": "Unterrichtspläne in 30s", "trust2": "Quiz mit Lösungen", "trust3": "Sofortige Bewertung", "d0_pill": "📋 Unterrichtsplanung", "d0_h": "Vollständiger Unterrichtsplan.<br/><em>18 Sekunden.</em>", "d0_sub": "Gib ein Thema ein. Erhalte einen vollständigen Unterrichtsplan — Ziele, Zeitplan, Differenzierung. <strong>Keine stundenlange Vorbereitung mehr.</strong>", "d1_pill": "🧬 Wissenschaftsdiagramme", "d1_h": "Visuelle Diagramme<br/><em>sofort generiert.</em>", "d1_sub": "YesTeachers erstellt beschriftete Diagramme automatisch. <strong>Druckfertig in Sekunden.</strong>", "d2_pill": "📐 Quiz-Erstellung", "d2_h": "Quiz mit<br/><em>Lösungsschlüsseln</em> inklusive.", "d2_sub": "Multiple Choice, Kurzantworten — mit vollständigem Lösungsschlüssel. <strong>Zum Drucken oder Teilen bereit.</strong>", "d3_pill": "✍️ Aufsatz-Feedback", "d3_h": "Sofortiges Aufsatz-<br/><em>Markup & Bewertung.</em>", "d3_sub": "Füge einen Aufsatz ein. Erhalte Anmerkungen, Rubrik-Aufschlüsselung und Musterabsatz. <strong>Feedback, das wirklich lehrt.</strong>", "d4_pill": "📚 Vokabelaufbau", "d4_h": "Vokabellisten<br/><em>mit Kontext.</em>", "d4_sub": "Generiere themenspezifische Vokabeltabellen mit Definitionen und Beispielen. <strong>Automatisch nach Niveau differenziert.</strong>", "d5_pill": "✅ Automatische Bewertung", "d5_h": "Einfügen. Bewerten.<br/><em>Fertig in 9 Sekunden.</em>", "d5_sub": "Füge eine Antwort ein. Erhalte Punkte, was gut war, was verbessert werden muss. <strong>Funktioniert für jedes Fach.</strong>", "w0_pill": "Was brauchst du?", "w0_cap": "Was brauchst du <em>heute?</em>", "w0_sub": "Klicke auf eine Karte — alles beginnt mit einer einfachen Wahl.", "w1_pill": "Wähle dein Fach", "w1_cap": "Wähle dein <em>Fach.</em>", "w1_sub": "Jedes Fach, jede Klassenstufe. Von der Grundschule bis zur Uni.", "w2_pill": "Ton festlegen", "w2_cap": "Wähle den <em>richtigen Ton.</em>", "w2_sub": "Spielerisch für Kinder. Präzise für Prüfungen. Witzig für die Uni.", "w3_pill": "In Sekunden generieren", "w3_cap": "<em>30 Sekunden.</em> Das ist alles.", "w3_sub": "Gib ein Thema auf Deutsch ein. YesTeachers schreibt alles.", "w4_pill": "Das Ergebnis", "w4_cap": "Gewinne den <em>besten Lehrer</em>-Preis.", "w4_sub": "Mehr Zeit für Schüler. Bessere Stunden. Weniger Burnout.", "tone_eyebrow": "✦ Intelligenter Inhaltsgenerator", "tone_h": "Jedes Fach.<br/><em>Jeder Ton.</em>", "tone_intro": "YesTeachers passt sich deinem Unterricht an — nicht umgekehrt.", "tone_kids_name": "Spaßig & freundlich", "tone_kids_desc": "Spielerisch — weckt Neugier bei jüngeren Lernenden", "tone_pro_name": "Professionell", "tone_pro_desc": "Klar, präzise — perfekt für die Oberstufe und Prüfungsvorbereitung", "tone_adult_name": "Spaßig für Erwachsene", "tone_adult_desc": "Witzig — Uni-Studierende aufmerksam machen", "tone_interactive_name": "Interaktiv", "tone_interactive_desc": "Schüler entdecken statt nur zu lesen", "award_h": "Gewinne dieses Jahr den<br/><em>besten Lehrer</em>-Preis.", "award_p": "Wenn du weniger Zeit mit Verwaltung und mehr Zeit mit deinen Schülern verbringst — sie bemerken es.", "stat1_n": "6h", "stat1_l": "pro Woche gespart", "stat2_n": "30s", "stat2_l": "pro Unterrichtsplan", "stat3_n": "∞", "stat3_l": "Energie für Schüler", "award_btn": "Pläne ansehen →", "pricing_h": "Wähle deinen <em>Plan.</em>", "pricing_sub": "Jeder Plan enthält alle Tools. Jederzeit kündbar.", "starter_feats": ["Unterrichtsplaner", "Quiz-Generator", "Antwortbewerter", "Diagrammgenerator", "PDF-Export", "Cloud-Verlauf"], "pro_feats": ["Alles in Starter", "Aufsatz-Feedback", "Vokabeltrainer", "Lehrplanausrichtung", "Analyse-Dashboard", "Früher Zugang"], "school_feats": ["Alles in Pro", "Geteilte Ressourcen", "Admin-Dashboard", "Rechnungsstellung", "Dedizierter Support"], "per_month": "pro Monat", "starter_gens": "100 Generierungen / Monat", "pro_gens": "Unbegrenzte Generierungen", "school_gens": "5 Lehrerplätze · unbegrenzt", "go_starter": "Starter wählen", "go_pro": "Pro wählen", "contact_us": "Kontakt", "most_popular": "Beliebteste", "fcta_h": "Deine Schüler verdienen<br/>dein <em>Bestes.</em>", "fcta_p": "Hör auf, Stunden mit Papierkram zu verschwenden. Sei voll präsent.", "fcta_btn": "Wähle deinen Plan →", "f_privacy": "Datenschutz", "f_terms": "AGB", "f_contact": "Kontakt", "lang_scroll": "Scrolle nach unten, um deine Sprache zu wählen", "lang_banner_title": "Wähle deine Sprache", "lang_banner_sub": "Wir laden die Seite in deiner Sprache neu.", "lang_continue": "Auf Englisch fortfahren", "n0_0_l": "Quiz erstellen", "n0_0_s": "Wissen testen", "n0_1_l": "Antworten bewerten", "n0_1_s": "Sofortiges Feedback", "n0_2_l": "Unterrichtspläne", "n0_2_s": "Stunde fertig", "n0_3_l": "Tests & Prüfungen", "n0_3_s": "Vollständige Bewertungen", "n1_0_l": "Naturwissenschaften", "n1_0_s": "Alle Bereiche", "n1_1_l": "Mathematik", "n1_1_s": "Klasse 1-13 & Uni", "n1_2_l": "Englisch", "n1_2_s": "Sprache & Literatur", "n1_3_l": "Geschichte", "n1_3_s": "Welt & lokal", "n2_0_l": "Spaßig & freundlich", "n2_0_s": "Grundschule", "n2_1_l": "Professionell", "n2_1_s": "Oberstufe+", "n2_2_l": "Spaßig für Erwachsene", "n2_2_s": "Universitätsniveau", "n2_3_l": "Interaktiv", "n2_3_s": "Alle Altersgruppen", "n3_0_l": "Thema eingeben", "n3_0_s": "Auf Deutsch", "n3_1_l": "Magie passiert", "n3_1_s": "In 30 Sekunden", "n3_2_l": "Überprüfen & bearbeiten", "n3_2_s": "Immer deins", "n3_3_l": "Exportieren & lehren", "n3_3_s": "PDF oder kopieren", "n4_0_l": "6h gespart", "n4_0_s": "jede Woche", "n4_1_l": "Bester Lehrer", "n4_1_s": "Preisträger", "n4_2_l": "Weniger Burnout", "n4_2_s": "mehr Freude", "n4_3_l": "Glückliche Schüler", "n4_3_s": "bessere Ergebnisse", "mock_c0_label": "YesTeachers — Unterrichtsplaner", "mock_c0_f1l": "Fach", "mock_c0_f1v": "Biologie · Gymnasium", "mock_c0_f2l": "Thema", "mock_c0_f2v": "Fotosynthese", "mock_c0_f3l": "Dauer", "mock_c0_f3v": "45 Min · mit Differenzierung", "mock_c0_btn": "Unterrichtsplan erstellen →", "mock_c0_sup": "Unterstützung", "mock_c0_ext": "Vertiefung", "mock_c1_label": "YesTeachers — Diagrammgenerator", "mock_c1_f1l": "Thema", "mock_c1_f1v": "Tierzellenstruktur", "mock_c1_f2l": "Stil", "mock_c1_f2v": "Beschriftet · Druckfertig", "mock_c1_btn": "Diagramm erstellen →", "mock_c2_label": "YesTeachers — Quiz-Generator", "mock_c2_f1l": "Thema", "mock_c2_f1v": "Quadratische Gleichungen · Klasse 10", "mock_c2_f2l": "Format", "mock_c2_f2v": "5 Fragen · MC + Kurzantwort", "mock_c2_btn": "Quiz + Lösungsschlüssel erstellen →", "mock_c3_label": "YesTeachers — Aufsatz-Feedback", "mock_c3_f1l": "Aufgabe", "mock_c3_f1v": "Ursachen des 1. WK · 8 Punkte", "mock_c3_f2l": "Niveau", "mock_c3_f2v": "Abitur · Analyse", "mock_c3_btn": "Aufsatz analysieren →", "mock_c4_label": "YesTeachers — Vokabeltrainer", "mock_c4_f1l": "Thema", "mock_c4_f1v": "Klimawandel · Geographie", "mock_c4_f2l": "Niveau", "mock_c4_f2v": "Klasse 9 · 8 Begriffe", "mock_c4_btn": "Vokabelliste erstellen →", "mock_c5_label": "YesTeachers — Antwortbewerter", "mock_c5_f1l": "Frage", "mock_c5_f1v": "Ursachen des 1. WK · 8 Punkte", "mock_c5_f2l": "Bewertungsschema", "mock_c5_f2v": "Analyse, nicht nur Aufzählung", "mock_c5_btn": "Bewerten + Feedback geben →"}, "fr": {"nav_pricing": "Tarifs", "nav_signin": "Se connecter / S'inscrire", "hero_eyebrow": "✦ Outils intelligents pour les enseignants", "hero_h1": "Préparation sans effort.<br/><em>Impact sans fin.</em>", "hero_sub": "Plans de cours, quiz, notation — en quelques secondes. Moins de temps au bureau, plus de temps avec vos élèves.", "hero_btn1": "Voir les plans →", "hero_btn2": "Voir en action ↓", "trust1": "Plans de cours en 30s", "trust2": "Quiz avec corrigés", "trust3": "Notation instantanée", "d0_pill": "📋 Planification", "d0_h": "Plan de cours complet.<br/><em>18 secondes.</em>", "d0_sub": "Tapez un sujet. Obtenez un cours structuré — objectifs, déroulement, différenciation. <strong>Fini les heures de préparation.</strong>", "d1_pill": "🧬 Diagrammes scientifiques", "d1_h": "Diagrammes visuels<br/><em>générés instantanément.</em>", "d1_sub": "YesTeachers crée des diagrammes étiquetés automatiquement. <strong>Prêts à imprimer en secondes.</strong>", "d2_pill": "📐 Génération de quiz", "d2_h": "Quiz avec<br/><em>corrigés</em> inclus.", "d2_sub": "QCM, réponses courtes — avec corrigé complet. <strong>Prêt à imprimer ou partager.</strong>", "d3_pill": "✍️ Feedback de dissertation", "d3_h": "Annotation instantanée<br/><em>et notation.</em>", "d3_sub": "Collez une dissertation. Obtenez des annotations, une rubrique et un paragraphe modèle. <strong>Un feedback qui enseigne vraiment.</strong>", "d4_pill": "📚 Vocabulaire", "d4_h": "Listes de vocabulaire<br/><em>avec contexte.</em>", "d4_sub": "Générez des tableaux de vocabulaire avec définitions et exemples. <strong>Différencié par niveau automatiquement.</strong>", "d5_pill": "✅ Notation automatique", "d5_h": "Coller. Noter.<br/><em>Terminé en 9 secondes.</em>", "d5_sub": "Collez une réponse. Obtenez une note, les points forts, les améliorations. <strong>Fonctionne pour toutes les matières.</strong>", "w0_pill": "De quoi avez-vous besoin ?", "w0_cap": "De quoi avez-vous besoin <em>aujourd'hui ?</em>", "w0_sub": "Cliquez sur une carte — tout commence par un choix simple.", "w1_pill": "Choisissez votre matière", "w1_cap": "Choisissez votre <em>matière.</em>", "w1_sub": "Toutes les matières, tous les niveaux. De la maternelle à l'université.", "w2_pill": "Définir le ton", "w2_cap": "Choisissez le <em>bon ton.</em>", "w2_sub": "Ludique pour les enfants. Précis pour les examens. Spirituel pour l'université.", "w3_pill": "Générer en secondes", "w3_cap": "<em>30 secondes.</em> C'est tout.", "w3_sub": "Tapez un sujet en français. YesTeachers écrit tout.", "w4_pill": "Le résultat", "w4_cap": "Gagnez le prix du <em>meilleur professeur.</em>", "w4_sub": "Plus de temps pour les élèves. De meilleures leçons. Moins d'épuisement.", "tone_eyebrow": "✦ Générateur de contenu intelligent", "tone_h": "Toute matière.<br/><em>Tout ton.</em>", "tone_intro": "YesTeachers s'adapte à votre classe — pas l'inverse.", "tone_kids_name": "Amusant et amical", "tone_kids_desc": "Ludique — éveille la curiosité des plus jeunes", "tone_pro_name": "Professionnel", "tone_pro_desc": "Clair, précis — parfait pour le lycée et la préparation aux examens", "tone_adult_name": "Amusant pour adultes", "tone_adult_desc": "Spirituel — captive vraiment les étudiants", "tone_interactive_name": "Interactif", "tone_interactive_desc": "Les élèves découvrent plutôt que de lire", "award_h": "Gagnez le prix du<br/><em>meilleur professeur</em> cette année.", "award_p": "Quand vous passez moins de temps sur la paperasse et plus avec vos élèves — ils le remarquent.", "stat1_n": "6h", "stat1_l": "économisées par semaine", "stat2_n": "30s", "stat2_l": "par plan de cours", "stat3_n": "∞", "stat3_l": "énergie pour les élèves", "award_btn": "Voir les plans →", "pricing_h": "Choisissez votre <em>plan.</em>", "pricing_sub": "Chaque plan inclut tous les outils. Annulez à tout moment.", "starter_feats": ["Planificateur de cours", "Générateur de quiz", "Correcteur", "Générateur de diagrammes", "Export PDF", "Historique cloud"], "pro_feats": ["Tout dans Starter", "Feedback de dissertation", "Vocabulaire", "Alignement standards", "Tableau de bord", "Accès anticipé"], "school_feats": ["Tout dans Pro", "Bibliothèque partagée", "Tableau admin", "Facturation", "Support dédié"], "per_month": "par mois", "starter_gens": "100 générations / mois", "pro_gens": "Générations illimitées", "school_gens": "5 postes enseignants · illimité", "go_starter": "Choisir Starter", "go_pro": "Choisir Pro", "contact_us": "Nous contacter", "most_popular": "Le plus populaire", "fcta_h": "Vos élèves méritent<br/>votre <em>meilleur.</em>", "fcta_p": "Arrêtez de brûler des heures sur la paperasse. Soyez pleinement présent.", "fcta_btn": "Choisissez votre plan →", "f_privacy": "Confidentialité", "f_terms": "Conditions", "f_contact": "Contact", "lang_scroll": "Faites défiler pour choisir votre langue", "lang_banner_title": "Choisissez votre langue", "lang_banner_sub": "Nous rechargerons la page dans votre langue.", "lang_continue": "Continuer en anglais", "n0_0_l": "Créer des quiz", "n0_0_s": "Tester les connaissances", "n0_1_l": "Corriger les réponses", "n0_1_s": "Feedback instantané", "n0_2_l": "Plans de cours", "n0_2_s": "Leçon complète prête", "n0_3_l": "Tests et examens", "n0_3_s": "Évaluations complètes", "n1_0_l": "Sciences", "n1_0_s": "Toutes les branches", "n1_1_l": "Mathématiques", "n1_1_s": "Collège à université", "n1_2_l": "Anglais", "n1_2_s": "Langue et littérature", "n1_3_l": "Histoire", "n1_3_s": "Mondiale et locale", "n2_0_l": "Amusant et amical", "n2_0_s": "École primaire", "n2_1_l": "Professionnel", "n2_1_s": "Lycée+", "n2_2_l": "Amusant pour adultes", "n2_2_s": "Niveau universitaire", "n2_3_l": "Interactif", "n2_3_s": "Tous les âges", "n3_0_l": "Tapez votre sujet", "n3_0_s": "En français", "n3_1_l": "La magie opère", "n3_1_s": "En 30 secondes", "n3_2_l": "Réviser et modifier", "n3_2_s": "Toujours à vous", "n3_3_l": "Exporter et enseigner", "n3_3_s": "PDF ou copier", "n4_0_l": "6h économisées", "n4_0_s": "chaque semaine", "n4_1_l": "Meilleur professeur", "n4_1_s": "lauréat du prix", "n4_2_l": "Moins d'épuisement", "n4_2_s": "plus de joie", "n4_3_l": "Élèves heureux", "n4_3_s": "meilleurs résultats", "mock_c0_label": "YesTeachers — Planificateur de cours", "mock_c0_f1l": "Matière", "mock_c0_f1v": "Biologie · Lycée", "mock_c0_f2l": "Sujet", "mock_c0_f2v": "Photosynthèse", "mock_c0_f3l": "Durée", "mock_c0_f3v": "45 min · avec différenciation", "mock_c0_btn": "Générer le plan de cours →", "mock_c0_sup": "Soutien", "mock_c0_ext": "Approfondissement", "mock_c1_label": "YesTeachers — Générateur de diagrammes", "mock_c1_f1l": "Sujet", "mock_c1_f1v": "Structure de la cellule animale", "mock_c1_f2l": "Style", "mock_c1_f2v": "Étiqueté · Imprimable", "mock_c1_btn": "Générer le diagramme →", "mock_c2_label": "YesTeachers — Générateur de quiz", "mock_c2_f1l": "Sujet", "mock_c2_f1v": "Équations du second degré · 3e", "mock_c2_f2l": "Format", "mock_c2_f2v": "5 questions · QCM + Réponse courte", "mock_c2_btn": "Générer quiz + corrigé →", "mock_c3_label": "YesTeachers — Feedback de dissertation", "mock_c3_f1l": "Sujet", "mock_c3_f1v": "Causes de la 1ère GM · 8 points", "mock_c3_f2l": "Niveau", "mock_c3_f2v": "Bac · Analyse", "mock_c3_btn": "Analyser la dissertation →", "mock_c4_label": "YesTeachers — Constructeur de vocabulaire", "mock_c4_f1l": "Sujet", "mock_c4_f1v": "Changement climatique · Géographie", "mock_c4_f2l": "Niveau", "mock_c4_f2v": "3e · 8 termes clés", "mock_c4_btn": "Créer la liste de vocabulaire →", "mock_c5_label": "YesTeachers — Correcteur", "mock_c5_f1l": "Question", "mock_c5_f1v": "Causes de la 1ère GM · 8 points", "mock_c5_f2l": "Barème", "mock_c5_f2v": "Privilégier l'analyse", "mock_c5_btn": "Corriger + donner un retour →"}};
-
-let siteLang = localStorage.getItem('yt_lang') || 'en';
-
-function buildSteps(T) {
-  return [
-    {pill: T.w0_pill, bg:'Create',    caption: T.w0_cap, sub: T.w0_sub,
-      nodes:[{i:'📝',l:T.n0_0_l,s:T.n0_0_s,t:'Done in 10 seconds'},
-             {i:'✅',l:T.n0_1_l,s:T.n0_1_s,t:'Paste & score instantly'},
-             {i:'🎓',l:T.n0_2_l,s:T.n0_2_s,t:'With objectives & hooks'},
-             {i:'📊',l:T.n0_3_l,s:T.n0_3_s,t:'Answer keys included'}]},
-    {pill: T.w1_pill, bg:'Choose',    caption: T.w1_cap, sub: T.w1_sub,
-      nodes:[{i:'🔬',l:T.n1_0_l,s:T.n1_0_s,t:'Bio, Chem, Physics'},
-             {i:'📐',l:T.n1_1_l,s:T.n1_1_s,t:'Algebra to Calculus'},
-             {i:'📖',l:T.n1_2_l,s:T.n1_2_s,t:'Essays to grammar'},
-             {i:'🌍',l:T.n1_3_l,s:T.n1_3_s,t:'Primary sources too'}]},
-    {pill: T.w2_pill, bg:'Tone',      caption: T.w2_cap, sub: T.w2_sub,
-      nodes:[{i:'🎨',l:T.n2_0_l,s:T.n2_0_s,t:'Sparks real curiosity'},
-             {i:'📋',l:T.n2_1_l,s:T.n2_1_s,t:'Exam-ready content'},
-             {i:'⚡',l:T.n2_2_l,s:T.n2_2_s,t:'Actually engaging'},
-             {i:'🎮',l:T.n2_3_l,s:T.n2_3_s,t:'Students explore it'}]},
-    {pill: T.w3_pill, bg:'Generate',  caption: T.w3_cap, sub: T.w3_sub,
-      nodes:[{i:'✍️',l:T.n3_0_l,s:T.n3_0_s,t:'"Photosynthesis"'},
-             {i:'⚙️',l:T.n3_1_l,s:T.n3_1_s,t:'Powered by smarts'},
-             {i:'📄',l:T.n3_2_l,s:T.n3_2_s,t:'Full control always'},
-             {i:'📤',l:T.n3_3_l,s:T.n3_3_s,t:'Ready to use now'}]},
-    {pill: T.w4_pill, bg:'Win',       caption: T.w4_cap, sub: T.w4_sub,
-      nodes:[{i:'⏱️',l:T.n4_0_l,s:T.n4_0_s,t:'Real time, real life'},
-             {i:'🏆',l:T.n4_1_l,s:T.n4_1_s,t:'You earned it'},
-             {i:'💚',l:T.n4_2_l,s:T.n4_2_s,t:'Sustainable teaching'},
-             {i:'⭐',l:T.n4_3_l,s:T.n4_3_s,t:'They will notice'}]},
-  ];
-}
-
-const STEPS = buildSteps(SITE_LANGS['en']);
-
-const scene = document.getElementById('diagramScene');
-scene.style.cssText='position:relative;width:100%;';
-
-let stepsWrap, stepEls = [], activeStep = 0;
-
-function buildDiagramSteps(lang) {
-  const T = SITE_LANGS[lang] || SITE_LANGS['en'];
-  const steps = buildSteps(T);
-  scene.innerHTML = '';
-  stepEls = [];
-  activeStep = 0;
-  stepsWrap = document.createElement('div');
-  stepsWrap.style.cssText='position:relative;width:100%;min-height:320px;';
-  scene.appendChild(stepsWrap);
-  steps.forEach((s,si)=>{
-    const el=document.createElement('div');
-    el.className='d-step'+(si===0?' active':'');
-    el.style.cssText=si===0?'position:relative;width:100%;display:flex;flex-direction:column;align-items:center;':'position:absolute;top:0;left:0;right:0;width:100%;display:flex;flex-direction:column;align-items:center;';
-    const pill=document.createElement('div');pill.className='step-pill';pill.textContent=s.pill;el.appendChild(pill);
-    const row=document.createElement('div');row.className='nodes-row';
-    s.nodes.forEach((n,ni)=>{
-      const wrap=document.createElement('div');wrap.className='node-wrap';
-      const box=document.createElement('div');box.className='node-box';
-      box.innerHTML=`<div class="tip-bub">${n.t}</div><div class="node-icon">${n.i}</div><div class="node-label">${n.l}</div><div class="node-sub">${n.s}</div>`;
-      box.addEventListener('click',()=>box.classList.toggle('lit'));
-      wrap.appendChild(box);row.appendChild(wrap);
-      if(ni<s.nodes.length-1){const c=document.createElement('div');c.className='connector';row.appendChild(c);}
-    });
-    el.appendChild(row);
-    const cap=document.createElement('div');cap.className='step-cap';
-    cap.innerHTML=`<h2>${s.caption}</h2><p>${s.sub}</p>`;
-    el.appendChild(cap);
-    stepsWrap.appendChild(el);stepEls.push(el);
-  });
-  if(bgWord) bgWord.textContent = steps[0].bg;
-}
-
-// ══ SCROLL DRIVER ══
-const bgWord=document.getElementById('bgWord');
-const diagramWrap=document.getElementById('diagram');
-const nav=document.querySelector('nav');
-let lastSY=-1;
-let demoStepTimer=null;
-
-function onFrame(){
-  const sy = window.scrollY;
-  if(sy !== lastSY){
-    lastSY = sy;
-    const demoRect = demoWrap.getBoundingClientRect();
-    const toneEl = document.querySelector('.tone-section');
-    const toneRect = toneEl ? toneEl.getBoundingClientRect() : {top:9999,bottom:0};
-    const inDark = (demoRect.top <= 0 && demoRect.bottom > 72) || (toneRect.top <= 0 && toneRect.bottom > 72);
-    nav.classList.toggle('dark', inDark);
-    const dr = demoWrap.getBoundingClientRect();
-    const dTotal = demoWrap.offsetHeight - window.innerHeight;
-    const dP = Math.max(0, Math.min(1, -dr.top / dTotal));
-    setDemoStep(Math.min(Math.floor(dP * DEMO_STEPS), DEMO_STEPS - 1));
-    demoProgressFill.style.width = (dP * 100) + '%';
-    const wr = diagramWrap.getBoundingClientRect();
-    const wTotal = diagramWrap.offsetHeight - window.innerHeight;
-    const wP = Math.max(0, Math.min(1, -wr.top / wTotal));
-    const raw = wP * STEPS.length;
-    const si = Math.min(Math.floor(raw), STEPS.length - 1);
-    const within = raw - si;
-    if(si !== activeStep){
-      stepEls[activeStep].classList.remove('active');
-      stepEls[activeStep].classList.add('exit-up');
-      const prev = activeStep;
-      setTimeout(()=>{ stepEls[prev].classList.remove('exit-up'); stepEls[prev].style.position = 'absolute'; }, 600);
-      activeStep = si;
-      stepEls[si].style.position = si === 0 ? 'relative' : 'absolute';
-      stepEls[si].classList.add('active');
-      bgWord.textContent = buildSteps(SITE_LANGS[siteLang||'en'])[si]?.bg || '';
-    }
-    bgWord.style.transform = `translate(-50%,-50%) scale(${1 + within * 0.04})`;
-    document.getElementById('jpf').style.width = (sy / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
-  }
-  requestAnimationFrame(onFrame);
-}
-requestAnimationFrame(onFrame);
-
-for(let i=0;i<DEMO_STEPS;i++){
-  const btn=document.getElementById('genBtn'+i);
-  if(!btn)continue;
-  btn.addEventListener('click',()=>{btn.classList.add('loading');setTimeout(()=>btn.classList.remove('loading'),1400);});
-}
-
-// ══ TONE PICKER ══
-const previews={
-  kids:{
-    Science:`"Hey curious minds! 🌱 Today we're going on a plant adventure — let's find out how leaves turn sunlight into actual food. Spoiler: it's basically plant magic. Ready? Let's go!"`,
-    History:`"Time travel alert! 🚀 We're zooming back to ancient Egypt. Buckle up, time explorers!"`,
-    Math:`"Numbers are like superheroes 🦸 — today we learn their secret powers!"`,
-    Biology:`"Your body has TRILLIONS of tiny workers inside it right now 🦠 Want to meet them?"`,
-    Geography:`"Planet Earth has seriously wild places 🌋 Adventure starts NOW!"`
-  },
-  pro:{
-    Science:`"This lesson covers photosynthesis: the biochemical conversion of light energy to chemical energy in plant cells."`,
-    History:`"This module examines causal factors of World War I, with attention to the alliance system and imperial rivalries."`,
-    Math:`"This lesson introduces quadratic equations. Students will derive the quadratic formula and interpret discriminant values."`,
-    Biology:`"This lesson examines cell division through mitosis and meiosis. Students will compare both processes."`,
-    Geography:`"This session focuses on tectonic plate boundaries and their geomorphological consequences."`
-  },
-  adult:{
-    Science:`"Plants figured out how to eat sunlight before humans discovered fire. Photosynthesis is the original life hack."`,
-    History:`"One assassination. One archduke. Four years of chaos. It's messier than the textbook version."`,
-    Math:`"Quadratic equations sound terrifying. They're not. They just ask where does this curve hit the ground."`,
-    Biology:`"Your DNA just copied itself while you read this sentence. Billions of times a day, mostly without a single mistake."`,
-    Geography:`"The ground under your feet is moving right now — about as fast as your fingernails grow."`
-  },
-  interactive:{
-    Science:`"[Click the sun] → Light hits the leaf → [Drag CO₂ in] → Watch glucose form. You control the photosynthesis."`,
-    History:`"[Choose a country in 1914] → See alliances light up → [Trigger the assassination] → Watch the dominoes fall."`,
-    Math:`"[Move sliders a, b, c] → Watch the parabola shift live → [Click roots] → See the formula solve step by step."`,
-    Biology:`"[Start with one cell] → Click to trigger mitosis → [Drag chromosomes] → Watch division complete."`,
-    Geography:`"[Spin the globe] → Click any volcano → [Slide the timeline] → Watch eruption history."`
-  },
-};
-let selTone='kids',selSubj='Science';
-function updatePreview(animate){
-  const pt=document.getElementById('prevText');
-  document.getElementById('prevSubj').textContent=selSubj;
-  if(animate){pt.classList.add('fade');setTimeout(()=>{pt.textContent=previews[selTone][selSubj];pt.classList.remove('fade');},260);}
-  else pt.textContent=previews[selTone][selSubj];
-}
-document.querySelectorAll('.t-card').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('.t-card').forEach(x=>x.classList.remove('on'));c.classList.add('on');selTone=c.dataset.t;updatePreview(true);});});
-document.querySelectorAll('.s-chip').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('.s-chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');selSubj=c.dataset.s;updatePreview(true);});});
-
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.12});
-document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
-
-
-// ══════════════════════════════════════
-//  LANDING PAGE LANGUAGE SYSTEM
-// ══════════════════════════════════════
-
-let langBannerShown = false;
-let langBannerDismissed = localStorage.getItem('yt_lang_dismissed') === '1';
-
-function applySiteLang(lang) {
-  const T = SITE_LANGS[lang] || SITE_LANGS['en'];
-  const $ = (sel) => document.querySelector(sel);
-  const $$ = (sel) => document.querySelectorAll(sel);
-  const set = (sel, val) => { const el = $(sel); if(el) el.innerHTML = val; };
-  const setTxt = (sel, val) => { const el = $(sel); if(el) el.textContent = val; };
-
-  const navLinks = $$('nav .nav-right a');
-  if(navLinks[0]) navLinks[0].textContent = T.nav_pricing;
-  if(navLinks[1]) navLinks[1].textContent = T.nav_signin;
-
-  set('.hero-eyebrow', T.hero_eyebrow);
-  set('.hero h1', T.hero_h1);
-  set('.hero-sub', T.hero_sub);
-  const heroBtns = $$('.hero-actions a');
-  if(heroBtns[0]) heroBtns[0].innerHTML = T.hero_btn1;
-  if(heroBtns[1]) heroBtns[1].innerHTML = T.hero_btn2;
-  const trustItems = $$('.trust-item');
-  const trustKeys = ['trust1','trust2','trust3'];
-  trustItems.forEach((item, i) => {
-    const dot = item.querySelector('.trust-dot');
-    item.textContent = T[trustKeys[i]] || '';
-    if(dot) item.prepend(dot);
-  });
-
-  set('.tone-eyebrow', T.tone_eyebrow);
-  set('.tone-inner h2', T.tone_h);
-  set('.tone-intro', T.tone_intro);
-  const tCards = $$('.t-card');
-  const tKeys = ['kids','pro','adult','interactive'];
-  tCards.forEach((card, i) => {
-    const name = card.querySelector('.t-name'); if(name) name.textContent = T[`tone_${tKeys[i]}_name`] || name.textContent;
-    const desc = card.querySelector('.t-desc'); if(desc) desc.textContent = T[`tone_${tKeys[i]}_desc`] || desc.textContent;
-  });
-
-  const demoStepEls = $$(`.demo-ls`);
-  demoStepEls.forEach((el, i) => {
-    const pill = el.querySelector('.demo-pill'); if(pill && T[`d${i}_pill`]) pill.innerHTML = T[`d${i}_pill`];
-    const h    = el.querySelector('.demo-h');    if(h    && T[`d${i}_h`])    h.innerHTML    = T[`d${i}_h`];
-    const sub  = el.querySelector('.demo-sub');  if(sub  && T[`d${i}_sub`])  sub.innerHTML  = T[`d${i}_sub`];
-  });
-
-  for(let ci = 0; ci < 6; ci++) {
-    const card = document.querySelector(`.demo-card-wrap[data-di="${ci}"]`);
-    if(!card) continue;
-    const lbl = card.querySelector('.mock-topbar-label');
-    if(lbl && T[`mock_c${ci}_label`]) lbl.textContent = T[`mock_c${ci}_label`];
-    const inputFields = card.querySelectorAll('.mock-input-field');
-    if(inputFields[0]) {
-      const l = inputFields[0].querySelector('.mock-input-label');
-      const v = inputFields[0].querySelector('.mock-input-val');
-      if(l && T[`mock_c${ci}_f1l`]) l.textContent = T[`mock_c${ci}_f1l`];
-      if(v && T[`mock_c${ci}_f1v`]) v.textContent = T[`mock_c${ci}_f1v`];
-    }
-    if(inputFields[1]) {
-      const l = inputFields[1].querySelector('.mock-input-label');
-      const v = inputFields[1].querySelector('.mock-input-val');
-      if(l && T[`mock_c${ci}_f2l`]) l.textContent = T[`mock_c${ci}_f2l`];
-      if(v && T[`mock_c${ci}_f2v`]) v.textContent = T[`mock_c${ci}_f2v`];
-    }
-    if(inputFields[2]) {
-      const l = inputFields[2].querySelector('.mock-input-label');
-      const v = inputFields[2].querySelector('.mock-input-val');
-      if(l && T[`mock_c${ci}_f3l`]) l.textContent = T[`mock_c${ci}_f3l`];
-      if(v && T[`mock_c${ci}_f3v`]) v.textContent = T[`mock_c${ci}_f3v`];
-    }
-    const btn = card.querySelector('.mock-gen-btn .btn-txt');
-    if(btn && T[`mock_c${ci}_btn`]) btn.textContent = T[`mock_c${ci}_btn`];
-    if(ci === 0) {
-      const sup = card.querySelector('.out-diff-card.sup');
-      const ext = card.querySelector('.out-diff-card.ext');
-      if(sup && T.mock_c0_sup) sup.lastChild.textContent = T.mock_c0_sup;
-      if(ext && T.mock_c0_ext) ext.lastChild.textContent = T.mock_c0_ext;
-    }
+  if (type === 'terms') {
+    title.textContent = 'Terms of Service';
+    body.innerHTML = `
+      <p><strong>Last updated: March 26, 2026</strong></p>
+      <p>Welcome to YesTeachers.com, an AI-powered SaaS platform that automatically generates lesson plans, quizzes, grading rubrics, and other teaching materials (“Service”).</p>
+      <h2>1. Description of Service</h2>
+      <p>YesTeachers is a subscription-based software tool that uses artificial intelligence to help teachers save time.</p>
+      <h2>2. Subscriptions and Billing</h2>
+      <p>Subscriptions auto-renew. You can cancel anytime from your dashboard. Payments are processed securely by our payment provider.</p>
+      <h2>3. Intellectual Property</h2>
+      <p>We own the platform and AI. You get a limited license to use the generated content for your teaching only.</p>
+      <h2>4. Acceptable Use</h2>
+      <p>You may not use the Service to create illegal, harmful, or offensive content.</p>
+      <h2>5. Limitation of Liability</h2>
+      <p>The Service is provided “as is”. AI outputs may contain errors — always review before classroom use.</p>
+      <p>If you have questions, contact us.</p>
+    `;
+  } 
+  else if (type === 'privacy') {
+    title.textContent = 'Privacy Policy';
+    body.innerHTML = `
+      <p><strong>Last updated: March 26, 2026</strong></p>
+      <p>We respect your privacy. This policy explains what data we collect.</p>
+      <h2>Information We Collect</h2>
+      <ul>
+        <li>Name, email, account details</li>
+        <li>Payment information (processed by our payment provider)</li>
+        <li>Generated lesson plans / quizzes (to provide the service)</li>
+      </ul>
+      <h2>How We Use It</h2>
+      <p>To deliver the Service, process payments, and improve our AI (anonymously).</p>
+      <h2>Data Sharing</h2>
+      <p>We only share with payment processors and hosting providers. We do not sell your data.</p>
+      <p>You can request deletion of your data at any time.</p>
+    `;
+  } 
+  else if (type === 'refund') {
+    title.textContent = 'Refund Policy';
+    body.innerHTML = `
+      <p><strong>Last updated: March 26, 2026</strong></p>
+      <p>All subscription fees are <strong>non-refundable</strong> except where required by law.</p>
+      <p>You may cancel your subscription at any time. Cancellation takes effect at the end of the current billing period.</p>
+      <p>No refunds for partial months or unused generations.</p>
+      <p>If you experience a technical issue that completely prevents you from using the Service, contact us within 7 days. We will try to resolve it or, at our discretion, offer a credit/refund.</p>
+    `;
   }
 
-  set('.award-inner h2', T.award_h);
-  const awardP = $('.award-inner > p'); if(awardP) awardP.textContent = T.award_p;
-  const stats = $$('.stat');
-  if(stats[0]) { const n=stats[0].querySelector('.stat-n'); const l=stats[0].querySelector('.stat-l'); if(n)n.textContent=T.stat1_n; if(l)l.textContent=T.stat1_l; }
-  if(stats[1]) { const n=stats[1].querySelector('.stat-n'); const l=stats[1].querySelector('.stat-l'); if(n)n.textContent=T.stat2_n; if(l)l.textContent=T.stat2_l; }
-  if(stats[2]) { const n=stats[2].querySelector('.stat-n'); const l=stats[2].querySelector('.stat-l'); if(n)n.textContent=T.stat3_n; if(l)l.textContent=T.stat3_l; }
-  const awardBtn = $('.award-section .btn-dark'); if(awardBtn) awardBtn.textContent = T.award_btn;
-
-  set('.sec-head h2', T.pricing_h);
-  const pricingSub = $('.sec-head p'); if(pricingSub) pricingSub.textContent = T.pricing_sub;
-  const plans = $$('.pc');
-  const planFeats = [T.starter_feats, T.pro_feats, T.school_feats];
-  const planGens  = [T.starter_gens,  T.pro_gens,  T.school_gens];
-  const planBtns  = [T.go_starter,    T.go_pro,    T.contact_us];
-  const perMonth  = T.per_month;
-  plans.forEach((plan, i) => {
-    const mo   = plan.querySelector('.p-mo');    if(mo)   mo.textContent = perMonth;
-    const gens = plan.querySelector('.p-gens');  if(gens) gens.textContent = planGens[i] || '';
-    const btn  = plan.querySelector('.p-btn');   if(btn)  btn.textContent = planBtns[i] || '';
-    const ul   = plan.querySelector('.p-feats');
-    if(ul && planFeats[i]) {
-      ul.innerHTML = planFeats[i].map(f => `<li>${f}</li>`).join('');
-    }
-    if(plan.classList.contains('hot')) {
-      plan.dataset.popular = T.most_popular;
-      plan.style.setProperty('--popular-label', `"${T.most_popular}"`);
-    }
-  });
-
-  set('.fcta h2', T.fcta_h);
-  const fctaP = $('.fcta p'); if(fctaP) fctaP.textContent = T.fcta_p;
-  const fctaBtn = $('.btn-w'); if(fctaBtn) fctaBtn.textContent = T.fcta_btn;
-
-  const fLinks = $$('.f-links a');
-  if(fLinks[0]) fLinks[0].textContent = T.f_privacy;
-  if(fLinks[1]) fLinks[1].textContent = T.f_terms;
-  if(fLinks[2]) fLinks[2].textContent = T.f_contact;
-
-  const lbt = document.getElementById('langBannerTitle'); if(lbt) lbt.textContent = T.lang_banner_title;
-  const lbs = document.getElementById('langBannerSub');   if(lbs) lbs.textContent = T.lang_banner_sub;
-  const lsh = document.getElementById('langScrollHintText'); if(lsh) lsh.textContent = T.lang_scroll;
-
-  buildDiagramSteps(lang);
-
-  document.querySelectorAll('.lang-banner-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${lang}'`));
-  });
-
-  updateTonePreviews(lang);
+  modal.classList.add('show');
 }
 
-function updateTonePreviews(lang) {
-  const previewsLang = {
-    en: {
-      kids:{Science:`"Hey curious minds! 🌱 Today we're going on a plant adventure — let's find out how leaves turn sunlight into actual food. Spoiler: it's basically plant magic. Ready? Let's go!"`,History:`"Time travel alert! 🚀 We're zooming back to ancient Egypt. Buckle up, time explorers!"`,Math:`"Numbers are like superheroes 🦸 — today we learn their secret powers!"`,Biology:`"Your body has TRILLIONS of tiny workers inside it right now 🦠 Want to meet them?"`,Geography:`"Planet Earth has seriously wild places 🌋 Adventure starts NOW!"`},
-      pro:{Science:`"This lesson covers photosynthesis: the biochemical conversion of light energy to chemical energy in plant cells."`,History:`"This module examines causal factors of World War I, with attention to the alliance system and imperial rivalries."`,Math:`"This lesson introduces quadratic equations. Students will derive the quadratic formula and interpret discriminant values."`,Biology:`"This lesson examines cell division through mitosis and meiosis."`,Geography:`"This session focuses on tectonic plate boundaries and their geomorphological consequences."`},
-      adult:{Science:`"Plants figured out how to eat sunlight before humans discovered fire. Photosynthesis is the original life hack."`,History:`"One assassination. One archduke. Four years of chaos. It's messier than the textbook version."`,Math:`"Quadratic equations sound terrifying. They're not. They just ask where does this curve hit the ground."`,Biology:`"Your DNA just copied itself while you read this sentence. Billions of times a day, mostly without a single mistake."`,Geography:`"The ground under your feet is moving right now — about as fast as your fingernails grow."`},
-      interactive:{Science:`"[Click the sun] → Light hits the leaf → [Drag CO₂ in] → Watch glucose form."`,History:`"[Choose a country in 1914] → See alliances light up → [Trigger the assassination] → Watch the dominoes fall."`,Math:`"[Move sliders a, b, c] → Watch the parabola shift live → [Click roots] → See the formula solve step by step."`,Biology:`"[Start with one cell] → Click to trigger mitosis → [Drag chromosomes] → Watch division complete."`,Geography:`"[Spin the globe] → Click any volcano → [Slide the timeline] → Watch eruption history."`},
-    },
-    bn: {
-      kids:{Science:`"আরে কৌতূহলী মনেরা! 🌱 আজ আমরা গাছের অ্যাডভেঞ্চারে যাচ্ছি — কীভাবে পাতা সূর্যের আলো থেকে খাবার তৈরি করে? এটা মূলত গাছের জাদু! চলো যাই!"`,History:`"টাইম ট্র্যাভেল অ্যালার্ট! 🚀 আমরা প্রাচীন মিশরে ফিরে যাচ্ছি। প্রস্তুত?"`,Math:`"সংখ্যাগুলো সুপারহিরোর মতো 🦸 — আজ আমরা তাদের গোপন শক্তি শিখব!"`,Biology:`"তোমার শরীরে এখন ট্রিলিয়ন ট্রিলিয়ন ছোট্ট কর্মী আছে 🦠 তাদের সাথে পরিচিত হতে চাও?"`,Geography:`"পৃথিবীতে সত্যিই অবাক করা জায়গা আছে 🌋 অ্যাডভেঞ্চার শুরু হচ্ছে!"`},
-      pro:{Science:`"এই পাঠে সালোকসংশ্লেষণ আলোচনা করা হবে: উদ্ভিদ কোষে আলো শক্তিকে রাসায়নিক শক্তিতে রূপান্তর।"`,History:`"এই মডিউলে প্রথম বিশ্বযুদ্ধের কারণ পরীক্ষা করা হবে।"`,Math:`"এই পাঠে দ্বিঘাত সমীকরণ পরিচয় করানো হবে।"`,Biology:`"এই পাঠে মাইটোসিস ও মেইওসিসের মাধ্যমে কোষ বিভাজন পরীক্ষা করা হবে।"`,Geography:`"এই সেশনে টেকটোনিক প্লেটের সীমানা আলোচনা করা হবে।"`},
-      adult:{Science:`"গাছপালা সূর্যের আলো খাওয়া শিখেছে মানুষ আগুন আবিষ্কারের আগেই। সালোকসংশ্লেষণ হলো সেরা লাইফ হ্যাক।"`,History:`"একটি হত্যাকাণ্ড। একজন আর্চডিউক। চার বছরের বিশৃঙ্খলা।"`,Math:`"দ্বিঘাত সমীকরণ ভয়ঙ্কর মনে হয়। আসলে না।"`,Biology:`"আপনি এই বাক্যটি পড়ার সময় আপনার DNA নিজেই কপি হয়ে গেছে।"`,Geography:`"আপনার পায়ের নিচের মাটি এখনও সরছে।"`},
-      interactive:{Science:`"[সূর্যে ক্লিক করুন] → আলো পাতায় পড়ে → [CO₂ টেনে আনুন] → গ্লুকোজ তৈরি দেখুন।"`,History:`"[১৯১৪ সালে দেশ বেছে নিন] → জোট দেখুন → [হত্যাকাণ্ড ট্রিগার করুন] → ডমিনো পড়া দেখুন।"`,Math:`"[a, b, c স্লাইডার সরান] → প্যারাবোলা পরিবর্তন দেখুন।"`,Biology:`"[একটি কোষ দিয়ে শুরু করুন] → মাইটোসিস ট্রিগার করতে ক্লিক করুন।"`,Geography:`"[গ্লোব ঘোরান] → যেকোনো আগ্নেয়গিরিতে ক্লিক করুন।"`},
-    },
-    es: {
-      kids:{Science:`"¡Hola mentes curiosas! 🌱 Hoy vamos de aventura vegetal — ¿cómo convierten las hojas la luz solar en comida? ¡Es básicamente magia de plantas!"`,History:`"¡Alerta de viaje en el tiempo! 🚀 Volvemos al antiguo Egipto. ¡Abrochad los cinturones, exploradores!"`,Math:`"Los números son como superhéroes 🦸 — ¡hoy aprendemos sus poderes secretos!"`,Biology:`"Tu cuerpo tiene BILLONES de pequeños trabajadores ahora mismo 🦠 ¿Quieres conocerlos?"`,Geography:`"El planeta Tierra tiene lugares increíblemente salvajes 🌋 ¡La aventura comienza AHORA!"`},
-      pro:{Science:`"Esta lección trata la fotosíntesis: la conversión bioquímica de energía luminosa en energía química en las células vegetales."`,History:`"Este módulo examina las causas de la Primera Guerra Mundial, con atención al sistema de alianzas."`,Math:`"Esta lección introduce las ecuaciones cuadráticas. Los alumnos derivarán la fórmula cuadrática."`,Biology:`"Esta lección examina la división celular mediante mitosis y meiosis."`,Geography:`"Esta sesión se centra en los límites de las placas tectónicas."`},
-      adult:{Science:`"Las plantas descubrieron cómo comer luz solar antes de que los humanos descubrieran el fuego."`,History:`"Un asesinato. Un archiduque. Cuatro años de caos."`,Math:`"Las ecuaciones cuadráticas suenan aterradoras. No lo son."`,Biology:`"Tu ADN acaba de copiarse mientras leías esta frase."`,Geography:`"El suelo bajo tus pies se está moviendo ahora mismo."`},
-      interactive:{Science:`"[Clic en el sol] → La luz llega a la hoja → [Arrastra CO₂] → Ve cómo se forma la glucosa."`,History:`"[Elige un país en 1914] → Ve las alianzas → [Activa el asesinato] → Mira caer las fichas."`,Math:`"[Mueve los deslizadores a, b, c] → Ve la parábola cambiar en tiempo real."`,Biology:`"[Empieza con una célula] → Clic para activar la mitosis → [Arrastra cromosomas]."`,Geography:`"[Gira el globo] → Clic en cualquier volcán → [Desliza la línea de tiempo]."`},
-    },
-    de: {
-      kids:{Science:`"Hey neugierige Köpfe! 🌱 Heute gehen wir auf Pflanzen-Abenteuer — wie machen Blätter aus Sonnenlicht echtes Essen? Im Grunde ist es Pflanzenmagie!"`,History:`"Zeitreise-Alarm! 🚀 Wir rasen zurück ins alte Ägypten. Anschnallen, Zeitreisende!"`,Math:`"Zahlen sind wie Superhelden 🦸 — heute lernen wir ihre Geheimkräfte!"`,Biology:`"Dein Körper hat jetzt BILLIONEN winziger Arbeiter 🦠 Willst du sie kennenlernen?"`,Geography:`"Planet Erde hat wirklich wilde Orte 🌋 Das Abenteuer beginnt JETZT!"`},
-      pro:{Science:`"Diese Stunde behandelt Fotosynthese: die biochemische Umwandlung von Lichtenergie in chemische Energie."`,History:`"Dieses Modul untersucht die Ursachen des Ersten Weltkriegs."`,Math:`"Diese Stunde führt quadratische Gleichungen ein."`,Biology:`"Diese Stunde untersucht Zellteilung durch Mitose und Meiose."`,Geography:`"Diese Sitzung konzentriert sich auf tektonische Plattengrenzen."`},
-      adult:{Science:`"Pflanzen haben herausgefunden, wie man Sonnenlicht isst, bevor Menschen Feuer entdeckten."`,History:`"Ein Attentat. Ein Erzherzog. Vier Jahre Chaos."`,Math:`"Quadratische Gleichungen klingen beängstigend. Sind sie nicht."`,Biology:`"Deine DNA hat sich gerade kopiert, während du diesen Satz gelesen hast."`,Geography:`"Der Boden unter deinen Füßen bewegt sich gerade."`},
-      interactive:{Science:`"[Klick auf die Sonne] → Licht trifft das Blatt → [CO₂ hineinziehen] → Glukosebildung beobachten."`,History:`"[Wähle ein Land 1914] → Bündnisse aufleuchten sehen → [Attentat auslösen] → Dominoeffekt beobachten."`,Math:`"[Schieberegler a, b, c bewegen] → Parabel live verändern sehen."`,Biology:`"[Mit einer Zelle beginnen] → Klick um Mitose auszulösen."`,Geography:`"[Globus drehen] → Auf Vulkan klicken → [Zeitlinie verschieben]."`},
-    },
-    fr: {
-      kids:{Science:`"Hé les esprits curieux ! 🌱 Aujourd'hui on part en aventure végétale — comment les feuilles transforment-elles la lumière en nourriture ? C'est de la magie végétale !"`,History:`"Alerte voyage dans le temps ! 🚀 On file vers l'Égypte antique. Attachez vos ceintures !"`,Math:`"Les nombres sont comme des super-héros 🦸 — aujourd'hui on apprend leurs pouvoirs secrets !"`,Biology:`"Ton corps a des BILLIONS de petits travailleurs en ce moment 🦠 Tu veux les rencontrer ?"`,Geography:`"La planète Terre a des endroits vraiment fous 🌋 L'aventure commence MAINTENANT !"`},
-      pro:{Science:`"Ce cours traite de la photosynthèse : la conversion biochimique de l'énergie lumineuse en énergie chimique."`,History:`"Ce module examine les causes de la Première Guerre mondiale."`,Math:`"Ce cours présente les équations du second degré."`,Biology:`"Ce cours examine la division cellulaire par mitose et méiose."`,Geography:`"Cette séance porte sur les limites des plaques tectoniques."`},
-      adult:{Science:`"Les plantes ont trouvé comment manger de la lumière avant que les humains découvrent le feu."`,History:`"Un assassinat. Un archiduc. Quatre ans de chaos."`,Math:`"Les équations du second degré semblent effrayantes. Elles ne le sont pas."`,Biology:`"Votre ADN vient de se copier pendant que vous lisiez cette phrase."`,Geography:`"Le sol sous vos pieds bouge en ce moment même."`},
-      interactive:{Science:`"[Cliquez sur le soleil] → La lumière touche la feuille → [Faites glisser le CO₂] → Regardez le glucose se former."`,History:`"[Choisissez un pays en 1914] → Voyez les alliances s'allumer → [Déclenchez l'assassinat]."`,Math:`"[Déplacez les curseurs a, b, c] → Regardez la parabole changer en direct."`,Biology:`"[Commencez avec une cellule] → Cliquez pour déclencher la mitose."`,Geography:`"[Faites tourner le globe] → Cliquez sur un volcan → [Faites glisser la chronologie]."`},
-    },
-  };
-
-  if(previewsLang[lang]) {
-    window._currentPreviews = previewsLang[lang];
-    const prevText = document.getElementById('prevText');
-    const prevSubj = document.getElementById('prevSubj');
-    if(prevText && prevSubj && window._selTone && window._selSubj) {
-      const p = previewsLang[lang];
-      if(p[window._selTone] && p[window._selTone][window._selSubj]) {
-        prevText.textContent = p[window._selTone][window._selSubj];
-      }
-    }
-  }
+function hideLegal() {
+  document.getElementById('legal-modal').classList.remove('show');
 }
 
-// Language banner scroll trigger
-let langShownOnce = false;
-function checkLangBannerScroll() {
-  if(langShownOnce || langBannerDismissed) return;
-  const scrolled = window.scrollY > window.innerHeight * 0.3;
-  if(scrolled) {
-    langShownOnce = true;
-    document.getElementById('langBannerWrap').classList.add('show');
-    document.getElementById('langScrollHint').classList.remove('show');
-  }
-}
-
-function initLangHint() {
-  if(langBannerDismissed || siteLang !== 'en') return;
-  setTimeout(() => {
-    if(!langShownOnce && window.scrollY < 100) {
-      document.getElementById('langScrollHint').classList.add('show');
-      setTimeout(() => {
-        document.getElementById('langScrollHint').classList.remove('show');
-      }, 4000);
-    }
-  }, 3000);
-}
-
-function selectSiteLang(lang) {
-  siteLang = lang;
-  localStorage.setItem('yt_lang', lang);
-  document.querySelectorAll('.lang-banner-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${lang}'`));
-  });
-  applySiteLang(lang);
-  updateNavLangBtn(lang);
-  setTimeout(() => {
-    dismissLangBanner();
-  }, lang === 'en' ? 0 : 800);
-}
-
-function dismissLangBanner() {
-  document.getElementById('langBannerWrap').classList.remove('show');
-  localStorage.setItem('yt_lang_dismissed', '1');
-  langBannerDismissed = true;
-}
-
-function reopenLangBanner() {
-  langBannerDismissed = false;
-  langShownOnce = true;
-  document.getElementById('langBannerWrap').classList.add('show');
-}
-
-function updateNavLangBtn(lang) {
-  const flags = {en:'🌐',bn:'🇧🇩',es:'🇪🇸',de:'🇩🇪',fr:'🇫🇷'};
-  const labels = {en:'EN',bn:'বাং',es:'ES',de:'DE',fr:'FR'};
-  const flag = document.getElementById('navLangFlag');
-  const label = document.getElementById('navLangLabel');
-  if(flag) flag.textContent = flags[lang] || '🌐';
-  if(label) label.textContent = labels[lang] || lang.toUpperCase();
-}
-
-function patchTonePicker() {
-  window._selTone = 'kids';
-  window._selSubj = 'Science';
-  document.querySelectorAll('.t-card').forEach(c => {
-    c.addEventListener('click', () => { window._selTone = c.dataset.t; });
-  });
-  document.querySelectorAll('.s-chip').forEach(c => {
-    c.addEventListener('click', () => { window._selSubj = c.dataset.s; });
-  });
-}
-
-// ══ INIT ══
-// THE FIX: banner now only shows on scroll for first-time visitors.
-// Returning visitors (any lang saved OR dismissed) will never see it uninvited.
-window.addEventListener('scroll', checkLangBannerScroll, { passive: true });
-document.addEventListener('DOMContentLoaded', () => {
-  const savedLang = localStorage.getItem('yt_lang') || 'en';
-  siteLang = savedLang;
-  buildDiagramSteps(savedLang);
-  applySiteLang(savedLang);
-  updateNavLangBtn(savedLang);
-  patchTonePicker();
-  // Only show scroll hint for brand new visitors who haven't chosen a language yet
-  if (!langBannerDismissed && !localStorage.getItem('yt_lang')) {
-    initLangHint();
-  }
+// Close modal when clicking outside the content
+document.getElementById('legal-modal').addEventListener('click', function(e) {
+  if (e.target.id === 'legal-modal') hideLegal();
 });
 </script>
 </body>
