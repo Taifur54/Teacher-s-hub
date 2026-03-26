@@ -1293,14 +1293,12 @@ let lastTopic = '', lastLevel = '';
 
 function buildPrompt(tool, f1, f2, f3, f4) {
   const curriculum = (document.getElementById('curriculumInput')?.value || '').trim();
-  const currNote   = curriculum ? `\nCurriculum / Standard: ${curriculum}\nEnsure all content, terminology, and mark scheme language aligns precisely with this curriculum.` : '';
-  // langNote already defined above, append to currNote so all prompts get it
-  const fullCurrNote = currNote + langNote;
   const langCode   = localStorage.getItem('yt_lang') || 'en';
   const langNames  = {en:'English',bn:'Bengali',es:'Spanish',de:'German',fr:'French'};
   const langName   = langNames[langCode] || 'English';
   const langNote   = langCode !== 'en' ? `\nIMPORTANT: Respond entirely in ${langName}. All headings, labels, content, and feedback must be written in ${langName}.` : '';
-  const srcCtx     = getSourceContext() || '';
+  const currNote   = curriculum ? `\nCurriculum / Standard: ${curriculum}\nEnsure all content, terminology, and mark scheme language aligns precisely with this curriculum.` : '';
+  const fullCurrNote = currNote + langNote;
   const srcNote    = srcCtx ? `\n\nIMPORTANT: The teacher has provided their own source material below. Ground the output specifically in this material — use the concepts, examples, vocabulary and structure from it rather than generic knowledge. Reference the source content directly where relevant.${srcCtx}` : '';
 
   // langNote injected per prompt below
