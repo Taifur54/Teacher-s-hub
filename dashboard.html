@@ -1299,9 +1299,9 @@ function buildPrompt(tool, f1, f2, f3, f4) {
   const langNote   = langCode !== 'en' ? `\nIMPORTANT: Respond entirely in ${langName}. All headings, labels, content, and feedback must be written in ${langName}.` : '';
   const currNote   = curriculum ? `\nCurriculum / Standard: ${curriculum}\nEnsure all content, terminology, and mark scheme language aligns precisely with this curriculum.` : '';
   const fullCurrNote = currNote + langNote;
-  const srcNote    = srcCtx ? `\n\nIMPORTANT: The teacher has provided their own source material below. Ground the output specifically in this material — use the concepts, examples, vocabulary and structure from it rather than generic knowledge. Reference the source content directly where relevant.${srcCtx}` : '';
+  const srcCtx  = getSourceContext() || '';
+  const srcNote = srcCtx ? `\n\nIMPORTANT: The teacher has provided their own source material below. Ground the output specifically in this material — use the concepts, examples, vocabulary and structure from it rather than generic knowledge. Reference the source content directly where relevant.${srcCtx}` : '';
 
-  // langNote injected per prompt below
   const prompts = {
     lesson:`You are an expert teacher assistant. Generate a detailed lesson plan:${fullCurrNote}\nSubject & Level: ${f1}\nTopic: ${f2}\nDuration: ${f3}\nSpecial requirements: ${f4||'none'}${srcNote}\n\nFormat with sections:\n🎯 LEARNING OBJECTIVES (3 bullet points)\n📋 LESSON FLOW (timed breakdown)\n♿ DIFFERENTIATION (support and extension)\n📎 RESOURCES NEEDED\n\nBe specific, practical and classroom-ready.`,
     lessongen:`You are an expert teacher. Write the full lesson content to deliver in class:${fullCurrNote}\nSubject & Level: ${f1}\nTopic: ${f2}\nTone: ${f3||'Professional'}\nLength: ${f4||'45 minutes'}${srcNote}\n\nSections:\n🪝 OPENING HOOK\n📖 MAIN EXPLANATION (step-by-step with examples)\n💡 WORKED EXAMPLE\n❓ DISCUSSION QUESTIONS (3-4)\n🎯 CLOSING SUMMARY`,
