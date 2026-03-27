@@ -15,62 +15,66 @@ body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);line
 a{color:var(--g);text-decoration:none;}
 a:hover{text-decoration:underline;}
 
-nav{position:sticky;top:0;z-index:100;background:rgba(250,249,246,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+nav{position:sticky;top:0;z-index:100;background:rgba(250,249,246,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
 .nav-logo{font-size:17px;font-weight:800;color:var(--ink);text-decoration:none;}
 .nav-logo span{color:var(--g);}
-.nav-back{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.15s;}
-.nav-back:hover{color:var(--g);text-decoration:none;}
+.nav-links{display:flex;align-items:center;gap:24px;}
+.nav-links a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;transition:color 0.15s;}
+.nav-links a:hover{color:var(--g);}
+.nav-links a.active{color:var(--g);}
+.nav-cta{background:var(--ink);color:#fff!important;padding:7px 18px;border-radius:8px;font-size:13px;font-weight:700;transition:background 0.15s;}
+.nav-cta:hover{background:var(--g)!important;}
 
 .hero-bar{background:var(--ink);padding:64px 40px 48px;text-align:center;}
 .hero-bar .label{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--g);margin-bottom:14px;}
-.hero-bar h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);font-weight:700;color:#fff;margin-bottom:12px;line-height:1.1;}
-.hero-bar .meta{font-size:13px;color:rgba(255,255,255,0.35);}
+.hero-bar h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,50px);font-weight:700;color:#fff;margin-bottom:12px;line-height:1.1;}
+.hero-bar .meta{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;}
 
 .content-wrap{max-width:760px;margin:0 auto;padding:64px 24px 100px;}
 
 .toc{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin-bottom:52px;}
-.toc h3{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
-.toc ol{padding-left:20px;display:flex;flex-direction:column;gap:8px;}
-.toc ol li{font-size:14px;font-weight:600;color:var(--ink);}
-.toc ol li a{color:var(--ink);text-decoration:none;transition:color 0.15s;}
-.toc ol li a:hover{color:var(--g);}
+.toc h3{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+.toc ol{padding-left:18px;display:flex;flex-direction:column;gap:7px;}
+.toc li{font-size:14px;font-weight:600;}
+.toc li a{color:var(--ink);transition:color 0.15s;}
+.toc li a:hover{color:var(--g);}
 
 .section{margin-bottom:52px;}
-.section h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--ink);margin-bottom:18px;padding-bottom:14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:10px;}
-.section h2 .num{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--g);background:var(--gl);padding:3px 9px;border-radius:999px;letter-spacing:0.06em;}
-.section p{font-size:15px;color:#444;margin-bottom:14px;line-height:1.75;}
-.section ul,.section ol{padding-left:22px;margin-bottom:14px;display:flex;flex-direction:column;gap:8px;}
-.section ul li,.section ol li{font-size:15px;color:#444;line-height:1.7;}
+.section h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);margin-bottom:16px;padding-bottom:12px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:10px;}
+.section h2 .num{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--g);background:var(--gl);padding:3px 9px;border-radius:999px;letter-spacing:0.06em;}
+.section h3{font-size:15px;font-weight:700;color:var(--ink);margin:18px 0 8px;}
+.section p{font-size:15px;color:#444;margin-bottom:12px;line-height:1.75;}
+.section ul{padding-left:20px;margin-bottom:12px;display:flex;flex-direction:column;gap:7px;}
+.section li{font-size:15px;color:#444;line-height:1.7;}
 .section strong{color:var(--ink);font-weight:700;}
-.section h3{font-size:16px;font-weight:700;color:var(--ink);margin:20px 0 10px;}
 
-.highlight-box{background:var(--gl);border:1.5px solid rgba(29,158,117,0.25);border-radius:12px;padding:18px 22px;margin:20px 0;}
-.highlight-box p{font-size:14px;color:var(--gd);margin-bottom:0;font-weight:600;}
+.highlight-box{background:var(--gl);border:1.5px solid rgba(29,158,117,0.3);border-radius:12px;padding:16px 20px;margin:16px 0;}
+.highlight-box p{font-size:14px;color:var(--gd);margin-bottom:0;font-weight:600;line-height:1.6;}
 
-.data-table{width:100%;border-collapse:collapse;margin:16px 0 20px;font-size:14px;}
-.data-table th{text-align:left;padding:10px 14px;background:var(--gl);color:var(--gd);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1.5px solid rgba(29,158,117,0.2);}
+.data-table{width:100%;border-collapse:collapse;margin:14px 0 18px;font-size:14px;}
+.data-table th{text-align:left;padding:10px 14px;background:var(--gl);color:var(--gd);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;}
 .data-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:#444;vertical-align:top;}
 .data-table tr:last-child td{border-bottom:none;}
 
 .contact-box{background:var(--ink);border-radius:16px;padding:32px 36px;text-align:center;margin-top:64px;}
-.contact-box h3{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:8px;}
-.contact-box p{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:20px;}
-.contact-box a{display:inline-block;background:var(--g);color:#fff;padding:11px 28px;border-radius:9px;font-size:14px;font-weight:700;text-decoration:none;transition:background 0.15s;}
-.contact-box a:hover{background:var(--gd);text-decoration:none;}
+.contact-box h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;}
+.contact-box p{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:18px;}
+.contact-box a.btn{display:inline-block;background:var(--g);color:#fff;padding:11px 28px;border-radius:9px;font-size:14px;font-weight:700;text-decoration:none;transition:background 0.15s;}
+.contact-box a.btn:hover{background:var(--gd);text-decoration:none;}
 
 footer{background:var(--ink);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .f-logo{font-size:15px;font-weight:800;color:#fff;}.f-logo span{color:var(--g);}
 .f-links{display:flex;gap:20px;}
-.f-links a{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;}
+.f-links a{font-size:12px;color:rgba(255,255,255,0.45);text-decoration:none;}
 .f-links a:hover{color:#fff;}
 
-@media(max-width:600px){
-  nav{padding:0 20px;}
+@media(max-width:640px){
+  nav{padding:0 16px;}
+  .nav-links .nav-hide{display:none;}
   .hero-bar{padding:48px 20px 36px;}
-  .content-wrap{padding:40px 20px 80px;}
+  .content-wrap{padding:40px 16px 80px;}
   .toc{padding:20px;}
-  .data-table{font-size:13px;}
-  footer{padding:20px;}
+  footer{padding:20px 16px;flex-direction:column;align-items:flex-start;}
 }
 </style>
 </head>
@@ -78,13 +82,22 @@ footer{background:var(--ink);padding:24px 40px;display:flex;justify-content:spac
 
 <nav>
   <a href="index.html" class="nav-logo">Yes<span>Teachers</span>!</a>
-  <a href="index.html" class="nav-back">← Back to home</a>
+  <div class="nav-links">
+    <a href="index.html#pricing" class="nav-hide">Pricing</a>
+    <a href="privacy-policy.html" class="active">Privacy</a>
+    <a href="terms-of-service.html" class="nav-hide">Terms</a>
+    <a href="refund-policy.html" class="nav-hide">Refunds</a>
+    <a href="dashboard.html" class="nav-cta">Sign in</a>
+  </div>
 </nav>
 
 <div class="hero-bar">
   <div class="label">Legal</div>
   <h1>Privacy Policy</h1>
-  <div class="meta">Last updated: March 2025 · Effective immediately</div>
+  <div class="meta">
+    Operated by <strong style="color:#fff;">YesTeachers</strong> (sole proprietor)<br/>
+    Last updated: March 2025 &nbsp;·&nbsp; Effective immediately
+  </div>
 </div>
 
 <div class="content-wrap">
@@ -93,174 +106,174 @@ footer{background:var(--ink);padding:24px 40px;display:flex;justify-content:spac
     <h3>Contents</h3>
     <ol>
       <li><a href="#intro">Introduction</a></li>
-      <li><a href="#what-we-collect">Information We Collect</a></li>
-      <li><a href="#how-we-use">How We Use Your Information</a></li>
-      <li><a href="#sharing">Information Sharing</a></li>
-      <li><a href="#ai-data">AI Processing & Your Content</a></li>
-      <li><a href="#cookies">Cookies & Tracking</a></li>
-      <li><a href="#storage">Data Storage & Security</a></li>
+      <li><a href="#collect">Information We Collect</a></li>
+      <li><a href="#use">How We Use Your Information</a></li>
+      <li><a href="#sharing">Information Sharing & Third Parties</a></li>
+      <li><a href="#ai">AI Processing & Your Content</a></li>
+      <li><a href="#paddle">Paddle & Payment Data</a></li>
+      <li><a href="#cookies">Cookies & Local Storage</a></li>
+      <li><a href="#security">Data Storage & Security</a></li>
       <li><a href="#retention">Data Retention</a></li>
       <li><a href="#rights">Your Rights</a></li>
       <li><a href="#children">Children's Privacy</a></li>
       <li><a href="#changes">Changes to This Policy</a></li>
-      <li><a href="#contact">Contact Us</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ol>
   </div>
 
   <div class="section" id="intro">
     <h2><span class="num">01</span> Introduction</h2>
-    <p>YesTeachers ("we", "us", "our") operates the platform at <strong>yesteachers.com</strong>. We are committed to protecting your personal information and your right to privacy.</p>
-    <p>This Privacy Policy explains what information we collect, how we use it, and your rights regarding your data when you use our Service. Please read it carefully. By using YesTeachers, you agree to the practices described here.</p>
+    <p><strong>YesTeachers</strong> (sole proprietor, operating at <strong>yesteachers.com</strong>) is committed to protecting your personal information. This Privacy Policy explains what data we collect, why we collect it, how we use it, and your rights.</p>
+    <p>By using the Service, you consent to the practices described in this policy. This policy applies to all users of yesteachers.com and the YesTeachers dashboard.</p>
     <div class="highlight-box">
-      <p>We do not sell your personal data. We do not use your submitted classroom content to train AI models. Your data is used only to provide you with the Service.</p>
+      <p>We do not sell your personal data. We do not use your classroom content or tool inputs to train AI models. Your data is used solely to provide and improve the Service.</p>
     </div>
   </div>
 
-  <div class="section" id="what-we-collect">
+  <div class="section" id="collect">
     <h2><span class="num">02</span> Information We Collect</h2>
-    <h3>Information you provide directly</h3>
+    <h3>Information you provide</h3>
     <table class="data-table">
       <thead><tr><th>Data</th><th>When collected</th></tr></thead>
       <tbody>
-        <tr><td>Name, email address, password</td><td>Account registration</td></tr>
-        <tr><td>School name, subject, grade level</td><td>Profile setup (optional)</td></tr>
-        <tr><td>Profile photo</td><td>Profile setup (optional)</td></tr>
-        <tr><td>Payment information</td><td>Subscription checkout (processed by payment provider — we do not store card details)</td></tr>
-        <tr><td>Tool inputs (topics, student answers, essays, source material)</td><td>When using AI tools</td></tr>
-        <tr><td>Support messages</td><td>When you contact us</td></tr>
+        <tr><td>Name and email address</td><td>Account registration</td></tr>
+        <tr><td>Password (hashed — never stored in plain text)</td><td>Account registration</td></tr>
+        <tr><td>School name, subject, grade level, profile photo</td><td>Profile setup (optional)</td></tr>
+        <tr><td>Tool inputs (topics, lesson details, student answers, essays, source material)</td><td>When using AI tools</td></tr>
+        <tr><td>Promo codes</td><td>At signup or profile page</td></tr>
+        <tr><td>Support messages</td><td>When contacting us</td></tr>
       </tbody>
     </table>
     <h3>Information collected automatically</h3>
     <ul>
       <li>Usage data — which tools you use, generation counts, feature interactions</li>
-      <li>Device and browser information — browser type, operating system, screen size</li>
+      <li>Device and browser information — browser type, OS, screen size</li>
       <li>IP address and approximate location (country/city level)</li>
       <li>Session data — pages visited, time on site, referral source</li>
     </ul>
     <h3>Information from third parties</h3>
-    <p>We may receive information from payment processors (transaction confirmation) and analytics providers. We do not purchase data from data brokers.</p>
+    <p>We receive transaction confirmation data from our payment processor (Paddle). We do not purchase personal data from third-party data brokers.</p>
   </div>
 
-  <div class="section" id="how-we-use">
+  <div class="section" id="use">
     <h2><span class="num">03</span> How We Use Your Information</h2>
-    <p>We use the information we collect to:</p>
     <ul>
-      <li><strong>Provide the Service</strong> — process your tool requests, generate AI outputs, manage your account and subscription</li>
-      <li><strong>Personalise your experience</strong> — remember your profile, language preference, and saved presets</li>
-      <li><strong>Process payments</strong> — manage subscriptions, billing, and trial activations</li>
-      <li><strong>Communicate with you</strong> — send account notifications, respond to support requests, send important service updates</li>
-      <li><strong>Improve the Service</strong> — analyse usage patterns to fix bugs and prioritise new features (using aggregated, anonymised data)</li>
+      <li><strong>Provide the Service</strong> — process tool requests, generate AI outputs, manage your account and subscription</li>
+      <li><strong>Personalise your experience</strong> — remember profile, language preference, and saved presets</li>
+      <li><strong>Process payments</strong> — manage subscriptions, billing cycles, and trial activations via Paddle</li>
+      <li><strong>Communicate with you</strong> — account notifications, support responses, service updates</li>
+      <li><strong>Improve the Service</strong> — analyse aggregated, anonymised usage patterns to fix bugs and build features</li>
       <li><strong>Ensure security</strong> — detect and prevent fraud, abuse, and unauthorised access</li>
-      <li><strong>Comply with legal obligations</strong> — respond to lawful requests from authorities where required</li>
+      <li><strong>Legal compliance</strong> — respond to lawful requests from authorities where required</li>
     </ul>
-    <p>We do not use your data for advertising targeting, profiling, or selling to third parties.</p>
+    <p>We do not use your data for advertising targeting, behavioural profiling, or sale to third parties.</p>
   </div>
 
   <div class="section" id="sharing">
-    <h2><span class="num">04</span> Information Sharing</h2>
-    <p>We do not sell, trade, or rent your personal information. We may share data only in the following limited circumstances:</p>
-    <h3>Service providers</h3>
-    <p>We work with trusted third-party providers who help us operate the Service:</p>
-    <ul>
-      <li><strong>Supabase</strong> — database, authentication, and backend infrastructure</li>
-      <li><strong>Anthropic</strong> — AI model provider (content is processed to generate outputs; Anthropic's API terms prohibit training on API inputs by default)</li>
-      <li><strong>Paddle / bKash</strong> — payment processing</li>
-      <li><strong>Cloudflare</strong> — CDN, security, and DNS</li>
-    </ul>
-    <p>These providers are contractually bound to use your data only to provide services to us and not for their own purposes.</p>
-    <h3>Legal requirements</h3>
-    <p>We may disclose your information if required by law, court order, or governmental authority, or if we believe disclosure is necessary to protect the rights, property, or safety of YesTeachers, our users, or the public.</p>
-    <h3>Business transfers</h3>
-    <p>In the event of a merger, acquisition, or sale of assets, your information may be transferred to the acquiring entity. We will notify you before your data is transferred and becomes subject to a different privacy policy.</p>
+    <h2><span class="num">04</span> Information Sharing & Third Parties</h2>
+    <p>We do not sell or rent your personal information. We share data only with the following trusted service providers who help us operate the Service:</p>
+    <table class="data-table">
+      <thead><tr><th>Provider</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Supabase</strong></td><td>Database, user authentication, backend infrastructure, file storage</td></tr>
+        <tr><td><strong>Anthropic</strong></td><td>AI model API — processes your tool inputs to generate outputs. Anthropic's API terms prohibit training on API inputs by default.</td></tr>
+        <tr><td><strong>Paddle.com Market Limited</strong></td><td>Payment processing, tax management, invoicing (Merchant of Record)</td></tr>
+        <tr><td><strong>Cloudflare</strong></td><td>CDN, DDoS protection, DNS, performance</td></tr>
+        <tr><td><strong>Google Fonts</strong></td><td>Font delivery (no personal data shared)</td></tr>
+      </tbody>
+    </table>
+    <p>All providers are contractually bound to use your data only to provide services to us. We may also disclose data if required by law, court order, or to protect the safety of users or the public.</p>
   </div>
 
-  <div class="section" id="ai-data">
+  <div class="section" id="ai">
     <h2><span class="num">05</span> AI Processing & Your Content</h2>
-    <p>When you use our AI tools, the content you submit (topics, student work, source material) is sent to Anthropic's API to generate a response. This is necessary to provide the Service.</p>
+    <p>When you use a YesTeachers tool, the content you submit is sent to Anthropic's API to generate a response. This is essential to the function of the Service.</p>
     <div class="highlight-box">
-      <p>We do not use your classroom content, student data, or tool inputs to train AI models. Anthropic's API terms also prohibit the use of API inputs for training by default.</p>
+      <p>We do not use your tool inputs, classroom content, or student data to train AI models. Anthropic's API terms also prohibit using API inputs for model training by default.</p>
     </div>
-    <p>We recommend that you do not include personally identifiable information about students (such as full names, ID numbers) in your tool inputs. Use anonymised or fictional names if testing with student data.</p>
-    <p>Generated outputs are stored temporarily to display them in your session. Outputs are not permanently stored on our servers unless you explicitly save them (if a save feature is offered).</p>
+    <p>We recommend you do not include personally identifiable student information (full names, ID numbers, contact details) in tool inputs. Use anonymised or example names when testing with student work.</p>
+    <p>AI-generated outputs are session-based and are not permanently stored on our servers unless you explicitly save them through a future save feature.</p>
+  </div>
+
+  <div class="section" id="paddle">
+    <h2><span class="num">06</span> Paddle & Payment Data</h2>
+    <p>Payments are processed by <strong>Paddle.com Market Limited</strong>, who acts as our Merchant of Record. When you subscribe, Paddle collects and processes your payment information (card details, billing address) directly. YesTeachers does not store your card number or CVV.</p>
+    <p>Paddle's handling of your payment data is governed by <a href="https://www.paddle.com/legal/privacy" target="_blank" rel="noopener">Paddle's Privacy Policy</a>. We receive only transaction confirmation and subscription status from Paddle.</p>
+    <p>For <strong>bKash</strong> payments, your bKash number and transaction reference are shared with us and bKash to process and confirm payment. bKash's own privacy policy applies to their handling of your data.</p>
   </div>
 
   <div class="section" id="cookies">
-    <h2><span class="num">06</span> Cookies & Tracking</h2>
-    <p>We use minimal cookies and local storage to operate the Service:</p>
+    <h2><span class="num">07</span> Cookies & Local Storage</h2>
+    <p>We use minimal cookies and browser local storage to operate the Service:</p>
     <ul>
-      <li><strong>Authentication cookies</strong> — keep you logged in (essential, cannot be disabled)</li>
-      <li><strong>Preference storage</strong> — remember your language selection and UI preferences (localStorage)</li>
-      <li><strong>Analytics</strong> — basic usage analytics to improve the Service (aggregated, not tied to individual identity)</li>
+      <li><strong>Authentication cookies</strong> — keep you logged in (essential, required for the Service to function)</li>
+      <li><strong>Preference storage (localStorage)</strong> — remember your language selection, UI preferences, and saved presets</li>
+      <li><strong>Basic analytics</strong> — aggregated usage data to understand feature adoption (not tied to individual identity)</li>
     </ul>
-    <p>We do not use third-party advertising cookies or cross-site tracking technologies. You can clear cookies and local storage through your browser settings, but this will log you out and reset your preferences.</p>
+    <p>We do not use advertising cookies or cross-site tracking. You can clear cookies and local storage via your browser settings, which will log you out and reset your preferences.</p>
   </div>
 
-  <div class="section" id="storage">
-    <h2><span class="num">07</span> Data Storage & Security</h2>
-    <p>Your data is stored on Supabase infrastructure. We implement industry-standard security measures including:</p>
+  <div class="section" id="security">
+    <h2><span class="num">08</span> Data Storage & Security</h2>
+    <p>Your data is stored on <strong>Supabase</strong> infrastructure. We implement industry-standard security measures including:</p>
     <ul>
-      <li>HTTPS encryption for all data in transit</li>
+      <li>HTTPS (TLS) encryption for all data in transit</li>
       <li>Encrypted storage for sensitive data at rest</li>
-      <li>Row-level security (RLS) policies ensuring users can only access their own data</li>
-      <li>Regular security reviews of our codebase and infrastructure</li>
+      <li>Row-level security (RLS) policies so users can only access their own data</li>
+      <li>Hashed passwords — your password is never stored in readable form</li>
     </ul>
-    <p>While we take security seriously, no system is completely secure. In the event of a data breach affecting your personal information, we will notify you as required by applicable law.</p>
+    <p>In the event of a data breach materially affecting your personal information, we will notify you as required by applicable law.</p>
   </div>
 
   <div class="section" id="retention">
-    <h2><span class="num">08</span> Data Retention</h2>
-    <p>We retain your personal data for as long as your account is active or as needed to provide the Service. Specifically:</p>
+    <h2><span class="num">09</span> Data Retention</h2>
     <ul>
       <li><strong>Account data</strong> — retained while your account is active and for up to 90 days after deletion to allow recovery</li>
-      <li><strong>Billing records</strong> — retained for 7 years as required for financial compliance</li>
-      <li><strong>Usage logs</strong> — retained for up to 12 months for security and analytics purposes</li>
-      <li><strong>Tool inputs / generated outputs</strong> — not permanently stored; session-only unless explicitly saved</li>
+      <li><strong>Billing records</strong> — retained for 7 years for financial compliance</li>
+      <li><strong>Usage logs</strong> — retained for up to 12 months</li>
+      <li><strong>Tool inputs / generated outputs</strong> — session-only; not permanently stored</li>
     </ul>
-    <p>You may request deletion of your account and associated data at any time by contacting us.</p>
+    <p>You may request deletion of your account and associated data at any time by emailing us.</p>
   </div>
 
   <div class="section" id="rights">
-    <h2><span class="num">09</span> Your Rights</h2>
-    <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+    <h2><span class="num">10</span> Your Rights</h2>
+    <p>Depending on your location, you may have the right to:</p>
     <ul>
-      <li><strong>Access</strong> — request a copy of the personal data we hold about you</li>
-      <li><strong>Correction</strong> — request correction of inaccurate or incomplete data</li>
-      <li><strong>Deletion</strong> — request deletion of your personal data ("right to be forgotten")</li>
-      <li><strong>Portability</strong> — request your data in a machine-readable format</li>
-      <li><strong>Objection</strong> — object to certain processing of your data</li>
-      <li><strong>Restriction</strong> — request that we restrict processing of your data in certain circumstances</li>
+      <li><strong>Access</strong> — request a copy of your personal data</li>
+      <li><strong>Correction</strong> — request correction of inaccurate data</li>
+      <li><strong>Deletion</strong> — request deletion of your data ("right to be forgotten")</li>
+      <li><strong>Portability</strong> — request your data in a portable format</li>
+      <li><strong>Objection</strong> — object to certain processing activities</li>
     </ul>
-    <p>To exercise any of these rights, please contact us at <a href="mailto:support@yesteachers.com">support@yesteachers.com</a>. We will respond within 30 days. You will not be charged for reasonable requests.</p>
-    <p>You can update your profile information and preferences directly within the dashboard under My Profile.</p>
+    <p>To exercise any of these rights, email <a href="mailto:support@yesteachers.com">support@yesteachers.com</a>. We will respond within 30 days. You can update your profile information directly in your dashboard at any time.</p>
   </div>
 
   <div class="section" id="children">
-    <h2><span class="num">10</span> Children's Privacy</h2>
-    <p>YesTeachers is designed for use by teachers and educational professionals aged 18 and over. We do not knowingly collect personal information from children under 13.</p>
-    <p>Teachers using the Service should not enter personally identifiable student data (names, ID numbers, contact details) into the tool inputs. Any student work submitted for feedback should be anonymised.</p>
-    <p>If you believe we have inadvertently collected information from a child under 13, please contact us immediately and we will delete it promptly.</p>
+    <h2><span class="num">11</span> Children's Privacy</h2>
+    <p>YesTeachers is designed for teachers and educational professionals aged <strong>18 and over</strong>. We do not knowingly collect personal data from children under 13. Teachers should not enter personally identifiable student data (names, ID numbers) into tool inputs — anonymise student work before submission.</p>
+    <p>If you believe we have inadvertently collected data from a child under 13, contact us immediately and we will delete it promptly.</p>
   </div>
 
   <div class="section" id="changes">
-    <h2><span class="num">11</span> Changes to This Policy</h2>
-    <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by posting a notice on our website or sending an email to your registered address. The "last updated" date at the top of this page reflects when the policy was last revised.</p>
-    <p>Your continued use of the Service after changes are posted constitutes your acceptance of the revised policy.</p>
+    <h2><span class="num">12</span> Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by posting a notice on our website or emailing your registered address. Continued use of the Service after changes are posted constitutes acceptance of the revised policy.</p>
   </div>
 
   <div class="section" id="contact">
-    <h2><span class="num">12</span> Contact Us</h2>
-    <p>If you have any questions, concerns, or requests regarding this Privacy Policy or your personal data, please contact us:</p>
+    <h2><span class="num">13</span> Contact</h2>
+    <p>For privacy questions, data requests, or concerns:</p>
     <ul>
+      <li><strong>Brand:</strong> YesTeachers</li>
       <li><strong>Email:</strong> <a href="mailto:support@yesteachers.com">support@yesteachers.com</a></li>
       <li><strong>Website:</strong> <a href="https://yesteachers.com">yesteachers.com</a></li>
     </ul>
-    <p>We take all privacy inquiries seriously and will respond promptly.</p>
   </div>
 
   <div class="contact-box">
     <h3>Privacy questions?</h3>
-    <p>We'll always respond within 30 days. Usually much faster.</p>
-    <a href="mailto:support@yesteachers.com">Contact us →</a>
+    <p>We respond to all privacy inquiries within 30 days — usually much faster.</p>
+    <a href="mailto:support@yesteachers.com" class="btn">Contact us →</a>
   </div>
 
 </div>
@@ -268,9 +281,11 @@ footer{background:var(--ink);padding:24px 40px;display:flex;justify-content:spac
 <footer>
   <div class="f-logo">Yes<span>Teachers</span>!</div>
   <div class="f-links">
-    <a href="privacy-policy.html">Privacy</a>
-    <a href="terms-of-service.html">Terms</a>
-    <a href="refund-policy.html">Refunds</a>
+    <a href="index.html">Home</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="terms-of-service.html">Terms of Service</a>
+    <a href="refund-policy.html">Refund Policy</a>
     <a href="mailto:support@yesteachers.com">Contact</a>
   </div>
 </footer>
