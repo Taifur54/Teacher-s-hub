@@ -15,56 +15,69 @@ body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);line
 a{color:var(--g);text-decoration:none;}
 a:hover{text-decoration:underline;}
 
-nav{position:sticky;top:0;z-index:100;background:rgba(250,249,246,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+/* ── TOP NAV ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(250,249,246,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
 .nav-logo{font-size:17px;font-weight:800;color:var(--ink);text-decoration:none;}
 .nav-logo span{color:var(--g);}
-.nav-back{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.15s;}
-.nav-back:hover{color:var(--g);text-decoration:none;}
+.nav-links{display:flex;align-items:center;gap:24px;}
+.nav-links a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;transition:color 0.15s;}
+.nav-links a:hover{color:var(--g);}
+.nav-links a.active{color:var(--g);}
+.nav-cta{background:var(--ink);color:#fff!important;padding:7px 18px;border-radius:8px;font-size:13px;font-weight:700;transition:background 0.15s;}
+.nav-cta:hover{background:var(--g)!important;}
 
 .hero-bar{background:var(--ink);padding:64px 40px 48px;text-align:center;}
 .hero-bar .label{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--g);margin-bottom:14px;}
-.hero-bar h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);font-weight:700;color:#fff;margin-bottom:12px;line-height:1.1;}
-.hero-bar .meta{font-size:13px;color:rgba(255,255,255,0.35);}
+.hero-bar h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,50px);font-weight:700;color:#fff;margin-bottom:12px;line-height:1.1;}
+.hero-bar .meta{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;}
 
 .content-wrap{max-width:760px;margin:0 auto;padding:64px 24px 100px;}
 
 .toc{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin-bottom:52px;}
-.toc h3{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
-.toc ol{padding-left:20px;display:flex;flex-direction:column;gap:8px;}
-.toc ol li{font-size:14px;font-weight:600;color:var(--ink);}
-.toc ol li a{color:var(--ink);text-decoration:none;transition:color 0.15s;}
-.toc ol li a:hover{color:var(--g);}
+.toc h3{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+.toc ol{padding-left:18px;display:flex;flex-direction:column;gap:7px;}
+.toc li{font-size:14px;font-weight:600;}
+.toc li a{color:var(--ink);transition:color 0.15s;}
+.toc li a:hover{color:var(--g);}
 
 .section{margin-bottom:52px;}
-.section h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--ink);margin-bottom:18px;padding-bottom:14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:10px;}
-.section h2 .num{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--g);background:var(--gl);padding:3px 9px;border-radius:999px;letter-spacing:0.06em;}
-.section p{font-size:15px;color:#444;margin-bottom:14px;line-height:1.75;}
-.section ul,.section ol{padding-left:22px;margin-bottom:14px;display:flex;flex-direction:column;gap:8px;}
-.section ul li,.section ol li{font-size:15px;color:#444;line-height:1.7;}
+.section h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);margin-bottom:16px;padding-bottom:12px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:10px;}
+.section h2 .num{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--g);background:var(--gl);padding:3px 9px;border-radius:999px;letter-spacing:0.06em;}
+.section h3{font-size:15px;font-weight:700;color:var(--ink);margin:18px 0 8px;}
+.section p{font-size:15px;color:#444;margin-bottom:12px;line-height:1.75;}
+.section ul,.section ol{padding-left:20px;margin-bottom:12px;display:flex;flex-direction:column;gap:7px;}
+.section li{font-size:15px;color:#444;line-height:1.7;}
 .section strong{color:var(--ink);font-weight:700;}
-.section h3{font-size:16px;font-weight:700;color:var(--ink);margin:20px 0 10px;}
 
-.highlight-box{background:var(--gl);border:1.5px solid rgba(29,158,117,0.25);border-radius:12px;padding:18px 22px;margin:20px 0;}
-.highlight-box p{font-size:14px;color:var(--gd);margin-bottom:0;font-weight:600;}
+.highlight-box{background:var(--gl);border:1.5px solid rgba(29,158,117,0.3);border-radius:12px;padding:16px 20px;margin:16px 0;}
+.highlight-box p{font-size:14px;color:var(--gd);margin-bottom:0;font-weight:600;line-height:1.6;}
+
+/* pricing table */
+.pricing-table{width:100%;border-collapse:collapse;margin:16px 0 20px;font-size:14px;}
+.pricing-table th{text-align:left;padding:10px 14px;background:var(--gl);color:var(--gd);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;}
+.pricing-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:#444;vertical-align:top;}
+.pricing-table tr:last-child td{border-bottom:none;}
+.pricing-table td strong{color:var(--ink);}
 
 .contact-box{background:var(--ink);border-radius:16px;padding:32px 36px;text-align:center;margin-top:64px;}
-.contact-box h3{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:8px;}
-.contact-box p{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:20px;}
-.contact-box a{display:inline-block;background:var(--g);color:#fff;padding:11px 28px;border-radius:9px;font-size:14px;font-weight:700;text-decoration:none;transition:background 0.15s;}
-.contact-box a:hover{background:var(--gd);text-decoration:none;}
+.contact-box h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;}
+.contact-box p{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:18px;}
+.contact-box a.btn{display:inline-block;background:var(--g);color:#fff;padding:11px 28px;border-radius:9px;font-size:14px;font-weight:700;text-decoration:none;transition:background 0.15s;}
+.contact-box a.btn:hover{background:var(--gd);text-decoration:none;}
 
 footer{background:var(--ink);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .f-logo{font-size:15px;font-weight:800;color:#fff;}.f-logo span{color:var(--g);}
 .f-links{display:flex;gap:20px;}
-.f-links a{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;}
+.f-links a{font-size:12px;color:rgba(255,255,255,0.45);text-decoration:none;}
 .f-links a:hover{color:#fff;}
 
-@media(max-width:600px){
-  nav{padding:0 20px;}
+@media(max-width:640px){
+  nav{padding:0 16px;}
+  .nav-links .nav-hide{display:none;}
   .hero-bar{padding:48px 20px 36px;}
-  .content-wrap{padding:40px 20px 80px;}
+  .content-wrap{padding:40px 16px 80px;}
   .toc{padding:20px;}
-  footer{padding:20px;}
+  footer{padding:20px 16px;flex-direction:column;align-items:flex-start;}
 }
 </style>
 </head>
@@ -72,13 +85,22 @@ footer{background:var(--ink);padding:24px 40px;display:flex;justify-content:spac
 
 <nav>
   <a href="index.html" class="nav-logo">Yes<span>Teachers</span>!</a>
-  <a href="index.html" class="nav-back">← Back to home</a>
+  <div class="nav-links">
+    <a href="index.html#pricing" class="nav-hide">Pricing</a>
+    <a href="privacy-policy.html" class="nav-hide">Privacy</a>
+    <a href="terms-of-service.html" class="active">Terms</a>
+    <a href="refund-policy.html" class="nav-hide">Refunds</a>
+    <a href="dashboard.html" class="nav-cta">Sign in</a>
+  </div>
 </nav>
 
 <div class="hero-bar">
   <div class="label">Legal</div>
   <h1>Terms of Service</h1>
-  <div class="meta">Last updated: March 2025 · Effective immediately</div>
+  <div class="meta">
+    Operated by <strong style="color:#fff;">YesTeachers</strong> (sole proprietor)<br/>
+    Last updated: March 2025 &nbsp;·&nbsp; Effective immediately
+  </div>
 </div>
 
 <div class="content-wrap">
@@ -86,144 +108,200 @@ footer{background:var(--ink);padding:24px 40px;display:flex;justify-content:spac
   <div class="toc">
     <h3>Contents</h3>
     <ol>
-      <li><a href="#acceptance">Acceptance of Terms</a></li>
-      <li><a href="#description">Description of Service</a></li>
+      <li><a href="#parties">Parties & Operator</a></li>
+      <li><a href="#service">Description of Service</a></li>
+      <li><a href="#pricing">Pricing & Plans</a></li>
       <li><a href="#accounts">Accounts & Registration</a></li>
-      <li><a href="#subscriptions">Subscriptions & Payments</a></li>
+      <li><a href="#payment">Payment & Billing</a></li>
+      <li><a href="#cancellation">Cancellation</a></li>
       <li><a href="#usage">Acceptable Use</a></li>
-      <li><a href="#content">Content & Intellectual Property</a></li>
+      <li><a href="#ip">Intellectual Property</a></li>
       <li><a href="#ai">AI-Generated Content</a></li>
       <li><a href="#privacy">Privacy</a></li>
       <li><a href="#termination">Termination</a></li>
-      <li><a href="#disclaimers">Disclaimers & Limitation of Liability</a></li>
+      <li><a href="#liability">Disclaimers & Liability</a></li>
       <li><a href="#governing">Governing Law</a></li>
       <li><a href="#contact">Contact</a></li>
     </ol>
   </div>
 
-  <div class="section" id="acceptance">
-    <h2><span class="num">01</span> Acceptance of Terms</h2>
-    <p>By accessing or using YesTeachers ("the Service", "we", "us", "our"), operated at <strong>yesteachers.com</strong>, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Service.</p>
-    <p>These terms apply to all users, including visitors, registered users, and paying subscribers. We may update these terms from time to time. Continued use of the Service after changes constitutes acceptance of the revised terms.</p>
+  <!-- 1 -->
+  <div class="section" id="parties">
+    <h2><span class="num">01</span> Parties & Operator</h2>
+    <p>These Terms of Service ("Terms") constitute a legally binding agreement between you ("User", "you") and <strong>YesTeachers</strong>, a sole proprietor brand operating the website at <strong>yesteachers.com</strong> ("we", "us", "our", "the Service").</p>
+    <p>Payments are processed by <strong>Paddle.com Market Limited</strong> ("Paddle"), who acts as our Merchant of Record. When you purchase a subscription, your contract for payment is with Paddle, subject to <a href="https://www.paddle.com/legal/buyers" target="_blank" rel="noopener">Paddle's Buyer Terms</a>. These Terms govern your use of the YesTeachers platform itself.</p>
+    <p>By accessing or using YesTeachers, you confirm that you have read, understood, and agree to be bound by these Terms. If you do not agree, please do not use the Service.</p>
   </div>
 
-  <div class="section" id="description">
+  <!-- 2 -->
+  <div class="section" id="service">
     <h2><span class="num">02</span> Description of Service</h2>
-    <p>YesTeachers is an AI-powered educational content generation platform designed for teachers. The Service provides tools including but not limited to:</p>
+    <p><strong>YesTeachers</strong> is an AI-powered educational content generation platform designed exclusively for teachers and educational professionals. The Service enables users to produce classroom-ready materials in seconds using artificial intelligence.</p>
+    <h3>Core tools included</h3>
     <ul>
-      <li>Lesson Planner — structured lesson plans from a topic and grade level</li>
-      <li>Lesson Generator — full written lesson content ready to deliver</li>
-      <li>Quiz Generator — quizzes with answer keys</li>
-      <li>Diagram Generator — labelled educational diagrams</li>
-      <li>Essay Feedback — inline markup and rubric scoring</li>
-      <li>Vocabulary Builder — word lists with definitions and difficulty ratings</li>
-      <li>Answer Grader — structured feedback on student answers</li>
-      <li>Analogy Generator — concept explanations through analogy</li>
+      <li><strong>Lesson Planner</strong> — structured lesson plans with objectives, timed flow, and differentiation strategies</li>
+      <li><strong>Lesson Generator</strong> — full written lesson content including hook, explanation, examples, and discussion questions</li>
+      <li><strong>Quiz Generator</strong> — multiple choice and short-answer quizzes with complete answer keys and formula sheets</li>
+      <li><strong>Diagram Generator</strong> — labelled educational SVG diagrams, print-ready</li>
+      <li><strong>Essay Feedback</strong> — inline markup, rubric scoring, and model answer excerpts</li>
+      <li><strong>Vocabulary Builder</strong> — topic word lists with definitions, example sentences, and difficulty ratings</li>
+      <li><strong>Answer Grader</strong> — structured score and feedback on student answers</li>
+      <li><strong>Analogy Generator</strong> — concept explanations through multiple relatable analogies</li>
     </ul>
-    <p>The Service is provided on a subscription basis. A free trial may be offered subject to separate trial terms.</p>
+    <p>Additional features include curriculum/standard alignment, source material upload (Pro), preset saving, PDF export, multi-language output, and a cloud-based dashboard accessible from any device.</p>
+    <p>The Service is provided via a web application at <strong>yesteachers.com</strong> and accessed through any modern web browser. No software installation is required.</p>
   </div>
 
+  <!-- 3 -->
+  <div class="section" id="pricing">
+    <h2><span class="num">03</span> Pricing & Plans</h2>
+    <p>YesTeachers offers three subscription tiers, billed monthly:</p>
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Plan</th>
+          <th>Price</th>
+          <th>Generations</th>
+          <th>Key features</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Starter</strong></td>
+          <td><strong>$9 / month</strong></td>
+          <td>100 / month</td>
+          <td>Lesson Planner, Quiz Generator, Answer Grader, Diagram Generator, PDF export, Cloud history</td>
+        </tr>
+        <tr>
+          <td><strong>Pro</strong></td>
+          <td><strong>$19 / month</strong></td>
+          <td>Unlimited</td>
+          <td>All Starter features + Essay Feedback, Vocabulary Builder, Analogy Generator, Source material upload, Standards alignment, Analytics dashboard, Early access to new tools</td>
+        </tr>
+        <tr>
+          <td><strong>School</strong></td>
+          <td><strong>$49 / month</strong></td>
+          <td>Unlimited (5 seats)</td>
+          <td>All Pro features for up to 5 teachers + Shared resource library, Admin dashboard, Invoice billing, Dedicated support</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>All prices are in <strong>USD</strong>. Local currency pricing may be displayed at checkout by Paddle based on your location. A free trial may be available to new users — see promo code terms at checkout.</p>
+    <p>Full pricing details are available at <a href="index.html#pricing">yesteachers.com/#pricing</a>.</p>
+  </div>
+
+  <!-- 4 -->
   <div class="section" id="accounts">
-    <h2><span class="num">03</span> Accounts & Registration</h2>
-    <p>To access full features of the Service, you must create an account. You agree to:</p>
+    <h2><span class="num">04</span> Accounts & Registration</h2>
+    <p>To access paid features, you must create an account. You agree to:</p>
     <ul>
       <li>Provide accurate, complete, and current registration information</li>
-      <li>Maintain the security of your password and not share account credentials</li>
+      <li>Keep your password secure and not share account credentials</li>
       <li>Notify us immediately of any unauthorised use of your account</li>
-      <li>Be responsible for all activity that occurs under your account</li>
+      <li>Accept responsibility for all activity that occurs under your account</li>
     </ul>
-    <p>You must be at least 18 years old to create an account. If you are registering on behalf of a school or institution, you represent that you have authority to bind that organisation to these terms.</p>
-    <p>We reserve the right to suspend or terminate accounts that violate these terms or that we reasonably suspect are being used fraudulently.</p>
+    <p>You must be at least <strong>18 years old</strong> to create an account. School plan administrators may manage seats on behalf of their institution.</p>
+    <p>Guest access (no account required) is available for demo purposes with limited functionality and pre-filled example data.</p>
   </div>
 
-  <div class="section" id="subscriptions">
-    <h2><span class="num">04</span> Subscriptions & Payments</h2>
-    <h3>Plans</h3>
-    <p>YesTeachers offers the following subscription plans:</p>
+  <!-- 5 -->
+  <div class="section" id="payment">
+    <h2><span class="num">05</span> Payment & Billing</h2>
+    <p>Subscriptions are billed monthly in advance. Payment is processed securely by <strong>Paddle.com Market Limited</strong>, our Merchant of Record, who handles all payment processing, invoicing, and applicable taxes. By subscribing, you authorise Paddle to charge your payment method on a recurring monthly basis.</p>
+    <p>Accepted payment methods include major credit and debit cards. <strong>bKash</strong> is also accepted for users in Bangladesh — specific bKash checkout terms are presented at the point of purchase.</p>
+    <p>All transactions are encrypted and processed over HTTPS. YesTeachers does not store your card details — these are held securely by Paddle.</p>
+    <p>We reserve the right to change subscription prices with <strong>30 days' prior notice</strong>. Continued use of the Service after a price change takes effect constitutes acceptance of the new price.</p>
+  </div>
+
+  <!-- 6 -->
+  <div class="section" id="cancellation">
+    <h2><span class="num">06</span> Cancellation</h2>
+    <p>You may cancel your subscription at any time. Upon cancellation:</p>
     <ul>
-      <li><strong>Starter</strong> — $9/month — 100 AI generations per month, core tools, PDF export</li>
-      <li><strong>Pro</strong> — $19/month — Unlimited generations, all tools, source material uploads</li>
-      <li><strong>School</strong> — $49/month — 5 teacher seats, shared library, admin dashboard</li>
+      <li>Your subscription remains active until the end of the current billing period</li>
+      <li>You will not be charged at the next renewal date</li>
+      <li>Your account and saved data are preserved — we do not delete accounts on cancellation</li>
     </ul>
-    <h3>Billing</h3>
-    <p>Subscriptions are billed monthly in advance. Payment is processed securely through our payment providers. By subscribing, you authorise us to charge your payment method on a recurring monthly basis.</p>
-    <h3>Cancellation</h3>
-    <p>You may cancel your subscription at any time. Cancellation takes effect at the end of the current billing period. You will retain access to the Service until the end of the period you have paid for. We do not provide refunds for partial months unless required by applicable law — please see our <a href="refund-policy.html">Refund Policy</a> for full details.</p>
-    <h3>Price Changes</h3>
-    <p>We may change subscription prices with 30 days' notice. Continued use after the notice period constitutes acceptance of the new pricing.</p>
-    <div class="highlight-box">
-      <p>For bKash payments and local payment methods, separate terms provided at checkout may apply. All prices are displayed in USD unless stated otherwise.</p>
-    </div>
+    <p>To cancel, email <a href="mailto:support@yesteachers.com">support@yesteachers.com</a> or use the cancellation option in your account settings. There are no cancellation fees.</p>
+    <p>For our refund policy, including our 7-day satisfaction guarantee on first payments, please see our <a href="refund-policy.html">Refund Policy</a>.</p>
   </div>
 
+  <!-- 7 -->
   <div class="section" id="usage">
-    <h2><span class="num">05</span> Acceptable Use</h2>
-    <p>You agree to use the Service only for lawful purposes and in accordance with these terms. You must not:</p>
+    <h2><span class="num">07</span> Acceptable Use</h2>
+    <p>The Service is intended for educational use by teachers and educational professionals. You agree not to:</p>
     <ul>
-      <li>Use the Service to generate content that is illegal, harmful, abusive, defamatory, or obscene</li>
-      <li>Attempt to reverse engineer, scrape, or extract data from the Service in bulk</li>
-      <li>Use automated scripts, bots, or tools to access the Service without our express written permission</li>
-      <li>Resell, sublicense, or commercially redistribute AI-generated outputs without our consent</li>
-      <li>Share your account credentials with others (except School plan administrators managing seats)</li>
-      <li>Use the Service in any way that could damage, overburden, or impair our infrastructure</li>
-      <li>Impersonate any person or entity or misrepresent your affiliation</li>
+      <li>Use the Service to generate illegal, harmful, abusive, defamatory, or obscene content</li>
+      <li>Scrape, bulk-export, or reverse-engineer the Service without written consent</li>
+      <li>Use automated bots or scripts to access the Service</li>
+      <li>Resell or commercially redistribute AI-generated outputs as a standalone product</li>
+      <li>Share account credentials outside of School plan seat management</li>
+      <li>Create multiple accounts to circumvent generation limits or trial restrictions</li>
+      <li>Impersonate any person or misrepresent your affiliation</li>
     </ul>
-    <p>The Service is intended for educational purposes only. We reserve the right to suspend access if we detect misuse.</p>
+    <p>We reserve the right to suspend or terminate access for any violation of these terms without prior notice.</p>
   </div>
 
-  <div class="section" id="content">
-    <h2><span class="num">06</span> Content & Intellectual Property</h2>
-    <h3>Your Content</h3>
-    <p>You retain ownership of any content you submit to the Service (e.g. student essays, source material, rubrics). By submitting content, you grant us a limited licence to process that content solely for the purpose of providing the Service to you. We do not use your submitted content to train AI models.</p>
-    <h3>Generated Content</h3>
-    <p>AI-generated outputs produced by the Service are provided for your personal, classroom, and educational use. You may use, adapt, print, and distribute generated content within your educational institution. You must not commercially resell or publish generated content as your own original work without substantial modification.</p>
-    <h3>Our Intellectual Property</h3>
-    <p>The YesTeachers platform, brand, interface, code, and underlying technology are owned by us and protected by applicable intellectual property laws. These terms do not transfer any ownership rights to you.</p>
+  <!-- 8 -->
+  <div class="section" id="ip">
+    <h2><span class="num">08</span> Intellectual Property</h2>
+    <h3>Your content</h3>
+    <p>You retain ownership of any content you submit (e.g. student essays, source material, rubrics). You grant YesTeachers a limited licence to process this content solely to provide the Service. We do not use your submitted content to train AI models.</p>
+    <h3>Generated content</h3>
+    <p>AI-generated outputs are provided for your personal, classroom, and institutional educational use. You may use, adapt, print, and distribute them within your school. You may not commercially resell generated content as an original standalone product.</p>
+    <h3>Our platform</h3>
+    <p>The YesTeachers brand, interface, codebase, and technology are our proprietary property and protected by applicable intellectual property laws. These Terms do not transfer any ownership rights to you.</p>
   </div>
 
+  <!-- 9 -->
   <div class="section" id="ai">
-    <h2><span class="num">07</span> AI-Generated Content</h2>
-    <p>The Service uses large language models to generate educational content. You acknowledge that:</p>
+    <h2><span class="num">09</span> AI-Generated Content</h2>
+    <p>YesTeachers uses large language model APIs to generate educational content. You acknowledge that:</p>
     <ul>
-      <li>AI-generated content may occasionally contain inaccuracies, errors, or outdated information</li>
-      <li>Generated content should be reviewed by a qualified teacher before use in the classroom</li>
-      <li>We do not guarantee that generated content meets any specific curriculum standard unless explicitly stated</li>
-      <li>Outputs are generated dynamically and may vary between requests for the same input</li>
+      <li>AI-generated content may contain inaccuracies or outdated information</li>
+      <li>All outputs should be reviewed by a qualified teacher before classroom use</li>
+      <li>We do not guarantee that outputs meet any specific curriculum standard unless you have specified one in your input</li>
+      <li>The quality and style of output may vary between requests</li>
     </ul>
     <div class="highlight-box">
-      <p>YesTeachers is a productivity tool. All AI-generated content should be reviewed by the teacher before classroom use. The teacher remains responsible for the accuracy and appropriateness of materials used with students.</p>
+      <p>YesTeachers is a teacher productivity tool. The teacher remains fully responsible for reviewing and approving all AI-generated materials used with students.</p>
     </div>
   </div>
 
+  <!-- 10 -->
   <div class="section" id="privacy">
-    <h2><span class="num">08</span> Privacy</h2>
-    <p>Your privacy matters to us. Our collection and use of personal information is governed by our <a href="privacy-policy.html">Privacy Policy</a>, which is incorporated into these terms by reference. By using the Service, you consent to the practices described in our Privacy Policy.</p>
+    <h2><span class="num">10</span> Privacy</h2>
+    <p>Your privacy is important to us. Our <a href="privacy-policy.html">Privacy Policy</a> describes how we collect, use, and protect your personal information. By using the Service, you consent to the practices described therein. The Privacy Policy is incorporated into these Terms by reference.</p>
   </div>
 
+  <!-- 11 -->
   <div class="section" id="termination">
-    <h2><span class="num">09</span> Termination</h2>
-    <p>We may terminate or suspend your access to the Service at any time, with or without notice, for conduct that we believe violates these terms or is harmful to other users, us, or third parties.</p>
-    <p>You may terminate your account at any time by contacting us or using the cancellation option in your account settings. Upon termination, your right to use the Service ceases immediately. Provisions of these terms that by their nature should survive termination will survive.</p>
+    <h2><span class="num">11</span> Termination</h2>
+    <p>We may suspend or terminate your access at any time if we determine you have violated these Terms, engaged in fraudulent activity, or pose a risk to other users or the platform. You may delete your account at any time by contacting us.</p>
+    <p>Upon termination, your right to use the Service ceases. Provisions that by their nature should survive termination (including intellectual property, disclaimers, and limitation of liability) will continue to apply.</p>
   </div>
 
-  <div class="section" id="disclaimers">
-    <h2><span class="num">10</span> Disclaimers & Limitation of Liability</h2>
-    <p>The Service is provided <strong>"as is"</strong> and <strong>"as available"</strong> without warranties of any kind, either express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
-    <p>We do not warrant that the Service will be uninterrupted, error-free, or free of viruses or other harmful components. We do not warrant the accuracy, completeness, or usefulness of any AI-generated content.</p>
-    <p>To the maximum extent permitted by applicable law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or goodwill, arising from your use of or inability to use the Service.</p>
-    <p>Our total aggregate liability to you for any claims arising from these terms or your use of the Service shall not exceed the amount you paid us in the 12 months preceding the claim.</p>
+  <!-- 12 -->
+  <div class="section" id="liability">
+    <h2><span class="num">12</span> Disclaimers & Limitation of Liability</h2>
+    <p>The Service is provided <strong>"as is"</strong> and <strong>"as available"</strong> without warranties of any kind, express or implied. We do not warrant that the Service will be uninterrupted, error-free, or that AI-generated content will be accurate or complete.</p>
+    <p>To the maximum extent permitted by applicable law, YesTeachers shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service.</p>
+    <p>Our total aggregate liability for any claims arising under these Terms shall not exceed the total amount paid by you to YesTeachers in the <strong>12 months preceding the claim</strong>.</p>
   </div>
 
+  <!-- 13 -->
   <div class="section" id="governing">
-    <h2><span class="num">11</span> Governing Law</h2>
-    <p>These terms are governed by and construed in accordance with applicable laws. Any disputes arising from these terms or your use of the Service shall be resolved through good-faith negotiation first. If unresolved, disputes shall be subject to the exclusive jurisdiction of the competent courts.</p>
-    <p>If any provision of these terms is found to be unenforceable, the remaining provisions will continue in full force and effect.</p>
+    <h2><span class="num">13</span> Governing Law</h2>
+    <p>These Terms are governed by applicable laws. Any disputes shall be resolved through good-faith negotiation first. If unresolved, disputes shall be subject to the jurisdiction of the competent courts. If any provision of these Terms is found unenforceable, the remaining provisions continue in full effect.</p>
+    <p>As Paddle acts as Merchant of Record for payment processing, payment disputes are also governed by <a href="https://www.paddle.com/legal/buyers" target="_blank" rel="noopener">Paddle's Buyer Terms</a>.</p>
   </div>
 
+  <!-- 14 -->
   <div class="section" id="contact">
-    <h2><span class="num">12</span> Contact</h2>
-    <p>If you have any questions about these Terms of Service, please contact us:</p>
+    <h2><span class="num">14</span> Contact</h2>
+    <p>For any questions regarding these Terms of Service, please contact:</p>
     <ul>
+      <li><strong>Brand name:</strong> YesTeachers</li>
       <li><strong>Email:</strong> <a href="mailto:support@yesteachers.com">support@yesteachers.com</a></li>
       <li><strong>Website:</strong> <a href="https://yesteachers.com">yesteachers.com</a></li>
     </ul>
@@ -231,8 +309,8 @@ footer{background:var(--ink);padding:24px 40px;display:flex;justify-content:spac
 
   <div class="contact-box">
     <h3>Questions about these terms?</h3>
-    <p>We're happy to clarify anything. Reach out any time.</p>
-    <a href="mailto:support@yesteachers.com">Contact us →</a>
+    <p>We're happy to clarify. We typically respond within 1–2 business days.</p>
+    <a href="mailto:support@yesteachers.com" class="btn">Email us →</a>
   </div>
 
 </div>
@@ -240,9 +318,11 @@ footer{background:var(--ink);padding:24px 40px;display:flex;justify-content:spac
 <footer>
   <div class="f-logo">Yes<span>Teachers</span>!</div>
   <div class="f-links">
-    <a href="privacy-policy.html">Privacy</a>
-    <a href="terms-of-service.html">Terms</a>
-    <a href="refund-policy.html">Refunds</a>
+    <a href="index.html">Home</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="terms-of-service.html">Terms of Service</a>
+    <a href="refund-policy.html">Refund Policy</a>
     <a href="mailto:support@yesteachers.com">Contact</a>
   </div>
 </footer>
