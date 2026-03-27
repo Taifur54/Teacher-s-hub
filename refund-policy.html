@@ -15,68 +15,82 @@ body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);line
 a{color:var(--g);text-decoration:none;}
 a:hover{text-decoration:underline;}
 
-nav{position:sticky;top:0;z-index:100;background:rgba(250,249,246,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+nav{position:sticky;top:0;z-index:100;background:rgba(250,249,246,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
 .nav-logo{font-size:17px;font-weight:800;color:var(--ink);text-decoration:none;}
 .nav-logo span{color:var(--g);}
-.nav-back{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.15s;}
-.nav-back:hover{color:var(--g);text-decoration:none;}
+.nav-links{display:flex;align-items:center;gap:24px;}
+.nav-links a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;transition:color 0.15s;}
+.nav-links a:hover{color:var(--g);}
+.nav-links a.active{color:var(--g);}
+.nav-cta{background:var(--ink);color:#fff!important;padding:7px 18px;border-radius:8px;font-size:13px;font-weight:700;transition:background 0.15s;}
+.nav-cta:hover{background:var(--g)!important;}
 
 .hero-bar{background:var(--ink);padding:64px 40px 48px;text-align:center;}
 .hero-bar .label{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--g);margin-bottom:14px;}
-.hero-bar h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);font-weight:700;color:#fff;margin-bottom:12px;line-height:1.1;}
-.hero-bar .meta{font-size:13px;color:rgba(255,255,255,0.35);}
+.hero-bar h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,50px);font-weight:700;color:#fff;margin-bottom:12px;line-height:1.1;}
+.hero-bar .meta{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;}
 
 .content-wrap{max-width:760px;margin:0 auto;padding:64px 24px 100px;}
 
-.summary-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:52px;}
-.summary-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:24px 20px;text-align:center;}
-.summary-card .icon{font-size:32px;margin-bottom:10px;}
-.summary-card h3{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px;}
-.summary-card p{font-size:13px;color:var(--muted);line-height:1.5;}
-.summary-card.green{border-color:var(--g);background:var(--gl);}
-.summary-card.green h3{color:var(--gd);}
-.summary-card.green p{color:var(--gd);}
+/* summary cards */
+.summary-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:52px;}
+.scard{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:22px 18px;text-align:center;}
+.scard.green{border-color:var(--g);background:var(--gl);}
+.scard .icon{font-size:28px;margin-bottom:8px;}
+.scard h3{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px;}
+.scard.green h3{color:var(--gd);}
+.scard p{font-size:12px;color:var(--muted);line-height:1.5;}
+.scard.green p{color:var(--gd);}
+
+.toc{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin-bottom:52px;}
+.toc h3{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+.toc ol{padding-left:18px;display:flex;flex-direction:column;gap:7px;}
+.toc li{font-size:14px;font-weight:600;}
+.toc li a{color:var(--ink);transition:color 0.15s;}
+.toc li a:hover{color:var(--g);}
 
 .section{margin-bottom:52px;}
-.section h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--ink);margin-bottom:18px;padding-bottom:14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:10px;}
-.section h2 .num{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--g);background:var(--gl);padding:3px 9px;border-radius:999px;letter-spacing:0.06em;}
-.section p{font-size:15px;color:#444;margin-bottom:14px;line-height:1.75;}
-.section ul,.section ol{padding-left:22px;margin-bottom:14px;display:flex;flex-direction:column;gap:8px;}
-.section ul li,.section ol li{font-size:15px;color:#444;line-height:1.7;}
+.section h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);margin-bottom:16px;padding-bottom:12px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:10px;}
+.section h2 .num{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--g);background:var(--gl);padding:3px 9px;border-radius:999px;letter-spacing:0.06em;}
+.section h3{font-size:15px;font-weight:700;color:var(--ink);margin:18px 0 8px;}
+.section p{font-size:15px;color:#444;margin-bottom:12px;line-height:1.75;}
+.section ul{padding-left:20px;margin-bottom:12px;display:flex;flex-direction:column;gap:7px;}
+.section li{font-size:15px;color:#444;line-height:1.7;}
 .section strong{color:var(--ink);font-weight:700;}
-.section h3{font-size:16px;font-weight:700;color:var(--ink);margin:20px 0 10px;}
 
-.highlight-box{background:var(--gl);border:1.5px solid rgba(29,158,117,0.25);border-radius:12px;padding:18px 22px;margin:20px 0;}
+.highlight-box{background:var(--gl);border:1.5px solid rgba(29,158,117,0.3);border-radius:12px;padding:16px 20px;margin:16px 0;}
 .highlight-box p{font-size:14px;color:var(--gd);margin-bottom:0;font-weight:600;line-height:1.6;}
-
-.warning-box{background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:12px;padding:18px 22px;margin:20px 0;}
+.warning-box{background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:12px;padding:16px 20px;margin:16px 0;}
 .warning-box p{font-size:14px;color:#92400E;margin-bottom:0;font-weight:600;line-height:1.6;}
 
-.steps{display:flex;flex-direction:column;gap:0;margin:20px 0;}
-.step{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--border);}
+/* steps */
+.steps{display:flex;flex-direction:column;gap:0;margin:16px 0;}
+.step{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--border);}
 .step:last-child{border-bottom:none;}
-.step-num{width:36px;height:36px;border-radius:50%;background:var(--g);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-num{width:34px;height:34px;border-radius:50%;background:var(--g);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
 .step-body h4{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;}
 .step-body p{font-size:14px;color:#555;line-height:1.6;margin:0;}
 
 .contact-box{background:var(--ink);border-radius:16px;padding:32px 36px;text-align:center;margin-top:64px;}
-.contact-box h3{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:8px;}
-.contact-box p{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:20px;}
-.contact-box a{display:inline-block;background:var(--g);color:#fff;padding:11px 28px;border-radius:9px;font-size:14px;font-weight:700;text-decoration:none;transition:background 0.15s;}
-.contact-box a:hover{background:var(--gd);text-decoration:none;}
+.contact-box h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;}
+.contact-box p{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:18px;}
+.contact-box a.btn{display:inline-block;background:var(--g);color:#fff;padding:11px 28px;border-radius:9px;font-size:14px;font-weight:700;text-decoration:none;transition:background 0.15s;}
+.contact-box a.btn:hover{background:var(--gd);text-decoration:none;}
 
 footer{background:var(--ink);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .f-logo{font-size:15px;font-weight:800;color:#fff;}.f-logo span{color:var(--g);}
 .f-links{display:flex;gap:20px;}
-.f-links a{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;}
+.f-links a{font-size:12px;color:rgba(255,255,255,0.45);text-decoration:none;}
 .f-links a:hover{color:#fff;}
 
-@media(max-width:600px){
-  nav{padding:0 20px;}
+@media(max-width:640px){
+  nav{padding:0 16px;}
+  .nav-links .nav-hide{display:none;}
   .hero-bar{padding:48px 20px 36px;}
-  .content-wrap{padding:40px 20px 80px;}
-  .summary-cards{grid-template-columns:1fr;}
-  footer{padding:20px;}
+  .content-wrap{padding:40px 16px 80px;}
+  .summary-row{grid-template-columns:1fr;}
+  .toc{padding:20px;}
+  footer{padding:20px 16px;flex-direction:column;align-items:flex-start;}
 }
 </style>
 </head>
@@ -84,171 +98,223 @@ footer{background:var(--ink);padding:24px 40px;display:flex;justify-content:spac
 
 <nav>
   <a href="index.html" class="nav-logo">Yes<span>Teachers</span>!</a>
-  <a href="index.html" class="nav-back">← Back to home</a>
+  <div class="nav-links">
+    <a href="index.html#pricing" class="nav-hide">Pricing</a>
+    <a href="privacy-policy.html" class="nav-hide">Privacy</a>
+    <a href="terms-of-service.html" class="nav-hide">Terms</a>
+    <a href="refund-policy.html" class="active">Refunds</a>
+    <a href="dashboard.html" class="nav-cta">Sign in</a>
+  </div>
 </nav>
 
 <div class="hero-bar">
   <div class="label">Legal</div>
   <h1>Refund Policy</h1>
-  <div class="meta">Last updated: March 2025 · Effective immediately</div>
+  <div class="meta">
+    Operated by <strong style="color:#fff;">YesTeachers</strong> (sole proprietor)<br/>
+    Last updated: March 2025 &nbsp;·&nbsp; Effective immediately
+  </div>
 </div>
 
 <div class="content-wrap">
 
-  <div class="summary-cards">
-    <div class="summary-card green">
+  <div class="summary-row">
+    <div class="scard green">
       <div class="icon">✅</div>
-      <h3>Free trial available</h3>
-      <p>Try YesTeachers free before committing to a paid plan.</p>
+      <h3>7-day guarantee</h3>
+      <p>Full refund on your first charge if requested within 7 days.</p>
     </div>
-    <div class="summary-card">
+    <div class="scard">
       <div class="icon">📅</div>
       <h3>Cancel anytime</h3>
-      <p>No lock-in. Cancel before your next billing date and you won't be charged.</p>
+      <p>No lock-in. Cancel before renewal and you won't be charged again.</p>
     </div>
-    <div class="summary-card">
+    <div class="scard">
       <div class="icon">💬</div>
-      <h3>Refunds case-by-case</h3>
-      <p>We handle refund requests fairly. Contact us within 7 days of a charge.</p>
+      <h3>We respond in 2 days</h3>
+      <p>Email us — we handle every request fairly and quickly.</p>
     </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#trial">Free Trial</a></li>
+      <li><a href="#guarantee">7-Day Satisfaction Guarantee</a></li>
+      <li><a href="#renewals">Monthly Renewals</a></li>
+      <li><a href="#cancellation">Cancellation Policy</a></li>
+      <li><a href="#how-to">How to Request a Refund</a></li>
+      <li><a href="#processing">Refund Processing Times</a></li>
+      <li><a href="#paddle-refunds">Paddle & Merchant of Record</a></li>
+      <li><a href="#bkash">bKash Payments</a></li>
+      <li><a href="#not-eligible">Non-Refundable Situations</a></li>
+      <li><a href="#disputes">Disputes & Chargebacks</a></li>
+      <li><a href="#contact-section">Contact</a></li>
+    </ol>
   </div>
 
   <div class="section" id="overview">
     <h2><span class="num">01</span> Overview</h2>
-    <p>At YesTeachers, we want you to be completely satisfied with your subscription. This Refund Policy explains when refunds are available, how to request one, and how they are processed.</p>
-    <p>We offer a free trial so you can experience the Service before purchasing. We encourage you to use the trial to evaluate whether YesTeachers meets your needs before subscribing.</p>
-    <div class="highlight-box">
-      <p>We offer a 7-day refund window from the date of your first paid charge. If you are not satisfied, contact us within 7 days and we will issue a full refund — no questions asked.</p>
-    </div>
+    <p>This Refund Policy applies to all subscriptions purchased through <strong>yesteachers.com</strong>, operated by <strong>YesTeachers</strong> (sole proprietor). Payments are processed by <strong>Paddle.com Market Limited</strong> as our Merchant of Record.</p>
+    <p>We want you to be satisfied with your purchase. We offer a free trial and a 7-day satisfaction guarantee on first payments so you can evaluate the Service before committing. If something goes wrong on our end, we will make it right.</p>
   </div>
 
-  <div class="section" id="free-trial">
+  <div class="section" id="trial">
     <h2><span class="num">02</span> Free Trial</h2>
-    <p>YesTeachers may offer a free trial period to new subscribers. During the trial:</p>
+    <p>YesTeachers may offer a free trial period to new subscribers via promo code. During the trial:</p>
     <ul>
-      <li>You have full access to the features included in your selected plan</li>
+      <li>You have full access to all features in your selected plan</li>
       <li>No payment is charged until the trial period ends</li>
-      <li>You may cancel before the trial ends to avoid being charged</li>
-      <li>Trial periods are available once per user — creating multiple accounts to extend a trial is a violation of our <a href="terms-of-service.html">Terms of Service</a></li>
+      <li>You may cancel before the trial ends to avoid any charge</li>
+      <li>Promo codes are single-use and non-transferable</li>
+      <li>Creating multiple accounts to extend a trial violates our <a href="terms-of-service.html">Terms of Service</a></li>
     </ul>
-    <p>Promo codes may be used to activate a free trial at signup or via your profile dashboard. Each promo code is single-use and cannot be transferred.</p>
   </div>
 
-  <div class="section" id="standard-refunds">
-    <h2><span class="num">03</span> Standard Refund Policy</h2>
-    <h3>7-day satisfaction guarantee (first charge only)</h3>
-    <p>If you subscribe to a paid plan for the first time and are not satisfied, you may request a full refund within <strong>7 days</strong> of the initial charge. This applies to your first payment only.</p>
-    <p>To qualify:</p>
+  <div class="section" id="guarantee">
+    <h2><span class="num">03</span> 7-Day Satisfaction Guarantee</h2>
+    <div class="highlight-box">
+      <p>If you subscribe to a paid plan for the first time and are not satisfied, you may request a full refund within 7 days of your initial charge — no questions asked.</p>
+    </div>
+    <p>To qualify for the 7-day guarantee:</p>
     <ul>
-      <li>Your refund request must be submitted within 7 days of the charge date</li>
-      <li>This applies to first-time subscriptions only — not renewals</li>
+      <li>Your refund request must be submitted within <strong>7 calendar days</strong> of the charge date</li>
+      <li>This applies to your <strong>first payment only</strong> on a given plan — not renewals</li>
       <li>Your account must not have violated our Terms of Service</li>
     </ul>
-    <h3>Monthly renewals</h3>
-    <p>For recurring monthly charges after the first payment, we generally do not offer refunds for partial months. However, we will consider refund requests in exceptional circumstances, including:</p>
+    <p>We will process your refund promptly upon verification. Your subscription will be cancelled at the same time.</p>
+  </div>
+
+  <div class="section" id="renewals">
+    <h2><span class="num">04</span> Monthly Renewals</h2>
+    <p>For recurring monthly charges after the first payment, we do not offer refunds for partial months as a standard policy. However, we will consider refund requests in the following exceptional circumstances:</p>
     <ul>
-      <li>Significant technical failures that prevented you from accessing the Service for an extended period</li>
-      <li>Duplicate charges due to a billing error on our side</li>
-      <li>Charges made after a cancellation was properly submitted</li>
+      <li>Significant technical failures on our side that prevented you from accessing the Service for an extended period (more than 48 hours)</li>
+      <li>Duplicate charges or billing errors caused by our systems</li>
+      <li>A charge processed after a cancellation was properly and verifiably submitted</li>
     </ul>
     <div class="warning-box">
-      <p>We do not offer refunds for: forgetting to cancel before renewal, dissatisfaction with AI-generated outputs in general, or change of mind after more than 7 days of your first payment.</p>
+      <p>We do not issue refunds for renewal charges due to: forgetting to cancel, unused generations, dissatisfaction with AI output quality, or change of mind after 7 days of the first payment.</p>
     </div>
   </div>
 
   <div class="section" id="cancellation">
-    <h2><span class="num">04</span> Cancellation Policy</h2>
-    <p>You can cancel your subscription at any time. Here is what happens when you cancel:</p>
+    <h2><span class="num">05</span> Cancellation Policy</h2>
+    <p>You may cancel your subscription at any time. Cancellation:</p>
     <ul>
-      <li>Your subscription remains active until the end of your current billing period</li>
-      <li>You will not be charged at the next renewal date</li>
-      <li>You retain access to all paid features until the period expires</li>
-      <li>Your account and saved data remain accessible — we do not delete your account on cancellation</li>
+      <li>Takes effect at the end of the current billing period</li>
+      <li>Stops any future charges immediately</li>
+      <li>Does not remove your account or data</li>
+      <li>Retains your access to paid features until the period expires</li>
     </ul>
-    <p>To cancel, contact us at <a href="mailto:support@yesteachers.com">support@yesteachers.com</a> or use the cancellation option in your account settings.</p>
+    <p>There are <strong>no cancellation fees</strong>. To cancel, email <a href="mailto:support@yesteachers.com">support@yesteachers.com</a> with your registered email address, or use the account settings in your dashboard.</p>
     <div class="highlight-box">
-      <p>Cancel before your next billing date and you will not be charged. There are no cancellation fees.</p>
+      <p>Cancel before your next billing date and you will not be charged again. We recommend cancelling at least 24 hours before renewal to ensure processing time.</p>
     </div>
   </div>
 
-  <div class="section" id="how-to-request">
-    <h2><span class="num">05</span> How to Request a Refund</h2>
+  <div class="section" id="how-to">
+    <h2><span class="num">06</span> How to Request a Refund</h2>
     <p>To request a refund, follow these steps:</p>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-body">
           <h4>Email us</h4>
-          <p>Send an email to <a href="mailto:support@yesteachers.com">support@yesteachers.com</a> with the subject line "Refund Request".</p>
+          <p>Send an email to <a href="mailto:support@yesteachers.com">support@yesteachers.com</a> with the subject line <strong>"Refund Request"</strong>.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-body">
           <h4>Include your details</h4>
-          <p>Include your registered email address, the date of the charge, and a brief reason for your request. This helps us process it faster.</p>
+          <p>Provide your registered email address, the date of the charge, the plan name, and a brief reason for your request.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-body">
           <h4>We review and respond</h4>
-          <p>We aim to respond to all refund requests within 2 business days. We will let you know the outcome and next steps.</p>
+          <p>We aim to respond to all refund requests within <strong>2 business days</strong> and will confirm the outcome via email.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">4</div>
         <div class="step-body">
-          <h4>Refund processed</h4>
-          <p>Approved refunds are processed back to your original payment method. Processing time depends on your payment provider — typically 5–10 business days for cards, and varies for bKash.</p>
+          <h4>Refund issued</h4>
+          <p>Approved refunds are initiated through Paddle back to your original payment method. See processing times below.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="section" id="payment-methods">
-    <h2><span class="num">06</span> Payment Method Notes</h2>
-    <h3>Credit / Debit cards (via Paddle)</h3>
-    <p>Refunds are processed back to the original card. Depending on your bank, it may take 5–10 business days to appear on your statement.</p>
-    <h3>bKash</h3>
-    <p>Refunds for bKash payments are processed back to the original bKash number. Processing typically takes 3–7 business days. We will confirm the refund via email once initiated.</p>
-    <p>Note: bKash transaction fees charged by bKash at the time of payment are non-refundable as they are collected by bKash, not by YesTeachers.</p>
+  <div class="section" id="processing">
+    <h2><span class="num">07</span> Refund Processing Times</h2>
+    <p>Once a refund is approved and initiated through Paddle, processing times depend on your payment method:</p>
+    <ul>
+      <li><strong>Credit / Debit card:</strong> 5–10 business days to appear on your statement (depends on your bank)</li>
+      <li><strong>PayPal:</strong> 3–5 business days</li>
+      <li><strong>bKash:</strong> 3–7 business days (see bKash section below)</li>
+    </ul>
+    <p>You will receive an email confirmation once the refund has been initiated. If you do not see the refund after the expected time, contact your bank or payment provider before contacting us.</p>
   </div>
 
-  <div class="section" id="exceptions">
-    <h2><span class="num">07</span> Non-Refundable Situations</h2>
+  <div class="section" id="paddle-refunds">
+    <h2><span class="num">08</span> Paddle & Merchant of Record</h2>
+    <p>As our Merchant of Record, <strong>Paddle.com Market Limited</strong> is responsible for processing all payments and refunds on our behalf. When a refund is approved by YesTeachers, it is initiated through Paddle's system.</p>
+    <p>In some regions, Paddle's own buyer protection policies may apply. You can also contact Paddle directly for billing queries via <a href="https://www.paddle.com/legal/buyers" target="_blank" rel="noopener">paddle.com/legal/buyers</a>. However, for the fastest resolution, we recommend contacting YesTeachers directly first.</p>
+  </div>
+
+  <div class="section" id="bkash">
+    <h2><span class="num">09</span> bKash Payments</h2>
+    <p>For users in Bangladesh paying via <strong>bKash</strong>:</p>
+    <ul>
+      <li>Refunds are returned to the original bKash number used for payment</li>
+      <li>Processing typically takes <strong>3–7 business days</strong> after approval</li>
+      <li>bKash transaction fees charged at the time of payment are <strong>non-refundable</strong> as they are collected by bKash, not by YesTeachers</li>
+      <li>We will confirm the refund reference number via email once initiated</li>
+    </ul>
+    <p>If you have a dispute about a bKash charge that you believe was unauthorised, please contact us immediately at <a href="mailto:support@yesteachers.com">support@yesteachers.com</a>.</p>
+  </div>
+
+  <div class="section" id="not-eligible">
+    <h2><span class="num">10</span> Non-Refundable Situations</h2>
     <p>Refunds will not be issued in the following circumstances:</p>
     <ul>
-      <li>Refund requests submitted more than 7 days after the charge (for initial subscriptions) or outside our exceptional circumstances criteria (for renewals)</li>
-      <li>Accounts found to have violated our <a href="terms-of-service.html">Terms of Service</a></li>
-      <li>Dissatisfaction with the nature of AI-generated content (we encourage using the free trial to evaluate this beforehand)</li>
-      <li>Unused generations — we do not prorate refunds based on how many generations you used</li>
-      <li>Third-party fees (e.g. bKash transaction fees)</li>
-      <li>Promo codes or trial extensions obtained through circumventing our systems</li>
+      <li>Requests submitted more than 7 days after the initial charge (outside our guarantee window)</li>
+      <li>Renewal charges where cancellation was not submitted before renewal</li>
+      <li>Unused AI generations — we do not prorate based on usage</li>
+      <li>Accounts that have violated our <a href="terms-of-service.html">Terms of Service</a></li>
+      <li>Dissatisfaction with the general quality of AI-generated content (we encourage using the free trial to evaluate the Service)</li>
+      <li>Third-party fees (e.g. bKash transaction fees, bank currency conversion fees)</li>
+      <li>Promo codes or trials obtained through system circumvention</li>
     </ul>
   </div>
 
   <div class="section" id="disputes">
-    <h2><span class="num">08</span> Disputes & Chargebacks</h2>
-    <p>We always prefer to resolve issues directly and fairly. If you have a problem with a charge, please contact us before initiating a chargeback with your bank or payment provider. We respond quickly and will work to resolve legitimate issues promptly.</p>
-    <p>Initiating a chargeback without first contacting us may result in suspension of your account while the dispute is being resolved. Fraudulent chargebacks will be contested.</p>
+    <h2><span class="num">11</span> Disputes & Chargebacks</h2>
+    <p>We always prefer to resolve issues directly. If you have a concern about a charge, please <strong>contact us before initiating a chargeback</strong> with your bank or card provider. We respond quickly and will resolve legitimate issues promptly.</p>
+    <p>Initiating a chargeback without first contacting us may result in temporary suspension of your account while the dispute is investigated. Fraudulent chargebacks will be contested with supporting documentation.</p>
+    <p>For payment disputes handled through Paddle, their dispute resolution process may also apply. Contact <a href="mailto:support@yesteachers.com">support@yesteachers.com</a> and we will coordinate with Paddle on your behalf.</p>
   </div>
 
   <div class="section" id="contact-section">
-    <h2><span class="num">09</span> Contact</h2>
-    <p>For refund requests, billing questions, or any concerns about a charge, please contact us:</p>
+    <h2><span class="num">12</span> Contact</h2>
+    <p>For all refund requests and billing questions:</p>
     <ul>
+      <li><strong>Brand:</strong> YesTeachers</li>
       <li><strong>Email:</strong> <a href="mailto:support@yesteachers.com">support@yesteachers.com</a></li>
+      <li><strong>Subject line:</strong> "Refund Request"</li>
       <li><strong>Response time:</strong> Within 2 business days</li>
       <li><strong>Website:</strong> <a href="https://yesteachers.com">yesteachers.com</a></li>
     </ul>
-    <p>We treat every request fairly and aim to make the process as smooth as possible.</p>
   </div>
 
   <div class="contact-box">
     <h3>Need a refund?</h3>
-    <p>Email us — we aim to respond within 2 business days.</p>
-    <a href="mailto:support@yesteachers.com">Request a refund →</a>
+    <p>Email us with "Refund Request" in the subject. We'll sort it within 2 business days.</p>
+    <a href="mailto:support@yesteachers.com" class="btn">Request a refund →</a>
   </div>
 
 </div>
@@ -256,9 +322,11 @@ footer{background:var(--ink);padding:24px 40px;display:flex;justify-content:spac
 <footer>
   <div class="f-logo">Yes<span>Teachers</span>!</div>
   <div class="f-links">
-    <a href="privacy-policy.html">Privacy</a>
-    <a href="terms-of-service.html">Terms</a>
-    <a href="refund-policy.html">Refunds</a>
+    <a href="index.html">Home</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="terms-of-service.html">Terms of Service</a>
+    <a href="refund-policy.html">Refund Policy</a>
     <a href="mailto:support@yesteachers.com">Contact</a>
   </div>
 </footer>
