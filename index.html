@@ -67,7 +67,7 @@ nav.dark .nav-cta:hover{background:var(--gl);color:var(--gd)!important;}
 .demo-inner{position:relative;z-index:2;width:100%;max-width:1160px;margin:0 auto;padding:12px 40px 12px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;height:100vh;box-sizing:border-box;}
 .demo-left{color:#fff;}
 .demo-left-steps{position:relative;min-height:240px;}
-.demo-ls{position:absolute;top:0;left:0;right:0;opacity:0;transform:translateY(20px);transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1);pointer-events:none;}
+.demo-ls{position:absolute;top:0;left:0;right:0;opacity:0;transform:translateY(20px);transition:opacity 0.4s cubic-bezier(0.25,0,0.1,1),transform 0.4s cubic-bezier(0.25,0,0.1,1);pointer-events:none;will-change:opacity,transform;backface-visibility:hidden;}
 .demo-ls.active{opacity:1;transform:translateY(0);pointer-events:auto;}
 .demo-ls.exit{opacity:0;transform:translateY(-20px);}
 .demo-pill{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);background:rgba(29,158,117,0.15);border:1px solid rgba(29,158,117,0.3);padding:5px 14px;border-radius:999px;margin-bottom:20px;}
@@ -76,10 +76,10 @@ nav.dark .nav-cta:hover{background:var(--gl);color:var(--gd)!important;}
 .demo-sub{font-size:15px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:380px;}
 .demo-sub strong{color:rgba(255,255,255,0.8);font-weight:600;}
 .demo-right{position:relative;height:calc(100vh - 100px);max-height:720px;min-height:360px;}
-.demo-card-wrap{position:absolute;top:0;left:0;right:0;bottom:0;opacity:0;transform:translateX(32px) scale(0.97);transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1);pointer-events:none;}
+.demo-card-wrap{position:absolute;top:0;left:0;right:0;bottom:0;opacity:0;transform:translateX(32px) scale(0.97);transition:opacity 0.4s cubic-bezier(0.25,0,0.1,1),transform 0.4s cubic-bezier(0.25,0,0.1,1);pointer-events:none;will-change:opacity,transform;backface-visibility:hidden;}
 .demo-card-wrap.active{opacity:1;transform:translateX(0) scale(1);pointer-events:auto;}
 .demo-card-wrap.exit{opacity:0;transform:translateX(-32px) scale(0.97);}
-.mock-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.5);height:100%;display:flex;flex-direction:column;}
+.mock-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.5);height:100%;display:flex;flex-direction:column;will-change:transform;transform:translateZ(0);backface-visibility:hidden;}
 .mock-topbar{background:#1a1a1a;padding:12px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0;}
 .mock-dots{display:flex;gap:5px;}
 .mock-dot{width:10px;height:10px;border-radius:50%;}
@@ -758,42 +758,47 @@ const nav=document.querySelector('nav');
 let lastSY=-1;
 let demoStepTimer=null;
 
-function onFrame(){
-  const sy = window.scrollY;
-  if(sy !== lastSY){
-    lastSY = sy;
-    const demoRect = demoWrap.getBoundingClientRect();
-    const toneEl = document.querySelector('.tone-section');
-    const toneRect = toneEl ? toneEl.getBoundingClientRect() : {top:9999,bottom:0};
-    const inDark = (demoRect.top <= 0 && demoRect.bottom > 72) || (toneRect.top <= 0 && toneRect.bottom > 72);
-    nav.classList.toggle('dark', inDark);
-    const dr = demoWrap.getBoundingClientRect();
-    const dTotal = demoWrap.offsetHeight - window.innerHeight;
-    const dP = Math.max(0, Math.min(1, -dr.top / dTotal));
-    setDemoStep(Math.min(Math.floor(dP * DEMO_STEPS), DEMO_STEPS - 1));
-    demoProgressFill.style.width = (dP * 100) + '%';
-    const wr = diagramWrap.getBoundingClientRect();
-    const wTotal = diagramWrap.offsetHeight - window.innerHeight;
-    const wP = Math.max(0, Math.min(1, -wr.top / wTotal));
-    const raw = wP * STEPS.length;
-    const si = Math.min(Math.floor(raw), STEPS.length - 1);
-    const within = raw - si;
-    if(si !== activeStep){
-      stepEls[activeStep].classList.remove('active');
-      stepEls[activeStep].classList.add('exit-up');
-      const prev = activeStep;
-      setTimeout(()=>{ stepEls[prev].classList.remove('exit-up'); stepEls[prev].style.position = 'absolute'; }, 600);
-      activeStep = si;
-      stepEls[si].style.position = si === 0 ? 'relative' : 'absolute';
-      stepEls[si].classList.add('active');
-      bgWord.textContent = buildSteps(SITE_LANGS[siteLang||'en'])[si]?.bg || '';
-    }
-    bgWord.style.transform = `translate(-50%,-50%) scale(${1 + within * 0.04})`;
-    document.getElementById('jpf').style.width = (sy / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+let ticking=false;
+window.addEventListener('scroll',()=>{
+  if(!ticking){
+    requestAnimationFrame(()=>{
+      const sy = window.scrollY;
+      if(sy !== lastSY){
+        lastSY = sy;
+        const demoRect = demoWrap.getBoundingClientRect();
+        const toneEl = document.querySelector('.tone-section');
+        const toneRect = toneEl ? toneEl.getBoundingClientRect() : {top:9999,bottom:0};
+        const inDark = (demoRect.top <= 0 && demoRect.bottom > 72) || (toneRect.top <= 0 && toneRect.bottom > 72);
+        nav.classList.toggle('dark', inDark);
+        const dr = demoWrap.getBoundingClientRect();
+        const dTotal = demoWrap.offsetHeight - window.innerHeight;
+        const dP = Math.max(0, Math.min(1, -dr.top / dTotal));
+        setDemoStep(Math.min(Math.floor(dP * DEMO_STEPS), DEMO_STEPS - 1));
+        demoProgressFill.style.width = (dP * 100) + '%';
+        const wr = diagramWrap.getBoundingClientRect();
+        const wTotal = diagramWrap.offsetHeight - window.innerHeight;
+        const wP = Math.max(0, Math.min(1, -wr.top / wTotal));
+        const raw = wP * STEPS.length;
+        const si = Math.min(Math.floor(raw), STEPS.length - 1);
+        const within = raw - si;
+        if(si !== activeStep){
+          stepEls[activeStep].classList.remove('active');
+          stepEls[activeStep].classList.add('exit-up');
+          const prev = activeStep;
+          setTimeout(()=>{ stepEls[prev].classList.remove('exit-up'); stepEls[prev].style.position = 'absolute'; }, 600);
+          activeStep = si;
+          stepEls[si].style.position = si === 0 ? 'relative' : 'absolute';
+          stepEls[si].classList.add('active');
+          bgWord.textContent = buildSteps(SITE_LANGS[siteLang||'en'])[si]?.bg || '';
+        }
+        bgWord.style.transform = `translate(-50%,-50%) scale(${1 + within * 0.04})`;
+        document.getElementById('jpf').style.width = (sy / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+      }
+      ticking=false;
+    });
+    ticking=true;
   }
-  requestAnimationFrame(onFrame);
-}
-requestAnimationFrame(onFrame);
+},{passive:true});
 
 for(let i=0;i<DEMO_STEPS;i++){
   const btn=document.getElementById('genBtn'+i);
