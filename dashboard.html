@@ -1093,7 +1093,7 @@ async function doSignup() {
   btn.disabled = true; btn.textContent = 'Creating account…';
   const { data, error } = await sb.auth.signUp({ email, password: pass });
   if (error) { btn.disabled=false; btn.textContent='Create account →'; showError('signup-error','Signup failed: '+error.message); return; }
-  currentUser = data.user; profile.fname = name.split(' ')[0]; profile.lname = name.split(' ').slice(1).join(' '); profile.email = email; isGuest = false;
+  currentUser = data.user; profile.fname = name.split(' ')[0]; profile.lname = name.split(' ').slice(1).join(' '); profile.email = email; isGuest = false; if(currentUser && !pendingPromoData){ const trial48 = new Date(Date.now() + 2*86400000).toISOString(); await sb.from('profiles').upsert({ id:currentUser.id, trial_expires_at:trial48 }); profile.trial_expires_at = trial48; }
   if (pendingPromoData && currentUser) {
     const days = pendingPromoData.type === '1month' ? 30 : 14;
     const trial_expires_at = new Date(Date.now() + days * 86400000).toISOString();
