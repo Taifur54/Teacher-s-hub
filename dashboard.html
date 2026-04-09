@@ -2724,6 +2724,7 @@ function toggleHelp() {
 
 function renderHelpList(filter) {
   const body = document.getElementById('helpQBody');
+  if (!body) return;
   body.innerHTML = '';
   HELP_DATA.forEach(section => {
     const items = filter
