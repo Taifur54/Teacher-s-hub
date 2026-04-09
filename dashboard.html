@@ -2795,15 +2795,22 @@ document.addEventListener('click', function(e) {
 
   const { data: { session } } = await sb.auth.getSession();
   if (session) { currentUser = session.user; isGuest = false; await loadProfileFromDB(); enterDash(); }
-  else if (profile.fname) { isGuest = false; enterDash(); }
   else {
-    // First visit — show language selector
     const hasSeenLang = localStorage.getItem('yt_lang');
     if (!hasSeenLang) {
       showScreen('screen-language');
     }
-    // else auth screen is already shown (default active screen)
   }
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Enter') return;
+  const loginVisible = document.getElementById('auth-login').style.display !== 'none';
+  const signupVisible = document.getElementById('auth-signup').style.display !== 'none';
+  if (document.getElementById('screen-auth').classList.contains('active')) {
+    if (loginVisible) doLogin();
+    else if (signupVisible) doSignup();
+  }
+});
+
 })();
 </script>
 
