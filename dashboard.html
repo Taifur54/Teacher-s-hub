@@ -2784,11 +2784,13 @@ document.addEventListener('click', function(e) {
 
 // ══ INIT ══
 (async () => {
-  // Attach preset modal event listeners safely after DOM is ready
-  document.getElementById('presetModalOverlay').addEventListener('click', function(e) {
+ // Attach preset modal event listeners safely after DOM is ready
+  const presetOverlay = document.getElementById('presetModalOverlay');
+  const presetInput = document.getElementById('presetNameInput');
+  if (presetOverlay) presetOverlay.addEventListener('click', function(e) {
     if (e.target === this) closePresetModal();
   });
-  document.getElementById('presetNameInput').addEventListener('keydown', function(e) {
+  if (presetInput) presetInput.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') confirmSavePreset();
   });
   // Load saved language
