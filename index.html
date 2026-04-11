@@ -283,110 +283,301 @@ h1 em{font-style:italic;color:var(--g);}
 }
 
 /* ══ CHALKBOARD CARD ══ */
-.tk-card-chalk{
+/* ══ CARD PANEL SYSTEM ══ */
+.tk-card-panel{
   padding: 0 0 20px 0;
   overflow: hidden;
 }
-.tk-card-chalk .tk-title,
-.tk-card-chalk .tk-desc,
-.tk-card-chalk .tk-tag{
+.tk-card-panel .tk-title,
+.tk-card-panel .tk-desc,
+.tk-card-panel .tk-tag{
   padding-left: 20px;
   padding-right: 20px;
 }
-.tk-card-chalk .tk-title{ margin-top: 14px; }
+.tk-card-panel .tk-title{ margin-top: 14px; }
 
-.chalk-board{
+.card-panel{
   position: relative;
   width: 100%;
   height: 110px;
-  background: transparent;
   border-radius: 16px 16px 0 0;
   overflow: hidden;
+  background: rgba(0,0,0,0.25);
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-/* subtle grid lines on board */
-.chalk-board::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background-image: repeating-linear-gradient(
-    0deg, transparent, transparent 24px,
-    rgba(255,255,255,0.03) 24px, rgba(255,255,255,0.03) 25px
-  );
-  pointer-events:none;
-  border-radius: 16px 16px 0 0;
+/* ── PANEL 0: Lesson Craft — typewriter lines building a plan ── */
+.cp0{ background: linear-gradient(135deg, rgba(29,80,58,0.6) 0%, rgba(8,12,10,0.4) 100%); }
+.cp0-line{
+  position:absolute; left:16px; height:3px; border-radius:2px;
+  background: rgba(255,255,255,0.7);
+  width: 0;
+  animation: cpLine 0.4s ease-out forwards;
+}
+.cp0-line.dim{ background: rgba(255,255,255,0.2); }
+.cp0-line.green{ background: var(--g); }
+.cp0 .cp0-line:nth-child(1){ top:18px; animation-delay:0.1s; --w:55%; }
+.cp0 .cp0-line:nth-child(2){ top:30px; animation-delay:0.5s; --w:72%; }
+.cp0 .cp0-line:nth-child(3){ top:42px; animation-delay:0.9s; --w:40%; }
+.cp0 .cp0-line:nth-child(4){ top:54px; animation-delay:1.3s; --w:65%; }
+.cp0 .cp0-line:nth-child(5){ top:66px; animation-delay:1.7s; --w:50%; }
+.cp0 .cp0-line:nth-child(6){ top:78px; animation-delay:2.1s; --w:30%; }
+@keyframes cpLine{ to{ width: var(--w); } }
+.cp0-cursor{
+  position:absolute; width:2px; height:12px; background:var(--g);
+  border-radius:1px;
+  animation: cpCursor 0.6s steps(1) infinite;
+}
+@keyframes cpCursor{ 0%,49%{opacity:1} 50%,100%{opacity:0} }
+/* badge */
+.cp0-badge{
+  position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  background:rgba(29,158,117,0.2); border:1px solid rgba(29,158,117,0.4);
+  border-radius:8px; padding:6px 10px; text-align:center;
+}
+.cp0-badge span{ display:block; font-family:'Fraunces',serif; color:var(--g); font-weight:700; font-size:18px; line-height:1; }
+.cp0-badge small{ display:block; font-size:8px; color:rgba(255,255,255,0.4); font-weight:600; letter-spacing:0.06em; margin-top:2px; }
+
+/* ── PANEL 1: Quiz Generator — MCQ options flashing, answer revealed ── */
+.cp1{ background: linear-gradient(135deg, rgba(3,49,91,0.6) 0%, rgba(8,12,10,0.4) 100%); }
+.cp1-q{
+  position:absolute; left:14px; top:12px; right:14px;
+  font-size:9px; font-weight:700; color:rgba(255,255,255,0.6);
+  letter-spacing:0.04em; text-transform:uppercase;
+}
+.cp1-opt{
+  position:absolute; left:14px; right:14px; height:14px;
+  border-radius:4px; border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.04);
+  display:flex; align-items:center; padding-left:8px;
+  font-size:8px; font-weight:600; color:rgba(255,255,255,0.45);
+  transition: all 0.3s ease;
+}
+.cp1-opt:nth-child(2){ top:28px; }
+.cp1-opt:nth-child(3){ top:46px; }
+.cp1-opt:nth-child(4){ top:64px; }
+.cp1-opt:nth-child(5){ top:82px; }
+.cp1-opt.correct{
+  background:rgba(29,158,117,0.2); border-color:rgba(29,158,117,0.5);
+  color:#fff;
+}
+.cp1-opt .cp1-dot{
+  width:6px; height:6px; border-radius:50%;
+  border:1.5px solid rgba(255,255,255,0.2);
+  margin-right:7px; flex-shrink:0;
+  transition: all 0.3s ease;
+}
+.cp1-opt.correct .cp1-dot{ background:var(--g); border-color:var(--g); }
+.cp1-key{
+  position:absolute; right:14px; top:28px;
+  background:rgba(29,158,117,0.15); border:1px solid rgba(29,158,117,0.3);
+  border-radius:6px; padding:4px 8px;
+  font-size:8px; font-weight:700; color:var(--g);
+  opacity:0; animation: cpFadeIn 0.4s 2.8s ease forwards;
+}
+@keyframes cpFadeIn{ to{opacity:1;} }
+
+/* ── PANEL 2: Auto Grader — score meter filling up ── */
+.cp2{ background: linear-gradient(135deg, rgba(60,40,0,0.6) 0%, rgba(8,12,10,0.4) 100%); }
+.cp2-ring{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:72px; height:72px;
+}
+.cp2-ring svg{ width:72px; height:72px; transform:rotate(-90deg); }
+.cp2-ring circle{
+  fill:none; stroke:rgba(255,255,255,0.07); stroke-width:5;
+  cx:36; cy:36; r:28;
+}
+.cp2-ring .arc{
+  fill:none; stroke:#F59E0B; stroke-width:5;
+  stroke-linecap:round;
+  cx:36; cy:36; r:28;
+  stroke-dasharray:176;
+  stroke-dashoffset:176;
+  animation: cpArc 1.8s 0.3s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+@keyframes cpArc{ to{ stroke-dashoffset:35; } }
+.cp2-score{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  text-align:center; pointer-events:none;
+}
+.cp2-score span{
+  display:block; font-family:'Fraunces',serif; font-size:20px; font-weight:700;
+  color:#fff; line-height:1;
+  opacity:0; animation: cpFadeIn 0.5s 1.8s ease forwards;
+}
+.cp2-score small{
+  display:block; font-size:7px; font-weight:700; color:rgba(255,255,255,0.4);
+  letter-spacing:0.1em; text-transform:uppercase; margin-top:2px;
+}
+.cp2-stars{
+  position:absolute; bottom:10px; left:50%; transform:translateX(-50%);
+  display:flex; gap:3px;
+  opacity:0; animation:cpFadeIn 0.5s 2.4s ease forwards;
+}
+.cp2-star{
+  font-size:12px; color:#F59E0B;
+  animation: cpStarPop 0.3s var(--sd) var(--spring) both;
+}
+@keyframes cpStarPop{ from{transform:scale(0) rotate(-20deg)} to{transform:scale(1) rotate(0)} }
+.cp2-star:nth-child(1){ --sd:2.4s }
+.cp2-star:nth-child(2){ --sd:2.55s }
+.cp2-star:nth-child(3){ --sd:2.7s }
+.cp2-label{
+  position:absolute; top:12px; right:14px;
+  font-size:8px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+  color:rgba(255,255,255,0.25);
 }
 
-.chalk-svg{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+/* ── PANEL 3: Essay Feedback — paragraph with highlight marks sweeping ── */
+.cp3{ background: linear-gradient(135deg, rgba(20,58,30,0.55) 0%, rgba(8,12,10,0.4) 100%); }
+.cp3-line{
+  position:absolute; left:14px; right:14px; height:2px; border-radius:1px;
+  background:rgba(255,255,255,0.15);
 }
+.cp3-line:nth-child(1){ top:18px; width:80%; }
+.cp3-line:nth-child(2){ top:28px; width:95%; }
+.cp3-line:nth-child(3){ top:38px; width:70%; }
+.cp3-line:nth-child(4){ top:48px; width:88%; }
+.cp3-line:nth-child(5){ top:58px; width:60%; }
+.cp3-line:nth-child(6){ top:68px; width:75%; }
+/* highlight sweeps */
+.cp3-hl{
+  position:absolute; height:10px; border-radius:2px;
+  top:0; animation: cpHl 0.5s ease-out forwards; width:0;
+}
+.cp3-hl.g{ background:rgba(29,158,117,0.35); }
+.cp3-hl.y{ background:rgba(245,158,11,0.35); }
+.cp3-hl.r{ background:rgba(239,68,68,0.25); }
+.cp3-hl:nth-child(7) { left:14px; top:23px; animation-delay:0.6s; --w:58px; }
+.cp3-hl:nth-child(8) { left:50px; top:33px; animation-delay:1.0s; --w:40px; }
+.cp3-hl:nth-child(9) { left:14px; top:43px; animation-delay:1.4s; --w:70px; }
+.cp3-hl:nth-child(10){ left:80px; top:53px; animation-delay:1.8s; --w:50px; }
+@keyframes cpHl{ to{ width:var(--w); } }
+/* grade badge */
+.cp3-grade{
+  position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  font-family:'Fraunces',serif; font-size:32px; font-weight:700;
+  color:var(--g); line-height:1;
+  opacity:0; animation:cpGrade 0.6s 2.2s var(--spring) both;
+}
+@keyframes cpGrade{ from{transform:translateY(-50%) scale(0.4);opacity:0} to{transform:translateY(-50%) scale(1);opacity:1} }
 
-/* base chalk stroke style */
-.ck{
-  fill: none;
-  stroke: rgba(235,230,215,0.92);
-  stroke-width: 2.2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  filter: url(#chalkFx);
-  animation: chalkDraw 0.6s ease-out forwards;
+/* ── PANEL 4: Diagram Generator — orbiting electrons around nucleus ── */
+.cp4{ background: linear-gradient(135deg, rgba(50,20,80,0.55) 0%, rgba(8,12,10,0.4) 100%); }
+.cp4-nucleus{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:18px; height:18px; border-radius:50%;
+  background:radial-gradient(circle at 35% 35%, #c084fc, #7c3aed);
+  box-shadow:0 0 12px rgba(167,139,250,0.6);
 }
-.ck-sm{ stroke-width: 1.6; }
-.ck-lg{ stroke-width: 2.5; }
-.ck-frac{ stroke-width: 2.0; stroke: rgba(200,220,200,0.7); }
-.ck-el{
-  fill: none;
-  stroke: rgba(235,230,215,0.92);
-  stroke-width: 2.2;
-  stroke-linecap: round;
-  filter: url(#chalkFx);
-  animation: chalkDraw 0.7s ease-out forwards;
+.cp4-orbit{
+  position:absolute; left:50%; top:50%;
+  border-radius:50%; border:1px solid rgba(167,139,250,0.2);
+  transform:translate(-50%,-50%);
 }
+.cp4-orbit:nth-child(2){ width:46px; height:46px; animation:cpOrbit1 2.8s linear infinite; }
+.cp4-orbit:nth-child(3){ width:70px; height:70px; animation:cpOrbit2 4.2s linear infinite reverse; }
+.cp4-orbit:nth-child(4){ width:96px; height:96px; animation:cpOrbit3 6s linear infinite; }
+@keyframes cpOrbit1{ to{transform:translate(-50%,-50%) rotate(360deg)} }
+@keyframes cpOrbit2{ to{transform:translate(-50%,-50%) rotate(360deg)} }
+@keyframes cpOrbit3{ to{transform:translate(-50%,-50%) rotate(360deg)} }
+.cp4-electron{
+  position:absolute; width:7px; height:7px; border-radius:50%;
+  top:-3.5px; left:50%; margin-left:-3.5px;
+}
+.cp4-orbit:nth-child(2) .cp4-electron{ background:#a78bfa; box-shadow:0 0 5px #a78bfa; }
+.cp4-orbit:nth-child(3) .cp4-electron{ background:#7dd3fc; box-shadow:0 0 5px #7dd3fc; }
+.cp4-orbit:nth-child(4) .cp4-electron{ background:#6ee7b7; box-shadow:0 0 5px #6ee7b7; }
+/* label lines -->  -->  --> */
+.cp4-lbl{
+  position:absolute; font-size:7px; font-weight:700; color:rgba(255,255,255,0.35);
+  letter-spacing:0.06em;
+}
+.cp4-lbl:nth-child(5){ top:8px; left:12px; }
+.cp4-lbl:nth-child(6){ bottom:8px; right:12px; }
 
-@keyframes chalkDraw{
-  to{ stroke-dashoffset: 0; }
+/* ── PANEL 5: Analogy Generator — two concepts bridged by equals ── */
+.cp5{ background: linear-gradient(135deg, rgba(80,20,20,0.55) 0%, rgba(8,12,10,0.4) 100%); }
+.cp5-box{
+  position:absolute; border-radius:8px; padding:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Fraunces',serif; font-weight:700; font-size:10px;
+  line-height:1.2; text-align:center;
 }
+.cp5-box.a{
+  left:10px; top:50%; transform:translateY(-50%);
+  width:54px; height:54px;
+  background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3);
+  color:rgba(255,255,255,0.7);
+  animation:cp5Pulse 3s ease-in-out infinite;
+}
+.cp5-box.b{
+  right:10px; top:50%; transform:translateY(-50%);
+  width:54px; height:54px;
+  background:rgba(29,158,117,0.15); border:1px solid rgba(29,158,117,0.3);
+  color:rgba(255,255,255,0.7);
+  animation:cp5Pulse 3s 1.5s ease-in-out infinite;
+}
+@keyframes cp5Pulse{ 0%,100%{box-shadow:none} 50%{box-shadow:0 0 16px rgba(255,255,255,0.1)} }
+.cp5-equals{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  font-family:'Fraunces',serif; font-size:24px; font-weight:700; color:rgba(255,255,255,0.5);
+  animation:cp5Eq 2s ease-in-out infinite;
+}
+@keyframes cp5Eq{ 0%,100%{opacity:0.3;transform:translate(-50%,-50%) scale(0.85)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1)} }
+.cp5-line{
+  position:absolute; left:64px; right:64px; top:50%; height:1px;
+  background:linear-gradient(to right, rgba(239,68,68,0.4), rgba(255,255,255,0.15), rgba(29,158,117,0.4));
+  transform:translateY(-50%);
+  animation:cp5Beam 2s ease-in-out infinite;
+}
+@keyframes cp5Beam{ 0%,100%{opacity:0.3} 50%{opacity:1} }
+/* flowing dots on the line */
+.cp5-dot{
+  position:absolute; width:4px; height:4px; border-radius:50%;
+  background:#fff; top:-1.5px;
+  animation:cp5Flow 2s linear infinite;
+}
+.cp5-dot:nth-child(1){ animation-delay:0s; }
+.cp5-dot:nth-child(2){ animation-delay:0.7s; }
+.cp5-dot:nth-child(3){ animation-delay:1.4s; }
+@keyframes cp5Flow{ from{left:0;opacity:0} 10%{opacity:1} 90%{opacity:1} to{left:100%;opacity:0} }
 
-/* chalk tray at bottom of board */
-.chalk-tray{
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 5px;
-  background: linear-gradient(to right, #8B6914, #C9A227, #8B6914);
-  box-shadow: 0 -1px 4px rgba(0,0,0,0.4);
+/* ── PANEL 6: Analytics — live line chart with scanning light ── */
+.cp6{ background: linear-gradient(135deg, rgba(3,49,91,0.55) 0%, rgba(8,12,10,0.4) 100%); }
+.cp6-svg{
+  position:absolute; inset:0; width:100%; height:100%;
+  overflow:visible;
 }
+.cp6-grid-line{
+  stroke:rgba(255,255,255,0.05); stroke-width:1;
+}
+.cp6-area{
+  fill:url(#cp6grad); opacity:0.6;
+  stroke:none;
+  clip-path:inset(0 100% 0 0);
+  animation:cp6Wipe 1.8s 0.2s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.cp6-line-path{
+  fill:none; stroke:#38bdf8; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+  stroke-dasharray:220; stroke-dashoffset:220;
+  animation:cp6Draw 1.8s 0.2s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+@keyframes cp6Draw{ to{stroke-dashoffset:0;} }
+@keyframes cp6Wipe{ to{clip-path:inset(0 0% 0 0);} }
+.cp6-dot{
+  fill:#38bdf8; r:3;
+  opacity:0; animation:cpFadeIn 0.3s var(--dd) ease forwards;
+}
+.cp6-scan{
+  position:absolute; top:0; bottom:0; width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(56,189,248,0.5),transparent);
+  animation:cp6Scan 2s 0.2s linear forwards;
+  left:0;
+}
+@keyframes cp6Scan{ to{left:100%;} }
 
-/* floating chalk dust particles */
-.chalk-dust{
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.chalk-dust::before,
-.chalk-dust::after{
-  content:'';
-  position:absolute;
-  border-radius:50%;
-  background:rgba(235,230,215,0.18);
-  animation: dustFloat 4s ease-in-out infinite;
-}
-.chalk-dust::before{ width:3px;height:3px;left:30%;bottom:18%;animation-delay:2s; }
-.chalk-dust::after{  width:2px;height:2px;left:65%;bottom:25%;animation-delay:3.5s; }
-@keyframes dustFloat{
-  0%,100%{ transform:translateY(0) translateX(0); opacity:0.3; }
-  50%{ transform:translateY(-8px) translateX(3px); opacity:0.7; }
-}
-
-/* loop: after all strokes drawn, fade out and redraw */
-.chalk-board.loop-reset .ck,
-.chalk-board.loop-reset .ck-el{
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
 
 .mq-wrap{background:var(--ink);border-top:1px solid rgba(255,255,255,0.07);padding:15px 0;overflow:hidden;}
 .mq-track{display:flex;white-space:nowrap;animation:mqRoll 26s linear infinite;}
@@ -678,13 +869,13 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
       <span class="split-line" id="hl1"></span>
       <span class="split-line" id="hl2"></span>
     </h1>
-    <p class="hero-sub" id="hsub">Lesson plans, quizzes, grading — done in seconds. Spend less time at your desk and more time with the students who need you.</p>
+    <p class="hero-sub" id="hsub">Lesson Craft, quizzes, grading — done in seconds. Spend less time at your desk and more time with the students who need you.</p>
     <div class="hero-actions" id="hact">
       <a href="#pricing" class="btn-ink">See plans →</a>
       <a href="#burst" class="btn-ring">See tools in action ↓</a>
     </div>
     <div class="trust-row" id="htrust">
-      <div class="trust-item"><div class="t-dot"></div>Lesson plans in 30s</div>
+      <div class="trust-item"><div class="t-dot"></div>Lesson Craft in 30s</div>
       <div class="trust-item"><div class="t-dot"></div>Quizzes with answer keys</div>
       <div class="trust-item"><div class="t-dot"></div>Instant grading & feedback</div>
     </div>
@@ -704,301 +895,142 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
       <p class="tk-sub">Everything a teacher needs, in one place.</p>
     </div>
     <div class="tk-grid" id="tkGrid">
-      <!-- CARD 0: Lesson Planner — a structured lesson outline being written -->
-      <div class="tk-card tk-card-chalk" data-i="0">
-        <div class="chalk-board" id="cb0">
-          <div class="chalk-dust"></div>
-          <svg class="chalk-svg" viewBox="0 0 178 100" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <filter id="chalkFx0"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.1" xChannelSelector="R" yChannelSelector="G"/></filter>
-            </defs>
-            <!-- Title: LESSON PLAN -->
-            <path class="ck cb0-s" d="M 14 18 L 14 30" stroke-dasharray="12" stroke-dashoffset="12" style="animation-delay:0.1s"/>
-            <path class="ck cb0-s" d="M 14 18 L 22 18" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:0.2s"/>
-            <path class="ck cb0-s" d="M 14 24 L 20 24" stroke-dasharray="6" stroke-dashoffset="6" style="animation-delay:0.3s"/>
-            <!-- P -->
-            <path class="ck cb0-s" d="M 26 18 L 26 30" stroke-dasharray="12" stroke-dashoffset="12" style="animation-delay:0.4s"/>
-            <path class="ck cb0-s" d="M 26 18 Q 34 18 34 24 Q 34 30 26 30" stroke-dasharray="22" stroke-dashoffset="22" style="animation-delay:0.5s"/>
-            <!-- underline -->
-            <path class="ck" d="M 10 34 L 80 34" stroke-dasharray="70" stroke-dashoffset="70" style="animation-delay:0.8s;opacity:0.4"/>
-            <!-- bullet line 1 -->
-            <path class="ck cb0-s" d="M 14 44 L 16 44" stroke-dasharray="2" stroke-dashoffset="2" style="animation-delay:1.0s"/>
-            <path class="ck" d="M 20 44 L 70 44" stroke-dasharray="50" stroke-dashoffset="50" style="animation-delay:1.1s;opacity:0.55"/>
-            <!-- bullet line 2 -->
-            <path class="ck cb0-s" d="M 14 54 L 16 54" stroke-dasharray="2" stroke-dashoffset="2" style="animation-delay:1.5s"/>
-            <path class="ck" d="M 20 54 L 60 54" stroke-dasharray="40" stroke-dashoffset="40" style="animation-delay:1.6s;opacity:0.55"/>
-            <!-- bullet line 3 -->
-            <path class="ck cb0-s" d="M 14 64 L 16 64" stroke-dasharray="2" stroke-dashoffset="2" style="animation-delay:1.9s"/>
-            <path class="ck" d="M 20 64 L 75 64" stroke-dasharray="55" stroke-dashoffset="55" style="animation-delay:2.0s;opacity:0.55"/>
-            <!-- tick mark -->
-            <path class="ck" d="M 130 38 L 140 50 L 158 26" stroke-dasharray="40" stroke-dashoffset="40" style="animation-delay:2.5s;stroke-width:3"/>
-            <!-- circle around tick -->
-            <ellipse class="ck-el" cx="144" cy="40" rx="18" ry="18" stroke-dasharray="115" stroke-dashoffset="115" style="animation-delay:3.0s;opacity:0.35"/>
-          </svg>
-          <div class="chalk-tray"></div>
+
+      <!-- CARD 0: Lesson Craft — typewriter lines -->
+      <div class="tk-card tk-card-panel" data-i="0">
+        <div class="card-panel cp0">
+          <div class="cp0-line dim" style="width:30%"></div>
+          <div class="cp0-line green"></div>
+          <div class="cp0-line"></div>
+          <div class="cp0-line dim"></div>
+          <div class="cp0-line"></div>
+          <div class="cp0-line dim"></div>
+          <div class="cp0-badge"><span>30s</span><small>avg plan</small></div>
         </div>
-        <div class="tk-title" style="margin-top:4px;">Lesson Planner</div>
+        <div class="tk-title" style="margin-top:4px;">Lesson Craft</div>
         <div class="tk-desc">Full structured plans in 18 seconds</div>
         <span class="tk-tag green">30s avg</span>
       </div>
 
-      <!-- CARD 1: Quiz Generator — intense math quiz: a²=b²+c², quadratic -->
-      <div class="tk-card tk-card-chalk" data-i="1">
-        <div class="chalk-board" id="cb1">
-          <div class="chalk-dust"></div>
-          <svg class="chalk-svg" viewBox="0 0 178 100" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <filter id="chalkFx1"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.1" xChannelSelector="R" yChannelSelector="G"/></filter>
-            </defs>
-            <!-- Q1: a² = b² + c² -->
-            <!-- a -->
-            <path class="ck" d="M 10 38 Q 18 20 26 38" stroke-dasharray="22" stroke-dashoffset="22" style="animation-delay:0.1s;stroke-width:2.5"/>
-            <path class="ck" d="M 13 31 L 23 31" stroke-dasharray="10" stroke-dashoffset="10" style="animation-delay:0.35s;stroke-width:2.5"/>
-            <!-- superscript 2 -->
-            <path class="ck ck-sm" d="M 28 22 Q 33 17 35 21 Q 37 25 28 29 L 37 29" stroke-dasharray="28" stroke-dashoffset="28" style="animation-delay:0.55s"/>
-            <!-- = -->
-            <path class="ck" d="M 42 31 L 54 31" stroke-dasharray="12" stroke-dashoffset="12" style="animation-delay:0.8s"/>
-            <path class="ck" d="M 42 37 L 54 37" stroke-dasharray="12" stroke-dashoffset="12" style="animation-delay:0.95s"/>
-            <!-- b -->
-            <path class="ck" d="M 60 18 L 60 38" stroke-dasharray="20" stroke-dashoffset="20" style="animation-delay:1.1s;stroke-width:2.5"/>
-            <path class="ck" d="M 60 28 Q 72 24 72 33 Q 72 42 60 38" stroke-dasharray="32" stroke-dashoffset="32" style="animation-delay:1.3s;stroke-width:2.5"/>
-            <!-- superscript 2 -->
-            <path class="ck ck-sm" d="M 74 22 Q 79 17 81 21 Q 83 25 74 29 L 83 29" stroke-dasharray="28" stroke-dashoffset="28" style="animation-delay:1.5s"/>
-            <!-- + -->
-            <path class="ck" d="M 88 29 L 98 29" stroke-dasharray="10" stroke-dashoffset="10" style="animation-delay:1.75s"/>
-            <path class="ck" d="M 93 24 L 93 34" stroke-dasharray="10" stroke-dashoffset="10" style="animation-delay:1.9s"/>
-            <!-- c -->
-            <path class="ck" d="M 112 24 Q 102 24 102 33 Q 102 42 112 42" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay:2.05s;stroke-width:2.5"/>
-            <!-- superscript 2 -->
-            <path class="ck ck-sm" d="M 114 22 Q 119 17 121 21 Q 123 25 114 29 L 123 29" stroke-dasharray="28" stroke-dashoffset="28" style="animation-delay:2.3s"/>
-
-            <!-- divider -->
-            <path class="ck" d="M 10 53 L 160 53" stroke-dasharray="150" stroke-dashoffset="150" style="animation-delay:2.7s;opacity:0.2;stroke-width:1"/>
-
-            <!-- Q2: x = -b ± √(b²-4ac) / 2a — quadratic formula, smaller -->
-            <!-- x = -->
-            <path class="ck ck-sm" d="M 10 65 L 16 73" stroke-dasharray="10" stroke-dashoffset="10" style="animation-delay:2.9s"/>
-            <path class="ck ck-sm" d="M 16 65 L 10 73" stroke-dasharray="10" stroke-dashoffset="10" style="animation-delay:3.05s"/>
-            <path class="ck ck-sm" d="M 20 68 L 28 68" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:3.2s"/>
-            <path class="ck ck-sm" d="M 20 72 L 28 72" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:3.3s"/>
-            <!-- -b -->
-            <path class="ck ck-sm" d="M 32 69 L 38 69" stroke-dasharray="6" stroke-dashoffset="6" style="animation-delay:3.45s"/>
-            <path class="ck ck-sm" d="M 40 65 L 40 73" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:3.6s"/>
-            <!-- ± -->
-            <path class="ck ck-sm" d="M 46 67 L 54 67" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:3.75s"/>
-            <path class="ck ck-sm" d="M 50 63 L 50 71" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:3.88s"/>
-            <path class="ck ck-sm" d="M 46 74 L 54 74" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:4.0s"/>
-            <!-- √ radical -->
-            <path class="ck ck-sm" d="M 57 73 L 61 78 L 66 60 L 100 60" stroke-dasharray="55" stroke-dashoffset="55" style="animation-delay:4.15s"/>
-            <!-- b²-4ac inside -->
-            <path class="ck ck-sm" d="M 68 72 L 68 66 Q 74 64 74 68 Q 74 72 68 72" stroke-dasharray="22" stroke-dashoffset="22" style="animation-delay:4.45s"/>
-            <path class="ck" d="M 76 66 L 82 66" stroke-dasharray="6" stroke-dashoffset="6" style="animation-delay:4.7s;stroke-width:1.4"/>
-            <!-- fraction bar -->
-            <path class="ck" d="M 30 80 L 100 80" stroke-dasharray="70" stroke-dashoffset="70" style="animation-delay:5.0s;stroke-width:1.8;opacity:0.7"/>
-            <!-- 2a -->
-            <path class="ck ck-sm" d="M 57 92 Q 64 84 71 92" stroke-dasharray="14" stroke-dashoffset="14" style="animation-delay:5.25s"/>
-            <path class="ck ck-sm" d="M 59 88 L 69 88" stroke-dasharray="10" stroke-dashoffset="10" style="animation-delay:5.45s"/>
-            <path class="ck ck-sm" d="M 74 86 L 74 92" stroke-dasharray="6" stroke-dashoffset="6" style="animation-delay:5.6s"/>
-            <path class="ck ck-sm" d="M 71 86 Q 77 84 77 89 Q 77 92 74 92" stroke-dasharray="16" stroke-dashoffset="16" style="animation-delay:5.75s"/>
-          </svg>
-          <div class="chalk-tray"></div>
+      <!-- CARD 1: Quiz Generator — MCQ with answer reveal -->
+      <div class="tk-card tk-card-panel" data-i="1">
+        <div class="card-panel cp1">
+          <div class="cp1-q">Q1 — Which formula gives the vertex?</div>
+          <div class="cp1-opt"><span class="cp1-dot"></span>A. y = mx + b</div>
+          <div class="cp1-opt correct"><span class="cp1-dot"></span>B. x = −b / 2a ✓</div>
+          <div class="cp1-opt"><span class="cp1-dot"></span>C. a² + b² = c²</div>
+          <div class="cp1-opt"><span class="cp1-dot"></span>D. F = ma</div>
+          <div class="cp1-key">🔑 Answer key</div>
         </div>
         <div class="tk-title" style="margin-top:4px;">Quiz Generator</div>
         <div class="tk-desc">Questions + answer keys, any subject</div>
         <span class="tk-tag blue">With keys</span>
       </div>
 
-      <!-- CARD 2: Auto Grader — score tally, rubric marks -->
-      <div class="tk-card tk-card-chalk" data-i="2">
-        <div class="chalk-board" id="cb2">
-          <div class="chalk-dust"></div>
-          <svg class="chalk-svg" viewBox="0 0 178 100" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <filter id="chalkFx2"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.1" xChannelSelector="R" yChannelSelector="G"/></filter>
-            </defs>
-            <!-- Score: 18 / 20 large -->
-            <!-- 1 -->
-            <path class="ck" d="M 22 16 L 22 44" stroke-dasharray="28" stroke-dashoffset="28" style="animation-delay:0.1s;stroke-width:3"/>
-            <path class="ck" d="M 16 22 L 22 16" stroke-dasharray="9" stroke-dashoffset="9" style="animation-delay:0.3s;stroke-width:3"/>
-            <!-- 8 -->
-            <path class="ck" d="M 30 16 Q 42 16 42 28 Q 42 44 30 44 Q 18 44 18 36 Q 18 28 30 28 Q 42 28 42 22 Q 42 16 30 16" stroke-dasharray="80" stroke-dashoffset="80" style="animation-delay:0.5s;stroke-width:3"/>
-            <!-- / -->
-            <path class="ck" d="M 50 44 L 62 16" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay:1.2s;stroke-width:3"/>
-            <!-- 2 -->
-            <path class="ck" d="M 68 18 Q 80 14 82 22 Q 84 30 68 40 L 84 40" stroke-dasharray="50" stroke-dashoffset="50" style="animation-delay:1.5s;stroke-width:3"/>
-            <!-- 0 -->
-            <ellipse class="ck-el" cx="98" cy="30" rx="10" ry="14" stroke-dasharray="76" stroke-dashoffset="76" style="animation-delay:2.0s;stroke-width:3"/>
-            <!-- underline score -->
-            <path class="ck" d="M 14 50 L 112 50" stroke-dasharray="98" stroke-dashoffset="98" style="animation-delay:2.6s;opacity:0.3"/>
-            <!-- "EXCELLENT" tally marks style — 4 vertical + 1 cross -->
-            <path class="ck ck-sm" d="M 124 20 L 124 36" stroke-dasharray="16" stroke-dashoffset="16" style="animation-delay:3.0s"/>
-            <path class="ck ck-sm" d="M 130 20 L 130 36" stroke-dasharray="16" stroke-dashoffset="16" style="animation-delay:3.15s"/>
-            <path class="ck ck-sm" d="M 136 20 L 136 36" stroke-dasharray="16" stroke-dashoffset="16" style="animation-delay:3.3s"/>
-            <path class="ck ck-sm" d="M 142 20 L 142 36" stroke-dasharray="16" stroke-dashoffset="16" style="animation-delay:3.45s"/>
-            <path class="ck ck-sm" d="M 120 28 L 148 28" stroke-dasharray="28" stroke-dashoffset="28" style="animation-delay:3.6s"/>
-            <!-- big tick below -->
-            <path class="ck" d="M 30 65 L 46 82 L 80 58" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay:4.1s;stroke-width:3.5"/>
-            <!-- stars -->
-            <path class="ck ck-sm" d="M 110 65 L 113 72 L 120 72 L 114 77 L 116 84 L 110 80 L 104 84 L 106 77 L 100 72 L 107 72 Z" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay:4.8s"/>
-            <path class="ck ck-sm" d="M 134 62 L 136 67 L 141 67 L 137 70 L 139 75 L 134 72 L 129 75 L 131 70 L 127 67 L 132 67 Z" stroke-dasharray="50" stroke-dashoffset="50" style="animation-delay:5.2s;opacity:0.6"/>
-          </svg>
-          <div class="chalk-tray"></div>
+      <!-- CARD 2: Auto Grader — score ring -->
+      <div class="tk-card tk-card-panel" data-i="2">
+        <div class="card-panel cp2">
+          <div class="cp2-label">Score</div>
+          <div class="cp2-ring">
+            <svg viewBox="0 0 72 72">
+              <defs>
+                <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#F59E0B"/>
+                  <stop offset="100%" stop-color="#EF4444"/>
+                </linearGradient>
+              </defs>
+              <circle cx="36" cy="36" r="28" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="5"/>
+              <circle class="arc" cx="36" cy="36" r="28" stroke="url(#arcGrad)"/>
+            </svg>
+          </div>
+          <div class="cp2-score"><span>18<small style="font-size:11px;color:rgba(255,255,255,0.4)">/20</small></span></div>
+          <div class="cp2-stars">
+            <span class="cp2-star">★</span>
+            <span class="cp2-star">★</span>
+            <span class="cp2-star">★</span>
+          </div>
         </div>
         <div class="tk-title" style="margin-top:4px;">Auto Grader</div>
         <div class="tk-desc">Score any student answer in 9 seconds</div>
         <span class="tk-tag amber">9s avg</span>
       </div>
 
-      <!-- CARD 3: Essay Feedback — lines of text with markup arrows -->
-      <div class="tk-card tk-card-chalk" data-i="3">
-        <div class="chalk-board" id="cb3">
-          <div class="chalk-dust"></div>
-          <svg class="chalk-svg" viewBox="0 0 178 100" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <filter id="chalkFx3"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.1" xChannelSelector="R" yChannelSelector="G"/></filter>
-            </defs>
-            <!-- Essay lines -->
-            <path class="ck" d="M 12 20 L 90 20" stroke-dasharray="78" stroke-dashoffset="78" style="animation-delay:0.1s;opacity:0.5"/>
-            <path class="ck" d="M 12 30 L 110 30" stroke-dasharray="98" stroke-dashoffset="98" style="animation-delay:0.4s;opacity:0.5"/>
-            <path class="ck" d="M 12 40 L 80 40" stroke-dasharray="68" stroke-dashoffset="68" style="animation-delay:0.7s;opacity:0.5"/>
-            <path class="ck" d="M 12 50 L 100 50" stroke-dasharray="88" stroke-dashoffset="88" style="animation-delay:0.95s;opacity:0.5"/>
-            <path class="ck" d="M 12 60 L 70 60" stroke-dasharray="58" stroke-dashoffset="58" style="animation-delay:1.2s;opacity:0.5"/>
-            <!-- underline correction on line 2 -->
-            <path class="ck" d="M 30 33 L 68 33" stroke-dasharray="38" stroke-dashoffset="38" style="animation-delay:1.6s;stroke-width:1.5;opacity:0.8"/>
-            <!-- upward arrow with "✓" comment -->
-            <path class="ck" d="M 48 36 L 48 46 L 43 42" stroke-dasharray="18" stroke-dashoffset="18" style="animation-delay:2.0s;stroke-width:1.8"/>
-            <path class="ck" d="M 48 46 L 53 42" stroke-dasharray="7" stroke-dashoffset="7" style="animation-delay:2.2s;stroke-width:1.8"/>
-            <!-- circle around word on line 3 -->
-            <ellipse class="ck-el" cx="52" cy="40" rx="14" ry="7" stroke-dasharray="66" stroke-dashoffset="66" style="animation-delay:2.5s;stroke-width:1.5;opacity:0.7"/>
-            <!-- big margin comment: A+ -->
-            <path class="ck" d="M 120 25 Q 132 10 144 25" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay:3.0s;stroke-width:3"/>
-            <path class="ck" d="M 123 19 L 141 19" stroke-dasharray="18" stroke-dashoffset="18" style="animation-delay:3.25s;stroke-width:3"/>
-            <!-- + -->
-            <path class="ck" d="M 148 16 L 156 16" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:3.5s;stroke-width:2.5"/>
-            <path class="ck" d="M 152 12 L 152 20" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:3.65s;stroke-width:2.5"/>
-            <!-- wavy underline on line 4 -->
-            <path class="ck" d="M 12 54 Q 20 51 28 54 Q 36 57 44 54 Q 52 51 60 54" stroke-dasharray="50" stroke-dashoffset="50" style="animation-delay:4.1s;stroke-width:1.4;opacity:0.7"/>
-            <!-- margin arrow -->
-            <path class="ck ck-sm" d="M 130 50 L 155 50 L 150 45" stroke-dasharray="32" stroke-dashoffset="32" style="animation-delay:4.5s"/>
-            <path class="ck ck-sm" d="M 155 50 L 150 55" stroke-dasharray="7" stroke-dashoffset="7" style="animation-delay:4.7s"/>
-          </svg>
-          <div class="chalk-tray"></div>
+      <!-- CARD 3: Essay Feedback — highlighted paragraph -->
+      <div class="tk-card tk-card-panel" data-i="3">
+        <div class="card-panel cp3">
+          <div class="cp3-line"></div>
+          <div class="cp3-line"></div>
+          <div class="cp3-line"></div>
+          <div class="cp3-line"></div>
+          <div class="cp3-line"></div>
+          <div class="cp3-line"></div>
+          <div class="cp3-hl g"></div>
+          <div class="cp3-hl y"></div>
+          <div class="cp3-hl g"></div>
+          <div class="cp3-hl r"></div>
+          <div class="cp3-grade">A+</div>
         </div>
         <div class="tk-title" style="margin-top:4px;">Essay Feedback</div>
         <div class="tk-desc">Inline markup, rubric, model paragraph</div>
         <span class="tk-tag green">GCSE ready</span>
       </div>
 
-      <!-- CARD 4: Diagram Generator — triangle with angles being drawn -->
-      <div class="tk-card tk-card-chalk" data-i="4">
-        <div class="chalk-board" id="cb4">
-          <div class="chalk-dust"></div>
-          <svg class="chalk-svg" viewBox="0 0 178 100" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <filter id="chalkFx4"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.1" xChannelSelector="R" yChannelSelector="G"/></filter>
-            </defs>
-            <!-- Main triangle -->
-            <path class="ck" d="M 30 80 L 90 12 L 150 80" stroke-dasharray="175" stroke-dashoffset="175" style="animation-delay:0.1s;stroke-width:2.8"/>
-            <!-- base -->
-            <path class="ck" d="M 30 80 L 150 80" stroke-dasharray="120" stroke-dashoffset="120" style="animation-delay:0.9s;stroke-width:2.8"/>
-            <!-- right angle mark at base-left -->
-            <path class="ck ck-sm" d="M 38 80 L 38 72 L 46 72" stroke-dasharray="22" stroke-dashoffset="22" style="animation-delay:1.6s"/>
-            <!-- angle arc at top vertex -->
-            <path class="ck ck-sm" d="M 80 22 Q 90 30 100 22" stroke-dasharray="24" stroke-dashoffset="24" style="animation-delay:2.0s"/>
-            <!-- angle arc at base-right -->
-            <path class="ck ck-sm" d="M 140 78 Q 143 68 150 68" stroke-dasharray="16" stroke-dashoffset="16" style="animation-delay:2.3s"/>
-            <!-- label A at top -->
-            <path class="ck ck-sm" d="M 85 8 Q 90 2 95 8" stroke-dasharray="14" stroke-dashoffset="14" style="animation-delay:2.6s"/>
-            <path class="ck ck-sm" d="M 86 5 L 94 5" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:2.8s"/>
-            <!-- label B at base-left -->
-            <path class="ck ck-sm" d="M 16 82 L 16 92 Q 24 90 24 87 Q 24 84 16 84 Q 24 84 24 89 Q 24 94 16 92" stroke-dasharray="42" stroke-dashoffset="42" style="animation-delay:3.0s"/>
-            <!-- label C at base-right -->
-            <path class="ck ck-sm" d="M 166 84 Q 156 80 156 87 Q 156 94 166 90" stroke-dasharray="26" stroke-dashoffset="26" style="animation-delay:3.3s"/>
-            <!-- altitude line (dotted feel — two segments) -->
-            <path class="ck" d="M 90 12 L 90 80" stroke-dasharray="68" stroke-dashoffset="68" style="animation-delay:3.7s;opacity:0.3;stroke-dasharray:4 6"/>
-            <!-- h label -->
-            <path class="ck ck-sm" d="M 95 44 L 95 52 Q 102 52 102 48 Q 102 44 95 44" stroke-dasharray="26" stroke-dashoffset="26" style="animation-delay:4.5s;opacity:0.8"/>
-            <!-- angle value θ -->
-            <path class="ck ck-sm" d="M 108 22 Q 113 16 118 22 Q 116 28 110 26" stroke-dasharray="24" stroke-dashoffset="24" style="animation-delay:4.9s"/>
-            <path class="ck ck-sm" d="M 109 24 L 117 24" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:5.1s"/>
-          </svg>
-          <div class="chalk-tray"></div>
+      <!-- CARD 4: Diagram Generator — orbiting electrons -->
+      <div class="tk-card tk-card-panel" data-i="4">
+        <div class="card-panel cp4">
+          <div class="cp4-nucleus"></div>
+          <div class="cp4-orbit"><div class="cp4-electron"></div></div>
+          <div class="cp4-orbit"><div class="cp4-electron"></div></div>
+          <div class="cp4-orbit"><div class="cp4-electron"></div></div>
+          <div class="cp4-lbl">nucleus</div>
+          <div class="cp4-lbl">electrons</div>
         </div>
         <div class="tk-title" style="margin-top:4px;">Diagram Generator</div>
         <div class="tk-desc">Labelled scientific diagrams, print-ready</div>
         <span class="tk-tag purple">SVG output</span>
       </div>
 
-      <!-- CARD 5: Analogy Generator — lightbulb sketch with connecting lines -->
-      <div class="tk-card tk-card-chalk" data-i="5">
-        <div class="chalk-board" id="cb5">
-          <div class="chalk-dust"></div>
-          <svg class="chalk-svg" viewBox="0 0 178 100" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <filter id="chalkFx5"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.1" xChannelSelector="R" yChannelSelector="G"/></filter>
-            </defs>
-            <!-- lightbulb dome -->
-            <path class="ck" d="M 52 50 Q 52 18 72 18 Q 92 18 92 50" stroke-dasharray="90" stroke-dashoffset="90" style="animation-delay:0.1s;stroke-width:2.5"/>
-            <!-- base of bulb -->
-            <path class="ck" d="M 55 52 L 89 52" stroke-dasharray="34" stroke-dashoffset="34" style="animation-delay:0.9s;stroke-width:2"/>
-            <path class="ck" d="M 58 58 L 86 58" stroke-dasharray="28" stroke-dashoffset="28" style="animation-delay:1.1s;stroke-width:2"/>
-            <path class="ck" d="M 62 64 L 82 64" stroke-dasharray="20" stroke-dashoffset="20" style="animation-delay:1.3s;stroke-width:2"/>
-            <!-- filament inside -->
-            <path class="ck ck-sm" d="M 66 48 Q 69 36 72 48 Q 75 36 78 48" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay:1.6s;opacity:0.7"/>
-            <!-- rays -->
-            <path class="ck ck-sm" d="M 72 10 L 72 4" stroke-dasharray="6" stroke-dashoffset="6" style="animation-delay:2.0s"/>
-            <path class="ck ck-sm" d="M 94 22 L 100 16" stroke-dasharray="9" stroke-dashoffset="9" style="animation-delay:2.15s"/>
-            <path class="ck ck-sm" d="M 50 22 L 44 16" stroke-dasharray="9" stroke-dashoffset="9" style="animation-delay:2.3s"/>
-            <path class="ck ck-sm" d="M 100 42 L 108 42" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:2.45s"/>
-            <path class="ck ck-sm" d="M 44 42 L 36 42" stroke-dasharray="8" stroke-dashoffset="8" style="animation-delay:2.6s"/>
-            <!-- = sign connecting to concept -->
-            <path class="ck" d="M 110 36 L 122 36" stroke-dasharray="12" stroke-dashoffset="12" style="animation-delay:3.0s;stroke-width:2"/>
-            <path class="ck" d="M 110 44 L 122 44" stroke-dasharray="12" stroke-dashoffset="12" style="animation-delay:3.15s;stroke-width:2"/>
-            <!-- concept box -->
-            <path class="ck ck-sm" d="M 126 28 L 168 28 L 168 52 L 126 52 Z" stroke-dasharray="88" stroke-dashoffset="88" style="animation-delay:3.3s"/>
-            <!-- ? inside box -->
-            <path class="ck" d="M 140 36 Q 147 30 154 36 Q 154 42 147 44 L 147 46" stroke-dasharray="28" stroke-dashoffset="28" style="animation-delay:3.8s;stroke-width:2.2"/>
-            <path class="ck ck-sm" d="M 147 50 L 147 51" stroke-dasharray="2" stroke-dashoffset="2" style="animation-delay:4.2s"/>
-          </svg>
-          <div class="chalk-tray"></div>
+      <!-- CARD 5: Analogy Generator — two concepts bridged -->
+      <div class="tk-card tk-card-panel" data-i="5">
+        <div class="card-panel cp5">
+          <div class="cp5-box a">DNA<br/>Helicase</div>
+          <div class="cp5-line">
+            <div class="cp5-dot"></div>
+            <div class="cp5-dot"></div>
+            <div class="cp5-dot"></div>
+          </div>
+          <div class="cp5-equals">=</div>
+          <div class="cp5-box b">Book<br/>Spine</div>
         </div>
         <div class="tk-title" style="margin-top:4px;">Analogy Generator</div>
         <div class="tk-desc">Complex ideas explained with perfect analogies</div>
         <span class="tk-tag rose">Any concept</span>
       </div>
 
-      <!-- CARD 6: Analytics — bar chart being drawn -->
-      <div class="tk-card tk-card-chalk" data-i="6">
-        <div class="chalk-board" id="cb6">
-          <div class="chalk-dust"></div>
-          <svg class="chalk-svg" viewBox="0 0 178 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- CARD 6: Analytics — live line chart -->
+      <div class="tk-card tk-card-panel" data-i="6">
+        <div class="card-panel cp6">
+          <svg class="cp6-svg" viewBox="0 0 178 110" preserveAspectRatio="none">
             <defs>
-              <filter id="chalkFx6"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.1" xChannelSelector="R" yChannelSelector="G"/></filter>
+              <linearGradient id="cp6grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+              </linearGradient>
             </defs>
-            <!-- axes -->
-            <path class="ck" d="M 20 80 L 20 12" stroke-dasharray="68" stroke-dashoffset="68" style="animation-delay:0.1s;stroke-width:2.2"/>
-            <path class="ck" d="M 20 80 L 162 80" stroke-dasharray="142" stroke-dashoffset="142" style="animation-delay:0.5s;stroke-width:2.2"/>
-            <!-- bar 1 (short) -->
-            <path class="ck" d="M 32 80 L 32 62 L 50 62 L 50 80" stroke-dasharray="56" stroke-dashoffset="56" style="animation-delay:0.9s;stroke-width:2.5"/>
-            <!-- bar 2 (medium) -->
-            <path class="ck" d="M 60 80 L 60 42 L 78 42 L 78 80" stroke-dasharray="96" stroke-dashoffset="96" style="animation-delay:1.4s;stroke-width:2.5"/>
-            <!-- bar 3 (tall) -->
-            <path class="ck" d="M 88 80 L 88 22 L 106 22 L 106 80" stroke-dasharray="136" stroke-dashoffset="136" style="animation-delay:1.9s;stroke-width:2.5"/>
-            <!-- bar 4 (medium-tall) -->
-            <path class="ck" d="M 116 80 L 116 35 L 134 35 L 134 80" stroke-dasharray="110" stroke-dashoffset="110" style="animation-delay:2.4s;stroke-width:2.5"/>
-            <!-- bar 5 (shorter) -->
-            <path class="ck" d="M 144 80 L 144 52 L 156 52 L 156 80" stroke-dasharray="84" stroke-dashoffset="84" style="animation-delay:2.8s;stroke-width:2.5"/>
-            <!-- trend line over bars -->
-            <path class="ck" d="M 41 62 L 69 42 L 97 22 L 125 35 L 150 52" stroke-dasharray="140" stroke-dashoffset="140" style="animation-delay:3.4s;stroke-width:1.5;opacity:0.5;stroke-dasharray:5 4"/>
-            <!-- axis tick labels -->
-            <path class="ck ck-sm" d="M 17 62 L 20 62" stroke-dasharray="3" stroke-dashoffset="3" style="animation-delay:3.9s"/>
-            <path class="ck ck-sm" d="M 17 42 L 20 42" stroke-dasharray="3" stroke-dashoffset="3" style="animation-delay:4.0s"/>
-            <path class="ck ck-sm" d="M 17 22 L 20 22" stroke-dasharray="3" stroke-dashoffset="3" style="animation-delay:4.1s"/>
-            <!-- up arrow on tallest bar -->
-            <path class="ck" d="M 97 20 L 97 10 L 92 15" stroke-dasharray="18" stroke-dashoffset="18" style="animation-delay:4.4s;stroke-width:2"/>
-            <path class="ck" d="M 97 10 L 102 15" stroke-dasharray="7" stroke-dashoffset="7" style="animation-delay:4.55s;stroke-width:2"/>
+            <line class="cp6-grid-line" x1="0" y1="25" x2="178" y2="25"/>
+            <line class="cp6-grid-line" x1="0" y1="55" x2="178" y2="55"/>
+            <line class="cp6-grid-line" x1="0" y1="85" x2="178" y2="85"/>
+            <path class="cp6-area" d="M10,85 L36,70 L62,50 L88,35 L114,45 L140,28 L168,20 L168,110 L10,110 Z"/>
+            <path class="cp6-line-path" d="M10,85 L36,70 L62,50 L88,35 L114,45 L140,28 L168,20"/>
+            <circle class="cp6-dot" cx="10"  cy="85" style="--dd:1.2s"/>
+            <circle class="cp6-dot" cx="36"  cy="70" style="--dd:1.35s"/>
+            <circle class="cp6-dot" cx="62"  cy="50" style="--dd:1.5s"/>
+            <circle class="cp6-dot" cx="88"  cy="35" style="--dd:1.65s"/>
+            <circle class="cp6-dot" cx="114" cy="45" style="--dd:1.8s"/>
+            <circle class="cp6-dot" cx="140" cy="28" style="--dd:1.95s"/>
+            <circle class="cp6-dot" cx="168" cy="20" style="--dd:2.1s"/>
           </svg>
-          <div class="chalk-tray"></div>
+          <div class="cp6-scan"></div>
         </div>
         <div class="tk-title" style="margin-top:4px;">Analytics</div>
         <div class="tk-desc">Track usage and generation history</div>
@@ -1011,14 +1043,14 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
 <!-- MARQUEE -->
 <div class="mq-wrap">
   <div class="mq-track">
-    <span class="mq-item">📋 Lesson Planner</span><span class="mq-item mq-dot"> · </span>
+    <span class="mq-item">📋 Lesson Craft</span><span class="mq-item mq-dot"> · </span>
     <span class="mq-item">📐 Quiz Generator</span><span class="mq-item mq-dot"> · </span>
     <span class="mq-item">✅ Auto Grading</span><span class="mq-item mq-dot"> · </span>
     <span class="mq-item">✍️ Essay Feedback</span><span class="mq-item mq-dot"> · </span>
     <span class="mq-item">🔬 Diagram Generator</span><span class="mq-item mq-dot"> · </span>
     <span class="mq-item">💡 Analogy Generator</span><span class="mq-item mq-dot"> · </span>
     <span class="mq-item">📊 Analytics</span><span class="mq-item mq-dot"> · </span>
-    <span class="mq-item">📋 Lesson Planner</span><span class="mq-item mq-dot"> · </span>
+    <span class="mq-item">📋 Lesson Craft</span><span class="mq-item mq-dot"> · </span>
     <span class="mq-item">📐 Quiz Generator</span><span class="mq-item mq-dot"> · </span>
     <span class="mq-item">✅ Auto Grading</span><span class="mq-item mq-dot"> · </span>
     <span class="mq-item">✍️ Essay Feedback</span><span class="mq-item mq-dot"> · </span>
@@ -1046,7 +1078,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
       <div class="hiw-num-ring"><span class="hiw-num">02</span></div>
       <span class="hiw-ico">⚙️</span>
       <div class="hiw-nh">Choose your tool</div>
-      <p class="hiw-np">Lesson plan, quiz, grading, diagram — pick exactly what you need right now.</p>
+      <p class="hiw-np">Lesson Craft, quiz, grading, diagram — pick exactly what you need right now.</p>
     </div>
     <div class="hiw-node rev rev-d3">
       <div class="hiw-num-ring"><span class="hiw-num">03</span></div>
@@ -1071,7 +1103,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
   </div>
   <div class="demo-grid">
     <div class="demo-nav" id="dNav">
-      <div class="dtab" data-p="0"><span class="dt-ico">📋</span><div class="dt-txt"><div class="dt-title">Lesson Planner</div><div class="dt-sub">Full plans in 30s</div></div><span class="dt-arr">→</span></div>
+      <div class="dtab" data-p="0"><span class="dt-ico">📋</span><div class="dt-txt"><div class="dt-title">Lesson Craft</div><div class="dt-sub">Full craft in 30s</div></div><span class="dt-arr">→</span></div>
       <div class="dtab" data-p="1"><span class="dt-ico">📐</span><div class="dt-txt"><div class="dt-title">Quiz Generator</div><div class="dt-sub">With answer keys</div></div><span class="dt-arr">→</span></div>
       <div class="dtab" data-p="2"><span class="dt-ico">✍️</span><div class="dt-txt"><div class="dt-title">Essay Feedback</div><div class="dt-sub">Inline markup</div></div><span class="dt-arr">→</span></div>
       <div class="dtab" data-p="3"><span class="dt-ico">✅</span><div class="dt-txt"><div class="dt-title">Auto Grader</div><div class="dt-sub">Score in 9s</div></div><span class="dt-arr">→</span></div>
@@ -1080,15 +1112,15 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
     </div>
     <div id="dDisplay">
 
-      <!-- Panel 0: Lesson Planner -->
+      <!-- Panel 0: Lesson Craft -->
       <div class="dpanel" id="p0">
         <div class="dp-card">
-          <div class="dp-bar"><div class="dp-dots"><div class="dp-dot dp-r"></div><div class="dp-dot dp-y"></div><div class="dp-dot dp-g"></div></div><span class="dp-bartitle">YesTeachers — Lesson Planner</span></div>
+          <div class="dp-bar"><div class="dp-dots"><div class="dp-dot dp-r"></div><div class="dp-dot dp-y"></div><div class="dp-dot dp-g"></div></div><span class="dp-bartitle">YesTeachers — Lesson Craft</span></div>
           <div class="dp-body">
             <div class="dp-field"><span class="dp-fl">Subject</span><span class="dp-fv">Biology · High School</span></div>
             <div class="dp-field"><span class="dp-fl">Topic</span><span class="dp-fv">Photosynthesis</span></div>
             <div class="dp-field"><span class="dp-fl">Duration</span><span class="dp-fv">45 min · include differentiation</span></div>
-            <button class="dp-btn" onclick="runBtn(this)"><span class="bi">⚡</span><span class="bt">Generate lesson plan →</span></button>
+            <button class="dp-btn" onclick="runBtn(this)"><span class="bi">⚡</span><span class="bt">Generate Lesson Craft →</span></button>
             <div class="dp-out">
               <div class="dp-out-h">🌿 Photosynthesis — 45 min Plan</div>
               <div class="dp-slbl">🎯 Objectives</div>
@@ -1248,7 +1280,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
   </div>
   <div class="stats-grid">
     <div class="stat-card rev rev-d1"><span class="stat-n" data-t="6">0</span><span class="stat-l">hours saved per week</span></div>
-    <div class="stat-card rev rev-d2"><span class="stat-n" data-t="30" data-s="s">0</span><span class="stat-l">per lesson plan</span></div>
+    <div class="stat-card rev rev-d2"><span class="stat-n" data-t="30" data-s="s">0</span><span class="stat-l">per Lesson Craft</span></div>
     <div class="stat-card rev rev-d3"><span class="stat-n" data-t="7">0</span><span class="stat-l">AI tools in one toolkit</span></div>
   </div>
 </section>
@@ -1272,7 +1304,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
       <div class="p-price"><sup>$</sup><span class="pv" data-m="12" data-y="9">9</span></div>
       <div class="p-mo">per month</div>
       <div class="p-gen">100 generations / month</div>
-      <ul class="p-feats"><li>Lesson planner</li><li>Quiz generator</li><li>Answer grader</li><li>Diagram generator</li><li>PDF export</li><li>Cloud history</li></ul>
+      <ul class="p-feats"><li>Lesson Craft</li><li>Quiz generator</li><li>Answer grader</li><li>Diagram generator</li><li>PDF export</li><li>Cloud history</li></ul>
       <a href="dashboard.html" class="p-btn">Go Starter</a>
     </div>
     <div class="pc hot rev rev-d2">
@@ -1535,53 +1567,48 @@ function runBtn(btn){
   }, 1500);
 }
 
-// ══ CHALKBOARD LOOP (all 7 boards) ══
+// ══ PANEL ANIMATION LOOPS ══
+// Each panel uses CSS animations — we restart them periodically
 (function() {
-  const boardIds = ['cb0','cb1','cb2','cb3','cb4','cb5','cb6'];
-  // Last animation-delay per board (seconds) — used to time the loop reset
-  const lastDelays = [3.0, 5.75, 5.2, 4.7, 5.1, 4.2, 4.55];
-  const holdAfter  = 2.5; // seconds to hold after last stroke before wiping
+  function restartAnimations(panel) {
+    // Collect all animated children
+    const els = panel.querySelectorAll('*');
+    els.forEach(el => {
+      const anim = getComputedStyle(el).animationName;
+      if(anim && anim !== 'none') {
+        el.style.animationPlayState = 'paused';
+        el.style.animation = 'none';
+        void el.offsetWidth;
+        el.style.animation = '';
+        el.style.animationPlayState = '';
+      }
+    });
+    // Also handle SVG elements
+    panel.querySelectorAll('[style*="animation"]').forEach(el => {
+      const style = el.getAttribute('style') || '';
+      el.removeAttribute('style');
+      void el.getBoundingClientRect();
+      el.setAttribute('style', style);
+    });
+  }
 
-  boardIds.forEach((id, idx) => {
-    const board = document.getElementById(id);
-    if(!board) return;
-    const strokes = board.querySelectorAll('.ck, .ck-el');
-    if(!strokes.length) return;
-
-    function getDelay(el) {
-      const s = el.getAttribute('style') || '';
-      const m = s.match(/animation-delay\s*:\s*([\d.]+)s/);
-      return m ? parseFloat(m[1]) : 0;
-    }
-
-    function resetAndPlay() {
-      // Fade all strokes out
-      strokes.forEach(s => { s.style.opacity = '0'; s.style.transition = 'opacity 0.5s ease'; });
+  // Loop each panel every 5 seconds with a 0.6s fade
+  document.querySelectorAll('.card-panel').forEach((panel, i) => {
+    const LOOP_MS = 5000 + i * 400; // stagger loops slightly per card
+    function loop() {
+      // fade out
+      panel.style.transition = 'opacity 0.4s ease';
+      panel.style.opacity = '0';
       setTimeout(() => {
-        strokes.forEach(s => {
-          const da = s.getAttribute('stroke-dasharray');
-          s.style.transition = 'none';
-          s.style.strokeDashoffset = da;
-          s.style.opacity = '';
-          // Re-trigger animation
-          const delay = getDelay(s);
-          s.style.animation = 'none';
-          void s.getBoundingClientRect();
-          s.style.animation = `chalkDraw 0.6s ${delay}s ease-out forwards`;
-        });
-      }, 600);
+        restartAnimations(panel);
+        panel.style.opacity = '1';
+        setTimeout(loop, LOOP_MS);
+      }, 450);
     }
-
-    function scheduleLoop() {
-      const totalMs = (lastDelays[idx] + holdAfter) * 1000;
-      setTimeout(() => {
-        resetAndPlay();
-        setTimeout(scheduleLoop, 1200);
-      }, totalMs);
-    }
-    scheduleLoop();
+    setTimeout(loop, LOOP_MS + i * 300);
   });
 })();
+
 
 
 document.querySelectorAll('.ptbtn').forEach(btn => {
@@ -1642,25 +1669,25 @@ const T = {
     nav_pricing:'Pricing', nav_cta:'Get started →',
     eyebrow:'✦ Smart tools built for teachers',
     h1_l1:'Effortless prep.', h1_l2:'Endless <em>impact.</em>',
-    hero_sub:'Lesson plans, quizzes, grading — done in seconds. Spend less time at your desk and more time with the students who need you.',
+    hero_sub:'Lesson Craft, quizzes, grading — done in seconds. Spend less time at your desk and more time with the students who need you.',
     btn_plans:'See plans →', btn_action:'See tools in action ↓',
-    trust1:'Lesson plans in 30s', trust2:'Quizzes with answer keys', trust3:'Instant grading & feedback',
+    trust1:'Lesson Craft in 30s', trust2:'Quizzes with answer keys', trust3:'Instant grading & feedback',
     tk_eye:'✦ Everything you need', tk_h:'7 tools. <em>One toolkit.</em>',
     hiw_eye:'✦ How it works', hiw_h:'Four steps to a<br/><em>perfect lesson.</em>',
     hiw_n1:'Type your topic', hiw_p1:'Plain English. No templates or formatting. Just tell us what you\'re teaching today.',
-    hiw_n2:'Choose your tool', hiw_p2:'Lesson plan, quiz, grading, diagram — pick exactly what you need right now.',
+    hiw_n2:'Choose your tool', hiw_p2:'Lesson Craft, quiz, grading, diagram — pick exactly what you need right now.',
     hiw_n3:'Get results in 30s', hiw_p3:'AI generates a complete, structured output. Review, tweak, and make it yours.',
     hiw_n4:'Export & teach', hiw_p4:'Download PDF, copy to clipboard, or share directly. Instantly ready.',
     demo_eye:'✦ Try it yourself', demo_h:'See every tool<br/><em>in action.</em>',
     stats_eye:'✦ The numbers', stats_h:'Win the <em>best teacher</em><br/>award this year.',
-    stat1_l:'hours saved per week', stat2_l:'per lesson plan', stat3_l:'AI tools in one toolkit',
+    stat1_l:'hours saved per week', stat2_l:'per Lesson Craft', stat3_l:'AI tools in one toolkit',
     pricing_eye:'✦ Pricing', pricing_h:'Pick your <em>plan.</em>',
     pricing_sub:'Every plan includes all tools. Cancel anytime.',
     toggle_y:'Yearly — save 25%', toggle_m:'Monthly',
     per_month:'per month',
     starter_gen:'100 generations / month', pro_gen:'Unlimited generations', school_gen:'5 teacher seats · unlimited',
     go_starter:'Go Starter', go_pro:'Go Pro', contact:'Contact us',
-    starter_feats:['Lesson planner','Quiz generator','Answer grader','Diagram generator','PDF export','Cloud history'],
+    starter_feats:['Lesson Craft','Quiz generator','Answer grader','Diagram generator','PDF export','Cloud history'],
     pro_feats:['Everything in Starter','Essay feedback & rubrics','Analogy generator','Standards alignment','Analytics dashboard','Early access to new tools'],
     school_feats:['Everything in Pro','Shared resource library','Admin dashboard','Invoice billing','Dedicated support'],
     cta_h:'Your students deserve<br/>your <em>best.</em>',
@@ -1672,25 +1699,25 @@ const T = {
     nav_pricing:'মূল্য', nav_cta:'শুরু করুন →',
     eyebrow:'✦ শিক্ষকদের জন্য স্মার্ট টুলস',
     h1_l1:'সহজ প্রস্তুতি।', h1_l2:'অসীম <em>প্রভাব।</em>',
-    hero_sub:'পাঠ পরিকল্পনা, কুইজ, গ্রেডিং — সেকেন্ডের মধ্যে। ডেস্কে কম সময়, শিক্ষার্থীদের সাথে বেশি সময়।',
+    hero_sub:'Lesson Craft, কুইজ, গ্রেডিং — সেকেন্ডের মধ্যে। ডেস্কে কম সময়, শিক্ষার্থীদের সাথে বেশি সময়।',
     btn_plans:'প্ল্যান দেখুন →', btn_action:'টুলস দেখুন ↓',
-    trust1:'৩০ সেকেন্ডে পাঠ পরিকল্পনা', trust2:'উত্তর চাবিসহ কুইজ', trust3:'তাৎক্ষণিক গ্রেডিং',
+    trust1:'Lesson Craft in 30s', trust2:'উত্তর চাবিসহ কুইজ', trust3:'তাৎক্ষণিক গ্রেডিং',
     tk_eye:'✦ সব কিছু এখানে', tk_h:'৭টি টুলস। <em>একটি কিট।</em>',
     hiw_eye:'✦ কীভাবে কাজ করে', hiw_h:'চারটি ধাপে<br/><em>নিখুঁত পাঠ।</em>',
     hiw_n1:'টপিক টাইপ করুন', hiw_p1:'সাধারণ বাংলায়। কোনো টেমপ্লেট নয়। শুধু বলুন কী পড়াচ্ছেন।',
-    hiw_n2:'টুল বেছে নিন', hiw_p2:'পাঠ পরিকল্পনা, কুইজ, গ্রেডিং — এখনই যা দরকার তা বেছে নিন।',
+    hiw_n2:'টুল বেছে নিন', hiw_p2:'Lesson Craft, কুইজ, গ্রেডিং — এখনই যা দরকার তা বেছে নিন।',
     hiw_n3:'৩০ সেকেন্ডে ফলাফল', hiw_p3:'AI সম্পূর্ণ আউটপুট তৈরি করে। পর্যালোচনা করুন এবং নিজের করুন।',
     hiw_n4:'রপ্তানি ও পড়ান', hiw_p4:'PDF ডাউনলোড করুন বা শেয়ার করুন। তাৎক্ষণিক প্রস্তুত।',
     demo_eye:'✦ নিজে চেষ্টা করুন', demo_h:'প্রতিটি টুল<br/><em>কার্যক্ষেত্রে দেখুন।</em>',
     stats_eye:'✦ পরিসংখ্যান', stats_h:'এই বছর সেরা শিক্ষকের<br/><em>পুরস্কার</em> জিতুন।',
-    stat1_l:'প্রতি সপ্তাহে সাশ্রয়', stat2_l:'প্রতি পাঠ পরিকল্পনা', stat3_l:'AI টুলস এক জায়গায়',
+    stat1_l:'প্রতি সপ্তাহে সাশ্রয়', stat2_l:'প্রতি Lesson Craft', stat3_l:'AI টুলস এক জায়গায়',
     pricing_eye:'✦ মূল্য নির্ধারণ', pricing_h:'আপনার <em>প্ল্যান</em> বেছে নিন।',
     pricing_sub:'প্রতিটি প্ল্যানে সব টুলস। যেকোনো সময় বাতিল করুন।',
     toggle_y:'বার্ষিক — ২৫% ছাড়', toggle_m:'মাসিক',
     per_month:'প্রতি মাসে',
     starter_gen:'মাসে ১০০ জেনারেশন', pro_gen:'সীমাহীন জেনারেশন', school_gen:'৫ শিক্ষক আসন · সীমাহীন',
     go_starter:'স্টার্টার নিন', go_pro:'প্রো নিন', contact:'যোগাযোগ করুন',
-    starter_feats:['পাঠ পরিকল্পনাকারী','কুইজ জেনারেটর','উত্তর গ্রেডার','ডায়াগ্রাম জেনারেটর','PDF এক্সপোর্ট','ক্লাউড ইতিহাস'],
+    starter_feats:['Lesson Craft','কুইজ জেনারেটর','উত্তর গ্রেডার','ডায়াগ্রাম জেনারেটর','PDF এক্সপোর্ট','ক্লাউড ইতিহাস'],
     pro_feats:['স্টার্টারের সব কিছু','প্রবন্ধ মতামত ও রুব্রিক','অ্যানালজি জেনারেটর','মান সমন্বয়','বিশ্লেষণ ড্যাশবোর্ড','নতুন টুলে আর্লি অ্যাক্সেস'],
     school_feats:['প্রোর সব কিছু','শেয়ার্ড রিসোর্স লাইব্রেরি','অ্যাডমিন ড্যাশবোর্ড','ইনভয়েস বিলিং','ডেডিকেটেড সাপোর্ট'],
     cta_h:'আপনার শিক্ষার্থীরা আপনার<br/><em>সেরাটা</em> পাওয়ার যোগ্য।',
@@ -1702,9 +1729,9 @@ const T = {
     nav_pricing:'Precios', nav_cta:'Comenzar →',
     eyebrow:'✦ Herramientas inteligentes para profesores',
     h1_l1:'Preparación sin esfuerzo.', h1_l2:'Impacto <em>infinito.</em>',
-    hero_sub:'Planes de clase, cuestionarios, calificaciones — listos en segundos.',
+    hero_sub:'Lesson Craft, cuestionarios, calificaciones — listos en segundos.',
     btn_plans:'Ver planes →', btn_action:'Ver herramientas ↓',
-    trust1:'Planes de clase en 30s', trust2:'Cuestionarios con respuestas', trust3:'Calificación instantánea',
+    trust1:'Lesson Craft en 30s', trust2:'Cuestionarios con respuestas', trust3:'Calificación instantánea',
     tk_eye:'✦ Todo lo que necesitas', tk_h:'7 herramientas. <em>Un kit.</em>',
     hiw_eye:'✦ Cómo funciona', hiw_h:'Cuatro pasos para una<br/><em>lección perfecta.</em>',
     hiw_n1:'Escribe tu tema', hiw_p1:'En español simple. Sin plantillas.',
@@ -1732,22 +1759,22 @@ const T = {
     h1_l1:'Mühelose Vorbereitung.', h1_l2:'Endloser <em>Einfluss.</em>',
     hero_sub:'Unterrichtspläne, Quiz, Bewertungen — in Sekunden erledigt.',
     btn_plans:'Pläne ansehen →', btn_action:'Tools ansehen ↓',
-    trust1:'Unterrichtspläne in 30s', trust2:'Quiz mit Lösungen', trust3:'Sofortige Bewertung',
+    trust1:'Lesson Craft in 30s', trust2:'Quiz mit Lösungen', trust3:'Sofortige Bewertung',
     tk_eye:'✦ Alles was du brauchst', tk_h:'7 Tools. <em>Ein Toolkit.</em>',
     hiw_eye:'✦ So funktioniert es', hiw_h:'Vier Schritte zur<br/><em>perfekten Stunde.</em>',
     hiw_n1:'Thema eingeben', hiw_p1:'Auf Deutsch. Keine Vorlagen.',
-    hiw_n2:'Tool auswählen', hiw_p2:'Unterrichtsplan, Quiz — wähle was du brauchst.',
+    hiw_n2:'Tool auswählen', hiw_p2:'Lesson Craft, Quiz — wähle was du brauchst.',
     hiw_n3:'Ergebnisse in 30s', hiw_p3:'KI generiert vollständige Ausgabe.',
     hiw_n4:'Exportieren & unterrichten', hiw_p4:'PDF herunterladen oder teilen.',
     demo_eye:'✦ Selbst ausprobieren', demo_h:'Jedes Tool<br/><em>in Aktion.</em>',
     stats_eye:'✦ Die Zahlen', stats_h:'Gewinne den<br/><em>besten Lehrer</em>-Preis.',
-    stat1_l:'Stunden gespart', stat2_l:'pro Unterrichtsplan', stat3_l:'KI-Tools',
+    stat1_l:'Stunden gespart', stat2_l:'pro Lesson Craft', stat3_l:'KI-Tools',
     pricing_eye:'✦ Preise', pricing_h:'Wähle deinen <em>Plan.</em>',
     pricing_sub:'Jeder Plan enthält alle Tools. Jederzeit kündbar.',
     toggle_y:'Jährlich — spare 25%', toggle_m:'Monatlich', per_month:'pro Monat',
     starter_gen:'100 Generierungen / Monat', pro_gen:'Unbegrenzt', school_gen:'5 Plätze · unbegrenzt',
     go_starter:'Starter', go_pro:'Pro', contact:'Kontakt',
-    starter_feats:['Unterrichtsplaner','Quiz-Generator','Bewerter','Diagramme','PDF','Verlauf'],
+    starter_feats:['Lesson Craft','Quiz-Generator','Bewerter','Diagramme','PDF','Verlauf'],
     pro_feats:['Alles Starter','Aufsatz-Feedback','Analogien','Lehrplan','Analyse','Früher Zugang'],
     school_feats:['Alles Pro','Ressourcen','Admin','Rechnung','Support'],
     cta_h:'Deine Schüler verdienen<br/>dein <em>Bestes.</em>', cta_p:'Hör auf, Zeit mit Papierkram zu verschwenden.',
@@ -1758,9 +1785,9 @@ const T = {
     nav_pricing:'Tarifs', nav_cta:'Commencer →',
     eyebrow:'✦ Outils intelligents pour enseignants',
     h1_l1:'Préparation sans effort.', h1_l2:'Impact <em>sans fin.</em>',
-    hero_sub:'Plans de cours, quiz, notation — en quelques secondes.',
+    hero_sub:'Lesson Craft, quiz, notation — en quelques secondes.',
     btn_plans:'Voir les plans →', btn_action:'Voir les outils ↓',
-    trust1:'Plans de cours en 30s', trust2:'Quiz avec corrigés', trust3:'Notation instantanée',
+    trust1:'Lesson Craft en 30s', trust2:'Quiz avec corrigés', trust3:'Notation instantanée',
     tk_eye:'✦ Tout ce dont vous avez besoin', tk_h:'7 outils. <em>Un seul kit.</em>',
     hiw_eye:'✦ Comment ça marche', hiw_h:'Quatre étapes vers<br/><em>la leçon parfaite.</em>',
     hiw_n1:'Tapez votre sujet', hiw_p1:'En français simple. Pas de modèles.',
@@ -1775,7 +1802,7 @@ const T = {
     toggle_y:'Annuel — économisez 25%', toggle_m:'Mensuel', per_month:'par mois',
     starter_gen:'100 générations / mois', pro_gen:'Illimité', school_gen:'5 postes · illimité',
     go_starter:'Starter', go_pro:'Pro', contact:'Nous contacter',
-    starter_feats:['Planificateur','Quiz','Correcteur','Diagrammes','PDF','Historique'],
+    starter_feats:['Lesson Craft','Quiz','Correcteur','Diagrammes','PDF','Historique'],
     pro_feats:['Tout Starter','Feedback','Analogies','Standards','Tableau','Accès anticipé'],
     school_feats:['Tout Pro','Bibliothèque','Admin','Facturation','Support'],
     cta_h:'Vos élèves méritent<br/>votre <em>meilleur.</em>', cta_p:'Arrêtez de brûler des heures sur la paperasse.',
