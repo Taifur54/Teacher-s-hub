@@ -81,7 +81,6 @@ h1 em{font-style:italic;color:var(--g);}
 @keyframes nudgePulse{0%,100%{opacity:0.25;transform:scaleY(0.7)}50%{opacity:1;transform:scaleY(1)}}
 .nudge-lbl{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);}
 
-/* FIX 3: will-change + contain on orbs so blur doesn't repaint surrounding content */
 .hero-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);will-change:transform;contain:strict;}
 .orb1{width:700px;height:700px;top:-200px;right:-200px;background:radial-gradient(circle,rgba(29,158,117,0.1),transparent 70%);animation:drift1 14s ease-in-out infinite;}
 .orb2{width:500px;height:500px;bottom:-120px;left:-120px;background:radial-gradient(circle,rgba(29,158,117,0.08),transparent 70%);animation:drift2 17s ease-in-out infinite;}
@@ -89,55 +88,199 @@ h1 em{font-style:italic;color:var(--g);}
 @keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(22px,-28px)}}
 @keyframes slideUp{to{opacity:1;transform:none}}
 
-/* ── BURST / UNZIP SECTION ── */
-.burst-section{position:relative;height:820vh;background:var(--ink);}
-.burst-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--ink);display:flex;align-items:center;justify-content:center;contain:layout style;}
-.burst-bg-glow{position:absolute;inset:0;pointer-events:none;transition:opacity 1s;}
+/* ══ TOOLKIT SECTION ══ */
+.toolkit-section{
+  background: var(--ink);
+  padding: 120px 60px 130px;
+  position: relative;
+  overflow: hidden;
+}
+.toolkit-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 100%, rgba(29,158,117,0.13), transparent 60%);
+  pointer-events:none;
+}
 
-/* School bag SVG */
-.bag-wrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:12;width:160px;height:160px;display:flex;align-items:center;justify-content:center;}
-.bag-svg{width:140px;height:140px;transition:transform 0.6s var(--spring),filter 0.4s;}
-.zipper-track{stroke-dasharray:200;stroke-dashoffset:200;transition:stroke-dashoffset 1.2s var(--cinematic);}
-.zipper-track.open{stroke-dashoffset:0;}
-.bag-flap{transform-origin:50% 100%;transform:rotateX(0deg);transition:transform 0.8s var(--ease);}
-.bag-flap.open{transform:rotateX(-45deg);}
+/* subtle grid */
+.toolkit-section::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  opacity:0.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 64 0 L 0 0 0 64' fill='none' stroke='%231D9E75' stroke-width='1'/%3E%3C/svg%3E");
+  background-size:64px 64px;
+  pointer-events:none;
+}
 
-/* center pulse ring */
-.cpulse{position:absolute;left:50%;top:50%;width:140px;height:140px;border-radius:50%;border:2px solid rgba(29,158,117,0.3);transform:translate(-50%,-50%) scale(1);opacity:0;animation:cpulseAnim 2s ease-out infinite;display:none;}
-.cpulse:nth-child(2){animation-delay:0.7s;}
-@keyframes cpulseAnim{0%{transform:translate(-50%,-50%) scale(0.8);opacity:0.6}100%{transform:translate(-50%,-50%) scale(3.5);opacity:0}}
+.tk-inner{
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
 
-/* Orbit rings */
-.o-ring{position:absolute;left:50%;top:50%;border-radius:50%;border:1px dashed rgba(29,158,117,0.12);transform:translate(-50%,-50%) scale(0);transition:transform 1s var(--ease),opacity 1s var(--ease);pointer-events:none;will-change:transform,opacity;}
+.tk-header{
+  text-align: center;
+  margin-bottom: 72px;
+}
+.tk-eye{
+  font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  color:rgba(29,158,117,0.8);margin-bottom:16px;
+}
+.tk-h{
+  font-family:'Fraunces',serif;
+  font-size:clamp(42px,6vw,80px);
+  font-weight:700;
+  color:#fff;
+  line-height:1;
+  letter-spacing:-2px;
+  margin-bottom:14px;
+}
+.tk-h em{font-style:italic;color:var(--g);}
+.tk-sub{font-size:16px;color:rgba(255,255,255,0.3);font-weight:400;}
 
-/* FIX 2: cards sit at center via left/top=50%, moved via transform only (compositor path) */
-/* FIX 5: will-change so layer is promoted before first animation */
-.fc{position:fixed;background:#fff;border-radius:16px;padding:16px 18px;width:178px;
-  box-shadow:0 24px 56px rgba(0,0,0,0.48);
-  opacity:0;pointer-events:none;z-index:490;
-  border:1px solid rgba(255,255,255,0.06);
-  left:50%;top:50%;
-  will-change:transform,opacity;}
-.fc.live{pointer-events:auto;}
-.fc.live:hover{box-shadow:0 32px 72px rgba(0,0,0,0.56),0 0 0 2px var(--g);z-index:496;filter:brightness(1.02) scale(1.06);}
-.fc-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:18px;}
-.fc-title{font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px;letter-spacing:-0.2px;line-height:1.2;}
-.fc-sub{font-size:10px;color:var(--muted);line-height:1.45;}
-.fc-tag{display:inline-block;margin-top:7px;padding:2px 9px;border-radius:100px;font-size:9px;font-weight:700;}
-.fc-tag.green{background:var(--gl);color:var(--gd);}
-.fc-tag.blue{background:#E0F2FE;color:#0369A1;}
-.fc-tag.amber{background:#FEF3C7;color:#92400E;}
+/* ── Card Grid ── */
+.tk-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
 
-/* Burst headline */
-.burst-hl{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);z-index:20;text-align:center;pointer-events:none;white-space:nowrap;}
-.bhl-eye{font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:10px;}
-.bhl-h{font-family:'Fraunces',serif;font-size:clamp(24px,3.2vw,48px);font-weight:700;color:#fff;line-height:1.1;opacity:0;transform:translateY(24px);transition:opacity 0.7s var(--ease),transform 0.7s var(--ease);}
-.bhl-h em{font-style:italic;color:var(--g);}
-.bhl-h.show{opacity:1;transform:none;}
+/* 7 cards: row 1 = 4 cards, row 2 = 3 cards centered */
+.tk-card:nth-child(5){ grid-column: 1; }
+.tk-card:nth-child(6){ grid-column: 2; }
+.tk-card:nth-child(7){ grid-column: 3; }
 
-/* counter */
-.burst-ctr{position:absolute;top:84px;right:52px;font-family:'Fraunces',serif;font-size:11px;font-weight:700;color:rgba(255,255,255,0.2);z-index:30;letter-spacing:0.04em;}
-.bc-n{color:rgba(255,255,255,0.55);}
+/* Row 2 centering trick */
+.tk-grid::after{
+  content:'';
+  grid-column: 4;
+}
+
+/* Card base */
+.tk-card{
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 24px 20px 20px;
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+
+  /* initial hidden state */
+  opacity: 0;
+  transform: translateY(40px) scale(0.92);
+  transition: opacity 0.55s var(--ease), transform 0.55s var(--spring),
+              box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+/* Stagger delays */
+.tk-card[data-i="0"]{ transition-delay: 0s; }
+.tk-card[data-i="1"]{ transition-delay: 0.07s; }
+.tk-card[data-i="2"]{ transition-delay: 0.14s; }
+.tk-card[data-i="3"]{ transition-delay: 0.21s; }
+.tk-card[data-i="4"]{ transition-delay: 0.08s; }
+.tk-card[data-i="5"]{ transition-delay: 0.15s; }
+.tk-card[data-i="6"]{ transition-delay: 0.22s; }
+
+/* Revealed state */
+.tk-card.revealed{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Floating animation after reveal */
+.tk-card.revealed{
+  animation: tkFloat var(--float-dur, 6s) var(--float-delay, 0s) ease-in-out infinite;
+}
+@keyframes tkFloat{
+  0%,100%{ transform: translateY(0px); }
+  50%    { transform: translateY(-8px); }
+}
+
+/* Each card gets a unique float timing */
+.tk-card[data-i="0"]{ --float-dur:5.8s; --float-delay:0s; }
+.tk-card[data-i="1"]{ --float-dur:6.4s; --float-delay:0.6s; }
+.tk-card[data-i="2"]{ --float-dur:5.4s; --float-delay:1.1s; }
+.tk-card[data-i="3"]{ --float-dur:6.9s; --float-delay:0.3s; }
+.tk-card[data-i="4"]{ --float-dur:6.2s; --float-delay:0.9s; }
+.tk-card[data-i="5"]{ --float-dur:5.6s; --float-delay:1.5s; }
+.tk-card[data-i="6"]{ --float-dur:6.7s; --float-delay:0.5s; }
+
+/* Hover lift */
+.tk-card:hover{
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(29,158,117,0.35);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(29,158,117,0.2);
+  animation-play-state: paused;
+  transform: translateY(-6px) scale(1.03) !important;
+}
+
+/* Subtle green shimmer on hover */
+.tk-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 50% 0%, rgba(29,158,117,0.08), transparent 65%);
+  opacity:0;
+  transition:opacity 0.3s;
+  border-radius: 20px;
+}
+.tk-card:hover::before{ opacity:1; }
+
+.tk-icon{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;margin-bottom:14px;
+  transition: transform 0.35s var(--spring);
+}
+.tk-card:hover .tk-icon{ transform: scale(1.18) rotate(-5deg); }
+
+.tk-title{
+  font-family:'Fraunces',serif;
+  font-size:15px;font-weight:700;
+  color:#fff;
+  margin-bottom:5px;
+  letter-spacing:-0.3px;
+  line-height:1.2;
+}
+.tk-desc{
+  font-size:11px;
+  color:rgba(255,255,255,0.42);
+  line-height:1.5;
+  margin-bottom:10px;
+}
+.tk-tag{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:100px;
+  font-size:9px;font-weight:700;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+.tk-tag.green{ background:var(--gl);color:var(--gd); }
+.tk-tag.blue{ background:#E0F2FE;color:#0369A1; }
+.tk-tag.amber{ background:#FEF3C7;color:#92400E; }
+.tk-tag.purple{ background:#F3E8FF;color:#6D28D9; }
+.tk-tag.rose{ background:#FFF1F2;color:#BE123C; }
+
+@media(max-width:1024px){
+  .tk-grid{ grid-template-columns: repeat(3,1fr); }
+  .tk-card:nth-child(5){ grid-column: auto; }
+  .tk-card:nth-child(6){ grid-column: auto; }
+  .tk-card:nth-child(7){ grid-column: auto; }
+  .tk-grid::after{ display:none; }
+}
+@media(max-width:640px){
+  .toolkit-section{ padding:80px 20px 90px; }
+  .tk-header{ margin-bottom:48px; }
+  .tk-grid{ grid-template-columns: repeat(2,1fr); gap:12px; }
+  .tk-card:nth-child(n){ grid-column:auto; }
+  .tk-grid::after{ display:none; }
+}
 
 /* ── MARQUEE ── */
 .mq-wrap{background:var(--ink);border-top:1px solid rgba(255,255,255,0.07);padding:15px 0;overflow:hidden;}
@@ -336,9 +479,6 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
   .btn-ink,.btn-ring{width:100%;max-width:280px;justify-content:center;padding:14px 28px;}
   .trust-row{gap:14px;}
   .trust-item{font-size:11px;}
-  .burst-ctr{right:16px;top:72px;}
-  .burst-hl{bottom:6%;}
-  .bhl-h{font-size:clamp(18px,5vw,28px);}
   .section-wrap{padding:80px 20px 0!important;}
   .demo-section{padding:60px 20px 80px!important;}
   .stats-section,.pricing-section{padding-left:20px!important;padding-right:20px!important;padding-bottom:80px!important;}
@@ -450,111 +590,60 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
   </div>
 </section>
 
-<!-- ══ BURST / UNZIP SECTION ══ -->
-<div class="burst-section" id="burst">
-  <div class="burst-sticky" id="bSticky">
-
-    <div class="burst-bg-glow" id="bGlow"></div>
-
-    <!-- Orbit rings -->
-    <div class="o-ring" id="or1" style="width:340px;height:340px;"></div>
-    <div class="o-ring" id="or2" style="width:560px;height:560px;"></div>
-    <div class="o-ring" id="or3" style="width:780px;height:780px;"></div>
-
-    <!-- Pulse rings -->
-    <div class="cpulse" id="cp1"></div>
-    <div class="cpulse" id="cp2"></div>
-
-    <!-- SCHOOL BAG SVG -->
-    <div class="bag-wrap" id="bagWrap">
-      <svg class="bag-svg" id="bagSvg" viewBox="0 0 140 150" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="70" cy="148" rx="44" ry="6" fill="rgba(0,0,0,0.25)"/>
-        <rect x="18" y="52" width="104" height="88" rx="14" fill="#2E7D5A"/>
-        <rect x="18" y="52" width="104" height="32" rx="14" fill="#358F68"/>
-        <rect x="18" y="72" width="104" height="12" fill="#358F68"/>
-        <rect x="30" y="90" width="80" height="42" rx="10" fill="#246348"/>
-        <line x1="30" y1="105" x2="110" y2="105" stroke="#1D9E75" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="70" cy="105" r="4" fill="#5DCAA5"/>
-        <circle cx="70" cy="105" r="2" fill="#0F6E56"/>
-        <rect x="34" y="94" width="72" height="34" rx="7" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="1" stroke-dasharray="3 3"/>
-        <path d="M 38 52 Q 30 20 42 10" stroke="#246348" stroke-width="12" fill="none" stroke-linecap="round"/>
-        <path d="M 102 52 Q 110 20 98 10" stroke="#246348" stroke-width="12" fill="none" stroke-linecap="round"/>
-        <path d="M 38 52 Q 30 20 42 10" stroke="#358F68" stroke-width="8" fill="none" stroke-linecap="round"/>
-        <path d="M 102 52 Q 110 20 98 10" stroke="#358F68" stroke-width="8" fill="none" stroke-linecap="round"/>
-        <rect x="34" y="48" width="14" height="8" rx="3" fill="#1D5C40"/>
-        <rect x="92" y="48" width="14" height="8" rx="3" fill="#1D5C40"/>
-        <path d="M 52 52 Q 52 36 70 36 Q 88 36 88 52" stroke="#246348" stroke-width="9" fill="none" stroke-linecap="round"/>
-        <path d="M 52 52 Q 52 36 70 36 Q 88 36 88 52" stroke="#4CAF82" stroke-width="5" fill="none" stroke-linecap="round"/>
-        <path id="zipTrack" d="M 22 64 Q 70 56 118 64" stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <path id="zipLine" class="zipper-track" d="M 22 64 Q 70 56 118 64" stroke="#5DCAA5" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="200" stroke-dashoffset="200"/>
-        <g opacity="0.5">
-          <circle cx="35" cy="62" r="1.5" fill="#5DCAA5"/>
-          <circle cx="50" cy="60" r="1.5" fill="#5DCAA5"/>
-          <circle cx="65" cy="59" r="1.5" fill="#5DCAA5"/>
-          <circle cx="80" cy="59" r="1.5" fill="#5DCAA5"/>
-          <circle cx="95" cy="60" r="1.5" fill="#5DCAA5"/>
-          <circle cx="108" cy="62" r="1.5" fill="#5DCAA5"/>
-        </g>
-        <rect x="18" y="78" width="8" height="30" rx="4" fill="#246348"/>
-        <rect x="114" y="78" width="8" height="30" rx="4" fill="#246348"/>
-        <rect x="48" y="93" width="44" height="18" rx="5" fill="rgba(255,255,255,0.12)"/>
-        <text x="70" y="106" font-family="Georgia,serif" font-size="9" font-weight="bold" fill="rgba(255,255,255,0.7)" text-anchor="middle">YT</text>
-      </svg>
+<!-- ══ TOOLKIT SECTION ══ -->
+<section class="toolkit-section" id="burst">
+  <div class="tk-inner">
+    <div class="tk-header rev">
+      <div class="tk-eye">✦ Everything you need</div>
+      <h2 class="tk-h" id="tkH">7 tools. <em>One toolkit.</em></h2>
+      <p class="tk-sub">Everything a teacher needs, in one place.</p>
     </div>
-
-    <!-- Feature cards -->
-    <div class="fc" id="fc0">
-      <div class="fc-icon" style="background:#E1F5EE;">📋</div>
-      <div class="fc-title">Lesson Planner</div>
-      <div class="fc-sub">Full structured plans in 18 seconds</div>
-      <span class="fc-tag green">30s avg</span>
+    <div class="tk-grid" id="tkGrid">
+      <div class="tk-card" data-i="0">
+        <div class="tk-icon" style="background:#E1F5EE;">📋</div>
+        <div class="tk-title">Lesson Planner</div>
+        <div class="tk-desc">Full structured plans in 18 seconds</div>
+        <span class="tk-tag green">30s avg</span>
+      </div>
+      <div class="tk-card" data-i="1">
+        <div class="tk-icon" style="background:#E0F2FE;">📐</div>
+        <div class="tk-title">Quiz Generator</div>
+        <div class="tk-desc">Questions + answer keys, any subject</div>
+        <span class="tk-tag blue">With keys</span>
+      </div>
+      <div class="tk-card" data-i="2">
+        <div class="tk-icon" style="background:#FEF3C7;">✅</div>
+        <div class="tk-title">Auto Grader</div>
+        <div class="tk-desc">Score any student answer in 9 seconds</div>
+        <span class="tk-tag amber">9s avg</span>
+      </div>
+      <div class="tk-card" data-i="3">
+        <div class="tk-icon" style="background:#E1F5EE;">✍️</div>
+        <div class="tk-title">Essay Feedback</div>
+        <div class="tk-desc">Inline markup, rubric, model paragraph</div>
+        <span class="tk-tag green">GCSE ready</span>
+      </div>
+      <div class="tk-card" data-i="4">
+        <div class="tk-icon" style="background:#F3E8FF;">🔬</div>
+        <div class="tk-title">Diagram Generator</div>
+        <div class="tk-desc">Labelled scientific diagrams, print-ready</div>
+        <span class="tk-tag purple">SVG output</span>
+      </div>
+      <div class="tk-card" data-i="5">
+        <div class="tk-icon" style="background:#FFF1F2;">💡</div>
+        <div class="tk-title">Analogy Generator</div>
+        <div class="tk-desc">Complex ideas explained with perfect analogies</div>
+        <span class="tk-tag rose">Any concept</span>
+      </div>
+      <div class="tk-card" data-i="6">
+        <div class="tk-icon" style="background:#E0F2FE;">📊</div>
+        <div class="tk-title">Analytics</div>
+        <div class="tk-desc">Track usage and generation history</div>
+        <span class="tk-tag blue">Pro+</span>
+      </div>
     </div>
-    <div class="fc" id="fc1">
-      <div class="fc-icon" style="background:#E0F2FE;">📐</div>
-      <div class="fc-title">Quiz Generator</div>
-      <div class="fc-sub">Questions + answer keys, any subject</div>
-      <span class="fc-tag blue">With keys</span>
-    </div>
-    <div class="fc" id="fc2">
-      <div class="fc-icon" style="background:#FEF3C7;">✅</div>
-      <div class="fc-title">Auto Grader</div>
-      <div class="fc-sub">Score any student answer in 9 seconds</div>
-      <span class="fc-tag amber">9s avg</span>
-    </div>
-    <div class="fc" id="fc3">
-      <div class="fc-icon" style="background:#E1F5EE;">✍️</div>
-      <div class="fc-title">Essay Feedback</div>
-      <div class="fc-sub">Inline markup, rubric, model paragraph</div>
-      <span class="fc-tag green">GCSE ready</span>
-    </div>
-    <div class="fc" id="fc4">
-      <div class="fc-icon" style="background:#F3E8FF;">🔬</div>
-      <div class="fc-title">Diagram Generator</div>
-      <div class="fc-sub">Labelled scientific diagrams, print-ready</div>
-      <span class="fc-tag" style="background:#F3E8FF;color:#6D28D9;">SVG output</span>
-    </div>
-    <div class="fc" id="fc5">
-      <div class="fc-icon" style="background:#FFF1F2;">💡</div>
-      <div class="fc-title">Analogy Generator</div>
-      <div class="fc-sub">Complex ideas explained with perfect analogies</div>
-      <span class="fc-tag" style="background:#FFF1F2;color:#BE123C;">Any concept</span>
-    </div>
-    <div class="fc" id="fc6">
-      <div class="fc-icon" style="background:#E0F2FE;">📊</div>
-      <div class="fc-title">Analytics</div>
-      <div class="fc-sub">Track usage and generation history</div>
-      <span class="fc-tag blue">Pro+</span>
-    </div>
-
-    <div class="burst-hl" id="bHl">
-      <div class="bhl-eye">✦ Everything you need</div>
-      <div class="bhl-h" id="bhlH">7 tools. <em>One toolkit.</em></div>
-    </div>
-
-    <div class="burst-ctr" id="bCtr"><span class="bc-n">0</span>/7 tools</div>
-
   </div>
-</div>
+</section>
 
 <!-- MARQUEE -->
 <div class="mq-wrap">
@@ -915,140 +1004,49 @@ document.addEventListener('click', e => {
   if(menuOpen && !navEl.contains(e.target) && !mobileMenu.contains(e.target)) closeMobileMenu();
 });
 
-// ══ BURST SECTION ══
-const CARD_COUNT = 7;
-const CW = 178, CH = 118;
-const ANGLES = [-105, -42, 18, 76, 138, 198, 252];
-const RADII  = [ 235,  265, 248, 258, 242, 264, 234];
-const ROTS   = ANGLES.map(() => (Math.random()-0.5)*6);
-
-// Cards sit at left:50% top:50% with translate(-50%,-50%) as base.
-// Offsets are pure ellipse displacement from center — no card-size math needed.
-function cardOffsets(i) {
-  const cx = window.innerWidth / 2;
-  const cy = window.innerHeight / 2;
-  const rad = ANGLES[i] * Math.PI / 180;
-  let x = Math.cos(rad) * RADII[i];
-  let y = Math.sin(rad) * RADII[i];
-  // Clamp: card center must stay within safe viewport bounds
-  const NAV_H = 68, SAFE_B = 140;
-  const minX = -cx + CW / 2 + 10;
-  const maxX =  cx - CW / 2 - 10;
-  const minY = -cy + NAV_H + CH / 2 + 10;
-  const maxY =  cy - CH / 2 - SAFE_B;
-  x = Math.max(minX, Math.min(maxX, x));
-  y = Math.max(minY, Math.min(maxY, y));
-  return {x, y};
-}
-
-const bGlow = document.getElementById('bGlow');
-const or1=document.getElementById('or1'),or2=document.getElementById('or2'),or3=document.getElementById('or3');
-const cp1=document.getElementById('cp1'),cp2=document.getElementById('cp2');
-const bagSvg=document.getElementById('bagSvg');
-const zipLine=document.getElementById('zipLine');
-const bhlH=document.getElementById('bhlH');
-const bCtr=document.getElementById('bCtr');
-const burstEl = document.getElementById('burst');
-const mqEl = document.querySelector('.mq-wrap');
-let lastStep = -1;
-
-function setStep(step) {
-  if(step === lastStep) return;
-  lastStep = step;
-  const p = Math.min(step / CARD_COUNT, 1);
-
-  bGlow.style.background = `radial-gradient(ellipse ${55+p*35}% ${55+p*35}% at 50% 50%, rgba(29,158,117,${0.06+p*0.16}), transparent 68%)`;
-
-  if(step === 0) {
-    bagSvg.style.transform = 'scale(1)';
-    bagSvg.style.filter = 'none';
-    zipLine.style.strokeDashoffset = '200';
-    cp1.style.display = 'none'; cp2.style.display = 'none';
-  } else if(step === 1) {
-    bagSvg.style.transform = 'scale(1.12)';
-    bagSvg.style.filter = 'drop-shadow(0 0 20px rgba(29,158,117,0.4))';
-    zipLine.style.transition = 'stroke-dashoffset 1s cubic-bezier(0.77,0,0.175,1)';
-    zipLine.style.strokeDashoffset = '100';
-    cp1.style.display = 'block'; cp2.style.display = 'block';
-  } else if(step === 2) {
-    zipLine.style.strokeDashoffset = '0';
-  } else if(step >= CARD_COUNT) {
-    bagSvg.style.transform = 'scale(0.85) rotate(8deg)';
-    bagSvg.style.filter = 'drop-shadow(0 0 28px rgba(29,158,117,0.35))';
-  }
-
-  or1.style.transform = `translate(-50%,-50%) scale(${Math.min(step/3,1)})`;
-  or1.style.opacity = Math.min(step/3,1)*0.5;
-  or2.style.transform = `translate(-50%,-50%) scale(${Math.min(step/5,1)})`;
-  or2.style.opacity = Math.min(step/5,1)*0.32;
-  or3.style.transform = `translate(-50%,-50%) scale(${Math.min(step/7,1)})`;
-  or3.style.opacity = Math.min(step/7,1)*0.18;
-
-  [or1,or2,or3].forEach(r => {
-    if(!r._t) { r.style.transition='transform 0.9s cubic-bezier(0.16,1,0.3,1),opacity 0.9s'; r._t=true; }
-  });
-
-  for(let i = 0; i < CARD_COUNT; i++) {
-    const card = document.getElementById('fc'+i);
-    if(i < step) {
-      const {x, y} = cardOffsets(i);
-      card.classList.add('live');
-      card.style.opacity = '1';
-      card.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotate(${ROTS[i]}deg)`;
-      card.style.transition = `opacity 0.5s ${i*0.08}s cubic-bezier(0.16,1,0.3,1), transform 0.65s ${i*0.08}s cubic-bezier(0.34,1.56,0.64,1)`;
-    } else {
-      card.classList.remove('live');
-      card.style.opacity = '0';
-      card.style.transform = 'translate(-50%,-50%) scale(0.12)';
-      card.style.transition = 'none';
-    }
-  }
-
-  bCtr.innerHTML = `<span class="bc-n">${Math.min(step,CARD_COUNT)}</span>/7 tools`;
-
-  if(step >= CARD_COUNT - 1) bhlH.classList.add('show');
-  else bhlH.classList.remove('show');
-}
-
-// FIX 1 + FIX 5: single rAF-gated scroll listener for everything
+// ══ NAV SCROLL STATE ══
 let scrollTicking = false;
+const toolkitSection = document.getElementById('burst');
+const mqEl = document.querySelector('.mq-wrap');
 
 function handleScroll() {
   const sy = window.scrollY;
-
-  // Nav state
-  const bTop = burstEl.offsetTop;
-  const bBot = bTop + burstEl.offsetHeight + mqEl.offsetHeight;
+  // Dark nav while over dark sections (toolkit + marquee)
+  const bTop = toolkitSection.offsetTop;
+  const bBot = bTop + toolkitSection.offsetHeight + (mqEl ? mqEl.offsetHeight : 0);
   const inDark = sy + 2 >= bTop && sy + 2 < bBot;
   navEl.className = inDark ? 'dark' : (sy > 40 ? 'light' : '');
-
-  // Burst scroll
-  const r = burstEl.getBoundingClientRect();
-  const total = burstEl.offsetHeight - window.innerHeight;
-  const progress = Math.max(0, Math.min(1, -r.top / total));
-  const step = Math.floor(progress * (CARD_COUNT + 1));
-  setStep(step);
-
-  const inBurst = r.top <= 0 && r.bottom >= window.innerHeight;
-  document.querySelectorAll('.fc').forEach(c => {
-    c.style.visibility = inBurst ? 'visible' : 'hidden';
-  });
+  checkBannerScroll();
 }
 
 window.addEventListener('scroll', () => {
-  if (scrollTicking) return;
+  if(scrollTicking) return;
   scrollTicking = true;
-  requestAnimationFrame(() => {
-    handleScroll();
-    scrollTicking = false;
-  });
-}, {passive: true});
-
-// Run once on load
+  requestAnimationFrame(() => { handleScroll(); scrollTicking = false; });
+}, {passive:true});
 handleScroll();
-setStep(0);
 
-// ══ INTERSECTION OBSERVER ══
+// ══ TOOLKIT CARDS — reveal on scroll-into-view ══
+const tkCards = document.querySelectorAll('.tk-card');
+let tkRevealed = false;
+
+const tkObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting && !tkRevealed) {
+      tkRevealed = true;
+      tkCards.forEach(card => {
+        // Small stagger so they don't all fire at exactly t=0
+        // The CSS transition-delay handles per-card timing
+        card.classList.add('revealed');
+      });
+      tkObserver.disconnect();
+    }
+  });
+}, { threshold: 0.15 });
+
+tkObserver.observe(document.getElementById('tkGrid'));
+
+// ══ INTERSECTION OBSERVER (general reveals + stats) ══
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if(!e.isIntersecting) return;
@@ -1186,12 +1184,10 @@ document.querySelectorAll('.ptbtn').forEach(btn => {
   });
 });
 
-// FIX 4: cache getBoundingClientRect on mouseenter, not inside mousemove
+// Tilt on pricing/stat cards
 document.querySelectorAll('.pc,.stat-card').forEach(card => {
   let rect = null;
-  card.addEventListener('mouseenter', () => {
-    rect = card.getBoundingClientRect();
-  });
+  card.addEventListener('mouseenter', () => { rect = card.getBoundingClientRect(); });
   card.addEventListener('mousemove', e => {
     if(!rect) return;
     const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -1199,10 +1195,7 @@ document.querySelectorAll('.pc,.stat-card').forEach(card => {
     card.style.transform = `translateY(-7px) scale(1.01) rotateX(${-y*7}deg) rotateY(${x*7}deg)`;
     card.style.transformOrigin = 'center';
   });
-  card.addEventListener('mouseleave', () => {
-    rect = null;
-    card.style.transform = '';
-  });
+  card.addEventListener('mouseleave', () => { rect = null; card.style.transform = ''; });
 });
 </script>
 
@@ -1240,7 +1233,7 @@ const T = {
     hero_sub:'Lesson plans, quizzes, grading — done in seconds. Spend less time at your desk and more time with the students who need you.',
     btn_plans:'See plans →', btn_action:'See tools in action ↓',
     trust1:'Lesson plans in 30s', trust2:'Quizzes with answer keys', trust3:'Instant grading & feedback',
-    burst_eye:'✦ Everything you need', burst_h:'7 tools. <em>One toolkit.</em>',
+    tk_eye:'✦ Everything you need', tk_h:'7 tools. <em>One toolkit.</em>',
     hiw_eye:'✦ How it works', hiw_h:'Four steps to a<br/><em>perfect lesson.</em>',
     hiw_n1:'Type your topic', hiw_p1:'Plain English. No templates or formatting. Just tell us what you\'re teaching today.',
     hiw_n2:'Choose your tool', hiw_p2:'Lesson plan, quiz, grading, diagram — pick exactly what you need right now.',
@@ -1270,7 +1263,7 @@ const T = {
     hero_sub:'পাঠ পরিকল্পনা, কুইজ, গ্রেডিং — সেকেন্ডের মধ্যে। ডেস্কে কম সময়, শিক্ষার্থীদের সাথে বেশি সময়।',
     btn_plans:'প্ল্যান দেখুন →', btn_action:'টুলস দেখুন ↓',
     trust1:'৩০ সেকেন্ডে পাঠ পরিকল্পনা', trust2:'উত্তর চাবিসহ কুইজ', trust3:'তাৎক্ষণিক গ্রেডিং',
-    burst_eye:'✦ সব কিছু এখানে', burst_h:'৭টি টুলস। <em>একটি কিট।</em>',
+    tk_eye:'✦ সব কিছু এখানে', tk_h:'৭টি টুলস। <em>একটি কিট।</em>',
     hiw_eye:'✦ কীভাবে কাজ করে', hiw_h:'চারটি ধাপে<br/><em>নিখুঁত পাঠ।</em>',
     hiw_n1:'টপিক টাইপ করুন', hiw_p1:'সাধারণ বাংলায়। কোনো টেমপ্লেট নয়। শুধু বলুন কী পড়াচ্ছেন।',
     hiw_n2:'টুল বেছে নিন', hiw_p2:'পাঠ পরিকল্পনা, কুইজ, গ্রেডিং — এখনই যা দরকার তা বেছে নিন।',
@@ -1297,91 +1290,85 @@ const T = {
     nav_pricing:'Precios', nav_cta:'Comenzar →',
     eyebrow:'✦ Herramientas inteligentes para profesores',
     h1_l1:'Preparación sin esfuerzo.', h1_l2:'Impacto <em>infinito.</em>',
-    hero_sub:'Planes de clase, cuestionarios, calificaciones — listos en segundos. Menos tiempo en el escritorio, más con tus alumnos.',
+    hero_sub:'Planes de clase, cuestionarios, calificaciones — listos en segundos.',
     btn_plans:'Ver planes →', btn_action:'Ver herramientas ↓',
     trust1:'Planes de clase en 30s', trust2:'Cuestionarios con respuestas', trust3:'Calificación instantánea',
-    burst_eye:'✦ Todo lo que necesitas', burst_h:'7 herramientas. <em>Un kit.</em>',
+    tk_eye:'✦ Todo lo que necesitas', tk_h:'7 herramientas. <em>Un kit.</em>',
     hiw_eye:'✦ Cómo funciona', hiw_h:'Cuatro pasos para una<br/><em>lección perfecta.</em>',
-    hiw_n1:'Escribe tu tema', hiw_p1:'En español simple. Sin plantillas. Solo dinos qué enseñas hoy.',
-    hiw_n2:'Elige tu herramienta', hiw_p2:'Plan de clase, quiz, corrección, diagrama — elige lo que necesitas ahora.',
-    hiw_n3:'Resultados en 30s', hiw_p3:'La IA genera un resultado completo. Revísalo y hazlo tuyo.',
-    hiw_n4:'Exporta y enseña', hiw_p4:'Descarga PDF, copia o comparte directamente. Listo al instante.',
+    hiw_n1:'Escribe tu tema', hiw_p1:'En español simple. Sin plantillas.',
+    hiw_n2:'Elige tu herramienta', hiw_p2:'Plan de clase, quiz, corrección — elige lo que necesitas.',
+    hiw_n3:'Resultados en 30s', hiw_p3:'La IA genera un resultado completo.',
+    hiw_n4:'Exporta y enseña', hiw_p4:'Descarga PDF o comparte. Listo al instante.',
     demo_eye:'✦ Pruébalo tú mismo', demo_h:'Ve cada herramienta<br/><em>en acción.</em>',
-    stats_eye:'✦ Los números', stats_h:'Gana el premio al<br/><em>mejor profesor</em> este año.',
-    stat1_l:'horas ahorradas por semana', stat2_l:'por plan de clase', stat3_l:'herramientas de IA',
+    stats_eye:'✦ Los números', stats_h:'Gana el premio al<br/><em>mejor profesor</em>.',
+    stat1_l:'horas ahorradas', stat2_l:'por plan de clase', stat3_l:'herramientas de IA',
     pricing_eye:'✦ Precios', pricing_h:'Elige tu <em>plan.</em>',
-    pricing_sub:'Cada plan incluye todas las herramientas. Cancela cuando quieras.',
-    toggle_y:'Anual — ahorra 25%', toggle_m:'Mensual',
-    per_month:'por mes',
+    pricing_sub:'Cada plan incluye todo. Cancela cuando quieras.',
+    toggle_y:'Anual — ahorra 25%', toggle_m:'Mensual', per_month:'por mes',
     starter_gen:'100 generaciones / mes', pro_gen:'Generaciones ilimitadas', school_gen:'5 plazas · ilimitado',
-    go_starter:'Empezar Starter', go_pro:'Empezar Pro', contact:'Contáctanos',
-    starter_feats:['Planificador de clases','Generador de quiz','Corrector','Generador de diagramas','Exportar PDF','Historial en la nube'],
-    pro_feats:['Todo en Starter','Feedback de ensayos','Generador de analogías','Alineación de estándares','Panel de análisis','Acceso anticipado'],
-    school_feats:['Todo en Pro','Biblioteca compartida','Panel de administración','Facturación','Soporte dedicado'],
-    cta_h:'Tus alumnos merecen<br/>lo <em>mejor</em> de ti.',
-    cta_p:'Deja de quemar horas en papeleo. Preséntate con todo.',
+    go_starter:'Starter', go_pro:'Pro', contact:'Contáctanos',
+    starter_feats:['Planificador','Quiz generator','Corrector','Diagramas','PDF','Historial'],
+    pro_feats:['Todo Starter','Feedback ensayos','Analogías','Estándares','Análisis','Acceso anticipado'],
+    school_feats:['Todo Pro','Biblioteca','Panel admin','Facturación','Soporte'],
+    cta_h:'Tus alumnos merecen<br/>lo <em>mejor.</em>', cta_p:'Deja de quemar horas en papeleo.',
     cta_btn:'Elige tu plan →',
-    lb_title:'Elige tu idioma', lb_sub:'Actualizaremos la página en tu idioma.',
+    lb_title:'Elige tu idioma', lb_sub:'Actualizaremos la página.',
   },
   de:{
     nav_pricing:'Preise', nav_cta:'Loslegen →',
     eyebrow:'✦ Smarte Tools für Lehrkräfte',
     h1_l1:'Mühelose Vorbereitung.', h1_l2:'Endloser <em>Einfluss.</em>',
-    hero_sub:'Unterrichtspläne, Quiz, Bewertungen — in Sekunden erledigt. Weniger Zeit am Schreibtisch, mehr mit deinen Schülern.',
+    hero_sub:'Unterrichtspläne, Quiz, Bewertungen — in Sekunden erledigt.',
     btn_plans:'Pläne ansehen →', btn_action:'Tools ansehen ↓',
     trust1:'Unterrichtspläne in 30s', trust2:'Quiz mit Lösungen', trust3:'Sofortige Bewertung',
-    burst_eye:'✦ Alles was du brauchst', burst_h:'7 Tools. <em>Ein Toolkit.</em>',
+    tk_eye:'✦ Alles was du brauchst', tk_h:'7 Tools. <em>Ein Toolkit.</em>',
     hiw_eye:'✦ So funktioniert es', hiw_h:'Vier Schritte zur<br/><em>perfekten Stunde.</em>',
-    hiw_n1:'Thema eingeben', hiw_p1:'Auf Deutsch. Keine Vorlagen. Sag uns einfach, was du unterrichtest.',
-    hiw_n2:'Tool auswählen', hiw_p2:'Unterrichtsplan, Quiz, Bewertung — wähle genau das, was du jetzt brauchst.',
-    hiw_n3:'Ergebnisse in 30s', hiw_p3:'KI generiert ein vollständiges Ergebnis. Überprüfe es und mach es zu deinem.',
-    hiw_n4:'Exportieren & unterrichten', hiw_p4:'PDF herunterladen, kopieren oder teilen. Sofort bereit.',
-    demo_eye:'✦ Selbst ausprobieren', demo_h:'Jedes Tool<br/><em>in Aktion sehen.</em>',
+    hiw_n1:'Thema eingeben', hiw_p1:'Auf Deutsch. Keine Vorlagen.',
+    hiw_n2:'Tool auswählen', hiw_p2:'Unterrichtsplan, Quiz — wähle was du brauchst.',
+    hiw_n3:'Ergebnisse in 30s', hiw_p3:'KI generiert vollständige Ausgabe.',
+    hiw_n4:'Exportieren & unterrichten', hiw_p4:'PDF herunterladen oder teilen.',
+    demo_eye:'✦ Selbst ausprobieren', demo_h:'Jedes Tool<br/><em>in Aktion.</em>',
     stats_eye:'✦ Die Zahlen', stats_h:'Gewinne den<br/><em>besten Lehrer</em>-Preis.',
-    stat1_l:'Stunden pro Woche gespart', stat2_l:'pro Unterrichtsplan', stat3_l:'KI-Tools an einem Ort',
+    stat1_l:'Stunden gespart', stat2_l:'pro Unterrichtsplan', stat3_l:'KI-Tools',
     pricing_eye:'✦ Preise', pricing_h:'Wähle deinen <em>Plan.</em>',
     pricing_sub:'Jeder Plan enthält alle Tools. Jederzeit kündbar.',
-    toggle_y:'Jährlich — spare 25%', toggle_m:'Monatlich',
-    per_month:'pro Monat',
-    starter_gen:'100 Generierungen / Monat', pro_gen:'Unbegrenzte Generierungen', school_gen:'5 Lehrerplätze · unbegrenzt',
-    go_starter:'Starter wählen', go_pro:'Pro wählen', contact:'Kontakt',
-    starter_feats:['Unterrichtsplaner','Quiz-Generator','Antwortbewerter','Diagrammgenerator','PDF-Export','Cloud-Verlauf'],
-    pro_feats:['Alles in Starter','Aufsatz-Feedback','Analogiegenerator','Lehrplanausrichtung','Analyse-Dashboard','Früher Zugang'],
-    school_feats:['Alles in Pro','Geteilte Ressourcen','Admin-Dashboard','Rechnungsstellung','Dedizierter Support'],
-    cta_h:'Deine Schüler verdienen<br/>dein <em>Bestes.</em>',
-    cta_p:'Hör auf, Stunden mit Papierkram zu verschwenden.',
-    cta_btn:'Wähle deinen Plan →',
-    lb_title:'Wähle deine Sprache', lb_sub:'Wir aktualisieren die Seite in deiner Sprache.',
+    toggle_y:'Jährlich — spare 25%', toggle_m:'Monatlich', per_month:'pro Monat',
+    starter_gen:'100 Generierungen / Monat', pro_gen:'Unbegrenzt', school_gen:'5 Plätze · unbegrenzt',
+    go_starter:'Starter', go_pro:'Pro', contact:'Kontakt',
+    starter_feats:['Unterrichtsplaner','Quiz-Generator','Bewerter','Diagramme','PDF','Verlauf'],
+    pro_feats:['Alles Starter','Aufsatz-Feedback','Analogien','Lehrplan','Analyse','Früher Zugang'],
+    school_feats:['Alles Pro','Ressourcen','Admin','Rechnung','Support'],
+    cta_h:'Deine Schüler verdienen<br/>dein <em>Bestes.</em>', cta_p:'Hör auf, Zeit mit Papierkram zu verschwenden.',
+    cta_btn:'Plan wählen →',
+    lb_title:'Sprache wählen', lb_sub:'Wir aktualisieren die Seite.',
   },
   fr:{
     nav_pricing:'Tarifs', nav_cta:'Commencer →',
-    eyebrow:'✦ Outils intelligents pour les enseignants',
+    eyebrow:'✦ Outils intelligents pour enseignants',
     h1_l1:'Préparation sans effort.', h1_l2:'Impact <em>sans fin.</em>',
-    hero_sub:'Plans de cours, quiz, notation — en quelques secondes. Moins de temps au bureau, plus avec vos élèves.',
+    hero_sub:'Plans de cours, quiz, notation — en quelques secondes.',
     btn_plans:'Voir les plans →', btn_action:'Voir les outils ↓',
     trust1:'Plans de cours en 30s', trust2:'Quiz avec corrigés', trust3:'Notation instantanée',
-    burst_eye:'✦ Tout ce dont vous avez besoin', burst_h:'7 outils. <em>Un seul kit.</em>',
+    tk_eye:'✦ Tout ce dont vous avez besoin', tk_h:'7 outils. <em>Un seul kit.</em>',
     hiw_eye:'✦ Comment ça marche', hiw_h:'Quatre étapes vers<br/><em>la leçon parfaite.</em>',
-    hiw_n1:'Tapez votre sujet', hiw_p1:'En français simple. Pas de modèles. Dites-nous juste ce que vous enseignez.',
-    hiw_n2:'Choisissez votre outil', hiw_p2:'Plan de cours, quiz, correction, diagramme — choisissez ce dont vous avez besoin.',
-    hiw_n3:'Résultats en 30s', hiw_p3:'L\'IA génère un résultat complet. Révisez-le et faites-en le vôtre.',
-    hiw_n4:'Exportez et enseignez', hiw_p4:'Téléchargez en PDF, copiez ou partagez. Prêt instantanément.',
+    hiw_n1:'Tapez votre sujet', hiw_p1:'En français simple. Pas de modèles.',
+    hiw_n2:'Choisissez l\'outil', hiw_p2:'Plan, quiz, correction — ce dont vous avez besoin.',
+    hiw_n3:'Résultats en 30s', hiw_p3:'L\'IA génère un résultat complet.',
+    hiw_n4:'Exportez et enseignez', hiw_p4:'Téléchargez PDF ou partagez.',
     demo_eye:'✦ Essayez vous-même', demo_h:'Voir chaque outil<br/><em>en action.</em>',
-    stats_eye:'✦ Les chiffres', stats_h:'Gagnez le prix du<br/><em>meilleur professeur</em>.',
-    stat1_l:'heures économisées par semaine', stat2_l:'par plan de cours', stat3_l:'outils IA en un seul endroit',
+    stats_eye:'✦ Les chiffres', stats_h:'Gagnez le prix du<br/><em>meilleur professeur.</em>',
+    stat1_l:'heures économisées', stat2_l:'par plan de cours', stat3_l:'outils IA',
     pricing_eye:'✦ Tarifs', pricing_h:'Choisissez votre <em>plan.</em>',
-    pricing_sub:'Chaque plan inclut tous les outils. Annulez à tout moment.',
-    toggle_y:'Annuel — économisez 25%', toggle_m:'Mensuel',
-    per_month:'par mois',
-    starter_gen:'100 générations / mois', pro_gen:'Générations illimitées', school_gen:'5 postes enseignants · illimité',
-    go_starter:'Choisir Starter', go_pro:'Choisir Pro', contact:'Nous contacter',
-    starter_feats:['Planificateur de cours','Générateur de quiz','Correcteur','Générateur de diagrammes','Export PDF','Historique cloud'],
-    pro_feats:['Tout dans Starter','Feedback de dissertation','Générateur d\'analogies','Alignement standards','Tableau de bord','Accès anticipé'],
-    school_feats:['Tout dans Pro','Bibliothèque partagée','Tableau admin','Facturation','Support dédié'],
-    cta_h:'Vos élèves méritent<br/>votre <em>meilleur.</em>',
-    cta_p:'Arrêtez de brûler des heures sur la paperasse.',
+    pricing_sub:'Chaque plan inclut tous les outils.',
+    toggle_y:'Annuel — économisez 25%', toggle_m:'Mensuel', per_month:'par mois',
+    starter_gen:'100 générations / mois', pro_gen:'Illimité', school_gen:'5 postes · illimité',
+    go_starter:'Starter', go_pro:'Pro', contact:'Nous contacter',
+    starter_feats:['Planificateur','Quiz','Correcteur','Diagrammes','PDF','Historique'],
+    pro_feats:['Tout Starter','Feedback','Analogies','Standards','Tableau','Accès anticipé'],
+    school_feats:['Tout Pro','Bibliothèque','Admin','Facturation','Support'],
+    cta_h:'Vos élèves méritent<br/>votre <em>meilleur.</em>', cta_p:'Arrêtez de brûler des heures sur la paperasse.',
     cta_btn:'Choisissez votre plan →',
-    lb_title:'Choisissez votre langue', lb_sub:'Nous mettrons à jour la page dans votre langue.',
+    lb_title:'Choisissez votre langue', lb_sub:'Nous mettrons à jour la page.',
   }
 };
 
@@ -1432,10 +1419,11 @@ function applyLang(lang) {
     if(dot) item.prepend(dot);
   });
 
-  const bhlEye = document.querySelector('.bhl-eye');
-  if(bhlEye) bhlEye.textContent = tx.burst_eye;
-  const bhlHEl = $('bhlH');
-  if(bhlHEl) bhlHEl.innerHTML = tx.burst_h;
+  // Toolkit section header
+  const tkEye = document.querySelector('.tk-eye');
+  const tkHEl = $('tkH');
+  if(tkEye) tkEye.textContent = tx.tk_eye;
+  if(tkHEl) tkHEl.innerHTML = tx.tk_h;
 
   const allSecEyes = document.querySelectorAll('.sec-eye');
   const allSecHs = document.querySelectorAll('.sec-h');
@@ -1527,28 +1515,6 @@ function checkBannerScroll() {
     document.getElementById('langBannerWrap').classList.add('show');
   }
 }
-// Banner check is now handled by the unified scroll listener above
-// We add it here as a lightweight callback (no extra listener needed)
-const _origHandleScroll = handleScroll;
-// Patch: add banner check into the rAF loop
-window.__bannerCheck = checkBannerScroll;
-
-// Re-register scroll to include banner check too
-// (already registered above — we extend via a simple wrapper)
-// Since handleScroll is already in the rAF loop, just call checkBannerScroll there too.
-// We do this by patching post-init:
-const scrollHandler = () => {
-  if (scrollTicking) return;
-  scrollTicking = true;
-  requestAnimationFrame(() => {
-    handleScroll();
-    checkBannerScroll();
-    scrollTicking = false;
-  });
-};
-// Remove old listener and add patched one
-window.removeEventListener('scroll', scrollHandler);
-window.addEventListener('scroll', scrollHandler, {passive: true});
 
 if(localStorage.getItem('yt_lang')) bannerDismissed = true;
 applyLang(currentLang);
