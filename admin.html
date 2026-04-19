@@ -657,16 +657,24 @@ function copyPromoCode() {
 }
 
 // ── TRIAL SETTING ──
-function loadTrialSetting() {
-  const isOn = localStorage.getItem('yt_admin_48hr_trial') === '1';
+async function loadTrialSetting() {
+  const { data, error } = await sb
+    .from('settings')
+    .select('value')
+    .eq('key', 'auto_trial_enabled')
+    .single();
+
+  const isOn = !error && data?.value === 'true';
   document.getElementById('trialToggle').checked = isOn;
   updateTrialUI(isOn);
   loadTrialStats();
 }
 
-function updateTrialSetting() {
+async function updateTrialSetting() {
   const isOn = document.getElementById('trialToggle').checked;
-  localStorage.setItem('yt_admin_48hr_trial', isOn ? '1' : '0');
+  await sb
+    .from('settings')
+    .upsert({ key: 'auto_trial_enabled', value: isOn ? 'true' : 'false' }, { onConflict: 'key' });
   updateTrialUI(isOn);
 }
 
