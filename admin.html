@@ -664,7 +664,13 @@ async function loadTrialSetting() {
     .eq('key', 'auto_trial_enabled')
     .single();
 
-  const isOn = !error && data?.value === 'true';
+  if (error) {
+    console.warn('Could not load trial setting:', error.message);
+    loadTrialStats();
+    return;
+  }
+
+  const isOn = data?.value === 'true';
   document.getElementById('trialToggle').checked = isOn;
   updateTrialUI(isOn);
   loadTrialStats();
