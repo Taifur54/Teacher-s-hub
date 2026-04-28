@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — YesTeachers</title>
+<meta name="description" content="Tips, resources and tools to help teachers save time and teach better.">
+<link rel="canonical" href="https://yesteachers.com/blog">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a18;
+    --paper: #f7f6f3;
+    --green: #1D9E75;
+    --muted: #6b6860;
+    --border: rgba(0,0,0,0.09);
+  }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo { font-size: 18px; font-weight: 700; text-decoration: none; color: var(--ink); }
+  .nav-logo span { color: var(--green); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 14px; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--ink);
+    color: #fff !important;
+    padding: 8px 18px;
+    border-radius: 99px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .hero {
+    text-align: center;
+    padding: 5rem 5% 3rem;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: #e1f5ee;
+    padding: 4px 14px;
+    border-radius: 99px;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .hero p {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .posts {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 5% 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .post-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem 2rem;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .post-card:hover {
+    border-color: var(--green);
+    transform: translateY(-2px);
+  }
+  .post-tag {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--green);
+    margin-bottom: 0.75rem;
+  }
+  .post-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.6rem;
+    color: var(--ink);
+  }
+  .post-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .post-read {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--green);
+  }
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--green); text-decoration: none; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Yes<span>Teachers</span></a>
+  <div class="nav-links">
+    <a href="/#pricing">Pricing</a>
+    <a href="/blog">Blog</a>
+    <a href="/dashboard.html" class="nav-cta">Get started</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Teacher Resources</div>
+  <h1>Tips to teach better,<br>prep less.</h1>
+  <p>Practical guides and resources for teachers who want their evenings back.</p>
+</div>
+
+<div class="posts">
+
+  <a class="post-card" href="/blog/5-ways-to-save-time-on-lesson-prep">
+    <div class="post-tag">Lesson Planning</div>
+    <div class="post-title">5 Ways to Save Time on Lesson Prep Every Week</div>
+    <div class="post-desc">Teachers spend 7–10 hours every week on lesson planning. Here are five practical ways to cut that down significantly and reclaim your evenings.</div>
+    <div class="post-read">Read article →</div>
+  </a>
+
+  <a class="post-card" href="/blog/best-free-tools-for-teachers-2025">
+    <div class="post-tag">Teacher Tools</div>
+    <div class="post-title">Best Free Tools for Teachers in 2025</div>
+    <div class="post-desc">A practical list of the best free tools teachers are using right now to save time, engage students, and teach better without spending a penny.</div>
+    <div class="post-read">Read article →</div>
+  </a>
+
+  <a class="post-card" href="/blog/how-yesteachers-works">
+    <div class="post-tag">About YesTeachers</div>
+    <div class="post-title">How YesTeachers Works</div>
+    <div class="post-desc">A simple explanation of what YesTeachers is, who it is for, and how it helps teachers save hours of prep time every single week.</div>
+    <div class="post-read">Read article →</div>
+  </a>
+
+</div>
+
+<footer>
+  <a href="/">← Back to YesTeachers</a>
+</footer>
+
+</body>
+</html>
