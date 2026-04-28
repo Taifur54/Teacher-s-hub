@@ -850,9 +850,9 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="nav-logo">Yes<span>Teachers</span>!</a>
-  <div class="nav-r" id="navR">
-   <a href="#pricing">Pricing</a>
-<a href="/blog" class="nav-r">Blog</a>
+ <div class="nav-r" id="navR">
+    <a href="#pricing">Pricing</a>
+    <a href="/blog">Blog</a>
     <button class="nav-lang-btn" id="navLangBtn" onclick="reopenLangBanner()" title="Change language">
       <span class="nl-flag" id="navLangFlag">🌐</span>
       <span id="navLangLabel">EN</span>
@@ -865,11 +865,10 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
     <span class="nb-line"></span>
   </button>
 </nav>
-
 <!-- MOBILE MENU -->
-<a href="#pricing" class="nmm-link" onclick="closeMobileMenu()">Pricing</a>
-<a href="/blog" class="nmm-link" onclick="closeMobileMenu()">Blog</a>
+<div class="nav-mobile-menu" id="mobileMenu">
   <a href="#pricing" class="nmm-link" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/blog" class="nmm-link" onclick="closeMobileMenu()">Blog</a>
   <a href="dashboard.html" class="nmm-cta">Get started</a>
   <div class="nmm-lang" id="mmmLang">
     <button class="nmm-lang-btn on" onclick="selectLang('en');closeMobileMenu()">🌐 EN</button>
