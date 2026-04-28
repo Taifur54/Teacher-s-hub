@@ -1,0 +1,24 @@
+# YesTeachers
+
+> Effortless Prep. Endless Impact. A teaching tool that helps teachers create lesson plans and access ready-made classroom resources instantly.
+
+## What YesTeachers does
+- Helps teachers with lesson planning and classroom prep
+- Provides ready-made teaching resources and materials
+- Saves teachers hours of weekly preparation time
+- AI-powered tools built specifically for educators
+
+## Who it's for
+Teachers, educators, tutors, homeschool parents, teaching assistants
+
+## Key pages
+- Homepage: https://yesteachers.com
+- Dashboard: https://yesteachers.com/dashboard.html
+- Privacy Policy: https://yesteachers.com/privacy-policy.html
+- Terms of Service: https://yesteachers.com/terms-of-service.html
+
+## Category
+Education Technology / Lesson Planning / Teacher Tools
+
+## Alternatives
+An alternative to: Teachers Pay Teachers, Google Classroom, Planboard
