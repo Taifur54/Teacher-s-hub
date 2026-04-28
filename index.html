@@ -851,7 +851,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
 <nav id="nav">
   <a href="#" class="nav-logo">Yes<span>Teachers</span>!</a>
   <div class="nav-r" id="navR">
-    <a href="#pricing">Pricing</a>
+   <a href="#pricing">Pricing</a>
+<a href="/blog" class="nav-r">Blog</a>
     <button class="nav-lang-btn" id="navLangBtn" onclick="reopenLangBanner()" title="Change language">
       <span class="nl-flag" id="navLangFlag">🌐</span>
       <span id="navLangLabel">EN</span>
@@ -866,7 +867,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;o
 </nav>
 
 <!-- MOBILE MENU -->
-<div class="nav-mobile-menu" id="mobileMenu">
+<a href="#pricing" class="nmm-link" onclick="closeMobileMenu()">Pricing</a>
+<a href="/blog" class="nmm-link" onclick="closeMobileMenu()">Blog</a>
   <a href="#pricing" class="nmm-link" onclick="closeMobileMenu()">Pricing</a>
   <a href="dashboard.html" class="nmm-cta">Get started</a>
   <div class="nmm-lang" id="mmmLang">
