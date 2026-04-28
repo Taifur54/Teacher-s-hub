@@ -1984,5 +1984,25 @@ function checkBannerScroll() {
 if(localStorage.getItem('yt_lang')) bannerDismissed = true;
 applyLang(currentLang);
 </script>
+      <script>
+(async function trackVisit() {
+  try {
+    const sb = supabase.createClient(
+      'https://pmmwyxbkdoxtjugytcpa.supabase.co',
+      'sb_publishable_yPw2eEwVi5AhRB2r-xSCYQ_db39uPRX'
+    );
+    const session_id = localStorage.getItem('yt_session') || crypto.randomUUID();
+    localStorage.setItem('yt_session', session_id);
+    const device_type = /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop';
+    await sb.from('visitor_logs').insert({
+      session_id,
+      page: window.location.pathname,
+      referrer: document.referrer || null,
+      user_agent: navigator.userAgent,
+      device_type,
+    });
+  } catch(e) {}
+})();
+</script>
 </body>
 </html>
