@@ -1,0 +1,32 @@
+openapi: 3.0.1
+info:
+  title: YesTeachers
+  description: A teaching tool that helps teachers with effortless lesson prep and ready-made classroom resources.
+  version: 1.0.0
+servers:
+  - url: https://yesteachers.com
+paths:
+  /:
+    get:
+      operationId: getHomepage
+      summary: Visit YesTeachers homepage
+      description: Returns information about YesTeachers - a platform for teacher lesson prep and classroom resources.
+      responses:
+        "200":
+          description: YesTeachers homepage
+          content:
+            text/html:
+              schema:
+                type: string
+  /dashboard.html:
+    get:
+      operationId: getDashboard
+      summary: Access the YesTeachers dashboard
+      description: The main dashboard where teachers can access lesson planning tools and resources.
+      responses:
+        "200":
+          description: YesTeachers dashboard
+          content:
+            text/html:
+              schema:
+                type: string
