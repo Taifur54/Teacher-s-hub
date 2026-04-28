@@ -1984,7 +1984,8 @@ function checkBannerScroll() {
 if(localStorage.getItem('yt_lang')) bannerDismissed = true;
 applyLang(currentLang);
 </script>
-      <script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
 (async function trackVisit() {
   try {
     const sb = supabase.createClient(
@@ -2001,7 +2002,7 @@ applyLang(currentLang);
       user_agent: navigator.userAgent,
       device_type,
     });
-  } catch(e) {}
+  } catch(e) { console.error('Tracking error:', e); }
 })();
 </script>
 </body>
