@@ -1,5 +1,18 @@
 User-agent: *
 Allow: /
 Disallow: /dashboard.html
+Disallow: /admin.html
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
 
 Sitemap: https://www.yesteachers.com/sitemap.xml
